@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-10 21:13-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plasmoid/contents/ui/Mpris2.qml:51 plasmoid/contents/ui/Mpris2.qml:80
+#: plasmoid/contents/ui/Mpris2.qml:165
+msgid "No source"
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:3
+msgid "Form"
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:6
+msgid "General preferences"
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:9
+msgid "Display Stop button: "
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:12
+msgid "Avoid popup close when it loses focus: "
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:15
+msgid ""
+"The window behaves like a dialogue, correcting an \n"
+"annoying behavior. If you use CairoDock or Plank \n"
+"disable this option or create a KWin rule for \"Plasma\"."
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:20
+msgid "Opaque buttons: "
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:23
+msgid "Control Bar"
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:26
+msgid " pixels"
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:29
+msgid "Flat buttons: "
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:32
+msgid "Show notifications: "
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:35
+msgid "Visible separator: "
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:38
+msgid "Size of buttons: "
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:41
+msgid "Popup"
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:44
+msgid "Default"
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:47
+msgid "ToolTip"
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:50
+msgid "Style popup: "
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:53
+msgid "Layout: "
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:56
+msgid "PlayBar"
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:59
+msgid "Minimalist"
+msgstr ""
+
+#: plasmoid/contents/ui/rc.js:62
+msgid "Cool"
+msgstr ""
+
+#: plasmoid/contents/ui/TrackInfo.qml:116
+msgid "By %1"
+msgstr ""
+
+#: plasmoid/contents/ui/TrackInfo.qml:173
+msgid "On %1"
+msgstr ""
+
+#: plasmoid/contents/code/control.js:83
+msgid "Open %1"
+msgstr ""
+
+#: plasmoid/contents/code/control.js:84
+msgid "Quit"
+msgstr ""
+
+#: plasmoid/contents/code/control.js:86
+msgid "Next source"
+msgstr ""

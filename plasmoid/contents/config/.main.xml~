@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+     http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+    <kcfgfile name="playbar-kcfg"/>
+    <group name="General">
+		<entry name="opaqueIcons" type="Bool">
+            <label></label>
+            <default>false</default>
+        </entry>
+        <entry name="media-clear" type="String">
+            <label></label>
+            <default>playbar/media-clear</default>
+        </entry>
+		<entry name="media-opaque" type="String">
+            <label></label>
+            <default>playbar/media-opaque</default>
+        </entry>
+		<entry name="media-clear-bar" type="String">
+			<label></label>
+			<default>playbar/media-clear-bar</default>
+		</entry>
+		<entry name="media-opaque-bar" type="String">
+			<label></label>
+			<default>playbar/media-opaque-bar</default>
+		</entry>
+		<entry name="arrows-clear" type="String">
+			<label></label>
+			<default>playbar/arrows-clear</default>
+		</entry>
+		<entry name="arrows-opaque" type="String">
+			<label></label>
+			<default>playbar/arrows-opaque</default>
+		</entry>
+		<entry name="rating-clear" type="String">
+            <label></label>
+            <default>playbar/rating-clear</default>
+        </entry>
+        <entry name="rating-opaque" type="String">
+            <label></label>
+            <default>playbar/rating-opaque</default>
+        </entry>
+		<entry name="audio-clear" type="String">
+			<label></label>
+			<default>playbar/audio-clear</default>
+		</entry>
+		<entry name="audio-opaque" type="String">
+			<label></label>
+			<default>playbar/audio-opaque</default>
+		</entry>
+        <entry name="showStop" type="Bool">
+            <label></label>
+            <default>true</default>
+        </entry>
+        <entry name="timeNegative" type="Bool">
+            <label></label>
+            <default>false</default>
+        </entry>
+        <entry name="popupStyle" type="Int">
+            <label></label>
+            <default>0</default>
+        </entry>
+        <entry name="windowFlagDialog" type="Bool">
+            <label></label>
+            <default>true</default>
+        </entry>
+        <entry name="flatButtons" type="Bool">
+            <label></label>
+            <default>true</default>
+        </entry>
+        <entry name="showNotifications" type="Bool">
+            <label></label>
+            <default>true</default>
+        </entry>
+        <entry name="PlayBarLayout" type="Int">
+            <label></label>
+            <default>0</default>
+        </entry>
+        <entry name="separatorVisible" type="Bool">
+            <label></label>
+            <default>false</default>
+        </entry>
+		<entry name="buttonSize" type="Int">
+            <label></label>
+            <default>22</default>
+        </entry>
+    </group>
+</kcfg>

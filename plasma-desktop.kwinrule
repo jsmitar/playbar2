@@ -1,0 +1,14 @@
+[Preferencias para la aplicación plasma-desktop]
+Description=Preferencias para la aplicación plasma-desktop
+clientmachine=opensuse
+clientmachinematch=0
+skippager=true
+skippagerrule=2
+skipswitcher=true
+skipswitcherrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+types=4294967295
+wmclass=plasma-desktop
+wmclasscomplete=false
+wmclassmatch=1
