@@ -1,5 +1,5 @@
-// -*- coding: iso-8859-1 -*-
-/*
+/* -*- coding: iso-8859-1 -*-
+ *
  *   Author: audoban <audoban@openmailbox.org>
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -19,37 +19,36 @@
  */
 
 import QtQuick 2.3
+import org.kde.plasma.core 2.0
 import org.kde.plasma.components 2.0
 
 PlaybackItem{
-    id: playbackbar
+	id: playbackbar
 
-	property bool vertical: false
-// DEPRECATED
-	property bool flatButtons: plasmoid.readConfig('flatButtons')
+	property bool flatButtons: plasmoid.configuration.FlatButtons
 
 	width: childrenRect.width
 
-    height: childrenRect.height
+	height: childrenRect.height
 
 	Component.onCompleted: {
 
-        function formFactorChanged()
-        {
-            switch(plasmoid.formFactor)
-            {
-                case Planar:
-                case MediaCenter:
-                case Horizontal:
-                    vertical = false
-                    return
-                case Vertical:
-                    vertical = true
-                    return
-            }
-        }
-        formFactorChanged()
-        plasmoid.formFactorChanged.connect(formFactorChanged)
+		function formFactorChanged()
+		{
+			switch(plasmoid.formFactor)
+			{
+				case Planar:
+				case MediaCenter:
+				case Horizontal:
+					buttons.flow = Flow.LeftToRight
+					return
+				case Vertical:
+					buttons.flow = Flow.TopToBottom
+					return
+			}
+		}
+		formFactorChanged()
+		plasmoid.formFactorChanged.connect(formFactorChanged)
 
 		function connectMediaActions(){
 			model.itemAt(0).clicked.connect(previous)
@@ -57,66 +56,54 @@ PlaybackItem{
 			model.itemAt(2).clicked.connect(stop)
 			model.itemAt(3).clicked.connect(next)
 		}
-
 		connectMediaActions()
 
-		//DEPRECATED
-		plasmoid.addEventListener('configChanged', function(){
-				if(plasmoid.readConfig('flatButtons') != flatButtons){
-					flatButtons = !flatButtons
-					connectMediaActions()
-				}
-				if(playing) buttons.playingState()
-				else buttons.pausedState()
-			}
-		)
-    }
+	}
 
 	ListModel{
-        id: playmodel
-        ListElement{
-            icon: "media-skip-backward"
-        }
-        ListElement{
-            icon: "media-playback-start"
-        }
-        ListElement{
-            icon: "media-playback-stop"
-        }
-        ListElement{
-            icon: "media-skip-forward"
-        }
+		id: playmodel
+		ListElement{
+			icon: "media-skip-backward"
+		}
+		ListElement{
+			icon: "media-playback-start"
+		}
+		ListElement{
+			icon: "media-playback-stop"
+		}
+		ListElement{
+			icon: "media-skip-forward"
+		}
 
-    }
+	}
 
-    Component{
-        id: toolButtonDelegate
+	Component{
+		id: toolButtonDelegate
 
-        ToolButton{
-            iconSource: icon
-            visible: index == 2 ? showStop : true
-			minimunWidth: buttonSize + 2
+		ToolButton{
+			iconSource: icon
+			visible: index == 2 ? showStop : true
+			minimumWidth: buttonSize + 2
 			minimumHeight: buttonSize + 2
-        }
-    }
+		}
+	}
 
-    Component{
-        id: iconWidgetDelegate
+	Component{
+		id: iconWidgetDelegate
 
-        IconWidget{
-            iconSource: icon
-            visible: index == 2 ? showStop : true
+		IconWidget{
+			iconSource: icon
+			svg: Svg{ imagePath: "icons/media.svgz" }
+			visible: index == 2 ? showStop : true
 			size: buttonSize
+		}
 
-        }
+	}
 
-    }
+	Flow {
+		id: buttons
 
-    Flow {
-        id: buttons
-
-        spacing: flatButtons ? 5 : -1
-		flow: vertical ? Flow.TopToBottom : Flow.LeftToRight
+		spacing: flatButtons ? 5 : -1
 
 		function playingState(){
 			model.itemAt(1).iconSource = "media-playback-pause"
@@ -126,34 +113,34 @@ PlaybackItem{
 			model.itemAt(1).iconSource = "media-playback-start"
 		}
 
-		states:[
-			State{
-				name: "Playing"
-				when: playing
-				StateChangeScript{
-					script: buttons.playingState()
-				}
-			},
-			State{
-				name: "Paused"
-				when: !playing
-				StateChangeScript{
-					script: buttons.pausedState()
-				}
+		states: [
+		State{
+			name: "Playing"
+			when: playing
+			StateChangeScript{
+				script: buttons.playingState()
 			}
+		},
+		State{
+			name: "Paused"
+			when: !playing
+			StateChangeScript{
+				script: buttons.pausedState()
+			}
+		}
 		]
 
-        move: Transition {
-            NumberAnimation {
-                property: "y"
-                easing.type: Easing.Linear
-            }
-        }
+		move: Transition {
+			NumberAnimation {
+				property: "y"
+				easing.type: Easing.Linear
+			}
+		}
 
-        Repeater{
-            id: model
-            model: playmodel
-            delegate: flatButtons ? iconWidgetDelegate : toolButtonDelegate
-        }
-    }
+		Repeater{
+			id: model
+			model: playmodel
+			delegate: flatButtons ? iconWidgetDelegate : toolButtonDelegate
+		}
+	}
 }

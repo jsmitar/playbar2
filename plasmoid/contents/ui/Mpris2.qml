@@ -1,4 +1,3 @@
-// -*- coding: iso-8859-1 -*-
 /*
  *   Author: audoban <audoban@openmailbox.org>
  *
@@ -23,7 +22,7 @@ import org.kde.plasma.core 2.0
 import "plasmapackage:/code/control.js" as Control
 
 DataSource{
-	id: dataSource
+	id: mpris2
 
 	engine: 'mpris2'
 
@@ -47,6 +46,8 @@ DataSource{
 
 	property bool sourceActive: false
 
+	property var service
+
 
 	property string identity: hasSource('Identity') ? data[source]['Identity'] : i18n("No source")
 
@@ -69,13 +70,12 @@ DataSource{
 	property real volume: hasSource('Volume') ? data[source]['Volume'] : 0
 
 
-	signal sourceChanged(string source)
+	signal mediaSourceChanged(string source)
 
 	signal ratingChanged()
 
-	signal volumeChanged(real value)
 
-	onSourceChanged: {
+	onMediaSourceChanged: {
 		if(data[source] != undefined ) identity = data[source]['Identity']
 		else identity = i18n("No source")
 	}
@@ -98,7 +98,7 @@ DataSource{
 
 	function connect(source){
 		connectedSources = [source]
-		Control.setSource(source)
+		setService(source)
 	}
 
 	function nextSource(){
@@ -130,8 +130,6 @@ DataSource{
 			ratingChanged()
 		}
 
-		if(hasSource('Volume')) volumeChanged(data['Volume'])
-
 	}
 
 	onSourceAdded: {
@@ -155,22 +153,51 @@ DataSource{
 		if(source != previousSource) {
 			print("connected: "+source)
 			previousSource = source
-			sourceChanged(source)
+			mediaSourceChanged(source)
 		}
 		if(source != ''){
 			sourceActive = true
 			initialConnection = false
 		}
-		idty = data[source] != undefined ? data[source]['Identity'] : i18n("No source")
-		Control.setSource(source, idty)
+		var idty = data[source] != undefined ? data[source]['Identity'] : i18n("No source")
+		setService(source, idty)
 	}
 
 	onSourceDisconnected: {
 		print("disconnected: "+source)
 		if(sources.length == 1){
-			sourceChanged(source)
-			Control.setSource("", identity)
+			mediaSourceChanged(source)
+			setService("")
 		}
+	}
+
+	function setService(source, identity){
+		if(previousSource == source) return
+		service = mpris2.serviceForSource(source)
+	}
+
+	function seek(position, currentPosition){
+		if(source == 'clementine') {
+			job = service.operationDescription('Seek')
+			job['microseconds'] = ((-currentPosition + position) * 1000).toFixed(0)
+			service.startOperationCall(job)
+			return
+		}
+
+		job = service.operationDescription('SetPosition')
+		job['microseconds'] = (position * 1000).toFixed(0)
+		service.startOperationCall(job)
+	}
+
+	function startOperation(name){
+		job = service.operationDescription(name)
+		service.startOperationCall(job)
+	}
+
+	function setVolume(value){
+		job = service.operationDescription('SetVolume')
+		job['level'] = value
+		service.startOperationCall(job)
 	}
 
 	//onIntervalChanged: print("interval: "+interval)

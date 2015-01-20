@@ -20,61 +20,24 @@
 
 .pragma library
 
-var source
-var serv
+var sourceActive
+var service
 var identity
 var icon
+var mpris
 
 var currentVolume = 0
 var openedPopup = false
 
+function setActions(sourceActive, identity){
 
-function setSource(sourceName, identity){
-	if(sourceName == source) return
-
-	source = sourceName
-	serv = service("mpris2", sourceName)
-	if(sourceName != "" ) setActions(sourceName, identity)
-	else removeActions()
-}
-
-function seek(position, currentPosition){
-	if(source == 'clementine') {
-		seekRelative(position, currentPosition)
-		return
-	}
-
-	job = serv.operationDescription('SetPosition')
-	job['microseconds'] = (position * 1000).toFixed(0)
-	serv.startOperationCall(job)
-}
-
-function seekRelative(position, currentPosition){
-	job = serv.operationDescription('Seek')
-	job['microseconds'] = ((-currentPosition + position) * 1000).toFixed(0)
-	serv.startOperationCall(job)
-}
-
-function startOperation(name){
-	job = serv.operationDescription(name)
-	serv.startOperationCall(job)
-}
-
-function setVolume(value){
-	job = serv.operationDescription('SetVolume')
-	job['level'] = value
-	serv.startOperationCall(job)
-}
-
-function setActions(sourceName, identity){
-
-	if(sourceName.match('vlc')){
+	if(sourceActive.match('vlc')){
 		icon = 'vlc'
 	}else{
-		icon = sourceName
+		icon = sourceActive
 	}
 
-	switch(sourceName){
+	switch(sourceActive){
 		case 'spotify':
 			icon = 'spotify-client'
 			break
@@ -94,19 +57,6 @@ function removeActions(){
 	plasmoid.removeAction('sep0')
 	plasmoid.removeAction('nextSource')
 	plasmoid.removeAction('sep1')
-}
-
-function autoSelectOpaqueIcons(themeName){
-	print("themeName: " + themeName)
-	switch(themeName){
-		case "default":
-		case "Dynamo Plasma":
-		case "Tibanna":
-		case "Midna":
-		case "midna":
-		case "org.tilain.plasma":
-			plasmoid.writeConfig("opaqueIcons", "true")
-	}
 }
 
 // callbacks

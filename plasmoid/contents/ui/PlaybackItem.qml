@@ -24,10 +24,9 @@ import "plasmapackage:/code/control.js" as Control
 Item{
     id: playbackitem
 
-    property bool playing: mpris.playbackStatus == 'Playing'
+    property bool playing: mpris2.playbackStatus == 'Playing'
 
-	//DEPRECATED
-    property bool showStop: mpris.source == 'spotify' ? false : plasmoid.readConfig('showStop')
+    property bool showStop: mpris2.source == 'spotify' ? false : plasmoid.configuration.ShowStop
 
     property bool vertical: false
 
@@ -43,36 +42,35 @@ Item{
 
     signal stop()
 
-	function showStopChanged(source){
-		if( source == undefined ) source = mpris.source
-		if( source != 'spotify' )
-			//DEPRECATED
-			showStop = plasmoid.readConfig('showStop')
-		else showStop = false
-	}
+// 	function showStopChanged(source){
+// 		if( source == undefined ) source = mpris2.source
+// 		if( source != 'spotify' )
+// 			showStop = plasmoid.configuration.ShowStop
+// 		else showStop = false
+// 	}
 
     onPlayPause: {
-		if(mpris.source == 'spotify' ) {
-			Control.startOperation('PlayPause')
+		if(mpris2.source == 'spotify' ) {
+			mpris2.startOperation('PlayPause')
 			return
 		}
-		if(!playing) Control.startOperation('Play')
-		else Control.startOperation('PlayPause')
+		if(!playing) mpris2.startOperation('Play')
+		else mpris2.startOperation('PlayPause')
 	}
 
-    onPrevious: Control.startOperation('Previous')
+    onPrevious: mpris2.startOperation('Previous')
 
-    onNext: Control.startOperation('Next')
+    onNext: mpris2.startOperation('Next')
 
-    onStop: if(mpris.playbackStatus != "Stopped") Control.startOperation('Stop')
+    onStop: if(mpris2.playbackStatus != "Stopped") mpris2.startOperation('Stop')
 
-	Component.onCompleted: {
-		mpris.sourceChanged.connect(showStopChanged)
-		//DEPRECATED
-		plasmoid.addEventListener('configChanged', showStopChanged)
-	}
-
-	Component.onDestruction: {
-		mpris.sourceChanged.disconnect(showStopChanged)
-	}
+// 	Component.onCompleted: {
+// 		mpris2.sourceChanged.connect(showStopChanged)
+// 		DEPRECATED
+// 		plasmoid.addEventListener('configChanged', showStopChanged)
+// 	}
+//
+// 	Component.onDestruction: {
+// 		mpris2.sourceChanged.disconnect(showStopChanged)
+// 	}
 }
