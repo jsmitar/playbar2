@@ -1,4 +1,3 @@
-// -*- coding: iso-8859-1 -*-
 /*
  *   Author: audoban <audoban@openmailbox.org>
  *
@@ -19,7 +18,7 @@
  */
 
 import QtQuick 2.3
-import "plasmapackage:/code/control.js" as Control
+// import "plasmapackage:/code/control.js" as Control
 
 Item{
     id: playbackitem
@@ -28,11 +27,9 @@ Item{
 
     property bool showStop: mpris2.source == 'spotify' ? false : plasmoid.configuration.ShowStop
 
-    property bool vertical: false
+    property int buttonSize: units.iconSize.medium
 
-    property real spacing: -2
-
-    property int buttonSize: 22
+    enabled: mpris2.sourceActive
 
     signal playPause()
 
@@ -41,13 +38,6 @@ Item{
     signal next()
 
     signal stop()
-
-// 	function showStopChanged(source){
-// 		if( source == undefined ) source = mpris2.source
-// 		if( source != 'spotify' )
-// 			showStop = plasmoid.configuration.ShowStop
-// 		else showStop = false
-// 	}
 
     onPlayPause: {
 		if(mpris2.source == 'spotify' ) {
@@ -64,13 +54,5 @@ Item{
 
     onStop: if(mpris2.playbackStatus != "Stopped") mpris2.startOperation('Stop')
 
-// 	Component.onCompleted: {
-// 		mpris2.sourceChanged.connect(showStopChanged)
-// 		DEPRECATED
-// 		plasmoid.addEventListener('configChanged', showStopChanged)
-// 	}
-//
-// 	Component.onDestruction: {
-// 		mpris2.sourceChanged.disconnect(showStopChanged)
-// 	}
+
 }

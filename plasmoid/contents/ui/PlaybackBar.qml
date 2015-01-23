@@ -1,5 +1,4 @@
-/* -*- coding: iso-8859-1 -*-
- *
+/*
  *   Author: audoban <audoban@openmailbox.org>
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -18,9 +17,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+
 import QtQuick 2.3
-import org.kde.plasma.core 2.0
-import org.kde.plasma.components 2.0
+import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.components 2.0 as PlasmaComponents
 
 PlaybackItem{
 	id: playbackbar
@@ -31,37 +31,18 @@ PlaybackItem{
 
 	height: childrenRect.height
 
-	Component.onCompleted: {
-
-		function formFactorChanged()
-		{
-			switch(plasmoid.formFactor)
-			{
-				case Planar:
-				case MediaCenter:
-				case Horizontal:
-					buttons.flow = Flow.LeftToRight
-					return
-				case Vertical:
-					buttons.flow = Flow.TopToBottom
-					return
-			}
-		}
-		formFactorChanged()
-		plasmoid.formFactorChanged.connect(formFactorChanged)
-
-		function connectMediaActions(){
-			model.itemAt(0).clicked.connect(previous)
-			model.itemAt(1).clicked.connect(playPause)
-			model.itemAt(2).clicked.connect(stop)
-			model.itemAt(3).clicked.connect(next)
-		}
-		connectMediaActions()
-
+	onPlayingChanged: {
+		if(playing)
+			model.itemAt(1).iconSource = "media-playback-pause"
+		else
+			model.itemAt(1).iconSource = "media-playback-start"
 	}
+
+
 
 	ListModel{
 		id: playmodel
+
 		ListElement{
 			icon: "media-skip-backward"
 		}
@@ -80,11 +61,12 @@ PlaybackItem{
 	Component{
 		id: toolButtonDelegate
 
-		ToolButton{
+		PlasmaComponents.ToolButton{
 			iconSource: icon
+			layer.smooth: true
 			visible: index == 2 ? showStop : true
-			minimumWidth: buttonSize + 2
-			minimumHeight: buttonSize + 2
+			width: buttonSize
+			height: buttonSize
 		}
 	}
 
@@ -93,8 +75,9 @@ PlaybackItem{
 
 		IconWidget{
 			iconSource: icon
-			svg: Svg{ imagePath: "icons/media.svgz" }
-			visible: index == 2 ? showStop : true
+			svg: PlasmaCore.Svg{ imagePath: "icons/media" }
+			visible: !(index == 2) | showStop
+			enabled: mpris2.sourceActive
 			size: buttonSize
 		}
 
@@ -103,37 +86,13 @@ PlaybackItem{
 	Flow {
 		id: buttons
 
-		spacing: flatButtons ? 5 : -1
-
-		function playingState(){
-			model.itemAt(1).iconSource = "media-playback-pause"
-		}
-
-		function pausedState(){
-			model.itemAt(1).iconSource = "media-playback-start"
-		}
-
-		states: [
-		State{
-			name: "Playing"
-			when: playing
-			StateChangeScript{
-				script: buttons.playingState()
-			}
-		},
-		State{
-			name: "Paused"
-			when: !playing
-			StateChangeScript{
-				script: buttons.pausedState()
-			}
-		}
-		]
+		spacing: units.smallSpacing
 
 		move: Transition {
 			NumberAnimation {
 				property: "y"
 				easing.type: Easing.Linear
+				duration: units.longDuration
 			}
 		}
 
@@ -141,6 +100,25 @@ PlaybackItem{
 			id: model
 			model: playmodel
 			delegate: flatButtons ? iconWidgetDelegate : toolButtonDelegate
+
+			onItemAdded: {
+				switch(index){
+					case 0 :
+						item.clicked.connect(previous)
+						break
+					case 1 :
+						item.clicked.connect(playPause)
+						//NOTE: update icon playing state
+						playingChanged()
+						break
+					case 2:
+						item.clicked.connect(stop)
+						break
+					case 3:
+						item.clicked.connect(next)
+						break
+				}
+			}
 		}
 	}
 }

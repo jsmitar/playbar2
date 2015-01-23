@@ -18,10 +18,10 @@
  */
 
 import QtQuick 2.3
-import org.kde.plasma.core 2.0
-import "plasmapackage:/code/control.js" as Control
+import org.kde.plasma.core 2.0 as PlasmaCore
+//import "plasmapackage:/code/control.js" as Control
 
-DataSource{
+PlasmaCore.DataSource{
 	id: mpris2
 
 	engine: 'mpris2'
@@ -42,11 +42,11 @@ DataSource{
 
 	property string previousSource
 
-	property string source: connectedSources[0] != undefined ? connectedSources[0] : ''
+	property string source: connectedSources[0] != undefined ? connectedSources[0] : previousSource
 
 	property bool sourceActive: false
 
-	property var service
+	property var service: null
 
 
 	property string identity: hasSource('Identity') ? data[source]['Identity'] : i18n("No source")
@@ -74,10 +74,63 @@ DataSource{
 
 	signal ratingChanged()
 
+	onNewData: {
 
-	onMediaSourceChanged: {
-		if(data[source] != undefined ) identity = data[source]['Identity']
-		else identity = i18n("No source")
+		if(!isMaximumLoad) return
+
+		position = data['Position'] / 1000
+
+		if(hasMetadata('userRating') && data['Metadata']['xesam:userRating'] != userRating ){
+			userRating = data['Metadata']['xesam:userRating'] != undefined ?
+			             data['Metadata']['xesam:userRating'] : 0
+			ratingChanged()
+		}else if(playbackStatus == 'Stopped' && userRating != 0){
+			userRating = 0
+			ratingChanged()
+		}
+
+	}
+
+	onSourceAdded: {
+		debug("Source added: "+source)
+		debug("sources: "+ sources)
+		if(initialConnection && source != '@multiplex') {
+			previousSource = connectedSources == "" ? "" : connectedSources[0]
+			connectedSources = [source]
+			initialConnection = false
+		}
+	}
+
+	onSourceRemoved: {
+		if(sources.length == 1){
+			sourceActive = false
+			initialConnection = true
+		}
+		if(source == previousSource) nextSource()
+	}
+
+	onSourceConnected: {
+		if(source != previousSource) {
+			debug("connected: "+source)
+			previousSource = source
+			mediaSourceChanged(source)
+		}
+		if(source != ''){
+			sourceActive = true
+			initialConnection = false
+			debug("initialConnection: "+initialConnection)
+		}
+		setService(source)
+		debug("Source connected: "+source)
+		debug("valid engine: "+ valid)
+	}
+
+	onSourceDisconnected: {
+		debug("disconnected: "+source)
+		if(sources.length == 1){
+			mediaSourceChanged(source)
+			setService("")
+		}
 	}
 
 	function hasMetadata(key){
@@ -102,81 +155,28 @@ DataSource{
 	}
 
 	function nextSource(){
-		for(i = 0; i < sources.length; i++){
+		debug("nextSource()")
+		for(var i = 0; i < sources.length; i++){
 			if(connectedSources[0] == sources[i] || connectedSources == "")
 			{
 				if(++i < sources.length && sources[i] != '@multiplex'){
 					connect(sources[i])
 				}else if(++i < sources.length){
 					connect(sources[i])
-				}else if(sources[0] != '@multiplex') connect(sources[0])
-
+				}else if(sources[0] != '@multiplex') {
+					connect(sources[0])
+				}
 				return
 			}
 		}
 	}
 
-	onNewData: {
-		if(!isMaximumLoad) return
-
-		position = data['Position'] /1000
-
-		if(hasMetadata('userRating') && data['Metadata']['xesam:userRating'] != userRating ){
-			userRating = data['Metadata']['xesam:userRating'] != undefined ?
-						 data['Metadata']['xesam:userRating'] : 0
-			ratingChanged()
-		}else if(playbackStatus == 'Stopped' && userRating != 0){
-			userRating = 0
-			ratingChanged()
-		}
-
-	}
-
-	onSourceAdded: {
-		if(initialConnection && source != '@multiplex') {
-			previousSource = connectedSources == "" ? "" : connectedSources[0]
-			connectedSources = [source]
-			initialConnection = false
-		}
-	}
-
-	onSourceRemoved: {
-		if(sources.length == 1){
-			sourceActive = false
-			initialConnection = true
-		}
-		if(source == previousSource)
-		nextSource()
-	}
-
-	onSourceConnected: {
-		if(source != previousSource) {
-			print("connected: "+source)
-			previousSource = source
-			mediaSourceChanged(source)
-		}
-		if(source != ''){
-			sourceActive = true
-			initialConnection = false
-		}
-		var idty = data[source] != undefined ? data[source]['Identity'] : i18n("No source")
-		setService(source, idty)
-	}
-
-	onSourceDisconnected: {
-		print("disconnected: "+source)
-		if(sources.length == 1){
-			mediaSourceChanged(source)
-			setService("")
-		}
-	}
-
-	function setService(source, identity){
-		if(previousSource == source) return
+	function setService(source){
 		service = mpris2.serviceForSource(source)
 	}
 
 	function seek(position, currentPosition){
+		if(!service) return
 		if(source == 'clementine') {
 			job = service.operationDescription('Seek')
 			job['microseconds'] = ((-currentPosition + position) * 1000).toFixed(0)
@@ -184,21 +184,25 @@ DataSource{
 			return
 		}
 
-		job = service.operationDescription('SetPosition')
+		var job = service.operationDescription('SetPosition')
 		job['microseconds'] = (position * 1000).toFixed(0)
 		service.startOperationCall(job)
 	}
 
 	function startOperation(name){
-		job = service.operationDescription(name)
-		service.startOperationCall(job)
+		if(service){
+			var job = service.operationDescription(name)
+			service.startOperationCall(job)
+		}
 	}
 
 	function setVolume(value){
-		job = service.operationDescription('SetVolume')
-		job['level'] = value
-		service.startOperationCall(job)
+		if(service){
+			var job = service.operationDescription('SetVolume')
+			job['level'] = value
+			service.startOperationCall(job)
+		}
 	}
 
-	//onIntervalChanged: print("interval: "+interval)
+	//onIntervalChanged: debug("interval: "+interval)
 }

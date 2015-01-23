@@ -1,4 +1,3 @@
-// -*- coding: iso-8859-1 -*-
 /*
  *   Author: audoban <audoban@openmailbox.org>
  *
@@ -18,11 +17,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.1
-//import org.kde.plasma.core 0.1 as PlasmaCore
+import QtQuick 2.3
+import org.kde.plasma.core 2.0 as PlasmaCore
 
 
-IconWidget{
+PlasmaCore.IconWidget{
 	id: iconPopup
 
 	svg: update()

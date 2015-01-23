@@ -1,4 +1,3 @@
-// -*- coding: iso-8859-1 -*-
 /*
  *   Author: audoban <audoban@openmailbox.org>
  *
@@ -19,17 +18,14 @@
  */
 
 import QtQuick 2.3
-import org.kde.plasma.core 2.0
+import org.kde.plasma.core 2.0 as PlasmaCore
 
-
-SvgItem {
+PlasmaCore.SvgItem {
 	id: iconWidget
 
-	property alias iconSource: elementId
+	property alias iconSource: iconWidget.elementId
 
-	property int size: theme.smallIconSize + 3
-
-	svg: Svg{ imagePath: "icons/media.svgz" }
+	property int size: units.iconSizes.medium
 
 	implicitWidth: size
 
@@ -39,19 +35,23 @@ SvgItem {
 
 	signal clicked()
 
-	Component.onCompleted: mouseArea.clicked.connect(clicked)
+	opacity: enabled ? 1 : 0.5
+
+	Behavior on opacity {
+		NumberAnimation { duration: units.shortDuration }
+	}
 
 	SequentialAnimation on scale{
 		id: animA
 		running: false
 		alwaysRunToEnd: true
-		NumberAnimation { to: 0.9; duration: 150 }
+		NumberAnimation { to: 0.9; duration: units.shortDuration }
 	}
 	SequentialAnimation on scale{
 		id: animB
-		running: scale == 0.9 && !mouseArea.pressed
+		running: !mouseArea.pressed && scale == 0.9
 		alwaysRunToEnd: true
-		NumberAnimation { to: 1; duration: 150 }
+		NumberAnimation { to: 1; duration: units.shortDuration }
 	}
 
 	MouseArea{
@@ -59,7 +59,8 @@ SvgItem {
 
 		acceptedButtons: Qt.LeftButton
 		anchors.fill: parent
-
 		onPressed: animA.start()
+
+		Component.onCompleted: clicked.connect(iconWidget.clicked)
 	}
 }
