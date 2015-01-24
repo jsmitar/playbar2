@@ -18,41 +18,12 @@
  */
 
 import QtQuick 2.3
-// import "plasmapackage:/code/control.js" as Control
+import org.kde.plasma.configuration 2.0
 
-Item{
-    id: playbackitem
-
-    property bool playing: mpris2.playbackStatus == 'Playing'
-
-    property bool showStop: mpris2.source == 'spotify' ? false : plasmoid.configuration.ShowStop
-
-    property int buttonSize: units.iconSize.small
-
-    enabled: mpris2.sourceActive
-
-    signal playPause()
-
-    signal previous()
-
-    signal next()
-
-    signal stop()
-
-    onPlayPause: {
-		if(mpris2.source == 'spotify' ) {
-			mpris2.startOperation('PlayPause')
-			return
-		}
-		if(!playing) mpris2.startOperation('Play')
-		else mpris2.startOperation('PlayPause')
+ConfigModel {
+	ConfigCategory {
+		name: "General"
+		icon: "plasma"
+		source: "config-ui/General.qml"
 	}
-
-    onPrevious: mpris2.startOperation('Previous')
-
-    onNext: mpris2.startOperation('Next')
-
-    onStop: if(mpris2.playbackStatus != "Stopped") mpris2.startOperation('Stop')
-
-
 }

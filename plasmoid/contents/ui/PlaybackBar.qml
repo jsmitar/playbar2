@@ -32,6 +32,8 @@ PlaybackItem{
 	height: childrenRect.height
 
 	onPlayingChanged: {
+		if(!model.itemAt(1)) return
+
 		if(playing)
 			model.itemAt(1).iconSource = "media-playback-pause"
 		else
@@ -86,6 +88,7 @@ PlaybackItem{
 	Flow {
 		id: buttons
 
+		flow: vertical ? Flow.TopToBottom : Flow.LeftToRight
 		spacing: units.smallSpacing
 
 		move: Transition {

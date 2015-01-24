@@ -1,4 +1,3 @@
-// -*- coding: iso-8859-1 -*-
 /*
  *   Author: audoban <audoban@openmailbox.org>
  *
@@ -19,33 +18,41 @@
  */
 
 import QtQuick 1.1
-import org.kde.plasma.components 0.1 as PlasmaComponents
-import org.kde.plasma.graphicswidgets 0.1
+import "plasmapackage:/code/control.js" as Control
 
-Column{
-	id: title
+Item{
+	id: layout
 
-	height: childrenRect.height + 10
+	property bool isSpotify: mpris.source == 'spotify'
 
-	PlasmaComponents.Label{
-		id: text
+	property bool noSource:
+		mpris.connectedSources == ""
 
-		text: mpris.identity
-		width: parent.width
-		lineHeight: 1.2
-		styleColor: theme.highlightColor
-		horizontalAlignment: Text.AlignHCenter
-		verticalAlignment: Text.AlignVCenter
+	property variant idLayout: null
+
+	LayoutsResources{id: layouts}
+
+	height: childrenRect.height
+	width: childrenRect.width
+
+	signal layoutChanged()
+
+	Component.onCompleted: {
+		plasmoid.addEventListener('configChanged', function(){
+				idLayout = layouts.resources[plasmoid.readConfig('PlayBarLayout')]
+			}
+		)
 	}
 
-	Separator{
-		orientation: Qt.Horizontal
-		width: parent.width
-	}
+	Loader{
+		id: loader
 
-	MouseArea{
-		anchors.fill: parent
-		parent: text
-		onClicked: action_nextSource()
+		sourceComponent: if(noSource) null
+			else if(isSpotify) layouts.spotifyLayout
+			else idLayout
+
+		onLoaded:{
+			layoutChanged()
+		}
 	}
 }

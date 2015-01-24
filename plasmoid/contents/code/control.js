@@ -18,52 +18,43 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-.pragma library
-
-var sourceActive
-var service
-var identity
-var icon
-var mpris
-
-var currentVolume = 0
-var openedPopup = false
-
-function setActions(sourceActive, identity){
-
-	if(sourceActive.match('vlc')){
-		icon = 'vlc'
-	}else{
-		icon = sourceActive
-	}
-
-	switch(sourceActive){
-		case 'spotify':
-			icon = 'spotify-client'
-			break
-	}
-
-	plasmoid.setAction('raise', i18n("Open %1", identity), icon)
-	plasmoid.setAction('quit', i18n("Quit"), 'exit')
-	plasmoid.setActionSeparator('sep0')
-	plasmoid.setAction('nextSource', i18n("Next source"), 'go-next')
-	plasmoid.setActionSeparator('sep1')
-
-}
-
-function removeActions(){
-	plasmoid.removeAction('raise')
-	plasmoid.removeAction('quit')
-	plasmoid.removeAction('sep0')
-	plasmoid.removeAction('nextSource')
-	plasmoid.removeAction('sep1')
-}
-
+// .pragma library
+//
+// function setActions(sourceActive, identity){
+//
+// 	if(sourceActive.match('vlc')){
+// 		icon = 'vlc'
+// 	}else{
+// 		icon = sourceActive
+// 	}
+//
+// 	switch(sourceActive){
+// 		case 'spotify':
+// 			icon = 'spotify-client'
+// 			break
+// 	}
+//
+// 	plasmoid.setAction('raise', i18n("Open %1", identity), icon)
+// 	plasmoid.setAction('quit', i18n("Quit"), 'exit')
+// 	plasmoid.setActionSeparator('sep0')
+// 	plasmoid.setAction('nextSource', i18n("Next source"), 'go-next')
+// 	plasmoid.setActionSeparator('sep1')
+//
+// }
+//
+// function removeActions(){
+// 	plasmoid.removeAction('raise')
+// 	plasmoid.removeAction('quit')
+// 	plasmoid.removeAction('sep0')
+// 	plasmoid.removeAction('nextSource')
+// 	plasmoid.removeAction('sep1')
+// }
+//
 // callbacks
-function controlBarWheelEvent(wheel){}
-
-function sourceNotify(){}
-
-function controlBarWheelNotify(){}
+// function controlBarWheelEvent(wheel){}
+//
+// function sourceNotify(){}
+//
+// function controlBarWheelNotify(){}
 
 

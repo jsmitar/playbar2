@@ -1,4 +1,3 @@
-// -*- coding: iso-8859-1 -*-
 /*
  *   Author: audoban <audoban@openmailbox.org>
  *

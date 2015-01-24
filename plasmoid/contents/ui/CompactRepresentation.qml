@@ -1,4 +1,3 @@
-// -*- coding: iso-8859-1 -*-
 /*
  *   Author: audoban <audoban@openmailbox.org>
  *
@@ -18,42 +17,21 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.1
-import "plasmapackage:/code/control.js" as Control
+import QtQuick 2.3
+import QtQuick.Layouts 1.0
+import org.kde.plasma.core 2.0 as PlasmaCore
 
-Item{
-	id: layout
+Flow{
+	id: playbackControl
 
-	property bool isSpotify: mpris.source == 'spotify'
+	spacing: units.smallSpacing
+	flow: vertical ? Flow.TopToBottom : Flow.LeftToRight
 
-	property bool noSource:
-		mpris.connectedSources == ""
-
-	property variant idLayout: null
-
-	LayoutsResources{id: layouts}
-
-	height: childrenRect.height
-	width: childrenRect.width
-
-	signal layoutChanged()
-
-	Component.onCompleted: {
-		plasmoid.addEventListener('configChanged', function(){
-				idLayout = layouts.resources[plasmoid.readConfig('PlayBarLayout')]
-			}
-		)
+	PlaybackBar{
+		id: playbackBar
+		buttonSize: vertical ? parent.width : parent.height
 	}
-
-	Loader{
-		id: loader
-
-		sourceComponent: if(noSource) null
-			else if(isSpotify) layouts.spotifyLayout
-			else idLayout
-
-		onLoaded:{
-			layoutChanged()
-		}
-	}
+	Layout.minimumWidth  : vertical ? 0 : playbackBar.width
+	Layout.minimumHeight : vertical ? playbackBar.height : 0
+// 	Layout.maximumHeight : playbackBar.buttonSize
 }
