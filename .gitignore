@@ -12,6 +12,9 @@ build/
 *.desktop~
 *.kate-swp
 .~*
+.*.qml~
+.*.js~
+.*.xml~
 
 # mo files
 *.mo
