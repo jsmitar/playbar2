@@ -19,53 +19,57 @@
 
 import QtQuick 2.3
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasmoid 2.0
 
-
-PlasmaCore.IconWidget{
+IconWidget{
 	id: iconPopup
 
-	svg: update()
+	property bool opened: false
 
-	elementId: closed
+	svg: PlasmaCore.Svg{ imagePath: "widgets/arrows" }
 
-	property variant icons: [ "up-arrow", "down-arrow", "right-arrow", "left-arrow" ]
+	iconSource: "down-arrow"
 
-	property string opened: icons[0]
+	state: "default"
 
-	property string closed: icons[1]
+	rotation: opened ? 180: 0
 
-	function update(){
-		if(plasmoid.readConfig("opaqueIcons") == true)
-			return Svg(plasmoid.readConfig("arrows-opaque"))
-		else return Svg(plasmoid.readConfig("arrows-clear"))
+	Behavior on rotation{
+		RotationAnimator{
+			direction: opened ? RotationAnimation.Clockwise : RotationAnimation.Counterclockwise
+			duration: units.longDuration
+		}
 	}
+	states: [
+		State{
+			name: "default"
+			when: plasmoid.location == PlasmaCore.Types.TopEdge
 
-	Component.onCompleted:{
-		function locationChanged(){
-
-			switch(plasmoid.location){
-				case Floating:
-				case Desktop:
-				case TopEdge:
-					opened = icons[0]
-					closed = icons[1]
-					break
-				case BottomEdge:
-					opened = icons[1]
-					closed = icons[0]
-					break
-				case LeftEdge:
-					opened = icons[3]
-					closed = icons[2]
-					break
-				case RightEdge:
-					opened = icons[2]
-					closed = icons[3]
+			PropertyChanges{
+				target: iconPopup
+				iconSource: "down-arrow"
+			}
+		},
+		State{
+			when: plasmoid.location == PlasmaCore.Types.BottomEdge
+			PropertyChanges{
+				target: iconPopup
+				iconSource: "up-arrow"
+			}
+		},
+		State{
+			when: plasmoid.location == PlasmaCore.Types.LeftEdge
+			PropertyChanges{
+				target: iconPopup
+				iconSource: "right-arrow"
+			}
+		},
+		State{
+			when: plasmoid.location == PlasmaCore.Types.RightEdge
+			PropertyChanges{
+				target: iconPopup
+				iconSource: "left-arrow"
 			}
 		}
-
-		plasmoid.addEventListener('configChanged', function(){svg = update()} )
-		plasmoid.locationChanged.connect(locationChanged)
-		locationChanged()
-	}
+	]
 }

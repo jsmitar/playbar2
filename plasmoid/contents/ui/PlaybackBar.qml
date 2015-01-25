@@ -40,8 +40,6 @@ PlaybackItem{
 			model.itemAt(1).iconSource = "media-playback-start"
 	}
 
-
-
 	ListModel{
 		id: playmodel
 

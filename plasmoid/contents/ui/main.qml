@@ -23,38 +23,17 @@ import QtQuick.Layouts 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.plasmoid 2.0
-// import "plasmapackage:/code/control.js" as Control
-
 
 Item {
     id: root
 
-	width: units.iconSizes.huge * 4
+	property bool vertical: plasmoid.formFactor == PlasmaCore.Types.Vertical
 
-	height: units.iconSizes.huge + 2 * units.smallSpacing
+	Plasmoid.compactRepresentation: CompactApplet{ }
 
-	property alias _w: root.width
-
-	property alias _h: root.height
-
-	property bool vertical: Plasmoid.formFactor == PlasmaCore.Types.Vertical
-
-	Plasmoid.compactRepresentation: CompactRepresentation{}
-
-	Plasmoid.fullRepresentation: FullRepresentation{}
-
-	clip: true
-
-// 	property bool popupOpen: popup.status == PlasmaComponents.DialogStatus.Open
-
-// 	property bool showNotifications: plasmoid.readConfig('showNotifications')
+	Plasmoid.fullRepresentation: FullApplet{ }
 
 	function debug(str){ console.debug(str) }
-
-
-	Behavior on opacity{
-		NumberAnimation{ duration: 250 }
-	}
 
 	Mpris2{ id: mpris2 }
 
@@ -71,44 +50,15 @@ Item {
 
 	function action_nextSource(){
 		mpris2.nextSource()
-// 		if(showNotifications) Control.sourceNotify()
 	}
 
 	//TODO: open file
 	//###########################
 
-	function setMaximumLoad(){
-		mpris2.interval = mpris2.maximumLoad
-	}
-
-	function setMinimumLoad(){
-		mpris2.interval = mpris2.minimumLoad
-	}
-
 	Component.onCompleted:{
-		plasmoid.constraint = 0
-		debug("root size: "+ _w + " " + _h)
 		debug("FormFactor: " + Plasmoid.formFactor)
-
+		debug("Location: " + Plasmoid.location)
     }
-
-	//ATTENTION: This will be removed in QtQuick 2.0 because will be unnecessary
-	// Volume Area
-	// DEPRECATED:
-	MouseArea{
-		id: volumeWheelArea
-
-		acceptedButtons: Qt.XButton1 | Qt.XButton2
-		enabled: mpris2.sourceActive
-
-		onWheel: {
-			if(!mpris2.sourceActive) return
-			if(mpris2.source != 'spotify'){
-				Control.controlBarWheelEvent(wheel)
-				Control.controlBarWheelNotify()
-			}
-		}
-	}
 }
 
 

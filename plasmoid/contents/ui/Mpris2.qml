@@ -19,17 +19,14 @@
 
 import QtQuick 2.3
 import org.kde.plasma.core 2.0 as PlasmaCore
-//import "plasmapackage:/code/control.js" as Control
+import "plasmapackage:/code/utils.js" as Utils
 
 PlasmaCore.DataSource{
 	id: mpris2
 
 	engine: 'mpris2'
 
-	interval: minimumLoad
-
-	connectedSources: sources.length > 1 && sources[0] != '@multiplex' ? [sources[0]] : [""]
-
+	interval: maximumLoad
 
 	property int maximumLoad: 500
 
@@ -37,14 +34,12 @@ PlasmaCore.DataSource{
 
 	property bool isMaximumLoad: interval == maximumLoad
 
-	property bool initialConnection: true
-
 
 	property string previousSource
 
-	property string source: connectedSources[0] != undefined ? connectedSources[0] : previousSource
+	property alias source: mpris2.connectedSources
 
-	property bool sourceActive: false
+	property bool sourceActive: source.length > 0
 
 	property var service: null
 
@@ -53,7 +48,7 @@ PlasmaCore.DataSource{
 
 	property string playbackStatus: hasSource('PlaybackStatus') ? data[source]['PlaybackStatus'] : "unknown"
 
-	property string artUrl: hasMetadata('artUrl') ? data[source]['Metadata']['mpris:artUrl'] : ""
+	property string artUrl: hasMetadataMpris('artUrl') ? data[source]['Metadata']['mpris:artUrl'] : ""
 
 	property string artist: hasMetadata('artist') ? data[source]['Metadata']['xesam:artist'].toString() : ""
 
@@ -61,7 +56,7 @@ PlasmaCore.DataSource{
 
 	property string title: hasMetadata('title') ? data[source]['Metadata']['xesam:title'] : ""
 
-	property int length: hasMetadata('length') ? data[source]['Metadata']['mpris:length'] / 1000: 0
+	property int length: hasMetadataMpris('length') ? data[source]['Metadata']['mpris:length'] / 1000: 0
 
 	property int position: 0
 
@@ -69,89 +64,79 @@ PlasmaCore.DataSource{
 
 	property real volume: hasSource('Volume') ? data[source]['Volume'] : 0
 
-
 	signal mediaSourceChanged(string source)
 
 	signal ratingChanged()
 
+	onMediaSourceChanged: Utils.setActions(source, identity)
+	//NOTICE: call to nextSource() for the initial connection
+	Component.onCompleted: nextSource()
+
 	onNewData: {
+		if(isMaximumLoad) {
+			position = data['Position'] / 1000
 
-		if(!isMaximumLoad) return
-
-		position = data['Position'] / 1000
-
-		if(hasMetadata('userRating') && data['Metadata']['xesam:userRating'] != userRating ){
-			userRating = data['Metadata']['xesam:userRating'] != undefined ?
-			             data['Metadata']['xesam:userRating'] : 0
-			ratingChanged()
-		}else if(playbackStatus == 'Stopped' && userRating != 0){
-			userRating = 0
-			ratingChanged()
+			if(hasMetadata('userRating') && data['Metadata']['xesam:userRating'] != userRating ){
+				userRating = data['Metadata']['xesam:userRating'] != undefined ?
+							data['Metadata']['xesam:userRating'] : 0
+				ratingChanged()
+			}else if(playbackStatus == 'Stopped' && userRating != 0){
+				userRating = 0
+				ratingChanged()
+			}
 		}
+	}
 
+	onSourcesChanged: {
+		if(connectedSources.length == 0) nextSource()
 	}
 
 	onSourceAdded: {
-		debug("Source added: "+source)
+		debug("Source added: " + source)
 		debug("sources: "+ sources)
-		if(initialConnection && source != '@multiplex') {
-			previousSource = connectedSources == "" ? "" : connectedSources[0]
-			connectedSources = [source]
-			initialConnection = false
+
+		if(source != '@multiplex' && connectedSources.length == 0) {
+			connectSource(source)
 		}
 	}
 
 	onSourceRemoved: {
-		if(sources.length == 1){
-			sourceActive = false
-			initialConnection = true
+		if(source == previousSource) {
+			nextSource()
 		}
-		if(source == previousSource) nextSource()
 	}
 
 	onSourceConnected: {
-		if(source != previousSource) {
-			debug("connected: "+source)
-			previousSource = source
-			mediaSourceChanged(source)
-		}
-		if(source != ''){
-			sourceActive = true
-			initialConnection = false
-			debug("initialConnection: "+initialConnection)
-		}
+		mediaSourceChanged(source)
 		setService(source)
 		debug("Source connected: "+source)
 		debug("valid engine: "+ valid)
 	}
 
 	onSourceDisconnected: {
+		mediaSourceChanged("no_source")
+		setService(null)
+		previousSource = source
 		debug("disconnected: "+source)
-		if(sources.length == 1){
-			mediaSourceChanged(source)
-			setService("")
-		}
 	}
 
 	function hasMetadata(key){
-		if (interval == minimumLoad) return false
+		if (!isMaximumLoad) return false
+		return data[source[0]] != undefined
+			&& data[source[0]]['Metadata'] != undefined
+			&& data[source[0]]['Metadata']['xesam:'+key] != undefined
+	}
 
-		if (key == 'artUrl' || key == 'length') key = 'mpris:'+key
-		else key = 'xesam:'+key
-
-		return data[source] != undefined
-			&& data[source]['Metadata'] != undefined
-			&& data[source]['Metadata'][key] != undefined
+	function hasMetadataMpris(key){
+		if (!isMaximumLoad) return false
+		return data[source[0]] != undefined
+		&& data[source[0]]['Metadata'] != undefined
+		&& data[source[0]]['Metadata']['mpris:'+key] != undefined
 	}
 
 	function hasSource(key){
-		return data[source] != undefined
-			&& data[source][key] != undefined
-	}
-
-	function connect(source){
-		connectedSources = [source]
-		setService(source)
+		return data[source[0]] != undefined
+			&& data[source[0]][key] != undefined
 	}
 
 	function nextSource(){
@@ -160,11 +145,11 @@ PlasmaCore.DataSource{
 			if(connectedSources[0] == sources[i] || connectedSources == "")
 			{
 				if(++i < sources.length && sources[i] != '@multiplex'){
-					connect(sources[i])
+					connectSource(sources[i])
 				}else if(++i < sources.length){
-					connect(sources[i])
+					connectSource(sources[i])
 				}else if(sources[0] != '@multiplex') {
-					connect(sources[0])
+					connectSource(sources[0])
 				}
 				return
 			}
@@ -172,7 +157,9 @@ PlasmaCore.DataSource{
 	}
 
 	function setService(source){
+		if(!source) service = null
 		service = mpris2.serviceForSource(source)
+		debug("service active" + service != null)
 	}
 
 	function seek(position, currentPosition){

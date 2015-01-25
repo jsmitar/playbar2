@@ -18,6 +18,7 @@
  */
 
 import QtQuick 2.3
+import org.kde.plasma.core 2.0 as PlasmaCore
 // import "plasmapackage:/code/control.js" as Control
 
 Item{
@@ -27,7 +28,7 @@ Item{
 
     property bool showStop: mpris2.source == 'spotify' ? false : plasmoid.configuration.ShowStop
 
-    property int buttonSize: units.iconSize.small
+    property int buttonSize: units.iconSizes.small
 
     enabled: mpris2.sourceActive
 
