@@ -1,4 +1,3 @@
-// -*- coding: iso-8859-1 -*-
 /*
  *   Author: audoban <audoban@openmailbox.org>
  *
@@ -18,211 +17,128 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.1
-import org.kde.plasma.components 0.1
-import "plasmapackage:/ui/" as PlayBar
+import QtQuick 2.3
+import QtQuick.Layouts 1.1
+import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.extras 2.0 as PlasmaExtras
 
-Item{
-    id: trackInfo
+GridLayout {
+	id: trackInfo
 
-	property alias widthLabelArtist: artist.width
+	rows: 3
+	columns: 2
+	rowSpacing: units.smallSpacing
+	columnSpacing: units.largeSpacing
+	clip: true
 
-	property alias widthLabelAlbum: album.width
+	PlasmaExtras.Heading{
+		id: title
 
-	property alias contentHeight: artist.height
+		text: mpris2.title
+		level: 2
+		color: Qt.lighter(theme.textColor, 1.2)
 
-	property alias titleFontWeight: title.font.weight
+		wrapMode: scrollTitle.scrolling ? Text.NoWrap : Text.WrapAnywhere
+		elide: scrollTitle.scrolling ? Text.ElideNone : Text.ElideRight
+		maximumLineCount: 1
 
-	property int albumArtistPointsize: 10
+		smooth: true
 
-	implicitHeight: content.height
+		Layout.fillWidth: true
+		Layout.columnSpan: 2
 
-	Column{
-		id: content
-		clip: true
-		spacing: -2
-		width: parent.width
-		height: childrenRect.height
-
-		Label{
-			id: title
-
-			text: mpris.title
-			wrapMode: Text.WrapAnywhere
-			elide: Text.ElideRight
-			maximumLineCount: 1
-			visible: mpris.title != ""
-
-			font.pointSize: 14
-
-			width: parent.width
-			lineHeight: 1.2
-
-			property bool isWrapped: implicitWidth > width ? true : false
-
-			function normalState(){
-				wrapMode = Text.WrapAnywhere
-				x = 0
-				state = ''
-			}
-
-			states: State{
-				name: 'scroll'
-				PropertyChanges{
-					target: title
-					wrapMode: Text.NoWrap
-					x: width / 1.1 - implicitWidth
-				}
-			}
-
-			Behavior on x{
-				SequentialAnimation{
-					//TODO: Change to PropertyAction
-					PropertyAnimation{
-						property: 'wrapMode'
-						duration: 0
-					}
-					SmoothedAnimation{
-						property: 'x'
-						velocity: 60
-					}
-					PauseAnimation{ duration: 120 }
-					SmoothedAnimation{
-						to: 0
-						property: 'x'
-						velocity: 70
-					}
-					ScriptAction{ script: title.normalState() }
-				}
-			}
-			MouseArea{
-				id: mouse
-
-				acceptedButtons: Qt.NoButton
-				anchors.fill: title
-				hoverEnabled: true
-				onEntered:	if(title.isWrapped)	title.state = 'scroll'
-			}
-		}
-
-		Column{
-			clip: true
-			children: [artist, album]
-		}
-
-		Label{
-			id: artist
-
-			text: i18n("By %1", mpris.artist)
-			wrapMode: Text.WrapAnywhere
-			elide: Text.ElideRight
-			maximumLineCount: 1
-			font.pointSize: albumArtistPointsize
-			visible: mpris.artist != ""
-
-			height: 12
-			width: content.width
-
-			property bool isWrapped: implicitWidth > width ? true : false
-
-			function normalState(){
-				wrapMode = Text.WrapAnywhere
-				x = 0
-				state = ""
-			}
-
-			states: State{
-				name: 'scroll'
-				PropertyChanges{
-					target: artist
-					wrapMode: Text.NoWrap
-					x: width / 1.1 - implicitWidth
-				}
-			}
-
-			Behavior on x{
-				SequentialAnimation{
-					PropertyAnimation{
-						property: 'wrapMode'
-						duration: 0
-					}
-					SmoothedAnimation{
-						property: 'x'
-						velocity: 60
-					}
-					PauseAnimation { duration: 120 }
-					SmoothedAnimation{
-						to: 0
-						property: 'x'
-						velocity: 70
-					}
-					ScriptAction{ script: artist.normalState() }
-				}
-			}
-			MouseArea{
-				acceptedButtons: Qt.NoButton
-				anchors.fill: parent
-				hoverEnabled: true
-				onEntered:	if(artist.isWrapped) artist.state = 'scroll'
-			}
-		}
-
-		Label{
-			id: album
-
-			text:  i18n("On %1", mpris.album)
-			wrapMode: Text.WrapAnywhere
-			elide: Text.ElideRight
-			maximumLineCount: 1
-
-			font.pointSize: albumArtistPointsize
-
-			visible: mpris.album != ""
-
-			width: content.width
-
-			property bool isWrapped: implicitWidth > width ? true : false
-
-			function normalState(){
-				wrapMode = Text.WrapAnywhere
-				state = ""
-			}
-
-			states: State{
-				name: 'scroll'
-				PropertyChanges{
-					target: album
-					wrapMode: Text.NoWrap
-					x: width / 1.1 - implicitWidth
-				}
-			}
-
-			Behavior on x{
-				SequentialAnimation{
-					PropertyAnimation{
-						property: 'wrapMode'
-						duration: 0
-					}
-					SmoothedAnimation{
-						property: 'x'
-						velocity: 60
-					}
-					PauseAnimation { duration: 120 }
-					SmoothedAnimation{
-						to: 0
-						property: 'x'
-						velocity: 70
-					}
-					ScriptAction{ script: album.normalState() }
-				}
-			}
-
-			MouseArea{
-				acceptedButtons: Qt.NoButton
-				anchors.fill: parent
-				hoverEnabled: true
-				onEntered:	if(album.isWrapped) album.state = 'scroll'
-			}
+		AutoscrollText{
+			id: scrollTitle
+			target: title
+			anchors.fill: parent
 		}
 	}
+
+	RowLayout{
+		Layout.row: 1
+		Layout.column: 1
+		Layout.fillWidth: true
+		Layout.alignment: Qt.AlignTop
+
+		clip: true
+		children: [artist]
+	}
+
+	PlasmaExtras.Heading{
+		id: artist
+
+		text: mpris2.artist
+		level: 3
+		color: Qt.lighter(theme.textColor, 1.5)
+		visible: mpris2.artist.length > 0
+
+		wrapMode: scrollArtist.scrolling ? Text.NoWrap : Text.WrapAnywhere
+		elide: scrollArtist.scrolling ? Text.ElideNone : Text.ElideRight
+		maximumLineCount: 1
+
+		Layout.fillWidth: true
+
+		AutoscrollText{
+			id: scrollArtist
+			target: artist
+			anchors.fill: parent
+		}
+	}
+
+	RowLayout{
+		Layout.row: 2
+		Layout.column: 1
+		Layout.fillWidth: true
+
+		clip: true
+		children: [album]
+	}
+
+	PlasmaExtras.Heading{
+		id: album
+
+		text: mpris2.album
+		level: 3
+		color: Qt.lighter(theme.textColor, 1.5)
+		visible: mpris2.album.length > 0
+
+		wrapMode: scrollAlbum.scrolling ? Text.NoWrap : Text.WrapAnywhere
+		elide: scrollAlbum.scrolling ? Text.ElideNone : Text.ElideRight
+		maximumLineCount: 1
+
+		Layout.fillWidth: true
+
+		AutoscrollText{
+			id: scrollAlbum
+			target: album
+			anchors.fill: parent
+		}
+	}
+
+	PlasmaExtras.Heading{
+		id: by
+
+		text: i18n("By")
+		level: 5
+		color: Qt.lighter(theme.textColor, 1.4)
+		visible: mpris2.artist.length > 0
+
+		Layout.row: 1
+		Layout.column: 0
+		Layout.alignment: Qt.AlignRight
+	}
+
+	PlasmaExtras.Heading{
+		id: on
+
+		text: i18n("On")
+		level: 5
+		color: Qt.lighter(theme.textColor, 1.4)
+		visible: mpris2.album.length > 0
+
+		Layout.row: 2
+		Layout.column: 0
+		Layout.alignment: Qt.AlignRight
+	}
+
 }
