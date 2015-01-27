@@ -18,52 +18,52 @@
  */
 
 import QtQuick 2.3
-import org.kde.plasma.components 2.0  as PlasmaComponents
-import org.kde.plasma.core 2.0 as PlasmaCore
+import QtQuick.Layouts 1.1
 
+Rectangle{
+	id: bg
 
-Item{
-	id: coverArt
+	width: units.iconSizes.enormous
+	height: units.iconSizes.enormous
+	visible: cover.visible
+	color: theme.complementaryBackgroundColor
+	radius: 2
 
-	property int size: units.iconSizes.enormous
+	border{
+		width: 2
+		color: color
+	}
 
-	width: bg.width
+	Layout.minimumWidth: units.iconSizes.huge
+	Layout.minimumHeight: units.iconSizes.huge
+	Layout.preferredWidth : units.iconSizes.enormous
+	Layout.preferredHeight: units.iconSizes.enormous
+	Layout.maximumWidth: height
+	Layout.maximumHeight: units.iconSizes.enormous
+	Layout.fillHeight: true
+	Layout.fillWidth: false
 
-	height: bg.height
+	Image{
+		id: cover
 
-	visible: false
+		source: mpris2.artUrl
+		fillMode: Image.PreserveAspectFit
+		visible: status == Image.Ready ? true : false
+		anchors.centerIn: parent
 
-	Rectangle{
-		id: bg
+		width: parent.width - 4
+		height: parent.height - 4
 
-		width: size + 4
-		height: size + 4
-		color: theme.complementaryBackgroundColor
+		sourceSize.width: units.iconSizes.enormous - 4
+		sourceSize.height: units.iconSizes.enormous - 4
 
-		Image{
-			id: cover
+		horizontalAlignment: Image.AlignHCenter
+		verticalAlignment: Image.AlignVCenter
 
-			source: mpris2.artUrl
-			fillMode: Image.PreserveAspectFit
-			visible: status == Image.Ready ? true : false
-			cache: true
-			asynchronous: true
-			anchors{
-				centerIn: parent
-			}
-
-			sourceSize.width: size
-			sourceSize.height: size
-
-			horizontalAlignment: Image.AlignHCenter
-			verticalAlignment: Image.AlignVCenter
-
-			onStatusChanged: {
-				coverArt.visible = status == Image.Ready
-				if(status == Image.Error)
-					debug("Err on CoverArt: " +mpris2.artUrl)
-			}
+		onStatusChanged: {
+			coverArt.visible = status == Image.Ready
+			if(status == Image.Error)
+				debug("Err on CoverArt: " +mpris2.artUrl)
 		}
-
 	}
 }
