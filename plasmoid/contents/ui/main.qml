@@ -29,6 +29,8 @@ Item {
 
 	property bool vertical: plasmoid.formFactor == PlasmaCore.Types.Vertical
 
+	clip: true
+	
 	Plasmoid.compactRepresentation: CompactApplet{ }
 
 	Plasmoid.fullRepresentation: FullApplet{ }

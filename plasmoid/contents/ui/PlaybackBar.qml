@@ -87,7 +87,7 @@ PlaybackItem{
 		id: buttons
 
 		flow: vertical ? Flow.TopToBottom : Flow.LeftToRight
-		spacing: units.smallSpacing
+		spacing: 0
 
 		move: Transition {
 			NumberAnimation {

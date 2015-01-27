@@ -11,7 +11,7 @@ Type=Service
 
 X-Plasma-API=declarativeappletscript
 X-Plasma-MainScript=ui/main.qml
-X-Plasma-DefaultSize=256,72
+# X-Plasma-DefaultSize=256,72
 X-Plasma-Provides=org.kde.plasma.multimediacontrols
 #X-Plasma-ConfigPlugins=kcm_playbarshortcuts
 
@@ -20,7 +20,7 @@ X-KDE-PluginInfo-Category=Multimedia
 X-KDE-PluginInfo-Email=audoban@openmailbox.org
 X-KDE-PluginInfo-License=GPLv3
 X-KDE-PluginInfo-Name=audoban.playbar2
-X-KDE-PluginInfo-Version=2pre
+X-KDE-PluginInfo-Version=2alpha
 X-KDE-PluginInfo-Website=https://github.com/audoban/PlayBar2
 
 X-KDE-ServiceTypes=Plasma/Applet
