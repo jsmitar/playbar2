@@ -17,7 +17,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.3
+import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
@@ -27,9 +27,14 @@ GridLayout {
 
 	rows: 3
 	columns: 2
-	rowSpacing: units.smallSpacing
+	rowSpacing: units.smallSpacing / 3 //NOTE: Correction of the spacing
 	columnSpacing: units.largeSpacing
 	clip: true
+	Layout.minimumWidth: units.iconSizes.enormous * 1.5
+	Layout.minimumHeight: implicitHeight
+	Layout.fillWidth: true
+	Layout.fillHeight: false
+
 
 	PlasmaExtras.Heading{
 		id: title
@@ -41,10 +46,10 @@ GridLayout {
 		wrapMode: scrollTitle.scrolling ? Text.NoWrap : Text.WrapAnywhere
 		elide: scrollTitle.scrolling ? Text.ElideNone : Text.ElideRight
 		maximumLineCount: 1
-
-		smooth: true
+		lineHeight: 1.1
 
 		Layout.fillWidth: true
+		Layout.fillHeight: false
 		Layout.columnSpan: 2
 
 		AutoscrollText{
@@ -58,6 +63,7 @@ GridLayout {
 		Layout.row: 1
 		Layout.column: 1
 		Layout.fillWidth: true
+		Layout.fillHeight: false
 		Layout.alignment: Qt.AlignTop
 
 		clip: true
@@ -75,8 +81,10 @@ GridLayout {
 		wrapMode: scrollArtist.scrolling ? Text.NoWrap : Text.WrapAnywhere
 		elide: scrollArtist.scrolling ? Text.ElideNone : Text.ElideRight
 		maximumLineCount: 1
+		lineHeight: 1.1
 
 		Layout.fillWidth: true
+		Layout.fillHeight: false
 
 		AutoscrollText{
 			id: scrollArtist
@@ -89,6 +97,8 @@ GridLayout {
 		Layout.row: 2
 		Layout.column: 1
 		Layout.fillWidth: true
+		Layout.fillHeight: false
+		Layout.alignment: Qt.AlignTop
 
 		clip: true
 		children: [album]
@@ -105,8 +115,10 @@ GridLayout {
 		wrapMode: scrollAlbum.scrolling ? Text.NoWrap : Text.WrapAnywhere
 		elide: scrollAlbum.scrolling ? Text.ElideNone : Text.ElideRight
 		maximumLineCount: 1
+		lineHeight: 1.1
 
 		Layout.fillWidth: true
+		Layout.fillHeight: false
 
 		AutoscrollText{
 			id: scrollAlbum
@@ -125,7 +137,8 @@ GridLayout {
 
 		Layout.row: 1
 		Layout.column: 0
-		Layout.alignment: Qt.AlignRight
+		Layout.fillHeight: false
+		Layout.alignment: Qt.AlignRight | Qt.AlignBaseline
 	}
 
 	PlasmaExtras.Heading{
@@ -138,7 +151,8 @@ GridLayout {
 
 		Layout.row: 2
 		Layout.column: 0
-		Layout.alignment: Qt.AlignRight
+		Layout.fillHeight: false
+		Layout.alignment: Qt.AlignRight | Qt.AlignBaseline
 	}
 
 }
