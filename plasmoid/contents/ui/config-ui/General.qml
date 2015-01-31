@@ -17,9 +17,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.3
+import QtQuick 2.4
 import QtQuick.Controls 1.2
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.1
 
 
 Item {
@@ -32,6 +32,7 @@ Item {
 	property alias cfg_FlatButtons: cfg1.checked
 	property alias cfg_ShowStop: cfg2.checked
 	property int cfg_ButtonSize: 22
+	property bool cfg_TimeLabelSwitch: false
 
 	Column {
 		id: pageColumn

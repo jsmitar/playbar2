@@ -15,5 +15,9 @@
 
         <entry name="ButtonSize" type="Int">
         </entry>
+
+		<entry name="TimeLabelSwitch" type="Bool">
+			<default>true</default>
+		</entry>
     </group>
 </kcfg>
