@@ -1,4 +1,3 @@
-// -*- coding: iso-8859-1 -*-
 /*
  *   Author: audoban <audoban@openmailbox.org>
  *
@@ -18,81 +17,87 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.1
-import org.kde.plasma.components 0.1
-import "plasmapackage:/code/control.js" as Control
+import QtQuick 2.4
+import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.extras 2.0 as PlasmaExtras
 
-Item{
-
+PlasmaExtras.Heading{
     id: time
 
-    //seconds
-    property int topTime: 0
-	//seconds
-    property int currentTime: 0
+    level: 5
 
-    property bool negative: false
+    // units in hundredth of second
+    property int topTime: mpris2.length
+    // units in hundredth of second
+    property int currentTime: mpris2.position
 
-    property alias hover: mouseArea.enabled
+    property bool showPosition: true
 
-	property int min: 0
+    property bool showRemaining: true
 
-	property int sec: 0
+    property bool labelSwitch: false
 
-	property alias autoTimeTrigger: timer.running
+    property alias interactive: mouseArea.hoverEnabled
 
-    implicitWidth: label.implicitWidth
+	property alias autoTimeUpdate: timer.running
 
-    implicitHeight: label.implicitHeight + 4
+	visible: mpris2.sourceActive & mpris2.length > 0
 
-    signal timeChanged()
-
-    onTimeChanged: {
+    function positionUpdate(negative) {
         var min
-        var sec = currentTime/1000
-        if (negative && topTime) sec = Math.abs(topTime/1000 - sec)
+        var sec = currentTime/100
+        if (negative) sec = Math.abs(topTime/100 - sec)
         min = parseInt(sec/60)
         sec = parseInt(sec - min*60)
-		time.min = min
-		time.sec = sec
+
+		if(negative) min = -min
+		text = min + ':' + ( sec >= 0 && sec <= 9 ? '0'+sec : sec )
     }
+
+    function lengthUpdate() {
+		var min
+		var sec = topTime/100
+		min = parseInt(sec/60)
+		sec = parseInt(sec - min*60)
+		time.text = min + ':' + ( sec >= 0 && sec <= 9 ? '0'+sec : sec )
+	}
 
 	Timer{
 		id: timer
 
-		interval: 300
+		property bool _switch: labelSwitch
+
+		interval: 400
 		repeat: true
-		running: true
-		onTriggered: timeChanged()
-	}
+		running: parent.visible
+		onTriggered: {
+			if(showPosition & showRemaining)
+				positionUpdate(_switch)
+			else if(_switch & showPosition)
+				positionUpdate(false)
+			else if(_switch & showRemaining)
+				positionUpdate(true)
+			else
+				lengthUpdate()
 
-	Label{
-        id: label
-		text: (negative ? '-' + min : min) + ':' + ( sec >= 0 && sec <= 9 ? '0'+sec : sec )
-        font.weight: Font.DemiBold
-        //style: Text.Sunken
-		//styleColor: theme.textColor
-        smooth: true
-		verticalAlignment: Text.AlignVCenter
-
-		Behavior on color{ ColorAnimation { duration: 250 } }
+		}
 	}
 
     MouseArea{
         id: mouseArea
-        anchors.fill: parent
-        hoverEnabled: true
-		enabled: false
 
-        onEntered: label.color = theme.highlightColor
-        onExited: label.color = theme.textColor
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton
+		enabled: hoverEnabled
+
+		onEntered: color = theme.highlightColor
+        onExited: color = theme.textColor
         onReleased: {
             if (!exited || containsMouse ){
-                negative = !negative
-				plasmoid.writeConfig('timeNegative', negative)
-                timeChanged()
+				timer._switch = !timer._switch
+				plasmoid.configuration.TimeLabelSwitch = timer._switch
+                timer.triggered()
             }
         }
     }
-
 }

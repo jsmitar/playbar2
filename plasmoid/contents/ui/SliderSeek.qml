@@ -1,4 +1,3 @@
-// -*- coding: iso-8859-1 -*-
 /*
  *   Author: audoban <audoban@openmailbox.org>
  *
@@ -18,70 +17,47 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.1
-import org.kde.plasma.core 0.1 as PlasmaCore
-import "plasmapackage:/code/control.js" as Control
+import QtQuick 2.4
+import QtQuick.Layouts 1.0
+import org.kde.plasma.components 2.0 as PlasmaComponents
 
+RowLayout{
 
-Row{
-    id: sliderSeek
+	spacing: units.smallSpacing
 
-    spacing: 8
+	TimeLabel{
+		currentTime: sliderSeek.value
+		interactive: true
 
-	property bool labelVisible: true
+		Layout.fillHeight: false
+		Layout.minimumWidth: units.largeSpacing * 2
+	}
 
-	signal currentSeekPosition(int position)
+	PlasmaComponents.Slider{
+		id: sliderSeek
 
-	width: childrenRect.width
+		activeFocusOnPress: false
+		updateValueWhileDragging: true
+		maximumValue: mpris2.length
+		value: mpris2.position
+		stepSize: 100
+		visible: maximumValue != 0
+		onValueChanged: if(pressed) mpris2.seek(value)
 
-	height: childrenRect.height
-
-    TimeLabel{
-        id: lengthTime
-
-		hover: false
-        currentTime: mpris.length
-		autoTimeTrigger: mpris.isMaximumLoad
-
-		anchors{
-			verticalCenter: slider.verticalCenter
-			verticalCenterOffset: -1
-		}
-		visible: labelVisible
-    }
-
-	Slider{
-		id: slider
-
-		maximumValue: mpris.length
-		value: mpris.position
-		width: parent.width - ( labelVisible ? (lengthTime.width * 2 + spacing * 3) : 0 )
-		height: 10
-
-		onValueChanged: Control.seek(value, mpris.position)
-		onSliderDragged: positionTime.timeChanged()
-
+		Layout.fillWidth: true
+		Layout.fillHeight: false
 	}
 
 	TimeLabel{
-        id: positionTime
+		currentTime: sliderSeek.value
+		interactive: true
+		showRemaining: true
+		showPosition: false
+		labelSwitch: plasmoid.configuration.TimeLabelSwitch
+		horizontalAlignment: Text.AlignRight
 
-		hover: true
-        topTime: mpris.length
-        currentTime: slider.pressed ? slider.valueForPosition : mpris.position
-		autoTimeTrigger: mpris.isMaximumLoad
-
-		anchors{
-			verticalCenter: slider.verticalCenter
-			verticalCenterOffset: -1
-		}
-
-		onTimeChanged: {
-			if(Control.openedPopup)
-				parent.currentSeekPosition(currentTime)
-		}
-
-		visible: labelVisible
-		negative: plasmoid.readConfig('timeNegative')
-    }
+		Layout.fillHeight: false
+		Layout.minimumWidth: units.largeSpacing * 2
+		Layout.alignment: Qt.AlignRight
+	}
 }
