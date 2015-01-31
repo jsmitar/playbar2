@@ -17,7 +17,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.3
+import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
 Rectangle{
@@ -28,7 +28,6 @@ Rectangle{
 	visible: cover.visible
 	color: theme.complementaryBackgroundColor
 	radius: 2
-
 	border{
 		width: 2
 		color: color
@@ -51,11 +50,11 @@ Rectangle{
 		visible: status == Image.Ready ? true : false
 		anchors.centerIn: parent
 
-		width: parent.width - 4
-		height: parent.height - 4
+		width: parent.width - 2
+		height: parent.height - 2
 
-		sourceSize.width: units.iconSizes.enormous - 4
-		sourceSize.height: units.iconSizes.enormous - 4
+		sourceSize.width: units.iconSizes.enormous - 2
+		sourceSize.height: units.iconSizes.enormous - 2
 
 		horizontalAlignment: Image.AlignHCenter
 		verticalAlignment: Image.AlignVCenter
