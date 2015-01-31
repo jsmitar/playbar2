@@ -17,9 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.3
+import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
-// import "plasmapackage:/code/control.js" as Control
 
 Item{
     id: playbackitem
@@ -30,7 +29,7 @@ Item{
 
     property int buttonSize: units.iconSizes.small
 
-    enabled: mpris2.sourceActive
+    visible: mpris2.sourceActive && mpris2.canControl
 
     signal playPause()
 
@@ -49,11 +48,17 @@ Item{
 		else mpris2.startOperation('PlayPause')
 	}
 
-    onPrevious: mpris2.startOperation('Previous')
-
-    onNext: mpris2.startOperation('Next')
-
-    onStop: if(mpris2.playbackStatus != "Stopped") mpris2.startOperation('Stop')
-
+    onPrevious: {
+		if(mpris2.canGoPrevious)
+			mpris2.startOperation('Previous')
+	}
+    onNext: {
+		if(mpris2.canGoNext)
+			mpris2.startOperation('Next')
+	}
+    onStop: {
+		if(mpris2.playbackStatus != "Stopped")
+			mpris2.startOperation('Stop')
+	}
 
 }

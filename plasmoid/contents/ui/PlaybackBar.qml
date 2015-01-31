@@ -18,7 +18,7 @@
  */
 
 
-import QtQuick 2.3
+import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
@@ -80,7 +80,6 @@ PlaybackItem{
 			enabled: mpris2.sourceActive
 			size: buttonSize
 		}
-
 	}
 
 	Flow {

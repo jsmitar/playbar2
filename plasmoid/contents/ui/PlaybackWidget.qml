@@ -1,103 +1,115 @@
-// -*- coding: iso-8859-1 -*-
 /*
- *   Author: audoban <audoban@openmailbox.org>
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU Library General Public License as
- *   published by the Free Software Foundation; either version 2 or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details
- *
- *   You should have received a copy of the GNU Library General Public
- *   License along with this program; if not, write to the
- *   Free Software Foundation, Inc.,
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+*   Author: audoban <audoban@openmailbox.org>
+*
+*   This program is free software; you can redistribute it and/or modify
+*   it under the terms of the GNU Library General Public License as
+*   published by the Free Software Foundation; either version 2 or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details
+*
+*   You should have received a copy of the GNU Library General Public
+*   License along with this program; if not, write to the
+*   Free Software Foundation, Inc.,
+*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
 
-import QtQuick 2.3
+import QtQuick 2.4
+import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.components 2.0 as PlasmaComponents
 
 PlaybackItem{
-    id: playbackWidget
+	id: playbackWidget
 
-	property int buttonSize: 26
+	property bool flatButtons: plasmoid.configuration.FlatButtons
 
-	property alias spacing: content.spacing
+	buttonSize: units.iconSizes.medium
 
-	width: content.width + ( model.itemAt(2).visible ? 0 : 20 )
+	implicitWidth: buttons.width
 
-	height: childrenRect.height
+	implicitHeight: buttons.height
 
-	Component.onCompleted: {
-		model.itemAt(0).clicked.connect(previous)
-		model.itemAt(1).clicked.connect(playPause)
-		model.itemAt(2).clicked.connect(stop)
-		model.itemAt(3).clicked.connect(next)
-	}
+	onPlayingChanged: {
+		if(!model.itemAt(1)) return
 
-	Component.onDestruction: {
-		model.itemAt(0).clicked.disconnect(previous)
-		model.itemAt(1).clicked.disconnect(playPause)
-		model.itemAt(2).clicked.disconnect(stop)
-		model.itemAt(3).clicked.disconnect(next)
+		if(playing)
+			model.itemAt(1).iconSource = "media-playback-pause"
+		else
+			model.itemAt(1).iconSource = "media-playback-start"
 	}
 
 	ListModel{
 		id: playmodel
+
 		ListElement{
-			idIcon: "media-skip-backward"
+			icon: "media-skip-backward"
 		}
 		ListElement{
-			idIcon: "media-playback-start"
+			icon: "media-playback-start"
 		}
 		ListElement{
-			idIcon: "media-playback-stop"
+			icon: "media-playback-stop"
 		}
 		ListElement{
-			idIcon: "media-skip-forward"
+			icon: "media-skip-forward"
 		}
 	}
 
 	Component{
-		id: buttonDelegate
+		id: toolButtonDelegate
 
-		IconWidget{
-
-			svg: update()
-			iconSource: idIcon
-			size: buttonSize
-
-			anchors.verticalCenter: parent.verticalCenter
-
-			visible: index == 2 ? showStop : true
-
+		PlasmaComponents.ToolButton{
+			iconSource: icon
+			visible: !(index == 2) | showStop
+			width: buttonSize * 1.3
+			height: buttonSize * 1.3
 		}
 	}
 
-	Row{
-		id: content
-		spacing: 5
-		anchors.horizontalCenter: parent.horizontalCenter
+	Component{
+		id: iconWidgetDelegate
 
-		states:[
-			State{
-				name: "Playing"
-				when: playing
-				PropertyChanges{
-					target: model.itemAt(1)
-					elementId: "media-playback-pause"
-				}
-			}
-		]
+		IconWidget{
+			iconSource: icon
+			svg: PlasmaCore.Svg{ imagePath: "icons/media" }
+			visible: !(index == 2) | showStop
+			enabled: mpris2.sourceActive
+			size: buttonSize
+		}
+	}
+
+	Row {
+		id: buttons
+
+		spacing: flatButtons ? units.smallSpacing : 0
 
 		Repeater{
 			id: model
 			model: playmodel
-			delegate: buttonDelegate
+			delegate: flatButtons ? iconWidgetDelegate : toolButtonDelegate
+
+			onItemAdded: {
+				switch(index){
+					case 0 :
+						item.clicked.connect(previous)
+						break
+					case 1 :
+						item.clicked.connect(playPause)
+						//NOTE: update icon playing state
+						playingChanged()
+						break
+					case 2:
+						item.clicked.connect(stop)
+						break
+					case 3:
+						item.clicked.connect(next)
+						break
+				}
+			}
 		}
 	}
 }
