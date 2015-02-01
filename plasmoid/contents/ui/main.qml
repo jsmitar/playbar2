@@ -18,8 +18,8 @@
  */
 
 
-import QtQuick 2.3
-import QtQuick.Layouts 1.0
+import QtQuick 2.4
+import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.plasmoid 2.0
@@ -29,13 +29,15 @@ Item {
 
 	property bool vertical: plasmoid.formFactor == PlasmaCore.Types.Vertical
 
-	clip: true
-	
+// 	Layout.minimumWidth: full.width
+//
+// 	Layout.minimumHeight: full.height
+
 	Plasmoid.compactRepresentation: CompactApplet{ }
 
-	Plasmoid.fullRepresentation: FullApplet{ }
+	Plasmoid.fullRepresentation: FullApplet{ id: full}
 
-	function debug(str){ console.debug(str) }
+	function debug(str){ console.debug("PlayBar2: " + str) }
 
 	Mpris2{ id: mpris2 }
 

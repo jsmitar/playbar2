@@ -78,11 +78,11 @@ PlaybackItem{
 			svg: PlasmaCore.Svg{ imagePath: "icons/media" }
 			visible: !(index == 2) | showStop
 			enabled: mpris2.sourceActive
-			size: buttonSize
+			size: buttonSize * 1.1
 		}
 	}
 
-	Row {
+	RowLayout {
 		id: buttons
 
 		spacing: flatButtons ? units.smallSpacing : 0

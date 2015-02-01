@@ -27,7 +27,7 @@ RowLayout{
 
 	TimeLabel{
 		currentTime: sliderSeek.value
-		interactive: true
+		interactive: false
 
 		Layout.fillHeight: false
 		Layout.minimumWidth: units.largeSpacing * 2

@@ -34,6 +34,7 @@ GridLayout {
 	Layout.minimumHeight: implicitHeight
 	Layout.fillWidth: true
 	Layout.fillHeight: false
+	Layout.alignment: Qt.AlignLeft
 
 
 	PlasmaExtras.Heading{
@@ -154,5 +155,4 @@ GridLayout {
 		Layout.fillHeight: false
 		Layout.alignment: Qt.AlignRight | Qt.AlignBaseline
 	}
-
 }

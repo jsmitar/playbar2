@@ -29,7 +29,7 @@ Item{
 
     property int buttonSize: units.iconSizes.small
 
-    visible: mpris2.sourceActive && mpris2.canControl
+    enabled: mpris2.sourceActive && mpris2.canControl
 
     signal playPause()
 

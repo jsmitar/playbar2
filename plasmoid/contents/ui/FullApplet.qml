@@ -17,7 +17,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.3
+import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
 
@@ -25,45 +25,55 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 GridLayout{
 	id: page
 
-	Layout.minimumWidth: implicitWidth
-	Layout.minimumHeight: implicitHeight
-
-	//Layout.maximumWidth: implicitWidth
-	//Layout.maximumHeight: implicitHeight
-
-	Layout.preferredWidth: implicitWidth
-	Layout.preferredHeight: implicitHeight
-
-	Layout.fillWidth: true
-	Layout.fillHeight: true
+	Layout.minimumWidth: 500
+	Layout.minimumHeight: 500
 
 	rowSpacing: units.smallSpacing
 	columnSpacing: units.largeSpacing
+	Layout.fillHeight: false
 	columns: 2
 
-// 	onWidthChanged: debug("size: "+implicitWidth+"x"+implicitHeight)
+ onWidthChanged: debug("size: "+implicitWidth+"x"+implicitHeight)
 
 	TitleBar{
 		Layout.columnSpan: 2
 		Layout.fillHeight: false
-		Layout.maximumWidth: implicitWidth
-		Layout.maximumHeight: implicitHeight
-		Layout.preferredWidth : implicitWidth
-		Layout.preferredHeight: implicitHeight
+// 		Layout.maximumWidth: imlicitWidth
+// 		Layout.maximumHeight: implicitHeight
+// 		Layout.preferredWidth : implicitWidth
+// 		Layout.preferredHeight: implicitHeight
 	}
-
 	CoverArt{
 		id: coverArt
 
 		Layout.alignment: Qt.AlignTop
-
+		Layout.fillHeight: true
 	}
 	TrackInfo{
-		Layout.alignment: Qt.AlignTop
-		Layout.fillHeight: true
-		Layout.fillWidth: true
-		Layout.minimumWidth: units.iconSizes.huge
-		Layout.minimumHeight: units.iconSizes.huge
-	}
+		Layout.alignment: Qt.AlignTop | Qt.AlignLeft
 
+	}
+	SliderSeek{
+		Layout.alignment: Qt.AlignTop
+		Layout.fillWidth: true
+		Layout.fillHeight: false
+		Layout.columnSpan: 2
+	}
+	RowLayout{
+		Layout.columnSpan: 2
+		Layout.alignment: Qt.AlignBottom
+		Layout.minimumHeight: childrenRect.height
+		Layout.fillWidth: true
+		Layout.fillHeight: true
+		spacing: units.largeSpacing
+		PlaybackWidget{
+			id: playbackControl
+			Layout.fillHeight: false
+			Layout.fillWidth: true
+			Layout.alignment: Qt.AlignBottom
+		}
+		VolumeSlider{
+			Layout.fillHeight: false
+		}
+	}
 }

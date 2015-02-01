@@ -35,7 +35,7 @@ Item{
 		loops: Animation.Infinite
 
 		onStopped: {
-			if( scrollArea.containsMouse && isScrollable ) anim.start()
+			if( scrollArea.containsMouse && isScrollable ) anim.resume()
 			else scrolling = false
 		}
 

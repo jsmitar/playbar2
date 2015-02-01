@@ -17,7 +17,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.3
+import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
 import "plasmapackage:/code/utils.js" as Utils
 
@@ -28,25 +28,26 @@ PlasmaCore.DataSource{
 
 	interval: maximumLoad
 
-	property int maximumLoad: 500
+	readonly property int maximumLoad: 500
 
-	property int minimumLoad: 1500
+	readonly property int minimumLoad: 1500
 
-	property bool isMaximumLoad: interval == maximumLoad
+	readonly property bool isMaximumLoad: interval == maximumLoad
+
+	readonly property bool sourceActive: source.length > 0
 
 
 	property string previousSource
 
 	property alias source: mpris2.connectedSources
 
-	property bool sourceActive: source.length > 0
 
 	property var service: null
 
 
 	property string identity: hasSource('Identity') ? data[source]['Identity'] : i18n("No source")
 
-	property string playbackStatus: hasSource('PlaybackStatus') ? data[source]['PlaybackStatus'] : "unknown"
+	property string playbackStatus: hasSource('PlaybackStatus') ? data[source]['PlaybackStatus'] : "Paused"
 
 	property string artUrl: hasMetadataMpris('artUrl') ? data[source]['Metadata']['mpris:artUrl'] : ""
 
@@ -56,13 +57,26 @@ PlasmaCore.DataSource{
 
 	property string title: hasMetadata('title') ? data[source]['Metadata']['xesam:title'] : ""
 
-	property int length: hasMetadataMpris('length') ? data[source]['Metadata']['mpris:length'] / 1000: 0
-
+// 	hundredth of second
+	property int length: hasMetadataMpris('length') ? data[source]['Metadata']['mpris:length'] / 10000: 0
+// 	hundredth of second
 	property int position: 0
 
 	property real userRating: 0
 
 	property real volume: hasSource('Volume') ? data[source]['Volume'] : 0
+
+
+	property bool canControl: hasSource('CanControl') ? data[source]['CanControl'] : false
+
+	property bool canGoNext: hasSource('CanGoNext') ? data[source]['CanGoNext'] : false
+
+	property bool canGoPrevious: hasSource('CanGoPrevious') ? data[source]['CanGoPrevious'] : false
+
+	property bool canSeek: hasSource('CanSeek') ? data[source]['CanSeek'] : false
+
+	property bool canRaise: hasSource('CanRaise') ? data[source]['CanRaise'] : false
+
 
 	signal mediaSourceChanged(string source)
 
@@ -74,7 +88,7 @@ PlasmaCore.DataSource{
 
 	onNewData: {
 		if(isMaximumLoad) {
-			position = data['Position'] / 1000
+			position = data['Position'] / 10000
 
 			if(hasMetadata('userRating') && data['Metadata']['xesam:userRating'] != userRating ){
 				userRating = data['Metadata']['xesam:userRating'] != undefined ?
@@ -107,7 +121,6 @@ PlasmaCore.DataSource{
 	}
 
 	onSourceConnected: {
-		mediaSourceChanged(source)
 		setService(source)
 		debug("Source connected: "+source)
 		debug("valid engine: "+ valid)
@@ -119,6 +132,8 @@ PlasmaCore.DataSource{
 		previousSource = source
 		debug("disconnected: "+source)
 	}
+
+	onConnectedSourcesChanged: mediaSourceChanged(source[0])
 
 	function hasMetadata(key){
 		if (!isMaximumLoad) return false
@@ -163,28 +178,30 @@ PlasmaCore.DataSource{
 	}
 
 	function seek(position, currentPosition){
-		if(!service) return
-		if(source == 'clementine') {
-			job = service.operationDescription('Seek')
-			job['microseconds'] = ((-currentPosition + position) * 1000).toFixed(0)
-			service.startOperationCall(job)
-			return
-		}
+		if(service && canControl && canSeek) {
+// 			if(source == 'clementine') {
+// 				job = service.operationDescription('Seek')
+// 				job['microseconds'] = ((-currentPosition + position) * 10000).toFixed(0)
+// 				service.startOperationCall(job)
+// 				return
+// 			}
 
-		var job = service.operationDescription('SetPosition')
-		job['microseconds'] = (position * 1000).toFixed(0)
-		service.startOperationCall(job)
+			var job = service.operationDescription('SetPosition')
+			job['microseconds'] = (position * 10000).toFixed(0)
+			service.startOperationCall(job)
+		}
 	}
 
 	function startOperation(name){
-		if(service){
+		if(service && canControl){
 			var job = service.operationDescription(name)
 			service.startOperationCall(job)
 		}
 	}
 
 	function setVolume(value){
-		if(service){
+		if(service && canControl){
+			debug(value.toString())
 			var job = service.operationDescription('SetVolume')
 			job['level'] = value
 			service.startOperationCall(job)
