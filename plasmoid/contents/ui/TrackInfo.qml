@@ -30,6 +30,7 @@ GridLayout {
 	rowSpacing: units.smallSpacing / 3 //NOTE: Correction of the spacing
 	columnSpacing: units.largeSpacing
 	clip: true
+	focus: false
 	Layout.minimumWidth: units.iconSizes.enormous * 1.5
 	Layout.minimumHeight: implicitHeight
 	Layout.fillWidth: true

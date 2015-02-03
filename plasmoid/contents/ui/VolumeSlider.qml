@@ -17,44 +17,54 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+
 import QtQuick 2.4
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 RowLayout{
+	id: volumeSlider
 
 	spacing: units.smallSpacing
 
-	property int maxLabelWidth: Math.max(labelRight.Layout.minimumWidth, labelLeft.Layout.minimumWidth)
+	Layout.fillWidth: true
 
-	TimeLabel{
-		id: labelLeft
-		currentTime: slider.value
-		interactive: false
-		horizontalAlignment: Text.AlignHCenter
+	property alias labelVisible: label.visible
+	property alias iconVisible: icon.visible
 
-		Layout.fillHeight: false
-		Layout.minimumWidth: units.largeSpacing * 2.5
+	enabled: mpris2.sourceActive
+
+	//TODO: Add a vertical Layout
+	// 	property alias orientation: slider.orientation
+	// 	property bool labelAbove: true
+
+	property int maxLabelWidth: Math.max(icon.width, label.Layout.minimumWidth)
+	Item{
+		width: maxLabelWidth
+		height: implicitHeight
+		VolumeIcon{
+			id: icon
+			anchors.centerIn: parent
+		}
 	}
 
 	PlasmaComponents.Slider{
 		id: slider
 
-		activeFocusOnPress: false
-		updateValueWhileDragging: true
-		maximumValue: mpris2.length
-		value: 0
-		stepSize: 100
-		enabled: maximumValue != 0
-		onValueChanged: if(pressed) mpris2.seek(value)
+		value: mpris2.volume
+		maximumValue: enabled ? 1.0 : 0
+		stepSize: 0.01
+		tickmarksEnabled: false
 
 		Layout.fillWidth: true
-		Layout.fillHeight: true
+		Layout.minimumWidth: 80
+
+		onValueChanged: if(pressed) mpris2.setVolume(value)
 		Connections{
 			target: mpris2
-			onPositionChanged: {
-				if(!slider.pressed) slider.value = mpris2.position
-				wheelArea.previousValue = mpris2.position
+			onVolumeChanged: {
+				if(!slider.pressed) slider.value = mpris2.volume
+					wheelArea.previousValue = mpris2.volume
 			}
 		}
 		MouseArea{
@@ -62,31 +72,27 @@ RowLayout{
 			acceptedButtons: Qt.XButton1 | Qt.XButton2
 			anchors.fill: parent
 
-			property int previousValue: mpris2.position
+			property real previousValue: mpris2.volume
 
 			onWheel: {
 				accepted: true
 				if(wheel.angleDelta.y > 100)
-					previousValue = mpris2.seek(previousValue + 500)
+					previousValue = mpris2.setVolume(previousValue + 0.05)
 				else if(wheel.angleDelta.y < -100)
-					previousValue = mpris2.seek(previousValue - 500)
+					previousValue = mpris2.setVolume(previousValue - 0.05)
 				else return
 				slider.value = previousValue
 			}
 		}
 	}
 
-	TimeLabel{
-		id: labelRight
-		currentTime: slider.value
-		interactive: true
-		showRemaining: true
-		showPosition: false
-		labelSwitch: plasmoid.configuration.TimeLabelSwitch
+	VolumeLabel{
+		id: label
+
+		value: slider.pressed ? slider.value : mpris2.volume
 		horizontalAlignment: Text.AlignHCenter
 
-		Layout.fillHeight: false
 		Layout.minimumWidth: units.largeSpacing * 2.5
-		Layout.alignment: Qt.AlignHCenter
+		Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
 	}
 }

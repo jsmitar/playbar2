@@ -26,7 +26,7 @@ PlasmaCore.DataSource{
 
 	engine: 'mpris2'
 
-	interval: maximumLoad
+	interval: minimumLoad
 
 	readonly property int maximumLoad: 500
 
@@ -45,7 +45,7 @@ PlasmaCore.DataSource{
 	property var service: null
 
 
-	property string identity: hasSource('Identity') ? data[source]['Identity'] : i18n("No source")
+	property string identity: hasSource('Identity') ? data[source]['Identity'] : i18n("no_source")
 
 	property string playbackStatus: hasSource('PlaybackStatus') ? data[source]['PlaybackStatus'] : "Paused"
 
@@ -78,31 +78,17 @@ PlasmaCore.DataSource{
 	property bool canRaise: hasSource('CanRaise') ? data[source]['CanRaise'] : false
 
 
-	signal mediaSourceChanged(string source)
-
-	signal ratingChanged()
-
-	onMediaSourceChanged: Utils.setActions(source, identity)
-	//NOTICE: call to nextSource() for the initial connection
 	Component.onCompleted: nextSource()
 
-	onNewData: {
-		if(isMaximumLoad) {
-			position = data['Position'] / 10000
+	onIdentityChanged: Utils.setActions(source[0], identity)
 
-			if(hasMetadata('userRating') && data['Metadata']['xesam:userRating'] != userRating ){
-				userRating = data['Metadata']['xesam:userRating'] != undefined ?
-							data['Metadata']['xesam:userRating'] : 0
-				ratingChanged()
-			}else if(playbackStatus == 'Stopped' && userRating != 0){
-				userRating = 0
-				ratingChanged()
-			}
-		}
+	onNewData: {
+		if(isMaximumLoad)
+			position = data['Position'] / 10000
 	}
 
 	onSourcesChanged: {
-		if(connectedSources.length == 0) nextSource()
+		if(connectedSources.length === 0) nextSource()
 	}
 
 	onSourceAdded: {
@@ -127,23 +113,20 @@ PlasmaCore.DataSource{
 	}
 
 	onSourceDisconnected: {
-		mediaSourceChanged("no_source")
 		setService(null)
 		previousSource = source
 		debug("disconnected: "+source)
 	}
 
-	onConnectedSourcesChanged: mediaSourceChanged(source[0])
+	onConnectedSourcesChanged: { setService(source[0]) }
 
 	function hasMetadata(key){
-		if (!isMaximumLoad) return false
 		return data[source[0]] != undefined
 			&& data[source[0]]['Metadata'] != undefined
 			&& data[source[0]]['Metadata']['xesam:'+key] != undefined
 	}
 
 	function hasMetadataMpris(key){
-		if (!isMaximumLoad) return false
 		return data[source[0]] != undefined
 		&& data[source[0]]['Metadata'] != undefined
 		&& data[source[0]]['Metadata']['mpris:'+key] != undefined
@@ -157,13 +140,16 @@ PlasmaCore.DataSource{
 	function nextSource(){
 		debug("nextSource()")
 		for(var i = 0; i < sources.length; i++){
-			if(connectedSources[0] == sources[i] || connectedSources == "")
+			if(connectedSources[0] == sources[i] || connectedSources == [""] || connectedSources == "")
 			{
 				if(++i < sources.length && sources[i] != '@multiplex'){
+					disconnectSource(source[0])
 					connectSource(sources[i])
 				}else if(++i < sources.length){
+					disconnectSource(source[0])
 					connectSource(sources[i])
 				}else if(sources[0] != '@multiplex') {
+					disconnectSource(source[0])
 					connectSource(sources[0])
 				}
 				return
@@ -179,17 +165,17 @@ PlasmaCore.DataSource{
 
 	function seek(position, currentPosition){
 		if(service && canControl && canSeek) {
+			var job = service.operationDescription('SetPosition')
+			job['microseconds'] = (position * 10000).toFixed(0)
+			service.startOperationCall(job)
+		}
+		return position
 // 			if(source == 'clementine') {
 // 				job = service.operationDescription('Seek')
 // 				job['microseconds'] = ((-currentPosition + position) * 10000).toFixed(0)
 // 				service.startOperationCall(job)
 // 				return
 // 			}
-
-			var job = service.operationDescription('SetPosition')
-			job['microseconds'] = (position * 10000).toFixed(0)
-			service.startOperationCall(job)
-		}
 	}
 
 	function startOperation(name){
@@ -200,13 +186,14 @@ PlasmaCore.DataSource{
 	}
 
 	function setVolume(value){
-		if(service && canControl){
+		if(service && canControl && service.isOperationEnabled('SetVolume')){
 			debug(value.toString())
 			var job = service.operationDescription('SetVolume')
 			job['level'] = value
 			service.startOperationCall(job)
+			value = value < 0 ? 0 : value
+			value = value > 1.2 ? 1 : value
 		}
+		return value
 	}
-
-	//onIntervalChanged: debug("interval: "+interval)
 }

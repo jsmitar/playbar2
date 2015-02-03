@@ -24,9 +24,11 @@ Item{
 
 	property var target
 
-	property bool scrolling
+	property bool scrolling: false
 
-	property bool isScrollable: target.contentWidth > target.width | target.truncated
+	property bool isScrollable: false
+
+	focus: false
 
 	SequentialAnimation{
 		id: anim
@@ -35,22 +37,31 @@ Item{
 		loops: Animation.Infinite
 
 		onStopped: {
-			if( scrollArea.containsMouse && isScrollable ) anim.resume()
+			if( scrollArea.containsMouse && !running ) anim.restart()
 			else scrolling = false
 		}
 
 		SmoothedAnimation{
+			id: animA
 			target: scroll.target
 			property: 'x'
 			from: 0
-			to: - ( target.contentWidth - target.width + units.largeSpacing )
+			to: - ( target.contentWidth - target.width + units.smallSpacing )
 			velocity: 60
 		}
 		SmoothedAnimation{
+			id: animB
 			target: scroll.target
 			property: 'x'
 			to: 0
 			velocity: 80
+		}
+		Component.onCompleted: {
+			isScrollable = target.contentWidth > target.width || target.truncated
+			target.textChanged.connect( function(){
+				isScrollable = target.contentWidth > target.width || target.truncated
+				scrolling = false
+			})
 		}
 	}
 
@@ -62,17 +73,15 @@ Item{
 		hoverEnabled: true
 
 		function initAutoScroll(){
-			if(isScrollable && containsMouse){
+			isScrollable = target.contentWidth > target.width || target.truncated
+			if(isScrollable && !anim.running){
 				scrolling = true
 				anim.start()
-			}else{
-				scrolling = false
-				if(anim.running) anim.stop()
+			}else if(scrolling && !anim.running){
+				anim.start()
 			}
 		}
 		onEntered: initAutoScroll()
 		onExited: if(anim.running) anim.stop()
-
-		Component.onCompleted: target.textChanged.connect(entered)
 	}
 }

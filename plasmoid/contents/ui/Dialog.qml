@@ -18,49 +18,49 @@
  */
 
 import QtQuick 2.4
+import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasmoid 2.0
+// import org.kde.plasma.components 2.0 as PlasmaComponents
 
-PlasmaCore.SvgItem {
-	id: iconWidget
+PlasmaCore.Dialog{
+	id: popupDialog
 
-	property alias iconSource: iconWidget.elementId
+	title: mpris2.identity
 
-	property int size: units.iconSizes.medium
+	minimumWidth: if(loader.active) 343
 
-	implicitWidth: size
+	minimumHeight: if(loader.active) loader.item.implicitHeight
 
-	implicitHeight: size
+	maximumWidth: 343
 
-	smooth: true
+	flags: Qt.WindowStaysOnTopHint
 
-	signal clicked()
+	type: PlasmaCore.Dialog.DialogWindow
 
-	opacity: enabled ? 1 : 0.5
+	location: plasmoid.location
 
-	Behavior on opacity {
-		NumberAnimation { duration: units.shortDuration }
+	backgroundHints: PlasmaCore.Dialog.StandardBackground
+
+	hideOnWindowDeactivate: true
+
+	onVisibleChanged: {
+		debug("Dialog visible: "+visible )
+		if(visible)
+			mpris2.interval = mpris2.maximumLoad
+		else
+			mpris2.interval = mpris2.minimumLoad
 	}
 
-	SequentialAnimation on scale{
-		id: animA
-		running: false
-		alwaysRunToEnd: true
-		NumberAnimation { to: 0.95; duration: units.shortDuration }
-	}
-	SequentialAnimation on scale{
-		id: animB
-		running: !mouseArea.pressed && scale == 0.95
-		alwaysRunToEnd: true
-		NumberAnimation { to: 1; duration: units.shortDuration }
-	}
+	MediaLayouts{ id: layouts }
 
-	MouseArea{
-		id: mouseArea
+	mainItem: if(loader.active) loader.item
 
-		acceptedButtons: Qt.LeftButton
-		anchors.fill: parent
-		onPressed: animA.start()
-
-		Component.onCompleted: clicked.connect(iconWidget.clicked)
+	Loader{
+		id: loader
+		sourceComponent: layouts.resources[0]
+		onLoaded: {
+			debug("Layout loaded")
+		}
 	}
 }

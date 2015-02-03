@@ -16,35 +16,17 @@
  *   Free Software Foundation, Inc.,
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-function setActions(sourceActive, identity){
-	var icon
 
-	if(identity === "no_source") removeActions()
-	icon = sourceActive
+import QtQuick 2.4
+import QtQuick.Layouts 1.1
+import org.kde.plasma.extras 2.0 as PlasmaExtras
 
-	if(sourceActive.match('vlc'))
-		icon = 'vlc'
+PlasmaExtras.Title{
+	id: titleBar
+	Layout.minimumHeight: height + units.smallSpacing
 
-	switch(sourceActive){
-		case 'spotify':
-			icon = 'spotify-client'
-			break
-		case 'clementine':
-			icon = 'application-x-clementine'
-	}
-
-	plasmoid.setAction('raise', i18n("Open %1", identity), icon)
-	plasmoid.setAction('quit', i18n("Quit"), 'window-close')
-	plasmoid.setActionSeparator('sep0')
-	plasmoid.setAction('nextSource', i18n("Next source"), 'go-next')
-	plasmoid.setActionSeparator('sep1')
-}
-
-function removeActions(){
-	plasmoid.removeAction('raise')
-	plasmoid.removeAction('quit')
-	plasmoid.removeAction('sep0')
-	plasmoid.removeAction('nextSource')
-	plasmoid.removeAction('sep1')
+	lineHeight: 1.2
+	text: mpris2.identity
+	enabled: mpris2.sourceActive
 }
 

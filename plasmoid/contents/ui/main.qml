@@ -29,17 +29,20 @@ Item {
 
 	property bool vertical: plasmoid.formFactor == PlasmaCore.Types.Vertical
 
-// 	Layout.minimumWidth: full.width
-//
-// 	Layout.minimumHeight: full.height
+	Plasmoid.compactRepresentation: CompactApplet{}
+	Plasmoid.fullRepresentation: FullApplet{}
 
-	Plasmoid.compactRepresentation: CompactApplet{ }
+	Plasmoid.preferredRepresentation: plasmoid.expanded ? Plasmoid.fullRepresentation : Plasmoid.compactRepresentation
 
-	Plasmoid.fullRepresentation: FullApplet{ id: full}
+	Plasmoid.icon: Qt.resolvedUrl(mpris2.artUrl)
+	Plasmoid.toolTipMainText: mpris2.title
+	Plasmoid.toolTipSubText: i18n("<b>By</b> %1 <b>on</b> %2", mpris2.artist, mpris2.album)
 
 	function debug(str){ console.debug("PlayBar2: " + str) }
 
 	Mpris2{ id: mpris2 }
+
+//
 
 	//###########################
 	// 	Context menu actions
@@ -55,9 +58,6 @@ Item {
 	function action_nextSource(){
 		mpris2.nextSource()
 	}
-
-	//TODO: open file
-	//###########################
 
 	Component.onCompleted:{
 		debug("FormFactor: " + Plasmoid.formFactor)

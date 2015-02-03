@@ -21,6 +21,7 @@
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.plasmoid 2.0
 
 PlaybackItem{
 	id: playbackbar
@@ -118,6 +119,29 @@ PlaybackItem{
 						item.clicked.connect(next)
 						break
 				}
+			}
+		}
+	}
+	MouseArea{
+		id: volumeWheelArea
+		acceptedButtons: Qt.XButton1 | Qt.XButton2
+		z: 99
+		anchors.fill: parent
+
+		//HACK: Update volume when has occurred a change, and make more fluid the volume changes
+		property real volumePrevious: mpris2.volume
+		Connections{
+			target: mpris2
+			onVolumeChanged: volumeWheelArea.volumePrevious = mpris2.volume
+		}
+
+		onWheel: {
+			wheel.accepted = true
+			if(wheel.modifiers == Qt.NoModifier){
+				if(wheel.angleDelta.y > 40)
+					volumePrevious = mpris2.setVolume(volumePrevious + 0.05)
+				else if(wheel.angleDelta.y < -40)
+					volumePrevious = mpris2.setVolume(volumePrevious - 0.05)
 			}
 		}
 	}

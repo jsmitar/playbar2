@@ -21,10 +21,10 @@ import QtQuick 2.4
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
-PlasmaExtras.Heading{
+PlasmaExtras.Paragraph{
     id: time
 
-    level: 5
+    //level: 5
 
     // units in hundredth of second
     property int topTime: mpris2.length
@@ -41,7 +41,7 @@ PlasmaExtras.Heading{
 
 	property alias autoTimeUpdate: timer.running
 
-	visible: mpris2.sourceActive & mpris2.length > 0
+	enabled: mpris2.sourceActive & mpris2.length > 0
 
     function positionUpdate(negative) {
         var min
