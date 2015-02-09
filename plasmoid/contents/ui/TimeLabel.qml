@@ -24,8 +24,6 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 PlasmaExtras.Paragraph{
     id: time
 
-    //level: 5
-
     // units in hundredth of second
     property int topTime: mpris2.length
     // units in hundredth of second
@@ -90,7 +88,7 @@ PlasmaExtras.Paragraph{
         acceptedButtons: Qt.LeftButton
 		enabled: hoverEnabled
 
-		onEntered: color = theme.highlightColor
+		onEntered: color = theme.viewHoverColor
         onExited: color = theme.textColor
         onReleased: {
             if (!exited || containsMouse ){

@@ -21,16 +21,15 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.plasmoid 2.0
-// import org.kde.plasma.components 2.0 as PlasmaComponents
 
 PlasmaCore.Dialog{
 	id: popupDialog
 
 	title: mpris2.identity
 
-	minimumWidth: if(loader.active) 343
+	minimumWidth: 343
 
-	minimumHeight: if(loader.active) loader.item.implicitHeight
+	minimumHeight: page.implicitHeight
 
 	maximumWidth: 343
 
@@ -52,15 +51,13 @@ PlasmaCore.Dialog{
 			mpris2.interval = mpris2.minimumLoad
 	}
 
-	MediaLayouts{ id: layouts }
+	mainItem: DefaultLayout{id: page}
 
-	mainItem: if(loader.active) loader.item
-
-	Loader{
-		id: loader
-		sourceComponent: layouts.resources[0]
-		onLoaded: {
-			debug("Layout loaded")
-		}
-	}
+// 	Loader{
+// 		id: loader
+// 		sourceComponent: DefaultLayout
+// 		onLoaded: {
+// 			debug("Layout loaded")
+// 		}
+// 	}
 }

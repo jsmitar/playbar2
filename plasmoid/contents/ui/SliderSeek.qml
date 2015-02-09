@@ -41,7 +41,6 @@ RowLayout{
 		id: slider
 
 		activeFocusOnPress: false
-		updateValueWhileDragging: true
 		maximumValue: mpris2.length
 		value: 0
 		stepSize: 100

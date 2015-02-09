@@ -19,5 +19,8 @@
 		<entry name="TimeLabelSwitch" type="Bool">
 			<default>true</default>
 		</entry>
+		<entry name="BackgroundHint" type="Int">
+			<default>1</default>
+		</entry>
     </group>
 </kcfg>

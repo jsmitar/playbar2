@@ -28,21 +28,24 @@ Flow{
 
 	spacing: units.smallSpacing / 2
 	flow: vertical ? Flow.TopToBottom : Flow.LeftToRight
-	Layout.minimumWidth: !vertical ? playbackBar.width + playbackBar.buttonSize + playbackControl.spacing : units.iconSizes.small
-	Layout.minimumHeight : vertical ? playbackBar.height + playbackBar.buttonSize + playbackControl.spacing : units.iconSizes.small
+
+	Layout.minimumWidth: !vertical ? playbackBar.width + playbackBar.buttonSize + spacing : units.iconSizes.small
+	Layout.minimumHeight : vertical ? playbackBar.height + playbackBar.buttonSize + spacing : units.iconSizes.small
 	anchors.fill: parent
+
+	property int _buttonSize: vertical ? (parent && parent.width ? parent.width : 0 ): (parent && parent.height ? parent.height : 0 )
 
 	PlaybackBar{
 		id: playbackBar
-		buttonSize: vertical ? parent.width : parent.height
+		buttonSize: parent._buttonSize
 	}
 	Item{
-		width: playbackBar.buttonSize
-		height: playbackBar.buttonSize
+		width: _buttonSize
+		height: _buttonSize
 		PopupButton{
 			id: popup
-			enabled: mpris2.sourceActive
-			size: playbackBar.buttonSize * (plasmoid.configuration.FlatButtons ? 0.7 : 0.5)
+
+			size: mpris2.sourceActive ? _buttonSize * (plasmoid.configuration.FlatButtons ? 0.7 : 0.5) : _buttonSize
 			anchors.centerIn: parent
 			opened: popupDialog.visible
 
@@ -55,5 +58,5 @@ Flow{
 			visualParent: playbackControl
 		}
 	}
-	
+
 }

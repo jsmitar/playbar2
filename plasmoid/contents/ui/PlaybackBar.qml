@@ -21,16 +21,17 @@
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.plasmoid 2.0
 
 PlaybackItem{
 	id: playbackbar
 
 	property bool flatButtons: plasmoid.configuration.FlatButtons
 
-	width: childrenRect.width
+	visible: mpris2.sourceActive
 
-	height: childrenRect.height
+	width: visible ? childrenRect.width : 0
+
+	height: visible ? childrenRect.height : 0
 
 	onPlayingChanged: {
 		if(!model.itemAt(1)) return
@@ -75,8 +76,8 @@ PlaybackItem{
 		id: iconWidgetDelegate
 
 		IconWidget{
-			iconSource: icon
 			svg: PlasmaCore.Svg{ imagePath: "icons/media" }
+			iconSource: icon
 			visible: !(index == 2) | showStop
 			enabled: mpris2.sourceActive
 			size: buttonSize
@@ -104,10 +105,10 @@ PlaybackItem{
 
 			onItemAdded: {
 				switch(index){
-					case 0 :
+					case 0:
 						item.clicked.connect(previous)
 						break
-					case 1 :
+					case 1:
 						item.clicked.connect(playPause)
 						//NOTE: update icon playing state
 						playingChanged()
@@ -122,11 +123,12 @@ PlaybackItem{
 			}
 		}
 	}
+
 	MouseArea{
 		id: volumeWheelArea
 		acceptedButtons: Qt.XButton1 | Qt.XButton2
 		z: 99
-		anchors.fill: parent
+		anchors.fill: buttons
 
 		//HACK: Update volume when has occurred a change, and make more fluid the volume changes
 		property real volumePrevious: mpris2.volume

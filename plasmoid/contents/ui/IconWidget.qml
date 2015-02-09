@@ -47,6 +47,7 @@ PlasmaCore.SvgItem {
 		alwaysRunToEnd: true
 		NumberAnimation { to: 0.95; duration: units.shortDuration }
 	}
+
 	SequentialAnimation on scale{
 		id: animB
 		running: !mouseArea.pressed && scale == 0.95
@@ -59,7 +60,7 @@ PlasmaCore.SvgItem {
 
 		acceptedButtons: Qt.LeftButton
 		anchors.fill: parent
-		onPressed: animA.start()
+		//onPressed: animA.start()
 
 		Component.onCompleted: clicked.connect(iconWidget.clicked)
 	}

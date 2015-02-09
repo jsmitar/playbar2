@@ -26,13 +26,17 @@ IconWidget{
 
 	property bool opened: false
 
-	svg: PlasmaCore.Svg{ imagePath: "widgets/arrows" }
+	svg: svgSource.arrows
 
-	iconSource: "down-arrow"
+	QtObject{
+		id: svgSource
+		property var arrows: PlasmaCore.Svg{ imagePath: "widgets/arrows" }
+		property var media: PlasmaCore.Svg{ imagePath: "icons/media" }
+	}
 
 	state: "default"
 
-	rotation: opened ? 180: 0
+	rotation: opened & mpris2.sourceActive ? 180: 0
 
 	Behavior on rotation{
 		RotationAnimator{
@@ -42,35 +46,35 @@ IconWidget{
 	}
 
 	states: [
-		State{
-			name: "default"
-			when: plasmoid.location == PlasmaCore.Types.TopEdge
+	State{
+		name: "default"
+		//when: plasmoid.location == PlasmaCore.Types.TopEdge
 
-			PropertyChanges{
-				target: iconPopup
-				iconSource: "down-arrow"
-			}
-		},
-		State{
-			when: plasmoid.location == PlasmaCore.Types.BottomEdge
-			PropertyChanges{
-				target: iconPopup
-				iconSource: "up-arrow"
-			}
-		},
-		State{
-			when: plasmoid.location == PlasmaCore.Types.LeftEdge
-			PropertyChanges{
-				target: iconPopup
-				iconSource: "right-arrow"
-			}
-		},
-		State{
-			when: plasmoid.location == PlasmaCore.Types.RightEdge
-			PropertyChanges{
-				target: iconPopup
-				iconSource: "left-arrow"
-			}
+		PropertyChanges{
+			target: iconPopup
+			iconSource: "down-arrow"
 		}
+	},
+	State{
+		when: plasmoid.location == PlasmaCore.Types.BottomEdge
+		PropertyChanges{
+			target: iconPopup
+			iconSource: "up-arrow"
+		}
+	},
+	State{
+		when: plasmoid.location == PlasmaCore.Types.LeftEdge
+		PropertyChanges{
+			target: iconPopup
+			iconSource: "right-arrow"
+		}
+	},
+	State{
+		when: plasmoid.location == PlasmaCore.Types.RightEdge
+		PropertyChanges{
+			target: iconPopup
+			iconSource: "left-arrow"
+		}
+	}
 	]
 }

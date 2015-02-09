@@ -24,7 +24,7 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 PlasmaExtras.Title{
 	id: titleBar
 	Layout.minimumHeight: height + units.smallSpacing
-
+	
 	lineHeight: 1.2
 	text: mpris2.identity
 	enabled: mpris2.sourceActive

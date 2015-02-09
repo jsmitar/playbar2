@@ -20,7 +20,7 @@
 import QtQuick 2.4
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
-
+import org.kde.plasma.core 2.0 as PlasmaCore
 
 Item {
 	id: general
@@ -33,6 +33,8 @@ Item {
 	property alias cfg_ShowStop: cfg2.checked
 	property int cfg_ButtonSize: 22
 	property bool cfg_TimeLabelSwitch: false
+	property bool cfg_IconPupup: false
+	property int cfg_BackgroundHint
 
 	Column {
 		id: pageColumn
@@ -46,6 +48,14 @@ Item {
 		CheckBox{
 			id: cfg2
 			text: i18n("Show stop")
+		}
+		CheckBox{
+			id: cfg3
+			text: i18n("Translucent Background")
+			onCheckedChanged: {
+				if(checked) cfg_BackgroundHint = PlasmaCore.Types.TranslucentBackground
+				else cfg_BackgroundHint = PlasmaCore.Types.DefaultBackground
+			}
 		}
 // 		RowLayout {
 // 			spacing: units.largeSpacing

@@ -45,7 +45,7 @@ PlasmaCore.DataSource{
 	property var service: null
 
 
-	property string identity: hasSource('Identity') ? data[source]['Identity'] : i18n("no_source")
+	property string identity: hasSource('Identity') ? data[source]['Identity'] : i18n("No media player")
 
 	property string playbackStatus: hasSource('PlaybackStatus') ? data[source]['PlaybackStatus'] : "Paused"
 
@@ -80,7 +80,13 @@ PlasmaCore.DataSource{
 
 	Component.onCompleted: nextSource()
 
-	onIdentityChanged: Utils.setActions(source[0], identity)
+	onIdentityChanged:{
+		if(source.length > 0) Utils.setActions(source[0], identity)
+	}
+
+	onSourceActiveChanged: {
+		if(!sourceActive) Utils.removeActions()
+	}
 
 	onNewData: {
 		if(isMaximumLoad)
@@ -160,7 +166,7 @@ PlasmaCore.DataSource{
 	function setService(source){
 		if(!source) service = null
 		service = mpris2.serviceForSource(source)
-		debug("service active" + service != null)
+		debug("service active: " + (service != null))
 	}
 
 	function seek(position, currentPosition){

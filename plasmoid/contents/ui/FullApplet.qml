@@ -19,61 +19,8 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
-import org.kde.plasma.core 2.0 as PlasmaCore
+// import org.kde.plasma.core 2.0 as PlasmaCore
+// import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 
-GridLayout{
-	id: page
-
-	Layout.minimumWidth: 500
-	Layout.minimumHeight: 500
-
-	rowSpacing: units.smallSpacing
-	columnSpacing: units.largeSpacing
-	Layout.fillHeight: false
-	columns: 2
-
- onWidthChanged: debug("size: "+implicitWidth+"x"+implicitHeight)
-
-	TitleBar{
-		Layout.columnSpan: 2
-		Layout.fillHeight: false
-// 		Layout.maximumWidth: imlicitWidth
-// 		Layout.maximumHeight: implicitHeight
-// 		Layout.preferredWidth : implicitWidth
-// 		Layout.preferredHeight: implicitHeight
-	}
-	CoverArt{
-		id: coverArt
-
-		Layout.alignment: Qt.AlignTop
-		Layout.fillHeight: true
-	}
-	TrackInfo{
-		Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-
-	}
-	SliderSeek{
-		Layout.alignment: Qt.AlignTop
-		Layout.fillWidth: true
-		Layout.fillHeight: false
-		Layout.columnSpan: 2
-	}
-	RowLayout{
-		Layout.columnSpan: 2
-		Layout.alignment: Qt.AlignBottom
-		Layout.minimumHeight: childrenRect.height
-		Layout.fillWidth: true
-		Layout.fillHeight: true
-		spacing: units.largeSpacing
-		PlaybackWidget{
-			id: playbackControl
-			Layout.fillHeight: false
-			Layout.fillWidth: true
-			Layout.alignment: Qt.AlignBottom
-		}
-		VolumeSlider{
-			Layout.fillHeight: false
-		}
-	}
-}
+DefaultLayout{}

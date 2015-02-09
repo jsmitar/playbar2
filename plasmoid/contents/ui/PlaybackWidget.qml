@@ -27,7 +27,7 @@ PlaybackItem{
 
 	property bool flatButtons: plasmoid.configuration.FlatButtons
 
-	buttonSize: units.iconSizes.smallMedium
+	buttonSize: units.iconSizes.medium
 
 	implicitWidth: buttons.width
 
@@ -65,8 +65,8 @@ PlaybackItem{
 		PlasmaComponents.ToolButton{
 			iconSource: icon
 			visible: !(index == 2) | showStop
-			width: buttonSize * 2
-			height: buttonSize * 2
+			width: buttonSize
+			height: buttonSize
 		}
 	}
 
@@ -74,11 +74,11 @@ PlaybackItem{
 		id: iconWidgetDelegate
 
 		IconWidget{
-			iconSource: icon
 			svg: PlasmaCore.Svg{ imagePath: "icons/media" }
+			iconSource: icon
 			visible: !(index == 2) | showStop
 			enabled: mpris2.sourceActive
-			size: buttonSize * 1.2
+			size: buttonSize
 		}
 	}
 
@@ -86,6 +86,8 @@ PlaybackItem{
 		id: buttons
 
 		spacing: flatButtons ? units.smallSpacing : 0
+		Layout.alignment: parent.Layout.alignment
+		//anchors.centerIn: parent
 
 		Repeater{
 			id: model

@@ -19,7 +19,7 @@
 function setActions(sourceActive, identity){
 	var icon
 
-	if(identity === "no_source") removeActions()
+	if(sourceActive == "") return
 	icon = sourceActive
 
 	if(sourceActive.match('vlc'))

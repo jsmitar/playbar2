@@ -29,20 +29,31 @@ Item {
 
 	property bool vertical: plasmoid.formFactor == PlasmaCore.Types.Vertical
 
-	Plasmoid.compactRepresentation: CompactApplet{}
-	Plasmoid.fullRepresentation: FullApplet{}
+	Plasmoid.compactRepresentation: CompactApplet{ id: compact}
+	Plasmoid.fullRepresentation: FullApplet{id: full}
 
-	Plasmoid.preferredRepresentation: plasmoid.expanded ? Plasmoid.fullRepresentation : Plasmoid.compactRepresentation
+	Plasmoid.preferredRepresentation: plasmoid.formFactor == 0 ? Plasmoid.fullRepresentation : Plasmoid.compactRepresentation
 
-	Plasmoid.icon: Qt.resolvedUrl(mpris2.artUrl)
-	Plasmoid.toolTipMainText: mpris2.title
-	Plasmoid.toolTipSubText: i18n("<b>By</b> %1 <b>on</b> %2", mpris2.artist, mpris2.album)
+	Plasmoid.icon: internal.icon
+	Plasmoid.toolTipMainText: internal.title
+	Plasmoid.toolTipSubText: internal.subText
+	Plasmoid.backgroundHints: plasmoid.configuration.BackgroundHint
+
+
+	Connections{
+		target: plasmoid
+		onFormFactorChanged: {
+		debug("FormFactor: " + plasmoid.formFactor)
+			if(plasmoid.formFactor == 0){
+				Plasmoid.preferredRepresentation = Plasmoid.fullRepresentation
+				mpris2.interval = mpris2.maximumLoad
+			}
+		}
+	}
 
 	function debug(str){ console.debug("PlayBar2: " + str) }
 
 	Mpris2{ id: mpris2 }
-
-//
 
 	//###########################
 	// 	Context menu actions
@@ -60,9 +71,24 @@ Item {
 	}
 
 	Component.onCompleted:{
-		debug("FormFactor: " + Plasmoid.formFactor)
 		debug("Location: " + Plasmoid.location)
+		plasmoid.formFactorChanged()
     }
+
+	QtObject{
+		id: internal
+
+		property string icon:
+			mpris2.artUrl != "" ? Qt.resolvedUrl(mpris2.artUrl) : "media-playback-start"
+		property string title:
+		    mpris2.title != "" ? mpris2.title : "PlayBar"
+		property string artist:
+		    mpris2.artist != "" ? i18nc("ToolTip: track artist %1", "<b>By</b> %1, ", mpris2.artist) : ""
+		property string album:
+		    mpris2.album != ""? i18nc("ToolTip: track album %1", "<b>On</b> %1", mpris2.album) : ""
+		property string subText:
+		    (artist == "" & album == "") ? i18n("Client MPRIS2, allows you to control your favorite media player") : artist + album
+	}
 }
 
 

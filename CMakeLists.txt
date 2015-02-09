@@ -1,11 +1,11 @@
 project(PlayBar)
 
-find_package(KDE4 REQUIRED)
+find_package(KF5 REQUIRED)
 
-include(KDE4Defaults)
+include(KDEInstallDirs)
 
-add_subdirectory( plasmoid )
 add_subdirectory( engine )
+add_subdirectory( kcm_shortcuts )
 
 execute_process(COMMAND ./messages.sh -compile-po
 	OUTPUT_VARIABLE out_messages
@@ -13,6 +13,4 @@ execute_process(COMMAND ./messages.sh -compile-po
 
 message(${out_messages})
 
-#This is not yet implemented
-#add_subdirectory( kcm_shortcuts )
-
+plasma_install_packages(plasmoid audoban.applet.playbar)

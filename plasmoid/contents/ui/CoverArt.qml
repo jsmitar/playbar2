@@ -28,14 +28,15 @@ Rectangle{
 	color: theme.complementaryBackgroundColor
 	radius: 2
 	opacity: mpris2.sourceActive && cover.status & Image.Ready ? 1 : 0.1
+
 	border{
-		width: 2
+		width: 1
 		color: color
 	}
 
 	Behavior on opacity{
 		NumberAnimation{
-			duration: shortDuration
+			duration: units.shortDuration
 		}
 	}
 
@@ -54,7 +55,6 @@ Rectangle{
 		source: mpris2.artUrl
 		fillMode: Image.PreserveAspectFit
 		anchors.centerIn: parent
-		mipmap: true
 
 		width: parent.width - 2
 		height: parent.height - 2
@@ -65,9 +65,10 @@ Rectangle{
 		horizontalAlignment: Image.AlignHCenter
 		verticalAlignment: Image.AlignVCenter
 
-		onStatusChanged: {
+		onStatusChanged:{
+			debug("artUrl: " + mpris2.artUrl)
 			if(status == Image.Error)
-				debug("Err on CoverArt: " +mpris2.artUrl)
+				debug("Err on CoverArt: " + mpris2.artUrl)
 		}
 	}
 }

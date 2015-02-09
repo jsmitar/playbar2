@@ -24,8 +24,6 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 PlasmaExtras.Paragraph{
 	id: label
 
-	//level: 5
-
 	property real value: 0
 
 	wrapMode: Text.NoWrap
@@ -37,5 +35,4 @@ PlasmaExtras.Paragraph{
 	}
 
 	text: parseInt(value * 100) + '%'
-	font.weight: Font.DemiBold
 }
