@@ -21,21 +21,22 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
+import "plasmapackage:/code/utils.js" as Utils
 
 GridLayout {
 	id: trackInfo
 
 	rows: 3
 	columns: 2
-	rowSpacing: units.smallSpacing / 3 //NOTE: Correction of the spacing
+	rowSpacing: units.smallSpacing
 	columnSpacing: units.largeSpacing
 	clip: true
 	focus: false
 	Layout.minimumWidth: units.iconSizes.enormous * 1.5
 	Layout.minimumHeight: implicitHeight
 	Layout.fillWidth: true
-	Layout.fillHeight: false
-	Layout.alignment: Qt.AlignLeft
+	Layout.fillHeight: true
+	Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 
 
 	PlasmaExtras.Heading{
@@ -43,7 +44,7 @@ GridLayout {
 
 		text: mpris2.title
 		level: 2
-		color: Qt.lighter(theme.textColor, 1.2)
+		color: theme.textColor
 
 		wrapMode: scrollTitle.scrolling ? Text.NoWrap : Text.WrapAnywhere
 		elide: scrollTitle.scrolling ? Text.ElideNone : Text.ElideRight
@@ -77,7 +78,7 @@ GridLayout {
 
 		text: mpris2.artist
 		level: 3
-		color: Qt.lighter(theme.textColor, 1.5)
+		color: Utils.adjustAlpha(theme.textColor, 0.9)
 		visible: mpris2.artist.length > 0
 
 		wrapMode: scrollArtist.scrolling ? Text.NoWrap : Text.WrapAnywhere
@@ -111,7 +112,7 @@ GridLayout {
 
 		text: mpris2.album
 		level: 3
-		color: Qt.lighter(theme.textColor, 1.5)
+		color: Utils.adjustAlpha(theme.textColor, 0.9)
 		visible: mpris2.album.length > 0
 
 		wrapMode: scrollAlbum.scrolling ? Text.NoWrap : Text.WrapAnywhere
@@ -134,7 +135,7 @@ GridLayout {
 
 		text: i18n("By")
 		level: 5
-		color: Qt.lighter(theme.textColor, 1.4)
+		color: Utils.adjustAlpha(theme.textColor, 0.8)
 		visible: mpris2.artist.length > 0
 
 		Layout.row: 1
@@ -148,7 +149,7 @@ GridLayout {
 
 		text: i18n("On")
 		level: 5
-		color: Qt.lighter(theme.textColor, 1.4)
+		color: Utils.adjustAlpha(theme.textColor, 0.8)
 		visible: mpris2.album.length > 0
 
 		Layout.row: 2

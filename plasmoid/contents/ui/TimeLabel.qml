@@ -20,6 +20,7 @@
 import QtQuick 2.4
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
+import "plasmapackage:/code/utils.js" as Utils
 
 PlasmaExtras.Paragraph{
     id: time
@@ -39,6 +40,8 @@ PlasmaExtras.Paragraph{
 
 	property alias autoTimeUpdate: timer.running
 
+	color: Utils.adjustAlpha(theme.textColor, 0.8)
+
 	enabled: mpris2.sourceActive & mpris2.length > 0
 
     function positionUpdate(negative) {
@@ -48,8 +51,9 @@ PlasmaExtras.Paragraph{
         min = parseInt(sec/60)
         sec = parseInt(sec - min*60)
 
-		if(negative) min = -min
-		text = min + ':' + ( sec >= 0 && sec <= 9 ? '0'+sec : sec )
+		if(negative) text = '-' + min + ':'
+		else text = min + ':'
+		text += sec >= 0 && sec <= 9 ? '0' + sec : sec
     }
 
     function lengthUpdate() {
@@ -89,7 +93,7 @@ PlasmaExtras.Paragraph{
 		enabled: hoverEnabled
 
 		onEntered: color = theme.viewHoverColor
-        onExited: color = theme.textColor
+        onExited: color = Utils.adjustAlpha(theme.textColor, 0.8)
         onReleased: {
             if (!exited || containsMouse ){
 				timer._switch = !timer._switch

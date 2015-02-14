@@ -25,6 +25,9 @@ RowLayout{
 
 	spacing: units.smallSpacing
 
+	Layout.fillWidth: true
+	Layout.fillHeight: true
+	
 	property int maxLabelWidth: Math.max(labelRight.Layout.minimumWidth, labelLeft.Layout.minimumWidth)
 
 	TimeLabel{
@@ -33,7 +36,6 @@ RowLayout{
 		interactive: false
 		horizontalAlignment: Text.AlignHCenter
 
-		Layout.fillHeight: false
 		Layout.minimumWidth: units.largeSpacing * 2.5
 	}
 
@@ -84,7 +86,6 @@ RowLayout{
 		labelSwitch: plasmoid.configuration.TimeLabelSwitch
 		horizontalAlignment: Text.AlignHCenter
 
-		Layout.fillHeight: false
 		Layout.minimumWidth: units.largeSpacing * 2.5
 		Layout.alignment: Qt.AlignHCenter
 	}

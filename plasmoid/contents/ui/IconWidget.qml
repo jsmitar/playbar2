@@ -19,6 +19,7 @@
 
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.extras 2.0
 
 PlasmaCore.SvgItem {
 	id: iconWidget
@@ -37,22 +38,20 @@ PlasmaCore.SvgItem {
 
 	opacity: enabled ? 1 : 0.5
 
-	Behavior on opacity {
-		NumberAnimation { duration: units.shortDuration }
-	}
-
-	SequentialAnimation on scale{
+	PressedAnimation{
 		id: animA
+		targetItem: iconWidget
 		running: false
+		duration: units.shortDuration
 		alwaysRunToEnd: true
-		NumberAnimation { to: 0.95; duration: units.shortDuration }
 	}
 
-	SequentialAnimation on scale{
+	ReleasedAnimation{
 		id: animB
-		running: !mouseArea.pressed && scale == 0.95
+		targetItem: iconWidget
 		alwaysRunToEnd: true
-		NumberAnimation { to: 1; duration: units.shortDuration }
+		running: enabled && mouseArea.released && !animA.running
+		duration: units.longDuration
 	}
 
 	MouseArea{
@@ -60,7 +59,8 @@ PlasmaCore.SvgItem {
 
 		acceptedButtons: Qt.LeftButton
 		anchors.fill: parent
-		//onPressed: animA.start()
+		onPressed: animA.start()
+		onReleased: animB.start()
 
 		Component.onCompleted: clicked.connect(iconWidget.clicked)
 	}

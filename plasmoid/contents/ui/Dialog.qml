@@ -27,11 +27,11 @@ PlasmaCore.Dialog{
 
 	title: mpris2.identity
 
-	minimumWidth: 343
+	minimumWidth: 350
 
 	minimumHeight: page.implicitHeight
 
-	maximumWidth: 343
+	maximumWidth: 360
 
 	flags: Qt.WindowStaysOnTopHint
 

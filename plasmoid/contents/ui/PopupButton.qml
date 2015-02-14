@@ -28,6 +28,8 @@ IconWidget{
 
 	svg: svgSource.arrows
 
+	iconSource: "down-arrow"
+
 	QtObject{
 		id: svgSource
 		property var arrows: PlasmaCore.Svg{ imagePath: "widgets/arrows" }
@@ -47,9 +49,16 @@ IconWidget{
 
 	states: [
 	State{
+		when: !mpris2.sourceActive
+		PropertyChanges{
+			target: iconPopup
+			svg: svgSource.media
+			iconSource: "media-playback-start"
+		}
+	},
+	State{
 		name: "default"
-		//when: plasmoid.location == PlasmaCore.Types.TopEdge
-
+		when: plasmoid.location == PlasmaCore.Types.TopEdge
 		PropertyChanges{
 			target: iconPopup
 			iconSource: "down-arrow"

@@ -27,62 +27,54 @@ ColumnLayout{
 	id: page
 
 	spacing: units.smallSpacing
-	width: 330
+	width: 350
+	height: implicitHeight
 
-	Layout.fillHeight: false
+	Layout.fillHeight: true
 	Layout.fillWidth: true
+	Layout.minimumWidth: 350
 	Layout.minimumHeight: implicitHeight
-	Layout.minimumWidth: 330
 
 	TitleBar{
 		Layout.columnSpan: 2
-		Layout.minimumHeight: implicitHeight
+		Layout.maximumHeight: implicitHeight
 	}
-	RowLayout{
-		spacing: units.largeSpacing
+	GridLayout{
+		id: osd
+		rowSpacing: units.largeSpacing
+		columnSpacing: units.largeSpacing
 		Layout.fillHeight: true
+		Layout.maximumHeight: implicitHeight
+
+		columns: 2
+		rows: 2
+
 		CoverArt{
 			id: cover
-			Layout.preferredWidth: height
-			Layout.preferredHeight: units.iconSizes.huge * 1.5
+			Layout.rowSpan: 2
+			Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 			focus: true
 		}
-		ColumnLayout{
-			Layout.fillWidth: true
-			Layout.alignment: Qt.AlignTop
-
-			TrackInfo{
-				Layout.alignment: Qt.AlignTop
-				Layout.fillWidth: true
-				Behavior on width{
-					NumberAnimation{
-						duration: units.shortDuration
-					}
+		TrackInfo{
+			Layout.fillHeight: true
+			Behavior on width{
+				NumberAnimation{
+					duration: units.shortDuration
 				}
 			}
-			PlaybackWidget{
-				Layout.fillWidth: true
-				Layout.fillHeight: false
-				Layout.alignment: Qt.AlignBottom | Qt.AlignLeft
-			}
+		}
+		PlaybackWidget{
+			id: playback
+			Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+			Layout.fillHeight: true
+			Layout.fillWidth: true
 		}
 	}
-// 	RowLayout{
-// 		Layout.fillWidth: true
-// 		Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 
-
-		VolumeSlider{
-			Layout.fillWidth: true
-			Layout.fillHeight: true
-			Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
-			Layout.minimumHeight: implicitHeight + units.smallSpacing
-		}
-// 	}
-
+	SliderVolume{
+		Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+	}
 	SliderSeek{
 		Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
-		Layout.fillWidth: true
-		Layout.minimumHeight: implicitHeight + units.smallSpacing
 	}
 }

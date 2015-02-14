@@ -22,12 +22,14 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
+
 RowLayout{
-	id: volumeSlider
+	id: sliderVolume
 
 	spacing: units.smallSpacing
 
 	Layout.fillWidth: true
+	Layout.fillHeight: true
 
 	property alias labelVisible: label.visible
 	property alias iconVisible: icon.visible
@@ -42,6 +44,8 @@ RowLayout{
 	Item{
 		width: maxLabelWidth
 		height: implicitHeight
+		Layout.minimumWidth: units.largeSpacing * 2.5
+		Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
 		VolumeIcon{
 			id: icon
 			anchors.centerIn: parent
@@ -54,9 +58,8 @@ RowLayout{
 		value: mpris2.volume
 		maximumValue: enabled ? 1.0 : 0
 		stepSize: 0.01
-		tickmarksEnabled: false
-
 		Layout.fillWidth: true
+		Layout.fillHeight: true
 		Layout.minimumWidth: 80
 
 		onValueChanged: if(pressed) mpris2.setVolume(value)

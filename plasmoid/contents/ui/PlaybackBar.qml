@@ -27,8 +27,6 @@ PlaybackItem{
 
 	property bool flatButtons: plasmoid.configuration.FlatButtons
 
-	visible: mpris2.sourceActive
-
 	width: visible ? childrenRect.width : 0
 
 	height: visible ? childrenRect.height : 0

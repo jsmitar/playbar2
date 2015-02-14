@@ -33,6 +33,10 @@ PlaybackItem{
 
 	implicitHeight: buttons.height
 
+	Layout.fillWidth: true
+	Layout.fillHeight: true
+	Layout.alignment: Qt.AlignBottom | Qt.AlignLeft
+
 	onPlayingChanged: {
 		if(!model.itemAt(1)) return
 
@@ -65,8 +69,8 @@ PlaybackItem{
 		PlasmaComponents.ToolButton{
 			iconSource: icon
 			visible: !(index == 2) | showStop
-			width: buttonSize
-			height: buttonSize
+			Layout.minimumWidth: buttonSize * 1.4
+			Layout.minimumHeight: buttonSize * 1.4
 		}
 	}
 
@@ -77,7 +81,6 @@ PlaybackItem{
 			svg: PlasmaCore.Svg{ imagePath: "icons/media" }
 			iconSource: icon
 			visible: !(index == 2) | showStop
-			enabled: mpris2.sourceActive
 			size: buttonSize
 		}
 	}
@@ -85,9 +88,8 @@ PlaybackItem{
 	RowLayout {
 		id: buttons
 
-		spacing: flatButtons ? units.smallSpacing : 0
-		Layout.alignment: parent.Layout.alignment
-		//anchors.centerIn: parent
+		spacing: flatButtons ? units.largeSpacing : units.smallSpacing
+		anchors.bottom: parent.bottom
 
 		Repeater{
 			id: model

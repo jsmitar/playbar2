@@ -26,9 +26,7 @@ PlasmaCore.DataSource{
 
 	engine: 'mpris2'
 
-	interval: minimumLoad
-
-	readonly property int maximumLoad: 500
+	readonly property int maximumLoad: 450
 
 	readonly property int minimumLoad: 1500
 
