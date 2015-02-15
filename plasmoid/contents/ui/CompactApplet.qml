@@ -35,6 +35,8 @@ Flow{
 
 	property int _buttonSize: vertical ? (parent && parent.width ? parent.width : 0 ): (parent && parent.height ? parent.height : 0 )
 
+	property alias playbackBarVisible: playbackBar.visible
+
 	PlaybackBar{
 		id: playbackBar
 		buttonSize: parent._buttonSize
@@ -45,17 +47,27 @@ Flow{
 		PopupButton{
 			id: popup
 
-			size: mpris2.sourceActive ? _buttonSize * (plasmoid.configuration.FlatButtons ? 0.7 : 0.5) : _buttonSize
+			size: playbackBar.visible ?
+				_buttonSize * (plasmoid.configuration.FlatButtons ? 0.7 : 0.5) : _buttonSize
 			anchors.centerIn: parent
-			opened: popupDialog.visible
+			opened: plasmoid.expanded
 
 			onClicked: {
-				popupDialog.setVisible(!popupDialog.visible)
+				plasmoid.expanded = !plasmoid.expanded
 			}
 		}
-		Dialog{
-			id: popupDialog
-			visualParent: playbackControl
+	}
+
+
+	Timer{
+		//HACK: For PopupApplet in  Notification
+		running: playbackBar.visible
+		interval: 100
+		onTriggered: {
+			if((!vertical && playbackBar.width > playbackControl.width) ||
+				(vertical && playbackBar.height > playbackControl.height)){
+				playbackBar.visible = false
+			}
 		}
 	}
 

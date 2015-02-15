@@ -26,6 +26,8 @@ PlasmaCore.DataSource{
 
 	engine: 'mpris2'
 
+	interval: plasmoid.expanded ? maximumLoad : minimumLoad
+
 	readonly property int maximumLoad: 450
 
 	readonly property int minimumLoad: 1500
@@ -45,7 +47,7 @@ PlasmaCore.DataSource{
 
 	property string identity: hasSource('Identity') ? data[source]['Identity'] : i18n("No media player")
 
-	property string playbackStatus: hasSource('PlaybackStatus') ? data[source]['PlaybackStatus'] : "Paused"
+	property string playbackStatus: hasSource('PlaybackStatus') ? data[source]['PlaybackStatus'] : ""
 
 	property string artUrl: hasMetadataMpris('artUrl') ? data[source]['Metadata']['mpris:artUrl'] : ""
 
@@ -77,6 +79,8 @@ PlasmaCore.DataSource{
 
 
 	Component.onCompleted: nextSource()
+
+	onIntervalChanged: debug("interval: "+interval)
 
 	onIdentityChanged:{
 		if(source.length > 0) Utils.setActions(source[0], identity)

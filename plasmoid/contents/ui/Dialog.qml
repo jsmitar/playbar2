@@ -19,7 +19,7 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
-import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.core 2.0 as PlasmaCores
 import org.kde.plasma.plasmoid 2.0
 
 PlasmaCore.Dialog{
@@ -44,6 +44,7 @@ PlasmaCore.Dialog{
 	hideOnWindowDeactivate: true
 
 	onVisibleChanged: {
+		plasmoid.expanded = true
 		debug("Dialog visible: "+visible )
 		if(visible)
 			mpris2.interval = mpris2.maximumLoad

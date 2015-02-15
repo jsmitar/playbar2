@@ -23,6 +23,7 @@ import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.plasmoid 2.0
+import "plasmapackage:/code/utils.js" as Utils
 
 Item {
     id: root
@@ -45,8 +46,10 @@ Item {
 		onFormFactorChanged: {
 		debug("FormFactor: " + plasmoid.formFactor)
 			if(plasmoid.formFactor == 0){
+				Plasmoid.expanded = true
 				Plasmoid.preferredRepresentation = Plasmoid.fullRepresentation
-				mpris2.interval = mpris2.maximumLoad
+			}else{
+				plasmoid.expanded = false
 			}
 		}
 	}
@@ -73,6 +76,9 @@ Item {
 	Component.onCompleted:{
 		debug("Location: " + Plasmoid.location)
 		plasmoid.formFactorChanged()
+		//NOTE: Init Utils
+		Utils.plasmoid = plasmoid
+		Utils.i18n = i18n
     }
 
 	QtObject{

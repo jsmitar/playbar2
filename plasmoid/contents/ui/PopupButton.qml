@@ -34,6 +34,16 @@ IconWidget{
 		id: svgSource
 		property var arrows: PlasmaCore.Svg{ imagePath: "widgets/arrows" }
 		property var media: PlasmaCore.Svg{ imagePath: "icons/media" }
+		function playbackIcon(){
+			var icon
+			if(mpris2.playbackStatus == "Playing")
+				icon = "media-playback-start"
+			else if(mpris2.playbackStatus == "Paused")
+				icon = "media-playback-pause"
+			else
+				icon = "media-playback-start"
+			return icon
+		}
 	}
 
 	state: "default"
@@ -49,11 +59,12 @@ IconWidget{
 
 	states: [
 	State{
-		when: !mpris2.sourceActive
+		when: !mpris2.sourceActive || !playbackBarVisible
 		PropertyChanges{
 			target: iconPopup
 			svg: svgSource.media
-			iconSource: "media-playback-start"
+			iconSource: svgSource.playbackIcon()
+			rotation: 0
 		}
 	},
 	State{

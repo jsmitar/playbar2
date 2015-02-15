@@ -19,13 +19,56 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
+import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
+import "plasmapackage:/code/utils.js" as Utils
 
-PlasmaExtras.Title{
-	id: titleBar
-	Layout.minimumHeight: height + units.smallSpacing
-	lineHeight: 1.2
-	text: mpris2.identity
-	enabled: mpris2.sourceActive
+RowLayout{
+	Layout.minimumHeight: implicitHeight + units.smallSpacing
+
+	PlasmaExtras.Title{
+		id: titleBar
+		Layout.fillWidth: true
+		lineHeight: 1.2
+		text: mpris2.identity
+		enabled: mpris2.sourceActive
+	}
+
+	PlasmaComponents.ToolButton{
+		id: menuButton
+		property var contextMenu
+
+		Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+		enabled: mpris2.sourceActive
+		iconSource: "configure"
+		onClicked: {
+			if(!contextMenu)
+				contextMenu = contextMenuComponent.createObject(menuButton)
+			contextMenu.open()
+		}
+	}
+
+	Component{
+		id: contextMenuComponent
+		PlasmaComponents.ContextMenu{
+			visualParent: menuButton
+			PlasmaComponents.MenuItem{
+				icon: Utils.iconApplication
+				text: "Open " + mpris2.identity
+				onClicked: action_raise()
+			}
+			PlasmaComponents.MenuItem{
+				icon: "window-close"
+				text: "Quit"
+				onClicked: action_quit()
+			}
+			PlasmaComponents.MenuItem{
+				icon: "go-next"
+				text: "Next multimedia source"
+				onClicked: action_nextSource()
+			}
+		}
+	}
 }
 

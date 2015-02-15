@@ -28,6 +28,7 @@ Rectangle{
 	height: units.iconSizes.enormous
 	color: Utils.adjustAlpha(theme.complementaryBackgroundColor, 0.4)
 	radius: 2
+	opacity: 0.1
 
 	border{
 		width: 1
@@ -76,15 +77,16 @@ Rectangle{
 		horizontalAlignment: Image.AlignHCenter
 		verticalAlignment: Image.AlignVCenter
 
-		Component.onCompleted: statusChanged(status)
-
 		onStatusChanged:{
-			if(status == Image.Ready)
+			if(status == Image.Ready && mpris2.artUrl != "")
 				appear.start()
 			else if(status == Image.Null)
 				fade.start()
-			else if(status == Image.Error)
+			else if(status == Image.Error){
+				fade.start()
 				debug("Err on CoverArt: " + mpris2.artUrl)
+			}else
+				fade.start()
 		}
 	}
 }

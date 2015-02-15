@@ -16,6 +16,12 @@
  *   Free Software Foundation, Inc.,
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+.pragma library
+
+var iconApplication
+var plasmoid
+var i18n
+
 function setActions(sourceActive, identity){
 	var icon
 
@@ -32,18 +38,19 @@ function setActions(sourceActive, identity){
 		case 'clementine':
 			icon = 'application-x-clementine'
 	}
+	iconApplication = icon
+	print(iconApplication)
 
 	plasmoid.setAction('raise', i18n("Open %1", identity), icon)
 	plasmoid.setAction('quit', i18n("Quit"), 'window-close')
-	plasmoid.setActionSeparator('sep0')
-	plasmoid.setAction('nextSource', i18n("Next source"), 'go-next')
+	plasmoid.setAction('nextSource', i18n("Next multimedia source"), 'go-next')
 	plasmoid.setActionSeparator('sep1')
+
 }
 
 function removeActions(){
 	plasmoid.removeAction('raise')
 	plasmoid.removeAction('quit')
-	plasmoid.removeAction('sep0')
 	plasmoid.removeAction('nextSource')
 	plasmoid.removeAction('sep1')
 }
