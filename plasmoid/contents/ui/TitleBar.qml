@@ -27,9 +27,10 @@ import "plasmapackage:/code/utils.js" as Utils
 RowLayout{
 	Layout.minimumHeight: implicitHeight + units.smallSpacing
 
-	PlasmaExtras.Title{
+	PlasmaExtras.Heading{
 		id: titleBar
 		Layout.fillWidth: true
+		level: 2
 		lineHeight: 1.2
 		text: mpris2.identity
 		enabled: mpris2.sourceActive
