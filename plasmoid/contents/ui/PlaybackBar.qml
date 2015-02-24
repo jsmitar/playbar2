@@ -121,28 +121,4 @@ PlaybackItem{
 			}
 		}
 	}
-
-	MouseArea{
-		id: volumeWheelArea
-		acceptedButtons: Qt.XButton1 | Qt.XButton2
-		z: 99
-		anchors.fill: buttons
-
-		//HACK: Update volume when has occurred a change, and make more fluid the volume changes
-		property real volumePrevious: mpris2.volume
-		Connections{
-			target: mpris2
-			onVolumeChanged: volumeWheelArea.volumePrevious = mpris2.volume
-		}
-
-		onWheel: {
-			wheel.accepted = true
-			if(wheel.modifiers == Qt.NoModifier){
-				if(wheel.angleDelta.y > 40)
-					volumePrevious = mpris2.setVolume(volumePrevious + 0.05)
-				else if(wheel.angleDelta.y < -40)
-					volumePrevious = mpris2.setVolume(volumePrevious - 0.05)
-			}
-		}
-	}
 }
