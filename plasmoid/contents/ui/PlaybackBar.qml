@@ -55,7 +55,6 @@ PlaybackItem{
 		ListElement{
 			icon: "media-skip-forward"
 		}
-
 	}
 
 	Component{

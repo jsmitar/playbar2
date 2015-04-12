@@ -41,10 +41,12 @@ function setActions(sourceActive, identity){
 	iconApplication = icon
 	print(iconApplication)
 
+	plasmoid.removeAction('configure')
 	plasmoid.setAction('raise', i18n("Open %1", identity), icon)
 	plasmoid.setAction('quit', i18n("Quit"), 'window-close')
 	plasmoid.setAction('nextSource', i18n("Next multimedia source"), 'go-next')
 	plasmoid.setActionSeparator('sep1')
+	plasmoid.setAction('configure', i18n("Configure PlayBar"), 'configure', "alt+d, s" )
 
 }
 
@@ -56,7 +58,7 @@ function removeActions(){
 }
 
 //  Color manipulation utilities
-//  Take it from Breeze porject
+//  Take it from Breeze project
 function blendColors(clr0, clr1, p) {
 	return Qt.tint(clr0, adjustAlpha(clr1, p));
 }

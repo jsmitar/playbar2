@@ -73,12 +73,32 @@ Item {
 		mpris2.nextSource()
 	}
 
+	function action_configure(){
+		playbarEngine.startOperation('ShowSettings')
+	}
+
+	PlasmaCore.DataSource{
+		id: playbarEngine
+		engine: 'audoban.dataengine.playbar'
+		connectedSources: 'Provider'
+
+		property var service: null
+		function startOperation(name){
+			if(!service) service = playbarEngine.serviceForSource('Provider')
+			var job = service.operationDescription(name)
+			debug("playbarEngine: " + name)
+			return service.startOperationCall(job)
+		}
+	}
+
 	Component.onCompleted:{
 		debug("Location: " + Plasmoid.location)
 		plasmoid.formFactorChanged()
 		//NOTE: Init Utils
 		Utils.plasmoid = plasmoid
 		Utils.i18n = i18n
+		plasmoid.removeAction('configure')
+		plasmoid.setAction('configure', i18n("Configure PlayBar"), 'configure', "alt+d, s")
     }
 
 	QtObject{

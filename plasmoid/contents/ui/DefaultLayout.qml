@@ -26,8 +26,9 @@ import QtQuick.Layouts 1.1
 ColumnLayout{
 	id: page
 
+	readonly property double num_aureo: 1.618033988749895
 	spacing: units.smallSpacing
-	width: 350
+	width: implicitHeight * num_aureo
 	height: implicitHeight
 
 	Layout.fillHeight: true
