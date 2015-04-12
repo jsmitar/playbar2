@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+	  http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+	<!--Add the optional <include> tags which may contain
+		C++ header files that are needed to compile the code
+		required to compute the default values.-->
+	<!--<include>kglobalsettings.h</include> -->
+	 <kcfgfile name="playbarrc"/>
+	 <group name="General">
+		  <entry name="ShowStop" type="Bool">
+			   <label>Show stop button</label>
+			   <default>true</default>
+		  </entry>
+		  <entry name="ControlsOnBar" type="Bool">
+			   <label>Controls on bar</label>
+			   <default>true</default>
+		  </entry>
+		  <entry name="ButtonsAppearance" type="Enum">
+			   <label>Buttons appearance</label>
+			   <default>0</default>
+		  </entry>
+		  <entry name="Background" type="Enum">
+			   <label>Background</label>
+			   <default>0</default>
+		  </entry>
+	 </group>
+</kcfg>
