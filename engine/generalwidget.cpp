@@ -24,7 +24,7 @@ GeneralWidget::GeneralWidget( QWidget * parent )
 {
 	m_ui.setupUi( this );
 
-	connect( m_ui.flat, SIGNAL( toggled( bool ) ), this, SLOT( setButtonsAppearance(bool) ) );
+	connect( m_ui.flat, SIGNAL( toggled( bool ) ), this, SLOT( setButtonsAppearance( bool ) ) );
 
 	connect( m_ui.normal, SIGNAL( toggled( bool ) ), this, SLOT( setBackgroundHint() ) );
 	connect( m_ui.translucent, SIGNAL( toggled( bool ) ), this, SLOT( setBackgroundHint() ) );

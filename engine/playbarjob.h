@@ -30,11 +30,11 @@ class PlayBarJob : public ServiceJob
 {
 public:
 
-	PlayBarJob(const QString &destination,
-			 const QString &operation,
-			 const QVariantMap &parameters,
-			 PlayBar * playbar,
-			 QObject *parent=nullptr);
+	PlayBarJob( const QString &destination,
+				const QString &operation,
+				const QVariantMap &parameters,
+				PlayBar * playbar,
+				QObject * parent=nullptr );
 
 	virtual ~PlayBarJob();
 

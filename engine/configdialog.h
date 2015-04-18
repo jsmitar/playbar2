@@ -29,16 +29,11 @@
 
 #include "generalwidget.h"
 
-class KConfigDialog;
-class KShortcutsEditor;
-class KConfigSkeleton;
-class KActionCollection;
-
 class ConfigDialog : public KConfigDialog
 {
 	Q_OBJECT
 public:
-	ConfigDialog(KActionCollection * collection, QWidget *parent = nullptr );
+	ConfigDialog( KActionCollection * collection, QWidget * parent = nullptr );
 
 	virtual ~ConfigDialog();
 

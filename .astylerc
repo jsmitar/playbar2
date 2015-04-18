@@ -2,8 +2,8 @@
 --pad-paren-in
 --unpad-paren
 --errors-to-stdout
---indent=tab=5
---indent=force-tab=5
+--indent=tab=4
+--indent=force-tab=4
 -A8
 --align-pointer=middle
 --align-reference=name

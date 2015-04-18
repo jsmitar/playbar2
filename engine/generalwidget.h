@@ -33,24 +33,28 @@ public:
 	virtual ~GeneralWidget();
 
 public:
-	inline bool showStop(){
+	inline bool showStop()
+	{
 		return m_ui.kcfg_ShowStop->isChecked();
 	}
 
-	inline bool controlsOnBar(){
+	inline bool controlsOnBar()
+	{
 		return m_ui.kcfg_ControlsOnBar->isChecked();
 	}
 
-	inline int buttonsAppearance(){
+	inline int buttonsAppearance()
+	{
 		return m_buttonsAppearance;
 	}
-	inline int backgroundHint(){
+	inline int backgroundHint()
+	{
 		return m_backgroundHint;
 	}
 
 private Q_SLOTS:
-	 void setButtonsAppearance(bool checked);
-	 void setBackgroundHint();
+	void setButtonsAppearance( bool checked );
+	void setBackgroundHint();
 
 private:
 	Ui::GeneralWidget m_ui;

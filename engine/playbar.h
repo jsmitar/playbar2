@@ -35,11 +35,11 @@ class PlayBar : public QObject
 	Q_OBJECT
 public:
 
-	PlayBar( KSharedConfigPtr &config, QObject *parent = 0 );
+	PlayBar( KSharedConfigPtr &config, QObject * parent = 0 );
 
 	virtual ~PlayBar();
 
-	inline const QString & source() const
+	inline const QString &source() const
 	{
 		return mpris2_source;
 	}
@@ -49,9 +49,9 @@ public:
 		mpris2_source = source;
 	}
 
-	const DataEngine::Data & data();
+	const DataEngine::Data &data();
 
-	void startOpOverMpris2( const QString& name ) const;
+	void startOpOverMpris2( const QString &name ) const;
 
 public Q_SLOTS:
 
@@ -69,8 +69,8 @@ private:
 	ConfigDialog * m_configDialog;
 	KActionCollection * m_collection;
 	KSharedConfigPtr m_config;
-	DataEngine::Data *m_data;
-	DataEngineConsumer *m_dc;
+	DataEngine::Data * m_data;
+	DataEngineConsumer * m_dc;
 	const QString MPRIS2 = "mpris2";
 
 	QAction * m_playpause;

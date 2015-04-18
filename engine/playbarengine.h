@@ -44,8 +44,8 @@ private Q_SLOTS:
 	void updateData();
 
 protected:
-	bool sourceRequestEvent(const QString &source) override;
-	bool updateSourceEvent(const QString &source) override;
+	bool sourceRequestEvent( const QString &source ) override;
+	bool updateSourceEvent( const QString &source ) override;
 
 private:
 

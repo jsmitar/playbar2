@@ -32,7 +32,7 @@ class PlayBarService : public Service
 	Q_OBJECT
 public:
 
-	PlayBarService(PlayBar * playbar, QObject * parent = 0);
+	PlayBarService( PlayBar * playbar, QObject * parent = 0 );
 
 	virtual ~PlayBarService();
 
