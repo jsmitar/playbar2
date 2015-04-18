@@ -2,6 +2,8 @@
 
 #include "playbarjob.h"
 
+#include <QDebug>
+
 #include "Plasma/Service"
 #include "Plasma/ServiceJob"
 
@@ -13,12 +15,12 @@ PlayBarService::PlayBarService( PlayBar * playbar, QObject * parent )
 	setName( QLatin1Literal( "audoban.dataengine.playbar" ) );
 }
 
-PlayBarService::~PlayBarService() {}
+PlayBarService::~PlayBarService()
+{
+	qDebug() << this << "deleted";
+}
 
 ServiceJob * PlayBarService::createJob( const QString &operation, QVariantMap &parameters )
 {
-	PlayBarJob * job = new PlayBarJob( destination(), operation, parameters, m_playbar, this );
-	//Delete this service when job was finished
-	connect( job, SIGNAL( finished( KJob * ) ), this, SLOT( deleteLater() ) );
-	return job;
+	return new PlayBarJob( destination(), operation, parameters, m_playbar, this );
 }

@@ -1,0 +1,9 @@
+--indent-col1-comments
+--pad-paren-in
+--unpad-paren
+--errors-to-stdout
+--indent=tab=5
+--indent=force-tab=5
+-A8
+--align-pointer=middle
+--align-reference=name

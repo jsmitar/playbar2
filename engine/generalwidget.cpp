@@ -7,9 +7,9 @@ GeneralWidget::GeneralWidget( QWidget * parent )
 
 	connect( m_ui.flat, SIGNAL( toggled( bool ) ), this, SLOT( setButtonsAppearance(bool) ) );
 
-	connect( m_ui.normal, SIGNAL( toggled( bool ) ), this, SLOT( setBackground() ) );
-	connect( m_ui.translucent, SIGNAL( toggled( bool ) ), this, SLOT( setBackground() ) );
-	connect( m_ui.nobackground, SIGNAL( toggled( bool ) ), this, SLOT( setBackground() ) );
+	connect( m_ui.normal, SIGNAL( toggled( bool ) ), this, SLOT( setBackgroundHint() ) );
+	connect( m_ui.translucent, SIGNAL( toggled( bool ) ), this, SLOT( setBackgroundHint() ) );
+	connect( m_ui.nobackground, SIGNAL( toggled( bool ) ), this, SLOT( setBackgroundHint() ) );
 }
 
 void GeneralWidget::setButtonsAppearance( bool checked )
@@ -18,14 +18,14 @@ void GeneralWidget::setButtonsAppearance( bool checked )
 	else m_buttonsAppearance = 1;
 }
 
-void GeneralWidget::setBackground()
+void GeneralWidget::setBackgroundHint()
 {
 	if( m_ui.normal->isChecked() )
-		m_background = 0;
+		m_backgroundHint = 1; // standard
 	else if( m_ui.translucent->isChecked() )
-		m_background = 1;
+		m_backgroundHint = 2; // translucent
 	else
-		m_background = 2; // no background
+		m_backgroundHint = 0; // no background
 }
 
 GeneralWidget::~GeneralWidget() { }

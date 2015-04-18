@@ -27,7 +27,7 @@ RowLayout{
 
 	Layout.fillWidth: true
 	Layout.fillHeight: true
-	
+
 	property int maxLabelWidth: Math.max(labelRight.Layout.minimumWidth, labelLeft.Layout.minimumWidth)
 
 	TimeLabel{
@@ -67,9 +67,9 @@ RowLayout{
 
 			onWheel: {
 				accepted: true
-				if(wheel.angleDelta.y > 100)
+				if(wheel.angleDelta.y > 50)
 					previousValue = mpris2.seek(previousValue + 500)
-				else if(wheel.angleDelta.y < -100)
+				else if(wheel.angleDelta.y < -50)
 					previousValue = mpris2.seek(previousValue - 500)
 				else return
 				slider.value = previousValue

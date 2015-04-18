@@ -1,6 +1,7 @@
+#include "playbarjob.h"
+
 #include <QDebug>
 
-#include "playbarjob.h"
 #include "playbar.h"
 
 PlayBarJob::PlayBarJob( const QString &destination,
@@ -24,4 +25,6 @@ void PlayBarJob::start()
 		m_playbar->showSettings();
 	if( operationName() == QLatin1String( "SetSourceMpris2" ))
 		m_playbar->mpris2_source = parameters()["source"].toString();
+
+	emitResult();
 }

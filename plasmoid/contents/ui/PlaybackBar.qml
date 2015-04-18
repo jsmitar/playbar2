@@ -25,11 +25,15 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 PlaybackItem{
 	id: playbackbar
 
-	property bool flatButtons: plasmoid.configuration.FlatButtons
+	property int buttonsAppearance: playbarEngine.buttonsAppearance
 
-	width: visible ? childrenRect.width : 0
+	visible: mpris2.sourceActive && playbarEngine.controlsOnBar
 
-	height: visible ? childrenRect.height : 0
+	enabled: visible
+
+	width: visible ? buttons.width : 0
+
+	height: visible ? buttons.height : 0
 
 	onPlayingChanged: {
 		if(!model.itemAt(1)) return
@@ -95,10 +99,11 @@ PlaybackItem{
 			}
 		}
 
+
 		Repeater{
 			id: model
 			model: playmodel
-			delegate: flatButtons ? iconWidgetDelegate : toolButtonDelegate
+			delegate: buttonsAppearance ? toolButtonDelegate : iconWidgetDelegate
 
 			onItemAdded: {
 				switch(index){

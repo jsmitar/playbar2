@@ -2,9 +2,10 @@
 #ifndef PLAYBARENGINE_H
 #define PLAYBARENGINE_H
 
-#include "playbar.h"
-
 #include <Plasma/DataEngine>
+#include <Plasma/Service>
+
+#include "playbar.h"
 
 using namespace Plasma;
 

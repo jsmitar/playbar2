@@ -43,14 +43,14 @@ PlayBarSettings::PlayBarSettings(  )
   addItem( itemControlsOnBar, QLatin1String( "ControlsOnBar" ) );
   QList<KConfigSkeleton::ItemEnum::Choice2> valuesButtonsAppearance;
   KConfigSkeleton::ItemEnum  *itemButtonsAppearance;
-  itemButtonsAppearance = new KConfigSkeleton::ItemEnum( currentGroup(), QLatin1String( "ButtonsAppearance" ), mButtonsAppearance, valuesButtonsAppearance, Flat );
+  itemButtonsAppearance = new KConfigSkeleton::ItemEnum( currentGroup(), QLatin1String( "ButtonsAppearance" ), mButtonsAppearance, valuesButtonsAppearance, 0 );
   itemButtonsAppearance->setLabel( i18n("Buttons appearance") );
   addItem( itemButtonsAppearance, QLatin1String( "ButtonsAppearance" ) );
-  QList<KConfigSkeleton::ItemEnum::Choice2> valuesBackground;
-  KConfigSkeleton::ItemEnum  *itemBackground;
-  itemBackground = new KConfigSkeleton::ItemEnum( currentGroup(), QLatin1String( "Background" ), mBackground, valuesBackground, Normal );
-  itemBackground->setLabel( i18n("Background") );
-  addItem( itemBackground, QLatin1String( "Background" ) );
+  QList<KConfigSkeleton::ItemEnum::Choice2> valuesBackgroundHint;
+  KConfigSkeleton::ItemEnum  *itemBackgroundHint;
+  itemBackgroundHint = new KConfigSkeleton::ItemEnum( currentGroup(), QLatin1String( "BackgroundHint" ), mBackgroundHint, valuesBackgroundHint, 1 );
+  itemBackgroundHint->setLabel( i18n("Background hints") );
+  addItem( itemBackgroundHint, QLatin1String( "BackgroundHint" ) );
 }
 
 PlayBarSettings::~PlayBarSettings()

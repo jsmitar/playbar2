@@ -88,7 +88,7 @@
            </font>
           </property>
           <property name="text">
-           <string>ToolB&amp;utton</string>
+           <string>Tool button</string>
           </property>
          </widget>
         </item>
@@ -96,7 +96,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="kcfg_Background">
+      <widget class="QGroupBox" name="kcfg_BackgroundHint">
        <property name="font">
         <font>
          <weight>50</weight>
@@ -110,7 +110,7 @@
         <bool>false</bool>
        </property>
        <property name="title">
-        <string>Background</string>
+        <string>Hint background</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -122,6 +122,19 @@
         <bool>false</bool>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QRadioButton" name="nobackground">
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>No bac&amp;kground</string>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="QRadioButton" name="normal">
           <property name="font">
@@ -150,20 +163,7 @@
            <bool>false</bool>
           </property>
           <property name="text">
-           <string>&amp;Translucent</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="nobackground">
-          <property name="font">
-           <font>
-            <weight>50</weight>
-            <bold>false</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>No bac&amp;kground</string>
+           <string>Transl&amp;ucent</string>
           </property>
          </widget>
         </item>

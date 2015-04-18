@@ -4,23 +4,9 @@
      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
     <kcfgfile name=""/>
-    <group name="General">
-        <entry name="ShowStop" type="Bool">
-            <default>true</default>
-        </entry>
-
-        <entry name="FlatButtons" type="Bool">
-            <default>true</default>
-        </entry>
-
-        <entry name="ButtonSize" type="Int">
-        </entry>
-
+    <group name="Internal">
 		<entry name="TimeLabelSwitch" type="Bool">
 			<default>true</default>
-		</entry>
-		<entry name="BackgroundHint" type="Int">
-			<default>1</default>
 		</entry>
     </group>
 </kcfg>

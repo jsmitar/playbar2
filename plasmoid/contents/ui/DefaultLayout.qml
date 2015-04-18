@@ -19,6 +19,7 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
+import QtGraphicalEffects 1.0
 
 //###########
 // DefaultLayout
@@ -77,5 +78,14 @@ ColumnLayout{
 	}
 	SliderSeek{
 		Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+	}
+
+	layer.enabled: playbarEngine.backgroundHint == 0 && plasmoid.formFactor == 0
+	layer.effect: DropShadow{
+		source: page
+		radius: 8.0
+		fast: true
+		color: "#99888888"
+		anchors.fill: source
 	}
 }

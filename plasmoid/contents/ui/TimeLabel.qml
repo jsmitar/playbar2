@@ -18,7 +18,6 @@
  */
 
 import QtQuick 2.4
-import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import "plasmapackage:/code/utils.js" as Utils
 
@@ -45,23 +44,25 @@ PlasmaExtras.Paragraph{
 	enabled: mpris2.sourceActive & mpris2.length > 0
 
     function positionUpdate(negative) {
-        var min
-        var sec = currentTime/100
-        if (negative) sec = Math.abs(topTime/100 - sec)
-        min = parseInt(sec/60)
-        sec = parseInt(sec - min*60)
+        var min, sec
+
+        if (negative) sec = Math.abs((topTime - currentTime)/100)
+        else sec = currentTime/100
+
+		min = Utils.truncate(sec/60)
+		sec = Utils.truncate(sec - min*60)
 
 		if(negative) text = '-' + min + ':'
 		else text = min + ':'
-		text += sec >= 0 && sec <= 9 ? '0' + sec : sec
+		text += sec <= 9 ? '0' + sec : sec
     }
 
     function lengthUpdate() {
 		var min
 		var sec = topTime/100
-		min = parseInt(sec/60)
-		sec = parseInt(sec - min*60)
-		time.text = min + ':' + ( sec >= 0 && sec <= 9 ? '0'+sec : sec )
+		min = Utils.truncate(sec/60)
+		sec = Utils.truncate(sec - min*60)
+		time.text = min + ':' + ( sec <= 9 ? '0' + sec : sec )
 	}
 
 	Timer{
@@ -81,7 +82,6 @@ PlasmaExtras.Paragraph{
 				positionUpdate(true)
 			else
 				lengthUpdate()
-
 		}
 	}
 

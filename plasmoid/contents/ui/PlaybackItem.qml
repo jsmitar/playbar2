@@ -25,7 +25,7 @@ Item{
 
     property bool playing: mpris2.playbackStatus == 'Playing'
 
-    property bool showStop: mpris2.source == 'spotify' ? false : plasmoid.configuration.ShowStop
+    property bool showStop: mpris2.source == 'spotify' ? false : playbarEngine.showStop
 
     property int buttonSize: units.iconSizes.small
 

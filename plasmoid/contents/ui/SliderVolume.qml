@@ -17,11 +17,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
-
 
 RowLayout{
 	id: sliderVolume
@@ -79,10 +77,10 @@ RowLayout{
 
 			onWheel: {
 				accepted: true
-				if(wheel.angleDelta.y > 100)
-					previousValue = mpris2.setVolume(previousValue + 0.05)
-				else if(wheel.angleDelta.y < -100)
-					previousValue = mpris2.setVolume(previousValue - 0.05)
+				if(wheel.angleDelta.y > 50)
+					previousValue = mpris2.setVolume(previousValue + 0.019)
+				else if(wheel.angleDelta.y < -50)
+					previousValue = mpris2.setVolume(previousValue - 0.019)
 				else return
 				slider.value = previousValue
 			}

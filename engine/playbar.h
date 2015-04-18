@@ -2,15 +2,14 @@
 #define PLAYBAR_H
 
 #include <QAction>
+
 #include <KActionCollection>
 #include <Plasma/DataEngine>
 #include <Plasma/DataEngineConsumer>
 
 #include "configdialog.h"
 
-class KActionCollection;
-using Plasma::DataEngine;
-using Plasma::DataEngineConsumer;
+using namespace Plasma;
 
 class PlayBar : public QObject
 {

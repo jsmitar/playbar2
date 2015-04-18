@@ -25,7 +25,7 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 PlaybackItem{
 	id: playbackWidget
 
-	property bool flatButtons: plasmoid.configuration.FlatButtons
+	property int buttonsAppearance: playbarEngine.buttonsAppearance
 
 	buttonSize: units.iconSizes.medium
 
@@ -88,13 +88,13 @@ PlaybackItem{
 	RowLayout {
 		id: buttons
 
-		spacing: flatButtons ? units.largeSpacing : units.smallSpacing
+		spacing: buttonsAppearance ? units.smallSpacing : units.largeSpacing
 		anchors.bottom: parent.bottom
 
 		Repeater{
 			id: model
 			model: playmodel
-			delegate: flatButtons ? iconWidgetDelegate : toolButtonDelegate
+			delegate: buttonsAppearance ? toolButtonDelegate : iconWidgetDelegate
 
 			onItemAdded: {
 				switch(index){

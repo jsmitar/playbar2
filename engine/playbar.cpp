@@ -102,23 +102,25 @@ void PlayBar::showSettings()
 	//Read preferences from config file.
 	PlayBarSettings::self()->load();
 	m_configDialog = new ConfigDialog( m_collection );
+	connect( this, SIGNAL( destroyed( QObject * ) ), m_configDialog, SLOT( deleteLater() ) );
 	m_configDialog->show();
 }
 
-const DataEngine::Data & PlayBar::data(){
+const DataEngine::Data &PlayBar::data()
+{
 	auto config = PlayBarSettings::self();
 	// Read preferences from the KConfig object.
 	config->read();
-	foreach( auto item , config->items() ) {
+	for( auto item : config->items() ) {
 		QString name = item->name();
-		if (name == QLatin1String("ShowStop"))
+		if( name == QLatin1String( "ShowStop" ) )
 			m_data->insert( name, config->showStop() );
-		else if(name == QLatin1String("ControlsOnBar"))
-			m_data->insert( name, config->controlsOnBar());
-		else if(name == QLatin1String("ButtonsAppearance"))
-			m_data->insert( name , config->buttonsAppearance());
-		else if(name == QLatin1String("Background"))
-			m_data->insert( name, config->background());
+		else if( name == QLatin1String( "ControlsOnBar" ) )
+			m_data->insert( name, config->controlsOnBar() );
+		else if( name == QLatin1String( "ButtonsAppearance" ) )
+			m_data->insert( name , config->buttonsAppearance() );
+		else if( name == QLatin1String( "BackgroundHint" ) )
+			m_data->insert( name, config->backgroundHint() );
 	}
 	return *m_data;
 }

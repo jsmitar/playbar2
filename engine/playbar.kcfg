@@ -21,9 +21,9 @@
 			   <label>Buttons appearance</label>
 			   <default>0</default>
 		  </entry>
-		  <entry name="Background" type="Enum">
-			   <label>Background</label>
-			   <default>0</default>
+		  <entry name="BackgroundHint" type="Enum">
+			   <label>Background hints</label>
+			   <default>1</default>
 		  </entry>
 	 </group>
 </kcfg>

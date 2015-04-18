@@ -71,22 +71,22 @@ class PlayBarSettings : public KConfigSkeleton
     }
 
     /**
-      Set Background
+      Set Background hints
     */
     static
-    void setBackground( int v )
+    void setBackgroundHint( int v )
     {
-      if (!self()->isImmutable( QString::fromLatin1( "Background" ) ))
-        self()->mBackground = v;
+      if (!self()->isImmutable( QString::fromLatin1( "BackgroundHint" ) ))
+        self()->mBackgroundHint = v;
     }
 
     /**
-      Get Background
+      Get Background hints
     */
     static
-    int background()
+    int backgroundHint()
     {
-      return self()->mBackground;
+      return self()->mBackgroundHint;
     }
 
   protected:
@@ -98,7 +98,7 @@ class PlayBarSettings : public KConfigSkeleton
     bool mShowStop;
     bool mControlsOnBar;
     int mButtonsAppearance;
-    int mBackground;
+    int mBackgroundHint;
 
   private:
 };

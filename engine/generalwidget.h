@@ -3,9 +3,8 @@
 #define GENERALWIDGET_H
 
 #include <QWidget>
-#include "ui_generalconfig.h"
 
-class ConfigDialog;
+#include "ui_generalconfig.h"
 
 class GeneralWidget : public QWidget
 {
@@ -27,18 +26,18 @@ public:
 	inline int buttonsAppearance(){
 		return m_buttonsAppearance;
 	}
-	inline int background(){
-		return m_background;
+	inline int backgroundHint(){
+		return m_backgroundHint;
 	}
 
 private Q_SLOTS:
 	 void setButtonsAppearance(bool checked);
-	 void setBackground();
+	 void setBackgroundHint();
 
 private:
 	Ui::GeneralWidget m_ui;
 	int m_buttonsAppearance = 0;
-	int m_background = 0;
+	int m_backgroundHint = 1;
 };
 
 #endif // GENERALWIDGET_H

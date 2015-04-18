@@ -105,6 +105,7 @@ PlasmaCore.DataSource{
 
 		if(source != '@multiplex' && connectedSources.length == 0) {
 			connectSource(source)
+			playbarEngine.setSource(source)
 		}
 	}
 
@@ -153,12 +154,15 @@ PlasmaCore.DataSource{
 				if(++i < sources.length && sources[i] != '@multiplex'){
 					disconnectSource(source[0])
 					connectSource(sources[i])
+					playbarEngine.setSource(sources[i])
 				}else if(++i < sources.length){
 					disconnectSource(source[0])
 					connectSource(sources[i])
+					playbarEngine.setSource(sources[i])
 				}else if(sources[0] != '@multiplex') {
 					disconnectSource(source[0])
 					connectSource(sources[0])
+					playbarEngine.setSource(sources[0])
 				}
 				return
 			}
@@ -178,12 +182,12 @@ PlasmaCore.DataSource{
 			service.startOperationCall(job)
 		}
 		return position
-// 			if(source == 'clementine') {
-// 				job = service.operationDescription('Seek')
-// 				job['microseconds'] = ((-currentPosition + position) * 10000).toFixed(0)
-// 				service.startOperationCall(job)
-// 				return
-// 			}
+// 		if(source == 'clementine') {
+// 			job = service.operationDescription('Seek')
+// 			job['microseconds'] = ((-currentPosition + position) * 10000).toFixed(0)
+// 			service.startOperationCall(job)
+// 			return
+// 		}
 	}
 
 	function startOperation(name){

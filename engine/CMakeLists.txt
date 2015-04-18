@@ -20,6 +20,7 @@ target_link_libraries( plasma_engine_playbar
 	KF5::ConfigWidgets
 	KF5::ConfigGui
 	KF5::ConfigCore
+	KF5::WindowSystem
 	KF5::XmlGui
 	KF5::GlobalAccel
 	KF5::I18n

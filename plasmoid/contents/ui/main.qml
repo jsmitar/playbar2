@@ -17,11 +17,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.plasmoid 2.0
 import "plasmapackage:/code/utils.js" as Utils
 
@@ -38,7 +36,7 @@ Item {
 	Plasmoid.icon: internal.icon
 	Plasmoid.toolTipMainText: internal.title
 	Plasmoid.toolTipSubText: internal.subText
-	Plasmoid.backgroundHints: plasmoid.configuration.BackgroundHint
+	Plasmoid.backgroundHints: playbarEngine.backgroundHint
 
 
 	Connections{
@@ -56,7 +54,6 @@ Item {
 
 	function debug(str){ console.debug("PlayBar2: " + str) }
 
-	Mpris2{ id: mpris2 }
 
 	//###########################
 	// 	Context menu actions
@@ -77,17 +74,34 @@ Item {
 		playbarEngine.startOperation('ShowSettings')
 	}
 
+	Mpris2{ id: mpris2 }
+
 	PlasmaCore.DataSource{
 		id: playbarEngine
 		engine: 'audoban.dataengine.playbar'
 		connectedSources: 'Provider'
 
-		property var service: null
+		readonly property bool showStop: hasSource('ShowStop') ? data[connectedSources[0]]['ShowStop'] : true
+		readonly property bool controlsOnBar: hasSource('ControlsOnBar') ? data[connectedSources[0]]['ControlsOnBar'] : true
+		readonly property int  buttonsAppearance: hasSource('ButtonsAppearance') ? data[connectedSources[0]]['ButtonsAppearance'] : 0
+		readonly property int  backgroundHint: hasSource('BackgroundHint') ? data[connectedSources[0]]['BackgroundHint'] : 1
+
 		function startOperation(name){
-			if(!service) service = playbarEngine.serviceForSource('Provider')
+			var service = playbarEngine.serviceForSource('Provider')
 			var job = service.operationDescription(name)
-			debug("playbarEngine: " + name)
-			return service.startOperationCall(job)
+			service.startOperationCall(job)
+		}
+
+		function setSource(name){
+			var service = playbarEngine.serviceForSource('Provider')
+			var job = service.operationDescription('SetSourceMpris2')
+			job['source'] = name
+			service.startOperationCall(job)
+		}
+
+		function hasSource(key){
+			return data[connectedSources[0]] != undefined
+			&& data[connectedSources[0]][key] != undefined
 		}
 	}
 
@@ -113,7 +127,7 @@ Item {
 		property string album:
 		    mpris2.album != ""? i18nc("ToolTip: track album %1", "<b>On</b> %1", mpris2.album) : ""
 		property string subText:
-		    (artist == "" & album == "") ? i18n("Client MPRIS2, allows you to control your favorite media player") : artist + album
+		    (title == "PlayBar" & artist == "" & album == "") ? i18n("Client MPRIS2, allows you to control your favorite media player") : artist + album
 	}
 }
 

@@ -1,8 +1,9 @@
-#include <klocalizedstring.h>
+#include "configdialog.h"
 
 #include <QPushButton>
 
-#include "configdialog.h"
+#include <klocalizedstring.h>
+
 #include "generalwidget.h"
 #include "playbarsettings.h"
 
@@ -37,7 +38,7 @@ void ConfigDialog::updateSettings(){
 	 config->setShowStop(m_generalPage->showStop());
 	 config->setControlsOnBar(m_generalPage->controlsOnBar());
 	 config->setButtonsAppearance(m_generalPage->buttonsAppearance());
-	 config->setBackground(m_generalPage->background());
+	 config->setBackgroundHint(m_generalPage->backgroundHint());
 	 config->save();
 	 qDebug() << "PlayBarEngine: config saved";
 }

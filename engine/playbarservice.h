@@ -1,11 +1,10 @@
-
 #ifndef PLAYBARSERVICE_H
 #define PLAYBARSERVICE_H
 
-#include "playbar.h"
-
 #include <Plasma/Service>
 #include <Plasma/ServiceJob>
+
+#include "playbar.h"
 
 using namespace Plasma;
 

@@ -67,4 +67,8 @@ function adjustAlpha(clr, a) {
 	return Qt.rgba(clr.r, clr.g, clr.b, a);
 }
 
+function truncate(n){
+	return n | 0
+}
+
 
