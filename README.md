@@ -1,7 +1,7 @@
 
 #PlayBar2
 
-MPRIS2 client, written in QML for Plasma KDE.
+*MPRIS2* client, written in QML for Plasma KDE.
 
 ![desktop](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_desktop.png)
 ![panel](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_panel.png) 
