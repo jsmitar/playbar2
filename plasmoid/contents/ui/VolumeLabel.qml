@@ -20,7 +20,7 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.extras 2.0 as PlasmaExtras
-import "plasmapackage:/code/utils.js" as Utils
+import "../code/utils.js" as Utils
 
 PlasmaExtras.Paragraph{
 	id: label

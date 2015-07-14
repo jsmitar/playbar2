@@ -19,7 +19,7 @@
 
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
-import "plasmapackage:/code/utils.js" as Utils
+import "../code/utils.js" as Utils
 
 PlasmaCore.DataSource{
 	id: mpris2
@@ -45,7 +45,8 @@ PlasmaCore.DataSource{
 	property var service: null
 
 
-	property string identity: hasSource('Identity') ? data[source]['Identity'] : i18n("No media player")
+	property string identity: hasSource('Identity') ? data[source]['Identity'] :
+i18n("No media player")
 
 	property string playbackStatus: hasSource('PlaybackStatus') ? data[source]['PlaybackStatus'] : ""
 

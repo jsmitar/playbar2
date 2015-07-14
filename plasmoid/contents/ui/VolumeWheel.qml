@@ -18,7 +18,7 @@
  */
 
 import QtQuick 2.4
-import "plasmapackage:/code/utils.js" as Utils
+import "../code/utils.js" as Utils
 
 MouseArea{
 	id: volumeWheelArea

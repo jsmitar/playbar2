@@ -8,55 +8,56 @@
 #include <kglobal.h>
 #include <QtCore/QFile>
 
-class PlayBarSettingsHelper
-{
-  public:
-    PlayBarSettingsHelper() : q(0) {}
-    ~PlayBarSettingsHelper() { delete q; }
-    PlayBarSettings *q;
+class PlayBarSettingsHelper {
+public:
+	PlayBarSettingsHelper() : q (0) {}
+	~PlayBarSettingsHelper() {
+		delete q;
+	}
+	PlayBarSettings *q;
 };
-K_GLOBAL_STATIC(PlayBarSettingsHelper, s_globalPlayBarSettings)
+K_GLOBAL_STATIC (PlayBarSettingsHelper, s_globalPlayBarSettings)
 PlayBarSettings *PlayBarSettings::self()
 {
-  if (!s_globalPlayBarSettings->q) {
-    new PlayBarSettings;
-    s_globalPlayBarSettings->q->readConfig();
-  }
+	if (!s_globalPlayBarSettings->q) {
+		new PlayBarSettings;
+		s_globalPlayBarSettings->q->readConfig();
+	}
 
-  return s_globalPlayBarSettings->q;
+	return s_globalPlayBarSettings->q;
 }
 
-PlayBarSettings::PlayBarSettings(  )
-  : KConfigSkeleton( QLatin1String( "playbarrc" ) )
+PlayBarSettings::PlayBarSettings()
+	: KConfigSkeleton (QLatin1String ("playbarrc"))
 {
-  Q_ASSERT(!s_globalPlayBarSettings->q);
-  s_globalPlayBarSettings->q = this;
-  setCurrentGroup( QLatin1String( "General" ) );
+	Q_ASSERT (!s_globalPlayBarSettings->q);
+	s_globalPlayBarSettings->q = this;
+	setCurrentGroup (QLatin1String ("General"));
 
-  KConfigSkeleton::ItemBool  *itemShowStop;
-  itemShowStop = new KConfigSkeleton::ItemBool( currentGroup(), QLatin1String( "ShowStop" ), mShowStop, true );
-  itemShowStop->setLabel( i18n("Show stop button") );
-  addItem( itemShowStop, QLatin1String( "ShowStop" ) );
-  KConfigSkeleton::ItemBool  *itemControlsOnBar;
-  itemControlsOnBar = new KConfigSkeleton::ItemBool( currentGroup(), QLatin1String( "ControlsOnBar" ), mControlsOnBar, true );
-  itemControlsOnBar->setLabel( i18n("Controls on bar") );
-  addItem( itemControlsOnBar, QLatin1String( "ControlsOnBar" ) );
-  QList<KConfigSkeleton::ItemEnum::Choice2> valuesButtonsAppearance;
-  KConfigSkeleton::ItemEnum  *itemButtonsAppearance;
-  itemButtonsAppearance = new KConfigSkeleton::ItemEnum( currentGroup(), QLatin1String( "ButtonsAppearance" ), mButtonsAppearance, valuesButtonsAppearance, 0 );
-  itemButtonsAppearance->setLabel( i18n("Buttons appearance") );
-  addItem( itemButtonsAppearance, QLatin1String( "ButtonsAppearance" ) );
-  QList<KConfigSkeleton::ItemEnum::Choice2> valuesBackgroundHint;
-  KConfigSkeleton::ItemEnum  *itemBackgroundHint;
-  itemBackgroundHint = new KConfigSkeleton::ItemEnum( currentGroup(), QLatin1String( "BackgroundHint" ), mBackgroundHint, valuesBackgroundHint, 1 );
-  itemBackgroundHint->setLabel( i18n("Background hints") );
-  addItem( itemBackgroundHint, QLatin1String( "BackgroundHint" ) );
+	KConfigSkeleton::ItemBool  *itemShowStop;
+	itemShowStop = new KConfigSkeleton::ItemBool (currentGroup(), QLatin1String ("ShowStop"), mShowStop, true);
+	itemShowStop->setLabel (i18n ("Show stop button"));
+	addItem (itemShowStop, QLatin1String ("ShowStop"));
+	KConfigSkeleton::ItemBool  *itemControlsOnBar;
+	itemControlsOnBar = new KConfigSkeleton::ItemBool (currentGroup(), QLatin1String ("ControlsOnBar"), mControlsOnBar, true);
+	itemControlsOnBar->setLabel (i18n ("Controls on bar"));
+	addItem (itemControlsOnBar, QLatin1String ("ControlsOnBar"));
+	QList<KConfigSkeleton::ItemEnum::Choice2> valuesButtonsAppearance;
+	KConfigSkeleton::ItemEnum  *itemButtonsAppearance;
+	itemButtonsAppearance = new KConfigSkeleton::ItemEnum (currentGroup(), QLatin1String ("ButtonsAppearance"), mButtonsAppearance, valuesButtonsAppearance, 0);
+	itemButtonsAppearance->setLabel (i18n ("Buttons appearance"));
+	addItem (itemButtonsAppearance, QLatin1String ("ButtonsAppearance"));
+	QList<KConfigSkeleton::ItemEnum::Choice2> valuesBackgroundHint;
+	KConfigSkeleton::ItemEnum  *itemBackgroundHint;
+	itemBackgroundHint = new KConfigSkeleton::ItemEnum (currentGroup(), QLatin1String ("BackgroundHint"), mBackgroundHint, valuesBackgroundHint, 1);
+	itemBackgroundHint->setLabel (i18n ("Background hints"));
+	addItem (itemBackgroundHint, QLatin1String ("BackgroundHint"));
 }
 
 PlayBarSettings::~PlayBarSettings()
 {
-  if (!s_globalPlayBarSettings.isDestroyed()) {
-    s_globalPlayBarSettings->q = 0;
-  }
+	if (!s_globalPlayBarSettings.isDestroyed()) {
+		s_globalPlayBarSettings->q = 0;
+	}
 }
 

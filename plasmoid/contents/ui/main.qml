@@ -21,19 +21,53 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.plasmoid 2.0
-import "plasmapackage:/code/utils.js" as Utils
+import "../code/utils.js" as Utils
 
 Item {
     id: root
 
+	//! dataengine
+	PlasmaCore.DataSource{
+		id: playbarEngine
+		engine: 'audoban.dataengine.playbar'
+		connectedSources: 'Provider'
+
+		readonly property bool showStop: hasSource('ShowStop') ? data[connectedSources[0]]['ShowStop'] : true
+		readonly property bool controlsOnBar: hasSource('ControlsOnBar') ? data[connectedSources[0]]['ControlsOnBar'] : true
+		readonly property int  buttonsAppearance: hasSource('ButtonsAppearance') ? data[connectedSources[0]]['ButtonsAppearance'] : 0
+		readonly property int  backgroundHint: hasSource('BackgroundHint') ? data[connectedSources[0]]['BackgroundHint'] : 1
+
+		function startOperation(name){
+			var service = playbarEngine.serviceForSource('Provider')
+			var job = service.operationDescription(name)
+			service.startOperationCall(job)
+		}
+
+		function setSource(name){
+			var service = playbarEngine.serviceForSource('Provider')
+			var job = service.operationDescription('SetSourceMpris2')
+			job['source'] = name
+			service.startOperationCall(job)
+		}
+
+		function hasSource(key){
+			return data[connectedSources[0]] != undefined
+			&& data[connectedSources[0]][key] != undefined
+		}
+	}
+	//! dataengine
+	Mpris2{ id: mpris2 }
+
 	property bool vertical: plasmoid.formFactor == PlasmaCore.Types.Vertical
 
-	Plasmoid.compactRepresentation: CompactApplet{ id: compact}
-	Plasmoid.fullRepresentation: FullApplet{id: full}
+	Plasmoid.compactRepresentation: CompactApplet{ id: compact }
+	Plasmoid.fullRepresentation: DefaultLayout{ id: full }
 
-	Plasmoid.preferredRepresentation: plasmoid.formFactor == 0 ? Plasmoid.fullRepresentation : Plasmoid.compactRepresentation
+	Plasmoid.preferredRepresentation: plasmoid.formFactor == 0
+? Plasmoid.fullRepresentation : Plasmoid.compactRepresentation
 
 	Plasmoid.icon: internal.icon
+	Plasmoid.title: mpris2.identity
 	Plasmoid.toolTipMainText: internal.title
 	Plasmoid.toolTipSubText: internal.subText
 	Plasmoid.backgroundHints: playbarEngine.backgroundHint
@@ -74,45 +108,19 @@ Item {
 		playbarEngine.startOperation('ShowSettings')
 	}
 
-	Mpris2{ id: mpris2 }
-
-	PlasmaCore.DataSource{
-		id: playbarEngine
-		engine: 'audoban.dataengine.playbar'
-		connectedSources: 'Provider'
-
-		readonly property bool showStop: hasSource('ShowStop') ? data[connectedSources[0]]['ShowStop'] : true
-		readonly property bool controlsOnBar: hasSource('ControlsOnBar') ? data[connectedSources[0]]['ControlsOnBar'] : true
-		readonly property int  buttonsAppearance: hasSource('ButtonsAppearance') ? data[connectedSources[0]]['ButtonsAppearance'] : 0
-		readonly property int  backgroundHint: hasSource('BackgroundHint') ? data[connectedSources[0]]['BackgroundHint'] : 1
-
-		function startOperation(name){
-			var service = playbarEngine.serviceForSource('Provider')
-			var job = service.operationDescription(name)
-			service.startOperationCall(job)
-		}
-
-		function setSource(name){
-			var service = playbarEngine.serviceForSource('Provider')
-			var job = service.operationDescription('SetSourceMpris2')
-			job['source'] = name
-			service.startOperationCall(job)
-		}
-
-		function hasSource(key){
-			return data[connectedSources[0]] != undefined
-			&& data[connectedSources[0]][key] != undefined
-		}
-	}
 
 	Component.onCompleted:{
+		debug("Loading PlayBar ...")
 		debug("Location: " + Plasmoid.location)
+		debug("title plasmoid:" + Plasmoid.title)
+		debug("i18n" + i18n)
 		plasmoid.formFactorChanged()
 		//NOTE: Init Utils
 		Utils.plasmoid = plasmoid
 		Utils.i18n = i18n
 		plasmoid.removeAction('configure')
-		plasmoid.setAction('configure', i18n("Configure PlayBar"), 'configure', "alt+d, s")
+		plasmoid.setAction('configure', i18n("Configure PlayBar"),
+'configure', "alt+d, s")
     }
 
 	QtObject{
@@ -123,11 +131,12 @@ Item {
 		property string title:
 		    mpris2.title != "" ? mpris2.title : "PlayBar"
 		property string artist:
-		    mpris2.artist != "" ? i18nc("ToolTip: track artist %1", "<b>By</b> %1, ", mpris2.artist) : ""
+		    mpris2.artist != "" ? i18n("<b>By</b> %1, ", mpris2.artist) : ""
 		property string album:
-		    mpris2.album != ""? i18nc("ToolTip: track album %1", "<b>On</b> %1", mpris2.album) : ""
+		    mpris2.album != ""? i18n("<b>On</b> %1", mpris2.album) : ""
 		property string subText:
-		    (title == "PlayBar" & artist == "" & album == "") ? i18n("Client MPRIS2, allows you to control your favorite media player") : artist + album
+		    (title == "PlayBar" & artist == "" & album == "") ? i18n("Client
+MPRIS2, allows you to control your favorite media player") : artist + album
 	}
 }
 

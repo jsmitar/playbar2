@@ -15,15 +15,15 @@ add_library( plasma_engine_playbar MODULE ${playbar_engine_SRCS} )
 kcoreaddons_desktop_to_json( plasma_engine_playbar plasma-dataengine-playbar.desktop )
 
 target_link_libraries( plasma_engine_playbar
-	KF5::Plasma
-	KF5::PlasmaQuick
-	KF5::ConfigWidgets
-	KF5::ConfigGui
 	KF5::ConfigCore
-	KF5::WindowSystem
-	KF5::XmlGui
+	KF5::ConfigGui
+	KF5::ConfigWidgets
 	KF5::GlobalAccel
 	KF5::I18n
+	KF5::Plasma
+	KF5::PlasmaQuick
+	KF5::WindowSystem
+	KF5::XmlGui
 )
 
 install(TARGETS plasma_engine_playbar
@@ -36,4 +36,5 @@ install(FILES audoban.dataengine.playbar.operations
 		DESTINATION ${PLASMA_DATA_INSTALL_DIR}/services)
 
 install(FILES playbar.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+
 

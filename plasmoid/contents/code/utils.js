@@ -43,10 +43,11 @@ function setActions(sourceActive, identity){
 
 	plasmoid.removeAction('configure')
 	plasmoid.setAction('raise', i18n("Open %1", identity), icon)
-	plasmoid.setAction('quit', i18n("Quit"), 'window-close')
+	plasmoid.setAction('quit', i18n("Quit") ,'window-close')
 	plasmoid.setAction('nextSource', i18n("Next multimedia source"), 'go-next')
 	plasmoid.setActionSeparator('sep1')
-	plasmoid.setAction('configure', i18n("Configure PlayBar"), 'configure', "alt+d, s" )
+	plasmoid.setAction('configure', i18n("Configure PlayBar"), 'configure',
+"alt+d, s" )
 
 }
 

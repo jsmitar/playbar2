@@ -27,11 +27,11 @@
 #include "Plasma/ServiceJob"
 
 
-PlayBarService::PlayBarService( PlayBar * playbar, QObject * parent )
-	: Service( parent ),
-	  m_playbar( playbar )
+PlayBarService::PlayBarService (PlayBar *playbar, QObject *parent)
+	: Service (parent),
+	  m_playbar (playbar)
 {
-	setName( QLatin1Literal( "audoban.dataengine.playbar" ) );
+	setName (QLatin1Literal ("audoban.dataengine.playbar"));
 }
 
 PlayBarService::~PlayBarService()
@@ -39,7 +39,7 @@ PlayBarService::~PlayBarService()
 	qDebug() << this << "deleted";
 }
 
-ServiceJob * PlayBarService::createJob( const QString &operation, QVariantMap &parameters )
+ServiceJob *PlayBarService::createJob (const QString &operation, QVariantMap &parameters)
 {
-	return new PlayBarJob( destination(), operation, parameters, m_playbar, this );
+	return new PlayBarJob (destination(), operation, parameters, m_playbar, this);
 }
