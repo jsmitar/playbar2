@@ -5,18 +5,22 @@
 build/
 
 # backup files
-*.qml~
-*.xml~
-*.js~
-*.sh~
 *.desktop~
-*.kate-swp
-.~*
-.*.qml~
-.*.js~
-.*.xml~
-.*.txt~
 *.gitignore~
+*.js~
+*.kate-swp
+*.qml~
+*.sh~
+*.xml~
+.*.cpp~
+.*.h~
+.*.js~
+.*.pot~
+.*.po~
+.*.qml~
+.*.txt~
+.*.xml~
+.~*
 
 # mo files
 *.mo
