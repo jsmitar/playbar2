@@ -64,14 +64,15 @@ Item {
 	Plasmoid.fullRepresentation: DefaultLayout{ id: full }
 
 	Plasmoid.preferredRepresentation: plasmoid.formFactor == 0
-? Plasmoid.fullRepresentation : Plasmoid.compactRepresentation
+		? Plasmoid.fullRepresentation
+		: Plasmoid.compactRepresentation
 
 	Plasmoid.icon: internal.icon
 	Plasmoid.title: mpris2.identity
 	Plasmoid.toolTipMainText: internal.title
 	Plasmoid.toolTipSubText: internal.subText
 	Plasmoid.backgroundHints: playbarEngine.backgroundHint
-
+	Plasmoid.toolTipTextFormat: Text.StyledText
 
 	Connections{
 		target: plasmoid
@@ -119,8 +120,7 @@ Item {
 		Utils.plasmoid = plasmoid
 		Utils.i18n = i18n
 		plasmoid.removeAction('configure')
-		plasmoid.setAction('configure', i18n("Configure PlayBar"),
-'configure', "alt+d, s")
+		plasmoid.setAction('configure', i18n("Configure PlayBar"), 'configure', "alt+d, s")
     }
 
 	QtObject{
@@ -131,12 +131,13 @@ Item {
 		property string title:
 		    mpris2.title != "" ? mpris2.title : "PlayBar"
 		property string artist:
-		    mpris2.artist != "" ? i18n("<b>By</b> %1, ", mpris2.artist) : ""
+		    mpris2.artist != "" ? i18n("<b>By</b> %1 ", mpris2.artist) : ""
 		property string album:
 		    mpris2.album != ""? i18n("<b>On</b> %1", mpris2.album) : ""
 		property string subText:
-		    (title == "PlayBar" & artist == "" & album == "") ? i18n("Client
-MPRIS2, allows you to control your favorite media player") : artist + album
+		    (title == "PlayBar" & artist == "" & album == "") ?
+	    		i18n("Client MPRIS2, allows you to control your favorite media player")
+				: artist + album
 	}
 }
 
