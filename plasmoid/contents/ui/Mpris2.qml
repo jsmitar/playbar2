@@ -45,8 +45,7 @@ PlasmaCore.DataSource{
 	property var service: null
 
 
-	property string identity: hasSource('Identity') ? data[source]['Identity'] :
-i18n("No media player")
+	property string identity: hasSource('Identity') ? data[source]['Identity'] : i18n("No media player")
 
 	property string playbackStatus: hasSource('PlaybackStatus') ? data[source]['PlaybackStatus'] : ""
 
@@ -150,9 +149,9 @@ i18n("No media player")
 	function nextSource(){
 		debug("nextSource()")
 		for(var i = 0; i < sources.length; i++){
-			if(connectedSources[0] == sources[i] || connectedSources == [""] || connectedSources == "")
+			if(connectedSources[0] === sources[i] || connectedSources == [""] || connectedSources == "")
 			{
-				if(++i < sources.length && sources[i] != '@multiplex'){
+				if(++i < sources.length && sources[i] !== '@multiplex'){
 					disconnectSource(source[0])
 					connectSource(sources[i])
 					playbarEngine.setSource(sources[i])
@@ -160,7 +159,7 @@ i18n("No media player")
 					disconnectSource(source[0])
 					connectSource(sources[i])
 					playbarEngine.setSource(sources[i])
-				}else if(sources[0] != '@multiplex') {
+				}else if(sources[0] !== '@multiplex') {
 					disconnectSource(source[0])
 					connectSource(sources[0])
 					playbarEngine.setSource(sources[0])
