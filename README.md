@@ -9,14 +9,15 @@ MPRIS2 client, written in QML for **Plasma 5** and **GNU/Linux**.
 
 
 ## Installation
-Dependencies: `plasma-framework-devel` `plasma5-workspace-devel`
+##### Dependencies **:** 
+`plasma-framework-devel plasma5-workspace-devel kdeclarative-devel kglobalaccel-devel kconfigwidgets-devel kxmlgui-devel kwindowsystem-devel kdoctools-devel extra-cmake-modules`
 
-Create a build directory and then enter it.
+Create a *build* directory and then enter it.
 ```bash
 $ mkdir build && cd build
 ```
 
-And compile. :D
+And compile.
 ```bash
 $ cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make && sudo make install
 ```
