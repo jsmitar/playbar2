@@ -1,0 +1,26 @@
+# Ignore hidden files
+.directory
+
+# build directory
+build/
+
+# backup files
+*.qml~
+*.xml~
+*.js~
+*.sh~
+*.desktop~
+*.kate-swp
+.~*
+.*.qml~
+.*.js~
+.*.xml~
+.*.txt~
+*.gitignore~
+
+# mo files
+*.mo
+
+# KDevelop Project files
+*.kdev4
+.kdev4/
