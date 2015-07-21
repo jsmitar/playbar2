@@ -56,19 +56,20 @@ RowLayout{
 			visualParent: menuButton
 			PlasmaComponents.MenuItem{
 				icon: Utils.iconApplication
-				text: "Open " + mpris2.identity
+				text: i18n("Open %1", mpris2.identity)
 				onClicked: action_raise()
 			}
 			PlasmaComponents.MenuItem{
 				icon: "window-close"
-				text: "Quit"
+				text: i18n("Quit")
 				onClicked: action_quit()
 			}
 			PlasmaComponents.MenuItem{
 				icon: "go-next"
-				text: "Next multimedia source"
+				text: i18n("Next multimedia source")
 				onClicked: action_nextSource()
 			}
+
 		}
 	}
 }
