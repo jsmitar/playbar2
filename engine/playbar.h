@@ -59,8 +59,6 @@ public Q_SLOTS:
 	void slotStop();
 	void slotNext();
 	void slotPrevious();
-	void slotVolumeUp();
-	void slotVolumeDown();
 	void slotToggleWinMediaPlayer();
 	void showSettings();
 
@@ -81,6 +79,7 @@ private:
 	QAction * m_volumeDown;
 	QAction * m_openMediaPlayer;
 	QAction * m_settingsAction;
+
 public:
 	QString mpris2_source = "@multiplex";
 };

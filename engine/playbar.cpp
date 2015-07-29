@@ -64,14 +64,6 @@ PlayBar::PlayBar (KSharedConfigPtr &config , QObject *parent)
 	m_previous->setText (i18n ("Previous track"));
 	KGlobalAccel::setGlobalShortcut (m_previous, Qt::Key_MediaPrevious);
 
-	m_volumeUp = m_collection->addAction (QLatin1String ("volume-up"), this, SLOT (slotVolumeUp()));
-	m_volumeUp->setText (i18n ("Volume up"));
-	KGlobalAccel::setGlobalShortcut (m_volumeUp, QKeySequence());
-
-	m_volumeDown = m_collection->addAction (QLatin1String ("volume-down"), this, SLOT (slotVolumeDown()));
-	m_volumeDown->setText (i18n ("Volume down"));
-	KGlobalAccel::setGlobalShortcut (m_volumeDown, QKeySequence());
-
 	m_openMediaPlayer = m_collection->addAction (QLatin1String ("toggle-mediaplayer"), this, SLOT (slotToggleWinMediaPlayer()));
 	m_openMediaPlayer->setText (i18n ("Toggle window media player"));
 	KGlobalAccel::setGlobalShortcut (m_openMediaPlayer, QKeySequence());
@@ -99,15 +91,6 @@ void PlayBar::slotNext()
 void PlayBar::slotPrevious()
 {
 	startOpOverMpris2 ("Previous");
-}
-
-void PlayBar::slotVolumeUp()
-{
-
-}
-
-void PlayBar::slotVolumeDown()
-{
 }
 
 void PlayBar::slotToggleWinMediaPlayer()
