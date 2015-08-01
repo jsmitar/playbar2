@@ -3,9 +3,9 @@
 
 #include "playbarsettings.h"
 
-#include <klocale.h>
-
+#include <KLocalizedString>
 #include <kglobal.h>
+
 #include <QtCore/QFile>
 
 class PlayBarSettingsHelper {

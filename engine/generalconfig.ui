@@ -22,16 +22,13 @@
     <height>300</height>
    </size>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QCheckBox" name="kcfg_ShowStop">
        <property name="text">
-        <string>Show stop</string>
+        <string>Show stop button</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -88,7 +85,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Tool button</string>
+           <string>T&amp;ool button</string>
           </property>
          </widget>
         </item>
@@ -110,7 +107,7 @@
         <bool>false</bool>
        </property>
        <property name="title">
-        <string>Hint background</string>
+        <string>Background hints</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -179,8 +176,8 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>20</width>
-       <height>40</height>
+       <width>100</width>
+       <height>10</height>
       </size>
      </property>
     </spacer>

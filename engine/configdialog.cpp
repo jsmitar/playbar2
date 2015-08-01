@@ -21,7 +21,7 @@
 
 #include <QPushButton>
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 #include "generalwidget.h"
 #include "playbarsettings.h"
@@ -30,11 +30,11 @@ ConfigDialog::ConfigDialog (KActionCollection *collection , QWidget *parent)
 	: KConfigDialog (parent, QLatin1String ("PlayBar Settings"), PlayBarSettings::self()),
 	  m_generalPage (new GeneralWidget (this))
 {
-	setWindowTitle (i18n ("Configure PlayBar"));
+	setWindowTitle ( i18n ("Configure PlayBar"));
 	m_shortcutsPage = new KShortcutsEditor (collection, this, KShortcutsEditor::GlobalAction);
 	setStandardButtons (QDialogButtonBox::Apply | QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
-	addPage (m_generalPage, i18nc ("General config", "General"), "applications-multimedia", i18nc ("General Config", "General"));
+	addPage (m_generalPage, i18nc ("General config", "General"), "applications-multimedia", i18nc ("General config", "General"));
 	addPage (m_shortcutsPage, i18nc ("Shortcuts config", "Shortcuts"), "configure-shortcuts", i18n ("Shortcuts Configuration"));
 
 	connect (this, SIGNAL (accepted()), this, SLOT (updateSettings()));

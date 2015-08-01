@@ -1,8 +1,9 @@
 #!/bin/sh
-BASEDIR="./plasmoid"			# root of translatable sources
-PROJECT="playbar"	# project name
-BUGADDR="https://github.com/audoban/PlayBar2"	# MSGID-Bugs
-WDIR=`pwd`                                  	# working dir
+echo  ${1:?Root of translatable sources}  ${2:?Project name}
+BASEDIR="$1"			# root of translatable sources
+PROJECT="$2"		# project name
+BUGADDR="https://github.com/audoban/PlayBar2"		# MSGID-Bugs
+WDIR=`pwd`																					# working dir
 
 
 echo "Preparing rc files"
@@ -11,8 +12,8 @@ cd ${BASEDIR}
 find . -name '*.rc' -o -name '*.ui' -o -name '*.kcfg' | sort > ${WDIR}/rcfiles.list
 xargs --arg-file=${WDIR}/rcfiles.list extractrc > ${WDIR}/rc.cpp
 # additional string for KAboutData
-echo 'i18nc("NAME OF TRANSLATORS","Your names");' >> ${WDIR}/rc.cpp
-echo 'i18nc("EMAIL OF TRANSLATORS","Your emails");' >> ${WDIR}/rc.cpp
+#echo 'i18nc("NAME OF TRANSLATORS","Your names");' >> ${WDIR}/rc.cpp
+#echo 'i18nc("EMAIL OF TRANSLATORS","Your emails");' >> ${WDIR}/rc.cpp
 cd ${WDIR}
 echo "Done preparing rc files"
 
@@ -31,7 +32,7 @@ echo "Done extracting messages"
 
 
 echo "Merging translations"
-catalogs=`find . -name '*.po'`
+catalogs=`find . -name "${PROJECT}.po"`
 for cat in $catalogs; do
   echo $cat
   msgmerge -o $cat.new $cat ${PROJECT}.pot

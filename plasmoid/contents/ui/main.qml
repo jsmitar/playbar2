@@ -29,7 +29,7 @@ Item {
 	//! dataengine
 	PlasmaCore.DataSource{
 		id: playbarEngine
-		engine: 'audoban.dataengine.playbar'
+		engine: 'playbar'
 		connectedSources: 'Provider'
 
 		readonly property bool showStop: hasSource('ShowStop') ? data[connectedSources[0]]['ShowStop'] : true

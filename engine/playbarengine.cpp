@@ -67,5 +67,5 @@ bool PlayBarEngine::updateSourceEvent (const QString &source)
 	return true;
 }
 
-K_EXPORT_PLASMA_DATAENGINE_WITH_JSON (playbarengine, PlayBarEngine, "plasma-dataengine-playbar.json")
+K_EXPORT_PLASMA_DATAENGINE_WITH_JSON (playbar, PlayBarEngine, "plasma-dataengine-playbar.json")
 #include "playbarengine.moc"

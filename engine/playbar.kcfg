@@ -14,7 +14,7 @@
 			   <default>true</default>
 		  </entry>
 		  <entry name="ControlsOnBar" type="Bool">
-			   <label>Controls on bar</label>
+			   <label>Playback controls on the bar</label>
 			   <default>true</default>
 		  </entry>
 		  <entry name="ButtonsAppearance" type="Enum">

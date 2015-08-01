@@ -22,6 +22,7 @@
 #include <QAction>
 #include <QIcon>
 
+#include <KLocalizedString>
 #include <KGlobalAccel>
 #include <KActionCollection>
 #include <Plasma/DataEngine>

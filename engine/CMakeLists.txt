@@ -1,5 +1,8 @@
 project(PlayBarEngine)
 
+add_definitions(-DTRANSLATION_DOMAIN=\"plasma_engine_playbar\")
+add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+
 set(playbar_engine_SRCS
 	configdialog.cpp
 	generalwidget.cpp
@@ -9,8 +12,8 @@ set(playbar_engine_SRCS
 	playbarservice.cpp
 	)
 
-ki18n_wrap_ui( playbar_engine_SRCS generalconfig.ui )
 kconfig_add_kcfg_files( playbar_engine_SRCS playbarsettings.kcfgc )
+ki18n_wrap_ui( playbar_engine_SRCS generalconfig.ui )
 add_library( plasma_engine_playbar MODULE ${playbar_engine_SRCS} )
 kcoreaddons_desktop_to_json( plasma_engine_playbar plasma-dataengine-playbar.desktop )
 
@@ -32,7 +35,7 @@ install(TARGETS plasma_engine_playbar
 install(FILES plasma-dataengine-playbar.desktop
 		DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
-install(FILES audoban.dataengine.playbar.operations
+install(FILES audoban.engine.playbar.operations
 		DESTINATION ${PLASMA_DATA_INSTALL_DIR}/services)
 
 install(FILES playbar.kcfg DESTINATION ${KCFG_INSTALL_DIR})

@@ -31,7 +31,7 @@ PlayBarService::PlayBarService (PlayBar *playbar, QObject *parent)
 	: Service (parent),
 	  m_playbar (playbar)
 {
-	setName (QLatin1Literal ("audoban.dataengine.playbar"));
+	setName (QLatin1Literal ("audoban.engine.playbar"));
 }
 
 PlayBarService::~PlayBarService()

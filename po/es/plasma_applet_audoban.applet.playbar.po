@@ -1,0 +1,59 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Smith AR <audoban@openmailbox.org>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
+"POT-Creation-Date: 2015-07-30 19:03-0500\n"
+"PO-Revision-Date: 2015-07-30 19:10-0500\n"
+"Last-Translator: Smith AR <audoban@openmailbox.org>\n"
+"Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: contents/ui/main.qml:123
+msgid "Configure PlayBar"
+msgstr "Configurar PlayBar"
+
+#: contents/ui/main.qml:134
+msgid "<b>By</b> %1 "
+msgstr "<b>Por</b> %1 "
+
+#: contents/ui/main.qml:136
+msgid "<b>On</b> %1"
+msgstr "<b>En</b> %1"
+
+#: contents/ui/main.qml:139
+msgid "Client MPRIS2, allows you to control your favorite media player"
+msgstr ""
+"Cliente para MPRIS2, le permite controlar su reproductor de audio favorito"
+
+#: contents/ui/Mpris2.qml:48
+msgid "No media player"
+msgstr "No hay medios"
+
+#: contents/ui/TitleBar.qml:59
+msgid "Open %1"
+msgstr "Abrir %1"
+
+#: contents/ui/TitleBar.qml:64
+msgid "Quit"
+msgstr "Salir"
+
+#: contents/ui/TitleBar.qml:69
+msgid "Next multimedia source"
+msgstr "Siguiente medio"
+
+#: contents/ui/TrackInfo.qml:135
+msgid "By"
+msgstr "Por"
+
+#: contents/ui/TrackInfo.qml:149
+msgid "On"
+msgstr "En"
