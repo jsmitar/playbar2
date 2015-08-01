@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
+"POT-Creation-Date: 2015-07-30 19:03-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: contents/ui/main.qml:123
+msgid "Configure PlayBar"
+msgstr ""
+
+#: contents/ui/main.qml:134
+msgid "<b>By</b> %1 "
+msgstr ""
+
+#: contents/ui/main.qml:136
+msgid "<b>On</b> %1"
+msgstr ""
+
+#: contents/ui/main.qml:139
+msgid "Client MPRIS2, allows you to control your favorite media player"
+msgstr ""
+
+#: contents/ui/Mpris2.qml:48
+msgid "No media player"
+msgstr ""
+
+#: contents/ui/TitleBar.qml:59
+msgid "Open %1"
+msgstr ""
+
+#: contents/ui/TitleBar.qml:64
+msgid "Quit"
+msgstr ""
+
+#: contents/ui/TitleBar.qml:69
+msgid "Next multimedia source"
+msgstr ""
+
+#: contents/ui/TrackInfo.qml:135
+msgid "By"
+msgstr ""
+
+#: contents/ui/TrackInfo.qml:149
+msgid "On"
+msgstr ""
