@@ -29,28 +29,27 @@
 
 #include "generalwidget.h"
 
-class ConfigDialog : public KConfigDialog
-{
+class ConfigDialog : public KConfigDialog {
 	Q_OBJECT
-public:
-	ConfigDialog( KActionCollection * collection, QWidget * parent = nullptr );
-
+  public:
+	ConfigDialog( KActionCollection *collection, QWidget *parent = nullptr );
+	
 	virtual ~ConfigDialog();
-
-protected Q_SLOTS:
+	
+  protected Q_SLOTS:
 	void updateSettings();
-
-private:
+	
+  private:
 	KSharedConfigPtr config() const;
-
-private:
-
-	GeneralWidget * m_generalPage;
-	KShortcutsEditor * m_shortcutsPage;
-
-public:
+	
+  private:
+  
+	GeneralWidget *m_generalPage;
+	KShortcutsEditor *m_shortcutsPage;
+	
+  public:
 	static const QString CONFIG_NAME;
-
+	
 };
 
 #endif // CONFIGDIALOG_H

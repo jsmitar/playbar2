@@ -27,30 +27,29 @@
 
 using namespace Plasma;
 
-class PlayBarEngine : public DataEngine
-{
+class PlayBarEngine : public DataEngine {
 	Q_OBJECT
-public:
-
-	PlayBarEngine( QObject * parent, const QVariantList &args );
-
+  public:
+  
+	PlayBarEngine( QObject *parent, const QVariantList &args );
+	
 	virtual ~PlayBarEngine();
-
-public:
-	virtual Service * serviceForSource( const QString &source );
-
-
-private Q_SLOTS:
+	
+  public:
+	virtual Service *serviceForSource( const QString &source );
+	
+	
+  private Q_SLOTS:
 	void updateData();
-
-protected:
+	
+  protected:
 	bool sourceRequestEvent( const QString &source ) override;
 	bool updateSourceEvent( const QString &source ) override;
-
-private:
-
+	
+  private:
+  
 	const QString PROVIDER = "Provider";
-	PlayBar * m_playbar;
+	PlayBar *m_playbar;
 };
 
 #endif // PLAYBARENGINE_H
