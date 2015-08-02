@@ -6,100 +6,91 @@
 #include <kconfigskeleton.h>
 #include <kdebug.h>
 
-class PlayBarSettings : public KConfigSkeleton
-{
+class PlayBarSettings : public KConfigSkeleton {
   public:
-
-    static PlayBarSettings *self();
-    ~PlayBarSettings();
-
-    /**
-      Set Show stop button
-    */
-    static
-    void setShowStop( bool v )
-    {
-      if (!self()->isImmutable( QString::fromLatin1( "ShowStop" ) ))
-        self()->mShowStop = v;
-    }
-
-    /**
-      Get Show stop button
-    */
-    static
-    bool showStop()
-    {
-      return self()->mShowStop;
-    }
-
-    /**
-      Set Controls on bar
-    */
-    static
-    void setControlsOnBar( bool v )
-    {
-      if (!self()->isImmutable( QString::fromLatin1( "ControlsOnBar" ) ))
-        self()->mControlsOnBar = v;
-    }
-
-    /**
-      Get Controls on bar
-    */
-    static
-    bool controlsOnBar()
-    {
-      return self()->mControlsOnBar;
-    }
-
-    /**
-      Set Buttons appearance
-    */
-    static
-    void setButtonsAppearance( int v )
-    {
-      if (!self()->isImmutable( QString::fromLatin1( "ButtonsAppearance" ) ))
-        self()->mButtonsAppearance = v;
-    }
-
-    /**
-      Get Buttons appearance
-    */
-    static
-    int buttonsAppearance()
-    {
-      return self()->mButtonsAppearance;
-    }
-
-    /**
-      Set Background hints
-    */
-    static
-    void setBackgroundHint( int v )
-    {
-      if (!self()->isImmutable( QString::fromLatin1( "BackgroundHint" ) ))
-        self()->mBackgroundHint = v;
-    }
-
-    /**
-      Get Background hints
-    */
-    static
-    int backgroundHint()
-    {
-      return self()->mBackgroundHint;
-    }
-
+  
+	static PlayBarSettings *self();
+	~PlayBarSettings();
+	
+	/**
+	  Set Show stop button
+	*/
+	static
+	void setShowStop( bool v ) {
+		if ( !self()->isImmutable( QString::fromLatin1( "ShowStop" ) ) )
+			self()->mShowStop = v;
+	}
+	
+	/**
+	  Get Show stop button
+	*/
+	static
+	bool showStop() {
+		return self()->mShowStop;
+	}
+	
+	/**
+	  Set Playback controls on the bar
+	*/
+	static
+	void setControlsOnBar( bool v ) {
+		if ( !self()->isImmutable( QString::fromLatin1( "ControlsOnBar" ) ) )
+			self()->mControlsOnBar = v;
+	}
+	
+	/**
+	  Get Playback controls on the bar
+	*/
+	static
+	bool controlsOnBar() {
+		return self()->mControlsOnBar;
+	}
+	
+	/**
+	  Set Buttons appearance
+	*/
+	static
+	void setButtonsAppearance( int v ) {
+		if ( !self()->isImmutable( QString::fromLatin1( "ButtonsAppearance" ) ) )
+			self()->mButtonsAppearance = v;
+	}
+	
+	/**
+	  Get Buttons appearance
+	*/
+	static
+	int buttonsAppearance() {
+		return self()->mButtonsAppearance;
+	}
+	
+	/**
+	  Set Background hints
+	*/
+	static
+	void setBackgroundHint( int v ) {
+		if ( !self()->isImmutable( QString::fromLatin1( "BackgroundHint" ) ) )
+			self()->mBackgroundHint = v;
+	}
+	
+	/**
+	  Get Background hints
+	*/
+	static
+	int backgroundHint() {
+		return self()->mBackgroundHint;
+	}
+	
   protected:
-    PlayBarSettings();
-    friend class PlayBarSettingsHelper;
-
-
-    // General
-    bool mShowStop;
-    bool mControlsOnBar;
-    int mButtonsAppearance;
-    int mBackgroundHint;
-
+	PlayBarSettings();
+	friend class PlayBarSettingsHelper;
+	
+	
+	// General
+	bool mShowStop;
+	bool mControlsOnBar;
+	int mButtonsAppearance;
+	int mBackgroundHint;
+	
   private:
 };
 

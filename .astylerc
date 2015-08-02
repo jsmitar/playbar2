@@ -1,9 +1,30 @@
---indent-col1-comments
---pad-paren-in
---unpad-paren
---errors-to-stdout
---indent=tab=4
---indent=force-tab=4
--A8
---align-pointer=middle
---align-reference=name
+#BracketStyleOptions
+	--style=attach
+	--keep-one-line-blocks
+	--keep-one-line-statements
+
+#TabOptions
+	--indent=force-tab=4
+
+#BracketModifyOptions
+	--attach-namespaces
+	--attach-inlines
+
+#IndentationOptions
+	--indent-modifiers
+	--indent-switches
+#	--indent-preproc-block
+	--indent-preproc-define
+	--indent-col1-comments
+	--min-conditional-indent=2
+	--max-instatement-indent=40#default40
+	--break-blocks
+	--pad-oper
+	--pad-paren-in
+	--pad-header
+	--fill-empty-lines
+	--align-pointer=name
+	--remove-brackets
+	--keep-one-line-blocks
+	--keep-one-line-statements
+	--close-templates
