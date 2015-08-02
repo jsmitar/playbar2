@@ -1,9 +1,9 @@
 #!/bin/sh
 echo  ${1:?Root of translatable sources}  ${2:?Project name}
-BASEDIR="$1"			# root of translatable sources
+BASEDIR="$1"		# root of translatable sources
 PROJECT="$2"		# project name
-BUGADDR="https://github.com/audoban/PlayBar2"		# MSGID-Bugs
-WDIR=`pwd`																					# working dir
+BUGADDR="https://github.com/audoban/PlayBar2"	# MSGID-Bugs
+WDIR=`pwd`										# working dir
 
 
 echo "Preparing rc files"

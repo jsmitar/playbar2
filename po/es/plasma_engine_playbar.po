@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
 "POT-Creation-Date: 2015-07-30 22:10-0500\n"
-"PO-Revision-Date: 2015-07-30 22:20-0500\n"
+"PO-Revision-Date: 2015-08-01 15:30-0500\n"
 "Last-Translator: Smith AR <audoban@openmailbox.org>\n"
 "Language-Team: Spanish <>\n"
 "Language: es\n"
@@ -87,7 +87,7 @@ msgstr "Sugerencias de fondo"
 #. i18n: ectx: label, entry (ControlsOnBar), group (General)
 #: rc.cpp:6 rc.cpp:33
 msgid "Playback controls on the bar"
-msgstr "Controles de reproducción en barra"
+msgstr "Controles de reproducción en linea"
 
 #. i18n: file: generalconfig.ui:57
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_ButtonsAppearance)
@@ -124,4 +124,5 @@ msgstr "Norm&al"
 #: rc.cpp:27
 msgid "Transl&ucent"
 msgstr "&Translúcido"
+
 
