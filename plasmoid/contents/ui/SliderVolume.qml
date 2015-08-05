@@ -28,6 +28,7 @@ RowLayout{
 
 	Layout.fillWidth: true
 	Layout.fillHeight: true
+	Layout.minimumHeight: implicitHeight + units.smallSpacing * 2
 
 	property alias labelVisible: label.visible
 	property alias iconVisible: icon.visible

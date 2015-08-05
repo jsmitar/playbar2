@@ -26,6 +26,8 @@ import "../code/utils.js" as Utils
 
 RowLayout{
 	Layout.minimumHeight: implicitHeight + units.smallSpacing
+	Layout.fillWidth: true
+	Layout.fillHeight: true
 
 	PlasmaExtras.Heading{
 		id: titleBar
@@ -69,7 +71,6 @@ RowLayout{
 				text: i18n("Next multimedia source")
 				onClicked: action_nextSource()
 			}
-
 		}
 	}
 }

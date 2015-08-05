@@ -71,7 +71,7 @@ Flow{
 	}
 
 	Timer{
-		//HACK: For PopupApplet in Notification
+		//HACK: For PopupApplet in Notification Area
 		running: playbackBar.visible
 		interval: 100
 		onTriggered: {

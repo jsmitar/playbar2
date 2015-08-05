@@ -18,7 +18,7 @@
  */
 
 import QtQuick 2.4
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 RowLayout{
@@ -27,6 +27,7 @@ RowLayout{
 
 	Layout.fillWidth: true
 	Layout.fillHeight: true
+	Layout.minimumHeight: implicitHeight + units.smallSpacing * 2
 
 	property int maxLabelWidth: Math.max(labelRight.Layout.minimumWidth, labelLeft.Layout.minimumWidth)
 

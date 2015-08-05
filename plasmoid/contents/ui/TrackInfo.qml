@@ -47,8 +47,9 @@ GridLayout {
 
 		wrapMode: scrollTitle.scrolling ? Text.NoWrap : Text.WrapAnywhere
 		elide: scrollTitle.scrolling ? Text.ElideNone : Text.ElideRight
+		verticalAlignment: Text.AlignVCenter
 		maximumLineCount: 1
-		lineHeight: 1.1
+		lineHeight: 1.2
 
 		Layout.fillWidth: true
 		Layout.fillHeight: false
@@ -82,6 +83,7 @@ GridLayout {
 
 		wrapMode: scrollArtist.scrolling ? Text.NoWrap : Text.WrapAnywhere
 		elide: scrollArtist.scrolling ? Text.ElideNone : Text.ElideRight
+		verticalAlignment: Text.AlignVCenter
 		maximumLineCount: 1
 		lineHeight: 1.1
 
@@ -116,6 +118,7 @@ GridLayout {
 
 		wrapMode: scrollAlbum.scrolling ? Text.NoWrap : Text.WrapAnywhere
 		elide: scrollAlbum.scrolling ? Text.ElideNone : Text.ElideRight
+		verticalAlignment: Text.AlignVCenter
 		maximumLineCount: 1
 		lineHeight: 1.1
 

@@ -38,12 +38,14 @@ Item {
 		readonly property int  backgroundHint: hasSource('BackgroundHint') ? data[connectedSources[0]]['BackgroundHint'] : 1
 
 		function startOperation(name){
+			if (!playbarEngine.valid) return
 			var service = playbarEngine.serviceForSource('Provider')
 			var job = service.operationDescription(name)
 			service.startOperationCall(job)
 		}
 
 		function setSource(name){
+			if (!playbarEngine.valid) return
 			var service = playbarEngine.serviceForSource('Provider')
 			var job = service.operationDescription('SetSourceMpris2')
 			job['source'] = name
@@ -63,12 +65,12 @@ Item {
 	Plasmoid.compactRepresentation: CompactApplet{ id: compact }
 	Plasmoid.fullRepresentation: DefaultLayout{ id: full }
 
-	Plasmoid.preferredRepresentation: plasmoid.formFactor == 0
-		? Plasmoid.fullRepresentation
-		: Plasmoid.compactRepresentation
+	//Plasmoid.preferredRepresentation: //plasmoid.formFactor == 0 ? 
+		//Plasmoid.fullRepresentation
+		//Plasmoid.compactRepresentation
 
 	Plasmoid.icon: internal.icon
-	Plasmoid.title: mpris2.identity
+//	Plasmoid.title: mpris2.identity
 	Plasmoid.toolTipMainText: internal.title
 	Plasmoid.toolTipSubText: internal.subText
 	Plasmoid.backgroundHints: playbarEngine.backgroundHint
@@ -76,18 +78,10 @@ Item {
 
 	Connections{
 		target: plasmoid
-		onFormFactorChanged: {
-		debug("FormFactor: " + plasmoid.formFactor)
-			if(plasmoid.formFactor == 0){
-				Plasmoid.expanded = true
-				Plasmoid.preferredRepresentation = Plasmoid.fullRepresentation
-			}else{
-				plasmoid.expanded = false
-			}
-		}
+		onFormFactorChanged: debug("FormFactor", plasmoid.formFactor)
 	}
 
-	function debug(str){ console.debug("PlayBar2: " + str) }
+	function debug(str, msg){ console.debug("PlayBar2 " + str + ": " + msg) }
 
 
 	//###########################
@@ -111,16 +105,13 @@ Item {
 
 
 	Component.onCompleted:{
-		debug("Loading PlayBar ...")
-		debug("Location: " + Plasmoid.location)
-		debug("title plasmoid:" + Plasmoid.title)
-		debug("i18n" + i18n)
 		plasmoid.formFactorChanged()
 		//NOTE: Init Utils
 		Utils.plasmoid = plasmoid
 		Utils.i18n = i18n
 		plasmoid.removeAction('configure')
 		plasmoid.setAction('configure', i18n("Configure PlayBar"), 'configure', "alt+d, s")
+		Plasmoid.setImmutability(PlasmaCore.Types.UserImmutable)
     }
 
 	QtObject{

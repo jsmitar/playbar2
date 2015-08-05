@@ -26,9 +26,9 @@ Rectangle{
 
 	width: units.iconSizes.enormous
 	height: units.iconSizes.enormous
-	color: Utils.adjustAlpha(theme.complementaryBackgroundColor, 0.4)
+	color: Utils.adjustAlpha(theme.complementaryBackgroundColor, 0.3)
 	radius: 2
-	opacity: 0.1
+	opacity: 0.3
 
 	border{
 		width: 1
@@ -38,7 +38,7 @@ Rectangle{
 	OpacityAnimator on opacity{
 		id: appear
 		running: false
-		from: 0.1
+		from: 0.3
 		to: 1.0
 		duration: units.longDuration
 	}
@@ -52,11 +52,11 @@ Rectangle{
 	}
 
 	Layout.minimumWidth: height
-	Layout.minimumHeight: units.iconSizes.huge
-	Layout.preferredWidth: units.iconSizes.enormous
-	Layout.preferredHeight: units.iconSizes.enormous
+	Layout.minimumHeight: units.iconSizes.enormous * 0.8
+	Layout.preferredWidth: units.iconSizes.enormous * 0.8
+	Layout.preferredHeight: units.iconSizes.enormous * 0.8
 	Layout.maximumWidth: height
-	Layout.maximumHeight: units.iconSizes.enormous * 1.2
+	Layout.maximumHeight: units.iconSizes.enormous
 	Layout.fillHeight: true
 	Layout.fillWidth: false
 
@@ -80,11 +80,11 @@ Rectangle{
 		onStatusChanged:{
 			if(status == Image.Ready && mpris2.artUrl != "")
 				appear.start()
-			else if(status == Image.Null)
+			else if(status === Image.Null)
 				fade.start()
-			else if(status == Image.Error){
+			else if(status === Image.Error){
 				fade.start()
-				debug("Err on CoverArt: " + mpris2.artUrl)
+				debug("Err on CoverArt", mpris2.artUrl)
 			}else
 				fade.start()
 		}

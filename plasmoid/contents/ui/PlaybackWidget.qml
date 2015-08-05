@@ -35,6 +35,7 @@ PlaybackItem{
 
 	Layout.fillWidth: true
 	Layout.fillHeight: true
+	Layout.maximumHeight: buttons.implicitHeight
 	Layout.alignment: Qt.AlignBottom | Qt.AlignLeft
 
 	onPlayingChanged: {

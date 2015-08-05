@@ -32,8 +32,8 @@ IconWidget{
 
 	QtObject{
 		id: svgSource
-		property var arrows: PlasmaCore.Svg{ imagePath: "widgets/arrows" }
-		property var media: PlasmaCore.Svg{ imagePath: "icons/media" }
+		readonly property var arrows: PlasmaCore.Svg{ imagePath: "widgets/arrows" }
+		readonly property var media: PlasmaCore.Svg{ imagePath: "icons/media" }
 		function playbackIcon(){
 			var icon
 			if(mpris2.playbackStatus == "Playing")

@@ -80,7 +80,7 @@ PlasmaCore.DataSource{
 
 	Component.onCompleted: nextSource()
 
-	onIntervalChanged: debug("interval: "+interval)
+	onIntervalChanged: debug("interval", interval)
 
 	onIdentityChanged:{
 		if(source.length > 0) Utils.setActions(source[0], identity)
@@ -100,8 +100,8 @@ PlasmaCore.DataSource{
 	}
 
 	onSourceAdded: {
-		debug("Source added: " + source)
-		debug("sources: "+ sources)
+		debug("Source added", source)
+		debug("sources", sources)
 
 		if(source != '@multiplex' && connectedSources.length == 0) {
 			connectSource(source)
@@ -117,14 +117,14 @@ PlasmaCore.DataSource{
 
 	onSourceConnected: {
 		setService(source)
-		debug("Source connected: "+source)
-		debug("valid engine: "+ valid)
+		debug("Source connected", source)
+		debug("Valid engine", valid)
 	}
 
 	onSourceDisconnected: {
 		setService(null)
 		previousSource = source
-		debug("disconnected: "+source)
+		debug("Disconnected", source)
 	}
 
 	onConnectedSourcesChanged: { setService(source[0]) }
@@ -147,7 +147,6 @@ PlasmaCore.DataSource{
 	}
 
 	function nextSource(){
-		debug("nextSource()")
 		for(var i = 0; i < sources.length; i++){
 			if(connectedSources[0] === sources[i] || connectedSources == [""] || connectedSources == "")
 			{
@@ -172,7 +171,7 @@ PlasmaCore.DataSource{
 	function setService(source){
 		if(!source) service = null
 		service = mpris2.serviceForSource(source)
-		debug("service active: " + (service != null))
+		debug("Service active", (service != null))
 	}
 
 	function seek(position, currentPosition){
@@ -199,7 +198,6 @@ PlasmaCore.DataSource{
 
 	function setVolume(value){
 		if(service && canControl && service.isOperationEnabled('SetVolume')){
-			debug(value.toString())
 			var job = service.operationDescription('SetVolume')
 			job['level'] = value
 			service.startOperationCall(job)
