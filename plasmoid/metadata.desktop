@@ -2,8 +2,8 @@
 Name=PlayBar
 Comment=Client MPRIS2, allows you to control your favorite media player
 Comment[es]=Cliente para MPRIS2, le permite controlar su reproductor de audio favorito
-Comment[ru]=Клиент MPRIS2, позволяет управлять вашим любимым медиа-плеером
-Comment[pl]=<polish comment>
+Comment[ru]=Клиент MPRIS2, позволяет управлять вашим мультимедиа-проигрывателем
+Comment[pl]=Klient MPRIS2 pozwala ci kontrolować ulubiony odtwarzacz multimedialny
 Comment[pt]=<portuguese comment>
 
 Encoding=UTF-8
