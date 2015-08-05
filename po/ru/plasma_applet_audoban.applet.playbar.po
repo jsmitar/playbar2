@@ -28,7 +28,7 @@ msgstr "<b>от</b>"
 
 #: contents/ui/main.qml:136
 msgid "<b>On</b> %1"
-msgstr "<b>на</b>"
+msgstr "<b>из</b>"
 
 #: contents/ui/main.qml:139
 msgid "Client MPRIS2, allows you to control your favorite media player"
@@ -56,5 +56,5 @@ msgstr "от"
 
 #: contents/ui/TrackInfo.qml:149
 msgid "On"
-msgstr "на"
+msgstr "из"
 
