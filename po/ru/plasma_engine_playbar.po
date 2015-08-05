@@ -62,7 +62,7 @@ msgstr "Показать окно проигрывателя"
 #. i18n: ectx: label, entry (ShowStop), group (General)
 #: playbarsettings.cpp:39 rc.cpp:3 rc.cpp:30
 msgid "Show stop button"
-msgstr "Показываеть кнопку стоп"
+msgstr "Показать кнопку стоп"
 
 #: playbarsettings.cpp:43
 msgid "Controls on bar"
@@ -88,7 +88,7 @@ msgstr "Фоновые подсказки"
 #. i18n: ectx: label, entry (ControlsOnBar), group (General)
 #: rc.cpp:6 rc.cpp:33
 msgid "Playback controls on the bar"
-msgstr "Управление проигрываением на панели"
+msgstr "Управление переключением на панели"
 
 #. i18n: file: generalconfig.ui:57
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_ButtonsAppearance)
