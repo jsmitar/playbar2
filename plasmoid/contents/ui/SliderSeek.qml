@@ -27,7 +27,7 @@ RowLayout{
 
 	Layout.fillWidth: true
 	Layout.fillHeight: true
-	Layout.minimumHeight: implicitHeight + units.smallSpacing * 2
+	Layout.minimumHeight: implicitHeight + units.smallSpacing
 
 	property int maxLabelWidth: Math.max(labelRight.Layout.minimumWidth, labelLeft.Layout.minimumWidth)
 
