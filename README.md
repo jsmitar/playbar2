@@ -42,5 +42,5 @@ PlayBar also supports keyboard shortcuts and these come with a default configura
 
 ![Shortcuts](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_keys.png)
 
-## Help me to translate!
+# Help me to translate!
 If you want to add a language, please follow this  __[thread.](https://github.com/audoban/PlayBar2/issues/1)__
