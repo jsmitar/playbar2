@@ -106,13 +106,13 @@ Item {
 
 
 	Component.onCompleted:{
-		plasmoid.formFactorChanged()
+		debug("Theme", theme.themeName)
+		Plasmoid.formFactorChanged()
 		//NOTE: Init Utils
 		Utils.plasmoid = plasmoid
 		Utils.i18n = i18n
-		plasmoid.removeAction('configure')
-		plasmoid.setAction('configure', i18n("Configure PlayBar"), 'configure', "alt+d, s")
-		Plasmoid.setImmutability(PlasmaCore.Types.UserImmutable)
+		Plasmoid.removeAction('configure')
+		Plasmoid.setAction('configure', i18n("Configure PlayBar"), 'configure', "alt+d, s")
     }
 
 	QtObject{

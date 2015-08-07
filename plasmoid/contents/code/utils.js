@@ -68,6 +68,51 @@ function adjustAlpha(clr, a) {
 	return Qt.rgba(clr.r, clr.g, clr.b, a);
 }
 
+// Hue: 0..1
+// Saturation: 0..1
+// Lightness: -1..1
+function rgbToHsl(clr){
+	
+	//The RGB values are divided by 255 to change the range from 0..255 to 0..1 
+	var R = clr.r
+	var G = clr.g
+	var B = clr.b
+	
+	var Cmax = Math.max(R, G, B)
+	var Cmin = Math.min(R, G, B)
+	
+	var diff = Cmax - Cmin
+	
+	//Hue calculation
+	var H
+	if ( diff.toPrecision(3) == 0.0 ) H = 0
+	else {
+		switch(Cmax){
+			case R:
+				H = Math.mod( ( G - B ) / diff, 6 )
+				break;
+			case G:
+				H = ( B - R ) / diff + 2
+				break;
+			case B:
+				H = ( R - G ) / diff + 4
+				break;
+		}
+		H /= 6
+	}
+	
+	//Lightness calculation	
+	var L = (Cmax + Cmin) - 1
+	
+	//Saturation calculation
+	var S = 0
+	if ( diff.toPrecision(3) != 0.0 ){
+		S = diff / ( ( L <= 0.0 ) ? ( Cmax + Cmin ) : ( 2 - Cmax - Cmin ) )
+	}
+
+	return { h: H, s: S, l: L }
+}
+
 function truncate(n){
 	return n | 0
 }
