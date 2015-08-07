@@ -19,6 +19,7 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
+import org.kde.plasma.core 2.0 as PlasmaCore
 import "../code/utils.js" as Utils
 
 Rectangle{
@@ -30,6 +31,15 @@ Rectangle{
 	radius: 2
 	opacity: 0.3
 
+	Layout.minimumWidth: height
+	Layout.minimumHeight: units.iconSizes.enormous
+	Layout.preferredWidth: units.iconSizes.enormous 
+	Layout.preferredHeight: units.iconSizes.enormous 
+	Layout.maximumWidth: height
+	Layout.maximumHeight: units.iconSizes.enormous
+	Layout.fillHeight: true
+	Layout.fillWidth: false
+	
 	border{
 		width: 1
 		color: color
@@ -38,6 +48,7 @@ Rectangle{
 	OpacityAnimator on opacity{
 		id: appear
 		running: false
+		alwaysRunToEnd: true
 		from: 0.3
 		to: 1.0
 		duration: units.longDuration
@@ -46,19 +57,12 @@ Rectangle{
 	OpacityAnimator on opacity{
 		id: fade
 		running: false
+		alwaysRunToEnd: true
 		from: 1.0
-		to: 0.1
-		duration: units.shortDuration
+		to: 0.3
+		duration: units.longDuration
 	}
 
-	Layout.minimumWidth: height
-	Layout.minimumHeight: units.iconSizes.enormous * 0.8
-	Layout.preferredWidth: units.iconSizes.enormous * 0.8
-	Layout.preferredHeight: units.iconSizes.enormous * 0.8
-	Layout.maximumWidth: height
-	Layout.maximumHeight: units.iconSizes.enormous
-	Layout.fillHeight: true
-	Layout.fillWidth: false
 
 	Image{
 		id: cover
@@ -77,16 +81,34 @@ Rectangle{
 		horizontalAlignment: Image.AlignHCenter
 		verticalAlignment: Image.AlignVCenter
 
-		onStatusChanged:{
-			if(status == Image.Ready && mpris2.artUrl != "")
+		onStatusChanged: {
+			if( status === Image.Ready )
 				appear.start()
-			else if(status === Image.Null)
+			else if( status === Image.Null || status === Image.Error ){
 				fade.start()
-			else if(status === Image.Error){
-				fade.start()
-				debug("Err on CoverArt", mpris2.artUrl)
-			}else
-				fade.start()
+				debug("Fade on CoverArt", status )
+			}
 		}
+	}
+	
+	PlasmaCore.IconItem {
+		id: noCover
+		
+		anchors.centerIn: parent
+		width: parent.width - 2
+		height: parent.height - 2
+		
+		source: "tools-rip-audio-cd"
+		smooth: true
+		
+		visible: cover.status !== Image.Ready || !mpris2.sourceActive
+		
+	}
+	
+	MouseArea{
+		id: toggleWindow
+		anchors.fill: parent
+		acceptedButtons: Qt.LeftButton
+		onClicked: action_raise()
 	}
 }

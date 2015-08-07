@@ -31,8 +31,6 @@ Item{
 
     enabled: mpris2.sourceActive && mpris2.canControl
 
-    visible: mpris2.sourceActive
-
     signal playPause()
 
     signal previous()

@@ -90,7 +90,8 @@ GridLayout{
 		source: page
 		radius: 8.0
 		fast: true
-		color: "#99888888"
+		spread: 0.3
+		color: theme.complementaryBackgroundColor
 		anchors.fill: source
 	}
 }

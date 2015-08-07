@@ -32,7 +32,7 @@ GridLayout {
 	clip: true
 	focus: false
 	Layout.minimumWidth: units.iconSizes.enormous * 1.5
-	Layout.minimumHeight: implicitHeight
+	Layout.minimumHeight: units.iconSizes.huge
 	Layout.fillWidth: true
 	Layout.fillHeight: true
 	Layout.alignment: Qt.AlignLeft | Qt.AlignTop

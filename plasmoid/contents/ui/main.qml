@@ -65,9 +65,10 @@ Item {
 	Plasmoid.compactRepresentation: CompactApplet{ id: compact }
 	Plasmoid.fullRepresentation: DefaultLayout{ id: full }
 
-	//Plasmoid.preferredRepresentation: //plasmoid.formFactor == 0 ? 
-		//Plasmoid.fullRepresentation
-		//Plasmoid.compactRepresentation
+	// NOTE: This is necessary ?
+	Plasmoid.preferredRepresentation: plasmoid.formFactor == 0 ? 
+		  Plasmoid.fullRepresentation
+		: Plasmoid.compactRepresentation
 
 	Plasmoid.icon: internal.icon
 //	Plasmoid.title: mpris2.identity

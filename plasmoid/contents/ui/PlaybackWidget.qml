@@ -26,6 +26,8 @@ PlaybackItem{
 	id: playbackWidget
 
 	property int buttonsAppearance: playbarEngine.buttonsAppearance
+	
+	visible: true
 
 	buttonSize: units.iconSizes.medium
 
