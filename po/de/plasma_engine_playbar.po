@@ -1,0 +1,128 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Tomasz Przybył <fademind@gmail.com>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
+"POT-Creation-Date: 2015-07-30 22:10-0500\n"
+"PO-Revision-Date: 2015-08-02 07:57+0100\n"
+"Last-Translator: Tomasz Przybył <fademind@gmail.com>\n"
+"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: configdialog.cpp:33
+msgid "Configure PlayBar"
+msgstr "Ustawienia"
+
+#: configdialog.cpp:37
+msgctxt "General config"
+msgid "General"
+msgstr "Ogólne"
+
+#: configdialog.cpp:38
+msgctxt "Shortcuts config"
+msgid "Shortcuts"
+msgstr "Skróty"
+
+#: configdialog.cpp:38
+msgid "Shortcuts Configuration"
+msgstr "Konfiguracja skrótów"
+
+#: playbar.cpp:50
+msgid "Play/Pause"
+msgstr "Odtwarzaj/Pauza"
+
+#: playbar.cpp:55
+msgid "Stop"
+msgstr "Stop"
+
+#: playbar.cpp:60
+msgid "Next track"
+msgstr "Następny utwór"
+
+#: playbar.cpp:65
+msgid "Previous track"
+msgstr "Poprzedni utwór"
+
+#: playbar.cpp:69
+msgid "Toggle window media player"
+msgstr "Przywołaj okno odtwarzacza"
+
+#. i18n: file: generalconfig.ui:31
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowStop)
+#. i18n: file: playbar.kcfg:13
+#. i18n: ectx: label, entry (ShowStop), group (General)
+#: playbarsettings.cpp:39 rc.cpp:3 rc.cpp:30
+msgid "Show stop button"
+msgstr "Pokaż przycisk stop"
+
+#: playbarsettings.cpp:43
+msgid "Controls on bar"
+msgstr "Kontrolki na pasku"
+
+#. i18n: file: playbar.kcfg:21
+#. i18n: ectx: label, entry (ButtonsAppearance), group (General)
+#: playbarsettings.cpp:48 rc.cpp:36
+msgid "Buttons appearance"
+msgstr "Wygląd przycisków"
+
+#. i18n: file: generalconfig.ui:110
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BackgroundHint)
+#. i18n: file: playbar.kcfg:25
+#. i18n: ectx: label, entry (BackgroundHint), group (General)
+#: playbarsettings.cpp:53 rc.cpp:18 rc.cpp:39
+msgid "Background hints"
+msgstr "Podpowiedzi w tle"
+
+#. i18n: file: generalconfig.ui:41
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ControlsOnBar)
+#. i18n: file: playbar.kcfg:17
+#. i18n: ectx: label, entry (ControlsOnBar), group (General)
+#: rc.cpp:6 rc.cpp:33
+msgid "Playback controls on the bar"
+msgstr "Przyciski kontrolne na pasku"
+
+#. i18n: file: generalconfig.ui:57
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_ButtonsAppearance)
+#: rc.cpp:9
+msgid "Buttons appareance"
+msgstr "Wygląd przycisków"
+
+#. i18n: file: generalconfig.ui:72
+#. i18n: ectx: property (text), widget (QRadioButton, flat)
+#: rc.cpp:12
+msgid "F&lat"
+msgstr "Płaski"
+
+#. i18n: file: generalconfig.ui:88
+#. i18n: ectx: property (text), widget (QRadioButton, toolbutton)
+#: rc.cpp:15
+msgid "T&ool button"
+msgstr "Przycisk narzędziowy"
+
+#. i18n: file: generalconfig.ui:131
+#. i18n: ectx: property (text), widget (QRadioButton, nobackground)
+#: rc.cpp:21
+msgid "No bac&kground"
+msgstr "Bez tła"
+
+#. i18n: file: generalconfig.ui:144
+#. i18n: ectx: property (text), widget (QRadioButton, normal)
+#: rc.cpp:24
+msgid "Nor&mal"
+msgstr "Normalny"
+
+#. i18n: file: generalconfig.ui:163
+#. i18n: ectx: property (text), widget (QRadioButton, translucent)
+#: rc.cpp:27
+msgid "Transl&ucent"
+msgstr "Przezroczysty"
+
