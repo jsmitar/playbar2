@@ -78,8 +78,8 @@ msgstr "Erscheinungsbild der Knöpfe"
 #. i18n: file: playbar.kcfg:25
 #. i18n: ectx: label, entry (BackgroundHint), group (General)
 #: playbarsettings.cpp:53 rc.cpp:18 rc.cpp:39
-msgid "Hintergrundinformationen"
-msgstr "Podpowiedzi w tle"
+msgid "Background hints"
+msgstr "Hintergrundinformationen"
 
 #. i18n: file: generalconfig.ui:41
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ControlsOnBar)
