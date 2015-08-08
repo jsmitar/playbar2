@@ -20,14 +20,15 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import QtGraphicalEffects 1.0
+import org.kde.plasma.core 2.0 as PlasmaCore
 
 //###########
 // DefaultLayout
 //###########
 
-Item{
+Item {
 	readonly property double num_aureo: 1.618033988749895
-	
+
  	Layout.fillHeight: true
  	Layout.fillWidth: true
  	Layout.minimumWidth: page.implicitHeight * num_aureo
@@ -35,12 +36,12 @@ Item{
  	Layout.preferredWidth: page.implicitHeight * num_aureo
  	Layout.preferredHeight: page.implicitHeight
 
- 	
-GridLayout{
+
+GridLayout {
 	id: page
 	width: parent.width
 	height: parent.height
-	
+
  	rowSpacing: units.smallSpacing
  	columnSpacing: units.largeSpacing
  	Layout.minimumWidth: implicitHeight * num_aureo
@@ -48,45 +49,45 @@ GridLayout{
  	Layout.maximumHeight: implicitHeight
  	Layout.fillWidth: true
  	Layout.fillHeight: false
- 	
+
 	columns: 2
 	rows: 5
 
-	TitleBar{
+	TitleBar {
 		Layout.row: 0
 		Layout.columnSpan: 2
 	}
-	CoverArt{
+	CoverArt {
 		id: cover
 		Layout.row: 1
  		Layout.rowSpan: 2
 		Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 		focus: true
 	}
-	TrackInfo{
+	TrackInfo {
 		Layout.row: 1
 		Layout.column: 1
  		Layout.fillHeight: false
 	}
-	PlaybackWidget{
+	PlaybackWidget {
 		id: playback
 		Layout.row: 2
-		Layout.column: 1	
+		Layout.column: 1
 		Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 	}
-	SliderVolume{
+	SliderVolume {
 		Layout.row: 3
 		Layout.columnSpan: 2
 		Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 	}
-	SliderSeek{
+	SliderSeek {
 		Layout.row: 4
 		Layout.columnSpan: 2
 		Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 	}
 
-	layer.enabled: playbarEngine.backgroundHint == 0 && plasmoid.formFactor == 0
-	layer.effect: DropShadow{
+	layer.enabled: playbarEngine.backgroundHint === 0 && plasmoid.formFactor === PlasmaCore.Types.Planar
+	layer.effect: DropShadow {
 		source: page
 		radius: 8.0
 		fast: true

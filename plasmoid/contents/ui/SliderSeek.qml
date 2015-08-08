@@ -21,7 +21,7 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
-RowLayout{
+RowLayout {
 
 	spacing: units.smallSpacing
 
@@ -29,9 +29,9 @@ RowLayout{
 	Layout.fillHeight: true
 	Layout.minimumHeight: implicitHeight + units.smallSpacing
 
-	property int maxLabelWidth: Math.max(labelRight.Layout.minimumWidth, labelLeft.Layout.minimumWidth)
+	property int maxLabelWidth: Math.max( labelRight.Layout.minimumWidth, labelLeft.Layout.minimumWidth )
 
-	TimeLabel{
+	TimeLabel {
 		id: labelLeft
 		currentTime: slider.value
 		interactive: false
@@ -40,7 +40,7 @@ RowLayout{
 		Layout.minimumWidth: units.largeSpacing * 2.5
 	}
 
-	PlasmaComponents.Slider{
+	PlasmaComponents.Slider {
 		id: slider
 
 		activeFocusOnPress: false
@@ -48,18 +48,18 @@ RowLayout{
 		value: 0
 		stepSize: 100
 		enabled: maximumValue != 0
-		onValueChanged: if(pressed) mpris2.seek(value)
+		onValueChanged: if ( pressed ) mpris2.seek( value )
 
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		Connections{
+		Connections {
 			target: mpris2
 			onPositionChanged: {
-				if(!slider.pressed) slider.value = mpris2.position
+				if ( !slider.pressed ) slider.value = mpris2.position
 				wheelArea.previousValue = mpris2.position
 			}
 		}
-		MouseArea{
+		MouseArea {
 			id: wheelArea
 			acceptedButtons: Qt.XButton1 | Qt.XButton2
 			anchors.fill: parent
@@ -68,17 +68,17 @@ RowLayout{
 
 			onWheel: {
 				accepted: true
-				if(wheel.angleDelta.y > 50)
-					previousValue = mpris2.seek(previousValue + 500)
-				else if(wheel.angleDelta.y < -50)
-					previousValue = mpris2.seek(previousValue - 500)
+				if ( wheel.angleDelta.y > 50 )
+					previousValue = mpris2.seek( previousValue + 500 )
+				else if ( wheel.angleDelta.y < -50 )
+					previousValue = mpris2.seek( previousValue - 500 )
 				else return
 				slider.value = previousValue
 			}
 		}
 	}
 
-	TimeLabel{
+	TimeLabel {
 		id: labelRight
 		currentTime: slider.value
 		interactive: true

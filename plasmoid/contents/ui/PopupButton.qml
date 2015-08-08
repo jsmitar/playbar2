@@ -21,79 +21,79 @@ import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.plasmoid 2.0
 
-IconWidget{
+IconWidget {
 	id: iconPopup
 
 	property bool opened: false
 
 	svg: svgSource.arrows
 
-	iconSource: "down-arrow"
+	iconSource: 'down-arrow'
 
-	QtObject{
+	QtObject {
 		id: svgSource
-		readonly property var arrows: PlasmaCore.Svg{ imagePath: "widgets/arrows" }
-		readonly property var media: PlasmaCore.Svg{ imagePath: "icons/media" }
-		function playbackIcon(){
+		readonly property var arrows: PlasmaCore.Svg { imagePath: 'widgets/arrows' }
+		readonly property var media: PlasmaCore.Svg { imagePath: 'icons/media' }
+		function playbackIcon() {
 			var icon
-			if(mpris2.playbackStatus == "Playing")
-				icon = "media-playback-start"
-			else if(mpris2.playbackStatus == "Paused")
-				icon = "media-playback-pause"
+			if ( mpris2.playbackStatus == 'Playing' )
+				icon = 'media-playback-start'
+			else if ( mpris2.playbackStatus == 'Paused' )
+				icon = 'media-playback-pause'
 			else
-				icon = "media-playback-start"
+				icon = 'media-playback-start'
 			return icon
 		}
 	}
 
-	state: "default"
+	state: 'default'
 
 	rotation: opened & mpris2.sourceActive ? 180: 0
 
-	Behavior on rotation{
-		RotationAnimator{
+	Behavior on rotation {
+		RotationAnimator {
 			direction: opened ? RotationAnimation.Clockwise : RotationAnimation.Counterclockwise
 			duration: units.longDuration
 		}
 	}
 
 	states: [
-	State{
+	State {
 		when: !mpris2.sourceActive || !playbackBarVisible
-		PropertyChanges{
+		PropertyChanges {
 			target: iconPopup
 			svg: svgSource.media
 			iconSource: svgSource.playbackIcon()
 			rotation: 0
 		}
 	},
-	State{
-		name: "default"
-		when: plasmoid.location == PlasmaCore.Types.TopEdge
-		PropertyChanges{
+	State {
+		name: 'default'
+		when: Plasmoid.location == PlasmaCore.Types.TopEdge
+		PropertyChanges {
 			target: iconPopup
-			iconSource: "down-arrow"
+			iconSource: 'down-arrow'
 		}
 	},
-	State{
-		when: plasmoid.location == PlasmaCore.Types.BottomEdge
-		PropertyChanges{
+	State {
+		when: Plasmoid.location == PlasmaCore.Types.BottomEdge
+		PropertyChanges {
 			target: iconPopup
-			iconSource: "up-arrow"
+			iconSource: 'up-arrow'
 		}
 	},
-	State{
-		when: plasmoid.location == PlasmaCore.Types.LeftEdge
-		PropertyChanges{
+	State {
+		when: Plasmoid.location == PlasmaCore.Types.LeftEdge
+		PropertyChanges {
 			target: iconPopup
-			iconSource: "right-arrow"
+			iconSource: 'right-arrow'
 		}
 	},
-	State{
-		when: plasmoid.location == PlasmaCore.Types.RightEdge
-		PropertyChanges{
+	State {
+		when: Plasmoid.location == PlasmaCore.Types.RightEdge
+		PropertyChanges {
 			target: iconPopup
-			iconSource: "left-arrow"
+			iconSource: 'left-arrow'
 		}
 	}
 	]

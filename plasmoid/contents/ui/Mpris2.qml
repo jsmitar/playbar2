@@ -19,9 +19,9 @@
 
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
-import "../code/utils.js" as Utils
+import '../code/utils.js' as Utils
 
-PlasmaCore.DataSource{
+PlasmaCore.DataSource {
 	id: mpris2
 
 	engine: 'mpris2'
@@ -32,7 +32,7 @@ PlasmaCore.DataSource{
 
 	readonly property int minimumLoad: 1500
 
-	readonly property bool isMaximumLoad: interval == maximumLoad
+	readonly property bool isMaximumLoad: interval === maximumLoad
 
 	readonly property bool sourceActive: source.length > 0
 
@@ -45,162 +45,162 @@ PlasmaCore.DataSource{
 	property var service: null
 
 
-	property string identity: hasSource('Identity') ? data[source]['Identity'] : i18n("No media player")
+	property string identity: hasSource( 'Identity' ) ? data[source]['Identity'] : i18n( 'No media player' )
 
-	property string playbackStatus: hasSource('PlaybackStatus') ? data[source]['PlaybackStatus'] : ""
+	property string playbackStatus: hasSource( 'PlaybackStatus' ) ? data[source]['PlaybackStatus'] : ''
 
-	property string artUrl: hasMetadataMpris('artUrl') ? data[source]['Metadata']['mpris:artUrl'] : ""
+	property string artUrl: hasMetadataMpris( 'artUrl' ) ? data[source]['Metadata']['mpris:artUrl'] : ''
 
-	property string artist: hasMetadata('artist') ? data[source]['Metadata']['xesam:artist'].toString() : ""
+	property string artist: hasMetadata( 'artist' ) ? data[source]['Metadata']['xesam:artist'].toString() : ''
 
-	property string album: hasMetadata('album') ? data[source]['Metadata']['xesam:album'] : ""
+	property string album: hasMetadata( 'album' ) ? data[source]['Metadata']['xesam:album'] : ''
 
-	property string title: hasMetadata('title') ? data[source]['Metadata']['xesam:title'] : ""
+	property string title: hasMetadata( 'title' ) ? data[source]['Metadata']['xesam:title'] : ''
 
 // 	hundredth of second
-	property int length: hasMetadataMpris('length') ? data[source]['Metadata']['mpris:length'] / 10000: 0
+	property int length: hasMetadataMpris( 'length' ) ? data[source]['Metadata']['mpris:length'] / 10000: 0
 // 	hundredth of second
 	property int position: 0
 
 	property real userRating: 0
 
-	property real volume: hasSource('Volume') ? data[source]['Volume'] : 0
+	property real volume: hasSource( 'Volume' ) ? data[source]['Volume'] : 0
 
 
-	property bool canControl: hasSource('CanControl') ? data[source]['CanControl'] : false
+	property bool canControl: hasSource( 'CanControl' ) ? data[source]['CanControl'] : false
 
-	property bool canGoNext: hasSource('CanGoNext') ? data[source]['CanGoNext'] : false
+	property bool canGoNext: hasSource( 'CanGoNext' ) ? data[source]['CanGoNext'] : false
 
-	property bool canGoPrevious: hasSource('CanGoPrevious') ? data[source]['CanGoPrevious'] : false
+	property bool canGoPrevious: hasSource( 'CanGoPrevious' ) ? data[source]['CanGoPrevious'] : false
 
-	property bool canSeek: hasSource('CanSeek') ? data[source]['CanSeek'] : false
+	property bool canSeek: hasSource( 'CanSeek' ) ? data[source]['CanSeek'] : false
 
-	property bool canRaise: hasSource('CanRaise') ? data[source]['CanRaise'] : false
+	property bool canRaise: hasSource( 'CanRaise' ) ? data[source]['CanRaise'] : false
 
 
 	Component.onCompleted: nextSource()
 
-	onIntervalChanged: debug("interval", interval)
+// 	onIntervalChanged: debug( 'interval', interval )
 
-	onIdentityChanged:{
-		if(source.length > 0) Utils.setActions(source[0], identity)
+	onIdentityChanged: {
+		if ( source.length > 0 ) Utils.setActions( source[0], identity )
 	}
 
 	onSourceActiveChanged: {
-		if(!sourceActive) Utils.removeActions()
+		if ( !sourceActive ) Utils.removeActions()
 	}
 
 	onNewData: {
-		if(isMaximumLoad)
+		if ( isMaximumLoad )
 			position = data['Position'] / 10000
 	}
 
 	onSourcesChanged: {
-		if(connectedSources.length === 0) nextSource()
+		if ( connectedSources.length === 0 ) nextSource()
 	}
 
 	onSourceAdded: {
-		debug("Source added", source)
-		debug("sources", sources)
+		// debug( 'Source added', source )
+		// debug( 'sources', sources )
 
-		if(source != '@multiplex' && connectedSources.length == 0) {
-			connectSource(source)
-			playbarEngine.setSource(source)
+		if ( source != '@multiplex' && connectedSources.length === 0 ) {
+			connectSource( source )
+			playbarEngine.setSource( source )
 		}
 	}
 
 	onSourceRemoved: {
-		if(source == previousSource) {
+		if ( source === previousSource ) {
 			nextSource()
 		}
 	}
 
 	onSourceConnected: {
-		setService(source)
-		debug("Source connected", source)
-		debug("Valid engine", valid)
+		setService( source )
+		// debug( 'Source connected', source )
+		// debug( 'Valid engine', valid )
 	}
 
 	onSourceDisconnected: {
-		setService(null)
+		setService( null )
 		previousSource = source
-		debug("Disconnected", source)
+		// debug( 'Disconnected', source )
 	}
 
-	onConnectedSourcesChanged: { setService(source[0]) }
+	onConnectedSourcesChanged: { setService( source[0] ) }
 
-	function hasMetadata(key){
+	function hasMetadata( key ) {
 		return data[source[0]] != undefined
 			&& data[source[0]]['Metadata'] != undefined
 			&& data[source[0]]['Metadata']['xesam:'+key] != undefined
 	}
 
-	function hasMetadataMpris(key){
+	function hasMetadataMpris( key ) {
 		return data[source[0]] != undefined
 		&& data[source[0]]['Metadata'] != undefined
 		&& data[source[0]]['Metadata']['mpris:'+key] != undefined
 	}
 
-	function hasSource(key){
+	function hasSource( key ) {
 		return data[source[0]] != undefined
 			&& data[source[0]][key] != undefined
 	}
 
-	function nextSource(){
-		for(var i = 0; i < sources.length; i++){
-			if(connectedSources[0] === sources[i] || connectedSources == [""] || connectedSources == "")
-			{
-				if(++i < sources.length && sources[i] !== '@multiplex'){
-					disconnectSource(source[0])
-					connectSource(sources[i])
-					playbarEngine.setSource(sources[i])
-				}else if(++i < sources.length){
-					disconnectSource(source[0])
-					connectSource(sources[i])
-					playbarEngine.setSource(sources[i])
-				}else if(sources[0] !== '@multiplex') {
-					disconnectSource(source[0])
-					connectSource(sources[0])
-					playbarEngine.setSource(sources[0])
+	function nextSource() {
+		for ( var i = 0; i < sources.length; i++ ) {
+			if ( connectedSources[0] === sources[i] || connectedSources == [''] || connectedSources == '' )
+			 {
+				if ( ++i < sources.length && sources[i] !== '@multiplex' ) {
+					disconnectSource( source[0] )
+					connectSource( sources[i] )
+					playbarEngine.setSource( sources[i] )
+				} else if ( ++i < sources.length ) {
+					disconnectSource( source[0] )
+					connectSource( sources[i] )
+					playbarEngine.setSource( sources[i] )
+				} else if ( sources[0] !== '@multiplex' ) {
+					disconnectSource( source[0] )
+					connectSource( sources[0] )
+					playbarEngine.setSource( sources[0] )
 				}
 				return
 			}
 		}
 	}
 
-	function setService(source){
-		if(!source) service = null
-		service = mpris2.serviceForSource(source)
-		debug("Service active", (service != null))
+	function setService( source ) {
+		if ( !source ) service = null
+		service = mpris2.serviceForSource( source )
+		// debug( 'Service active', ( service != null ) )
 	}
 
-	function seek(position, currentPosition){
-		if(service && canControl && canSeek) {
-			var job = service.operationDescription('SetPosition')
-			job['microseconds'] = (position * 10000).toFixed(0)
-			service.startOperationCall(job)
+	function seek( position, currentPosition ) {
+		if ( service && canControl && canSeek ) {
+			var job = service.operationDescription( 'SetPosition' )
+			job['microseconds'] = ( position * 10000 ) .toFixed( 0 )
+			service.startOperationCall( job )
 		}
 		return position
-// 		if(source == 'clementine') {
-// 			job = service.operationDescription('Seek')
-// 			job['microseconds'] = ((-currentPosition + position) * 10000).toFixed(0)
-// 			service.startOperationCall(job)
+// 		if ( source == 'clementine' ) {
+// 			job = service.operationDescription( 'Seek' )
+// 			job['microseconds'] = ( ( -currentPosition + position ) * 10000 ) .toFixed( 0 )
+// 			service.startOperationCall( job )
 // 			return
 // 		}
 	}
 
-	function startOperation(name){
-		if(service && canControl){
-			var job = service.operationDescription(name)
-			service.startOperationCall(job)
+	function startOperation( name ) {
+		if ( service && canControl ) {
+			var job = service.operationDescription( name )
+			service.startOperationCall( job )
 		}
 	}
 
-	function setVolume(value){
-		if(service && canControl && service.isOperationEnabled('SetVolume')){
-			var job = service.operationDescription('SetVolume')
+	function setVolume( value ) {
+		if ( service && canControl && service.isOperationEnabled( 'SetVolume' ) ) {
+			var job = service.operationDescription( 'SetVolume' )
 			job['level'] = value
-			service.startOperationCall(job)
+			service.startOperationCall( job )
 			value = value < 0 ? 0 : value
 			value = value > 1.2 ? 1 : value
 		}

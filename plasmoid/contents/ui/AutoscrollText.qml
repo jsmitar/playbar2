@@ -19,7 +19,7 @@
 
 import QtQuick 2.4
 
-Item{
+Item {
 	id: scroll
 
 	property var target
@@ -30,18 +30,18 @@ Item{
 
 	focus: false
 
-	SequentialAnimation{
+	SequentialAnimation {
 		id: anim
 		running: false
 		alwaysRunToEnd: true
 		loops: Animation.Infinite
 
 		onStopped: {
-			if( scrollArea.containsMouse && !running ) anim.restart()
+			if ( scrollArea.containsMouse && !running ) anim.restart()
 			else scrolling = false
 		}
 
-		SmoothedAnimation{
+		SmoothedAnimation {
 			id: animA
 			target: scroll.target
 			property: 'x'
@@ -49,7 +49,7 @@ Item{
 			to: - ( target.contentWidth - target.width + units.smallSpacing )
 			velocity: 60
 		}
-		SmoothedAnimation{
+		SmoothedAnimation {
 			id: animB
 			target: scroll.target
 			property: 'x'
@@ -58,30 +58,30 @@ Item{
 		}
 		Component.onCompleted: {
 			isScrollable = target.contentWidth > target.width || target.truncated
-			target.textChanged.connect( function(){
+			target.textChanged.connect( function() {
 				isScrollable = target.contentWidth > target.width || target.truncated
 				scrolling = false
-			})
+			} )
 		}
 	}
 
-	MouseArea{
+	MouseArea {
 		id: scrollArea
 
 		anchors.fill: parent
 		acceptedButtons: Qt.NoButton
 		hoverEnabled: true
 
-		function initAutoScroll(){
+		function initAutoScroll() {
 			isScrollable = target.contentWidth > target.width || target.truncated
-			if(isScrollable && !anim.running){
+			if ( isScrollable && !anim.running ) {
 				scrolling = true
 				anim.start()
-			}else if(scrolling && !anim.running){
+			} else if ( scrolling && !anim.running ) {
 				anim.start()
 			}
 		}
 		onEntered: initAutoScroll()
-		onExited: if(anim.running) anim.stop()
+		onExited: if ( anim.running ) anim.stop()
 	}
 }

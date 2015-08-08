@@ -21,15 +21,15 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import QtGraphicalEffects 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
-import "../code/utils.js" as Utils
+import '../code/utils.js' as Utils
 
-Rectangle{
+Rectangle {
 	id: bg
 
 	width: units.iconSizes.enormous
 	height: units.iconSizes.enormous
-	//color: Utils.adjustAlpha(Utils.blendColors(theme.complementaryBackgroundColor, theme.backgroundColor, 0.5), 0.5)
-	color: Utils.adjustAlpha(theme.complementaryBackgroundColor, 0.3)
+	//color: Utils.adjustAlpha( Utils.blendColors( theme.complementaryBackgroundColor, theme.backgroundColor, 0.5 ) , 0.5 )
+	color: Utils.adjustAlpha( theme.complementaryBackgroundColor, 0.3 )
 	radius: 2
 	opacity: 0.3
 
@@ -41,13 +41,13 @@ Rectangle{
 	Layout.maximumHeight: units.iconSizes.enormous
 	Layout.fillHeight: true
 	Layout.fillWidth: false
-	
-	border{
+
+	border {
 		width: 1
 		color: color
 	}
 
-	OpacityAnimator on opacity{
+	OpacityAnimator on opacity {
 		id: appear
 		running: false
 		alwaysRunToEnd: true
@@ -55,7 +55,7 @@ Rectangle{
 		duration: units.longDuration
 	}
 
-	OpacityAnimator on opacity{
+	OpacityAnimator on opacity {
 		id: fade
 		running: false
 		alwaysRunToEnd: true
@@ -64,7 +64,7 @@ Rectangle{
 	}
 
 
-	Image{
+	Image {
 		id: cover
 
 		source: mpris2.artUrl
@@ -82,41 +82,41 @@ Rectangle{
 		verticalAlignment: Image.AlignVCenter
 
 		onStatusChanged: {
-			if( status === Image.Ready )
+			if ( status === Image.Ready )
 				appear.start()
-			else if( mpris2.artUrl.length === 0 && ( status === Image.Null || status === Image.Error ) ){
+			else if ( mpris2.artUrl.length === 0 && ( status === Image.Null || status === Image.Error ) ) {
 				fade.start()
-				debug("Fade on CoverArt", status )
+				// debug( 'Fade on CoverArt', status )
 			}
 		}
 	}
-	
+
 	PlasmaCore.IconItem {
 		id: noCover
-		
+
 		anchors.centerIn: parent
 		width: parent.width - 2
 		height: parent.height - 2
-		
-		source: "tools-rip-audio-cd"
-		
+
+		source: 'tools-rip-audio-cd'
+
 		visible: false
 	}
-	
+
 	Colorize {
 		anchors.fill: noCover
-		readonly property var hsl: Utils.rgbToHsl(theme.textColor)
-		
+		readonly property var hsl: Utils.rgbToHsl( theme.textColor )
+
 		visible: cover.status !== Image.Ready || !mpris2.sourceActive
 		source: noCover
 		hue: hsl.h
 		saturation: hsl.s
 		lightness: hsl.l
 		cached: true
-		
+
 	}
-	
-	MouseArea{
+
+	MouseArea {
 		id: toggleWindow
 		anchors.fill: parent
 		acceptedButtons: Qt.LeftButton

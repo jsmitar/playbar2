@@ -20,7 +20,7 @@
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
 
-Item{
+Item {
     id: playbackitem
 
     property bool playing: mpris2.playbackStatus == 'Playing'
@@ -40,25 +40,25 @@ Item{
     signal stop()
 
     onPlayPause: {
-		if(mpris2.source == 'spotify' ) {
-			mpris2.startOperation('PlayPause')
+		if ( mpris2.source == 'spotify' ) {
+			mpris2.startOperation( 'PlayPause' )
 			return
 		}
-		if(!playing) mpris2.startOperation('Play')
-		else mpris2.startOperation('PlayPause')
+		if ( !playing ) mpris2.startOperation( 'Play' )
+		else mpris2.startOperation( 'PlayPause' )
 	}
 
     onPrevious: {
-		if(mpris2.canGoPrevious)
-			mpris2.startOperation('Previous')
+		if ( mpris2.canGoPrevious )
+			mpris2.startOperation( 'Previous' )
 	}
     onNext: {
-		if(mpris2.canGoNext)
-			mpris2.startOperation('Next')
+		if ( mpris2.canGoNext )
+			mpris2.startOperation( 'Next' )
 	}
     onStop: {
-		if(mpris2.playbackStatus != "Stopped")
-			mpris2.startOperation('Stop')
+		if ( mpris2.playbackStatus != 'Stopped' )
+			mpris2.startOperation( 'Stop' )
 	}
 
 }

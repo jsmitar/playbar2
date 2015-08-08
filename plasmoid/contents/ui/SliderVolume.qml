@@ -21,7 +21,7 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
-RowLayout{
+RowLayout {
 	id: sliderVolume
 
 	spacing: units.smallSpacing
@@ -39,19 +39,19 @@ RowLayout{
 	// 	property alias orientation: slider.orientation
 	// 	property bool labelAbove: true
 
-	property int maxLabelWidth: Math.max(icon.width, label.Layout.minimumWidth)
-	Item{
+	property int maxLabelWidth: Math.max( icon.width, label.Layout.minimumWidth )
+	Item {
 		width: maxLabelWidth
 		height: implicitHeight
 		Layout.minimumWidth: units.largeSpacing * 2.5
 		Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-		VolumeIcon{
+		VolumeIcon {
 			id: icon
 			anchors.centerIn: parent
 		}
 	}
 
-	PlasmaComponents.Slider{
+	PlasmaComponents.Slider {
 		id: slider
 
 		value: mpris2.volume
@@ -61,15 +61,15 @@ RowLayout{
 		Layout.fillHeight: true
 		Layout.minimumWidth: 80
 
-		onValueChanged: if(pressed) mpris2.setVolume(value)
-		Connections{
+		onValueChanged: if ( pressed ) mpris2.setVolume( value )
+		Connections {
 			target: mpris2
 			onVolumeChanged: {
-				if(!slider.pressed) slider.value = mpris2.volume
+				if ( !slider.pressed ) slider.value = mpris2.volume
 					wheelArea.previousValue = mpris2.volume
 			}
 		}
-		MouseArea{
+		MouseArea {
 			id: wheelArea
 			acceptedButtons: Qt.XButton1 | Qt.XButton2
 			anchors.fill: parent
@@ -78,17 +78,17 @@ RowLayout{
 
 			onWheel: {
 				accepted: true
-				if(wheel.angleDelta.y > 50)
-					previousValue = mpris2.setVolume(previousValue + 0.019)
-				else if(wheel.angleDelta.y < -50)
-					previousValue = mpris2.setVolume(previousValue - 0.019)
+				if ( wheel.angleDelta.y > 50 )
+					previousValue = mpris2.setVolume( previousValue + 0.019 )
+				else if ( wheel.angleDelta.y < -50 )
+					previousValue = mpris2.setVolume( previousValue - 0.019 )
 				else return
 				slider.value = previousValue
 			}
 		}
 	}
 
-	VolumeLabel{
+	VolumeLabel {
 		id: label
 
 		value: slider.pressed ? slider.value : mpris2.volume

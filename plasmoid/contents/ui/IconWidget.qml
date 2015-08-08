@@ -38,7 +38,7 @@ PlasmaCore.SvgItem {
 
 	opacity: enabled ? 1 : 0.5
 
-	PressedAnimation{
+	PressedAnimation {
 		id: animA
 		targetItem: iconWidget
 		running: false
@@ -46,7 +46,7 @@ PlasmaCore.SvgItem {
 		alwaysRunToEnd: true
 	}
 
-	ReleasedAnimation{
+	ReleasedAnimation {
 		id: animB
 		targetItem: iconWidget
 		alwaysRunToEnd: true
@@ -54,7 +54,7 @@ PlasmaCore.SvgItem {
 		duration: units.longDuration
 	}
 
-	MouseArea{
+	MouseArea {
 		id: mouseArea
 
 		acceptedButtons: Qt.LeftButton
@@ -62,6 +62,6 @@ PlasmaCore.SvgItem {
 		onPressed: animA.start()
 		onReleased: animB.start()
 
-		Component.onCompleted: clicked.connect(iconWidget.clicked)
+		Component.onCompleted: clicked.connect( iconWidget.clicked )
 	}
 }

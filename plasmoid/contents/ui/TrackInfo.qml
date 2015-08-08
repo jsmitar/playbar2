@@ -20,7 +20,7 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.extras 2.0 as PlasmaExtras
-import "../code/utils.js" as Utils
+import '../code/utils.js' as Utils
 
 GridLayout {
 	id: trackInfo
@@ -38,7 +38,7 @@ GridLayout {
 	Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 
 
-	PlasmaExtras.Heading{
+	PlasmaExtras.Heading {
 		id: title
 
 		text: mpris2.title
@@ -55,14 +55,14 @@ GridLayout {
 		Layout.fillHeight: false
 		Layout.columnSpan: 2
 
-		AutoscrollText{
+		AutoscrollText {
 			id: scrollTitle
 			target: title
 			anchors.fill: parent
 		}
 	}
 
-	RowLayout{
+	RowLayout {
 		Layout.row: 1
 		Layout.column: 1
 		Layout.fillWidth: true
@@ -73,12 +73,12 @@ GridLayout {
 		children: [artist]
 	}
 
-	PlasmaExtras.Heading{
+	PlasmaExtras.Heading {
 		id: artist
 
 		text: mpris2.artist
 		level: 3
-		color: Utils.adjustAlpha(theme.textColor, 0.9)
+		color: Utils.adjustAlpha( theme.textColor, 0.9 )
 		visible: mpris2.artist.length > 0
 
 		wrapMode: scrollArtist.scrolling ? Text.NoWrap : Text.WrapAnywhere
@@ -90,14 +90,14 @@ GridLayout {
 		Layout.fillWidth: true
 		Layout.fillHeight: false
 
-		AutoscrollText{
+		AutoscrollText {
 			id: scrollArtist
 			target: artist
 			anchors.fill: parent
 		}
 	}
 
-	RowLayout{
+	RowLayout {
 		Layout.row: 2
 		Layout.column: 1
 		Layout.fillWidth: true
@@ -108,12 +108,12 @@ GridLayout {
 		children: [album]
 	}
 
-	PlasmaExtras.Heading{
+	PlasmaExtras.Heading {
 		id: album
 
 		text: mpris2.album
 		level: 3
-		color: Utils.adjustAlpha(theme.textColor, 0.9)
+		color: Utils.adjustAlpha( theme.textColor, 0.9 )
 		visible: mpris2.album.length > 0
 
 		wrapMode: scrollAlbum.scrolling ? Text.NoWrap : Text.WrapAnywhere
@@ -125,19 +125,19 @@ GridLayout {
 		Layout.fillWidth: true
 		Layout.fillHeight: false
 
-		AutoscrollText{
+		AutoscrollText {
 			id: scrollAlbum
 			target: album
 			anchors.fill: parent
 		}
 	}
 
-	PlasmaExtras.Heading{
+	PlasmaExtras.Heading {
 		id: by
 
-		text: i18n("By")
+		text: i18n( 'By' )
 		level: 5
-		color: Utils.adjustAlpha(theme.textColor, 0.8)
+		color: Utils.adjustAlpha( theme.textColor, 0.8 )
 		visible: mpris2.artist.length > 0
 
 		Layout.row: 1
@@ -146,12 +146,12 @@ GridLayout {
 		Layout.alignment: Qt.AlignRight | Qt.AlignBaseline
 	}
 
-	PlasmaExtras.Heading{
+	PlasmaExtras.Heading {
 		id: on
 
-		text: i18n("On")
+		text: i18n( 'On' )
 		level: 5
-		color: Utils.adjustAlpha(theme.textColor, 0.8)
+		color: Utils.adjustAlpha( theme.textColor, 0.8 )
 		visible: mpris2.album.length > 0
 
 		Layout.row: 2

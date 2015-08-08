@@ -4,7 +4,7 @@
 *   This program is free software; you can redistribute it and/or modify
 *   it under the terms of the GNU Library General Public License as
 *   published by the Free Software Foundation; either version 2 or
-*   (at your option) any later version.
+*   (at your option ) any later version.
 *
 *   This program is distributed in the hope that it will be useful,
 *   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,11 +22,11 @@ import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
-PlaybackItem{
+PlaybackItem {
 	id: playbackWidget
 
 	property int buttonsAppearance: playbarEngine.buttonsAppearance
-	
+
 	visible: true
 
 	buttonSize: units.iconSizes.medium
@@ -41,49 +41,49 @@ PlaybackItem{
 	Layout.alignment: Qt.AlignBottom | Qt.AlignLeft
 
 	onPlayingChanged: {
-		if(!model.itemAt(1)) return
+		if ( !model.itemAt( 1 ) ) return
 
-		if(playing)
-			model.itemAt(1).iconSource = "media-playback-pause"
+		if ( playing )
+			model.itemAt( 1 ) .iconSource = 'media-playback-pause'
 		else
-			model.itemAt(1).iconSource = "media-playback-start"
+			model.itemAt( 1 ) .iconSource = 'media-playback-start'
 	}
 
-	ListModel{
+	ListModel {
 		id: playmodel
 
-		ListElement{
-			icon: "media-skip-backward"
+		ListElement {
+			icon: 'media-skip-backward'
 		}
-		ListElement{
-			icon: "media-playback-start"
+		ListElement {
+			icon: 'media-playback-start'
 		}
-		ListElement{
-			icon: "media-playback-stop"
+		ListElement {
+			icon: 'media-playback-stop'
 		}
-		ListElement{
-			icon: "media-skip-forward"
+		ListElement {
+			icon: 'media-skip-forward'
 		}
 	}
 
-	Component{
+	Component {
 		id: toolButtonDelegate
 
-		PlasmaComponents.ToolButton{
+		PlasmaComponents.ToolButton {
 			iconSource: icon
-			visible: !(index == 2) | showStop
+			visible: !( index == 2 ) | showStop
 			Layout.minimumWidth: buttonSize * 1.4
 			Layout.minimumHeight: buttonSize * 1.4
 		}
 	}
 
-	Component{
+	Component {
 		id: iconWidgetDelegate
 
-		IconWidget{
-			svg: PlasmaCore.Svg{ imagePath: "icons/media" }
+		IconWidget {
+			svg: PlasmaCore.Svg { imagePath: 'icons/media' }
 			iconSource: icon
-			visible: !(index == 2) | showStop
+			visible: !( index == 2 ) | showStop
 			size: buttonSize
 		}
 	}
@@ -94,26 +94,26 @@ PlaybackItem{
 		spacing: buttonsAppearance ? units.smallSpacing : units.largeSpacing
 		anchors.bottom: parent.bottom
 
-		Repeater{
+		Repeater {
 			id: model
 			model: playmodel
 			delegate: buttonsAppearance ? toolButtonDelegate : iconWidgetDelegate
 
 			onItemAdded: {
-				switch(index){
+				switch ( index ) {
 					case 0 :
-						item.clicked.connect(previous)
+						item.clicked.connect( previous )
 						break
 					case 1 :
-						item.clicked.connect(playPause)
+						item.clicked.connect( playPause )
 						//NOTE: update icon playing state
 						playingChanged()
 						break
 					case 2:
-						item.clicked.connect(stop)
+						item.clicked.connect( stop )
 						break
 					case 3:
-						item.clicked.connect(next)
+						item.clicked.connect( next )
 						break
 				}
 			}

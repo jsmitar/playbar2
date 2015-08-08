@@ -19,9 +19,9 @@
 
 import QtQuick 2.4
 import org.kde.plasma.extras 2.0 as PlasmaExtras
-import "../code/utils.js" as Utils
+import '../code/utils.js' as Utils
 
-PlasmaExtras.Paragraph{
+PlasmaExtras.Paragraph {
     id: time
 
     // units in hundredth of second
@@ -39,20 +39,20 @@ PlasmaExtras.Paragraph{
 
 	property alias autoTimeUpdate: timer.running
 
-	color: Utils.adjustAlpha(theme.textColor, 0.8)
+	color: Utils.adjustAlpha( theme.textColor, 0.8 )
 
 	enabled: mpris2.sourceActive & mpris2.length > 0
 
-    function positionUpdate(negative) {
+    function positionUpdate( negative ) {
         var min, sec
 
-        if (negative) sec = Math.abs((topTime - currentTime)/100)
+        if ( negative ) sec = Math.abs( ( topTime - currentTime ) /100 )
         else sec = currentTime/100
 
-		min = Utils.truncate(sec/60)
-		sec = Utils.truncate(sec - min*60)
+		min = Utils.truncate( sec/60 )
+		sec = Utils.truncate( sec - min*60 )
 
-		if(negative) text = '-' + min + ':'
+		if ( negative ) text = '-' + min + ':'
 		else text = min + ':'
 		text += sec <= 9 ? '0' + sec : sec
     }
@@ -60,12 +60,12 @@ PlasmaExtras.Paragraph{
     function lengthUpdate() {
 		var min
 		var sec = topTime/100
-		min = Utils.truncate(sec/60)
-		sec = Utils.truncate(sec - min*60)
+		min = Utils.truncate( sec/60 )
+		sec = Utils.truncate( sec - min*60 )
 		time.text = min + ':' + ( sec <= 9 ? '0' + sec : sec )
 	}
 
-	Timer{
+	Timer {
 		id: timer
 
 		property bool _switch: labelSwitch
@@ -74,18 +74,18 @@ PlasmaExtras.Paragraph{
 		repeat: true
 		running: parent.visible
 		onTriggered: {
-			if(showPosition & showRemaining)
-				positionUpdate(_switch)
-			else if(_switch & showPosition)
-				positionUpdate(false)
-			else if(_switch & showRemaining)
-				positionUpdate(true)
+			if ( showPosition & showRemaining )
+				positionUpdate( _switch )
+			else if ( _switch & showPosition )
+				positionUpdate( false )
+			else if ( _switch & showRemaining )
+				positionUpdate( true )
 			else
 				lengthUpdate()
 		}
 	}
 
-    MouseArea{
+    MouseArea {
         id: mouseArea
 
         anchors.fill: parent
@@ -93,9 +93,9 @@ PlasmaExtras.Paragraph{
 		enabled: hoverEnabled
 
 		onEntered: color = theme.viewHoverColor
-        onExited: color = Utils.adjustAlpha(theme.textColor, 0.8)
+        onExited: color = Utils.adjustAlpha( theme.textColor, 0.8 )
         onReleased: {
-            if (!exited || containsMouse ){
+            if ( !exited || containsMouse ) {
 				timer._switch = !timer._switch
 				plasmoid.configuration.TimeLabelSwitch = timer._switch
                 timer.triggered()
