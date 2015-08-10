@@ -24,7 +24,7 @@ X-KDE-PluginInfo-Category=Multimedia
 X-KDE-PluginInfo-Email=audoban@openmailbox.org
 X-KDE-PluginInfo-License=GPLv3
 X-KDE-PluginInfo-Name=audoban.applet.playbar
-X-KDE-PluginInfo-Version=2.1
+X-KDE-PluginInfo-Version=2.2
 X-KDE-PluginInfo-Website=https://github.com/audoban/PlayBar2
 
 X-KDE-ServiceTypes=Plasma/Applet
