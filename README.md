@@ -1,5 +1,5 @@
 
-#PlayBar2
+# PlayBar2
 
 MPRIS2 client, written in QML for **Plasma 5** and **GNU/Linux**.
 
@@ -7,7 +7,7 @@ MPRIS2 client, written in QML for **Plasma 5** and **GNU/Linux**.
 ![panel](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_panel.png) 
 ![notification](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_notification_area.png)
 
-#Installation
+# Installation
 ## Build from the source code
 **Dependencies:** `plasma-framework-devel plasma5-workspace-devel kdeclarative-devel kglobalaccel-devel kconfigwidgets-devel kxmlgui-devel kwindowsystem-devel kdoctools-devel extra-cmake-modules`
 
@@ -44,3 +44,12 @@ PlayBar also supports keyboard shortcuts and these come with a default configura
 
 # Help me to translate!
 **If you want to add a language, please follow this**  __[Thread.](https://github.com/audoban/PlayBar2/issues/1)__
+
+# Contributors
+- ![Alexey Murz Korepov](https://github.com/MurzNN) Improve Readme
+- ![varlesh](https://github.com/varlesh) Create a PPA repository with Packages for **Ubuntu**
+- ![André Vitor de Lima Matos](https://github.com/andrevmatos) Create a AUR package for **Arch Linux**
+- ![Tomasz Przybył](https://github.com/FadeMind) Polish translation
+- ![Konstantin](https://github.com/KottV) Russian translation
+- ![dkadioglu](https://github.com/dkadioglu) German translation
+
