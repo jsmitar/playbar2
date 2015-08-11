@@ -22,7 +22,7 @@ $ mkdir build && cd build
 
 And compile.
 ```bash
-$ cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make && sudo make install
+$ cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release .. && make && sudo make install
 ```
 ## Repositories 
 **Kubuntu:**
