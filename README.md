@@ -15,14 +15,11 @@ MPRIS2 client, written in QML for **Plasma 5** and **GNU/Linux**.
 ```bash
 sudo apt-get install g++ plasma-framework-dev plasma-workspace-dev libkf5declarative-dev libkf5globalaccel-dev libkf5configwidgets-dev libkf5xmlgui-dev libkf5windowsystem-dev kdoctools-dev cmake extra-cmake-modules kdelibs5-dev
 ```
-Create a *build* directory and then enter it.
+Create a build directory into PlayBar, compile the widget and enjoy it.
 ```bash
-$ mkdir build && cd build
-```
-
-And compile.
-```bash
-$ cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release .. && make && sudo make install
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release ..
+make && sudo make install
 ```
 ## Repositories 
 **Kubuntu:**
