@@ -52,3 +52,4 @@ PlayBar also supports keyboard shortcuts and these come with a default configura
 - ![Konstantin](https://github.com/KottV) Russian translation
 - ![dkadioglu](https://github.com/dkadioglu) German translation
 
+# See the ![Milestones](https://github.com/audoban/PlayBar2/milestones)!
