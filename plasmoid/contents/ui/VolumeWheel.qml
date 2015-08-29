@@ -37,10 +37,10 @@ MouseArea {
 		if ( wheel.modifiers == Qt.NoModifier ) {
 			if ( wheel.angleDelta.y > 80 ) {
 				volumePrevious = volumePrevious.toPrecision( 3 ) - volumePrevious.toPrecision( 3 ) % 0.05
-				volumePrevious = mpris2.setVolume( volumePrevious + 0.058 ) .toPrecision( 3 )
+				volumePrevious = mpris2.setVolume( volumePrevious + 0.058 ).toPrecision( 3 )
 			} else if ( wheel.angleDelta.y < -80 ) {
 				volumePrevious = volumePrevious.toPrecision( 3 ) - volumePrevious.toPrecision( 3 ) % 0.05
-				volumePrevious = mpris2.setVolume( volumePrevious - 0.05 ) .toPrecision( 3 )
+				volumePrevious = mpris2.setVolume( volumePrevious - 0.05 ).toPrecision( 3 )
 			}
 		}
 	}

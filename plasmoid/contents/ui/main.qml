@@ -24,7 +24,7 @@ import org.kde.plasma.plasmoid 2.0
 import '../code/utils.js' as Utils
 
 Item {
-    id: root
+	id: root
 
 	//! dataengine
 	PlasmaCore.DataSource {
@@ -112,7 +112,7 @@ Item {
 		Utils.i18n = i18n
 		Plasmoid.removeAction( 'configure' )
 		Plasmoid.setAction( 'configure', i18n( 'Configure PlayBar' ) , 'configure', 'alt+d, s' )
-    }
+	}
 
 	QtObject {
 		id: internal
@@ -120,14 +120,14 @@ Item {
 		property string icon:
 			mpris2.artUrl != '' ? Qt.resolvedUrl( mpris2.artUrl ) : 'media-playback-start'
 		property string title:
-		    mpris2.title != '' ? mpris2.title : 'PlayBar'
+			mpris2.title != '' ? mpris2.title : 'PlayBar'
 		property string artist:
-		    mpris2.artist != '' ? i18n( '<b>By</b> %1 ', mpris2.artist ) : ''
+			mpris2.artist != '' ? i18n( '<b>By</b> %1 ', mpris2.artist ) : ''
 		property string album:
-		    mpris2.album != ''? i18n( '<b>On</b> %1', mpris2.album ) : ''
+			mpris2.album != ''? i18n( '<b>On</b> %1', mpris2.album ) : ''
 		property string subText:
-		    ( title === 'PlayBar' & artist === '' & album === '' ) ?
-	    		i18n( 'Client MPRIS2, allows you to control your favorite media player' )
+			( title === 'PlayBar' & artist === '' & album === '' ) ?
+				i18n( 'Client MPRIS2, allows you to control your favorite media player' )
 				: artist + album
 	}
 }

@@ -69,28 +69,28 @@ IconWidget {
 	},
 	State {
 		name: 'default'
-		when: Plasmoid.location == PlasmaCore.Types.TopEdge
+		when: plasmoid.location === PlasmaCore.Types.TopEdge
 		PropertyChanges {
 			target: iconPopup
 			iconSource: 'down-arrow'
 		}
 	},
 	State {
-		when: Plasmoid.location == PlasmaCore.Types.BottomEdge
+		when: plasmoid.location === PlasmaCore.Types.BottomEdge
 		PropertyChanges {
 			target: iconPopup
 			iconSource: 'up-arrow'
 		}
 	},
 	State {
-		when: Plasmoid.location == PlasmaCore.Types.LeftEdge
+		when: plasmoid.location === PlasmaCore.Types.LeftEdge
 		PropertyChanges {
 			target: iconPopup
 			iconSource: 'right-arrow'
 		}
 	},
 	State {
-		when: Plasmoid.location == PlasmaCore.Types.RightEdge
+		when: plasmoid.location === PlasmaCore.Types.RightEdge
 		PropertyChanges {
 			target: iconPopup
 			iconSource: 'left-arrow'

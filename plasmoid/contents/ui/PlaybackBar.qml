@@ -39,9 +39,9 @@ PlaybackItem {
 		if ( !model.itemAt( 1 ) ) return
 
 		if ( playing )
-			model.itemAt( 1 ) .iconSource = 'media-playback-pause'
+			model.itemAt( 1 ).iconSource = 'media-playback-pause'
 		else
-			model.itemAt( 1 ) .iconSource = 'media-playback-start'
+			model.itemAt( 1 ).iconSource = 'media-playback-start'
 	}
 
 	ListModel {

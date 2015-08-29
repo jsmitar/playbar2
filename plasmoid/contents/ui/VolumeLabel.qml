@@ -33,9 +33,9 @@ PlasmaExtras.Paragraph {
 	color: Utils.adjustAlpha( theme.textColor, 0.8 )
 
 	function setLabel( value ) {
-		text = ( value * 100 ) .toFixed() +'%'
+		text = ( value * 100 ).toFixed() +'%'
 	}
 
-	text: ( value * 100 ) .toFixed() + '%'
+	text: ( value * 100 ).toFixed() + '%'
 
 }

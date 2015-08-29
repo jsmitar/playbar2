@@ -22,20 +22,20 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 import '../code/utils.js' as Utils
 
 PlasmaExtras.Paragraph {
-    id: time
+	id: time
 
-    // units in hundredth of second
-    property int topTime: mpris2.length
-    // units in hundredth of second
-    property int currentTime: mpris2.position
+	// units in hundredth of second
+	property int topTime: mpris2.length
+	// units in hundredth of second
+	property int currentTime: mpris2.position
 
-    property bool showPosition: true
+	property bool showPosition: true
 
-    property bool showRemaining: true
+	property bool showRemaining: true
 
-    property bool labelSwitch: false
+	property bool labelSwitch: false
 
-    property alias interactive: mouseArea.hoverEnabled
+	property alias interactive: mouseArea.hoverEnabled
 
 	property alias autoTimeUpdate: timer.running
 
@@ -43,11 +43,11 @@ PlasmaExtras.Paragraph {
 
 	enabled: mpris2.sourceActive & mpris2.length > 0
 
-    function positionUpdate( negative ) {
-        var min, sec
+	function positionUpdate( negative ) {
+		var min, sec
 
-        if ( negative ) sec = Math.abs( ( topTime - currentTime ) /100 )
-        else sec = currentTime/100
+		if ( negative ) sec = Math.abs( ( topTime - currentTime ) /100 )
+		else sec = currentTime/100
 
 		min = Utils.truncate( sec/60 )
 		sec = Utils.truncate( sec - min*60 )
@@ -55,9 +55,9 @@ PlasmaExtras.Paragraph {
 		if ( negative ) text = '-' + min + ':'
 		else text = min + ':'
 		text += sec <= 9 ? '0' + sec : sec
-    }
+	}
 
-    function lengthUpdate() {
+	function lengthUpdate() {
 		var min
 		var sec = topTime/100
 		min = Utils.truncate( sec/60 )
@@ -85,21 +85,21 @@ PlasmaExtras.Paragraph {
 		}
 	}
 
-    MouseArea {
-        id: mouseArea
+	MouseArea {
+		id: mouseArea
 
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton
+		anchors.fill: parent
+		acceptedButtons: Qt.LeftButton
 		enabled: hoverEnabled
 
 		onEntered: color = theme.viewHoverColor
-        onExited: color = Utils.adjustAlpha( theme.textColor, 0.8 )
-        onReleased: {
-            if ( !exited || containsMouse ) {
+		onExited: color = Utils.adjustAlpha( theme.textColor, 0.8 )
+		onReleased: {
+			if ( !exited || containsMouse ) {
 				timer._switch = !timer._switch
 				plasmoid.configuration.TimeLabelSwitch = timer._switch
-                timer.triggered()
-            }
-        }
-    }
+				timer.triggered()
+			}
+		}
+	}
 }
