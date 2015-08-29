@@ -11,7 +11,9 @@
 class PlayBarSettingsHelper {
   public:
 	PlayBarSettingsHelper() : q( 0 ) {}
-	~PlayBarSettingsHelper() { delete q; }
+	~PlayBarSettingsHelper() {
+		delete q;
+	}
 	PlayBarSettings *q;
 };
 K_GLOBAL_STATIC( PlayBarSettingsHelper, s_globalPlayBarSettings )
@@ -24,7 +26,7 @@ PlayBarSettings *PlayBarSettings::self() {
 	return s_globalPlayBarSettings->q;
 }
 
-PlayBarSettings::PlayBarSettings(  )
+PlayBarSettings::PlayBarSettings()
 	: KConfigSkeleton( QLatin1String( "playbarrc" ) ) {
 	Q_ASSERT( !s_globalPlayBarSettings->q );
 	s_globalPlayBarSettings->q = this;

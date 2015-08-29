@@ -34,7 +34,7 @@ PlayBarJob::PlayBarJob( const QString &destination,
 }
 
 PlayBarJob::~PlayBarJob() {
-	// qDebug() << this << "deleted";
+	qDebug() << this << "deleted";
 }
 
 void PlayBarJob::start() {

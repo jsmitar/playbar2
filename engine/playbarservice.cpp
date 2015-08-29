@@ -34,7 +34,7 @@ PlayBarService::PlayBarService( PlayBar *playbar, QObject *parent )
 }
 
 PlayBarService::~PlayBarService() {
-	qDebug() << this << "deleted";
+	// qDebug() << this << "deleted";
 }
 
 ServiceJob *PlayBarService::createJob( const QString &operation, QVariantMap &parameters ) {

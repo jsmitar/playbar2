@@ -17,32 +17,26 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+#include "playbarservice.h"
+
 #include "playbarjob.h"
 
 #include <QDebug>
 
-#include "playbar.h"
+#include "Plasma/Service"
+#include "Plasma/ServiceJob"
 
-PlayBarJob::PlayBarJob( const QString &destination,
-						const QString &operation,
-						const QVariantMap &parameters,
-						PlayBar *playbar,
-						QObject *parent ) :
-	ServiceJob( destination, operation, parameters, parent ),
-	m_playbar( playbar ) {
-	
+
+PlayBarService::PlayBarService( PlayBar *playbar, QObject *parent )
+	: Service( parent ),
+	  m_playbar( playbar ) {
+	setName( QLatin1Literal( "audoban.engine.playbar" ) );
 }
 
-PlayBarJob::~PlayBarJob() {
-	// qDebug() << this << "deleted";
+PlayBarService::~PlayBarService() {
+	qDebug() << this << "deleted";
 }
 
-void PlayBarJob::start() {
-	if ( operationName() == QLatin1String( "ShowSettings" ) )
-		m_playbar->showSettings();
-		
-	if ( operationName() == QLatin1String( "SetSourceMpris2" ) )
-		m_playbar->mpris2_source = parameters() ["source"].toString();
-		
-	emitResult();
+ServiceJob *PlayBarService::createJob( const QString &operation, QVariantMap &parameters ) {
+	return new PlayBarJob( destination(), operation, parameters, m_playbar, this );
 }

@@ -44,7 +44,7 @@ ConfigDialog::ConfigDialog( KActionCollection *collection , QWidget *parent )
 }
 
 ConfigDialog::~ConfigDialog() {
-	// qDebug() << this << "deleted";
+	qDebug() << this << "deleted";
 }
 
 void ConfigDialog::updateSettings() {
