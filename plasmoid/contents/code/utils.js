@@ -37,6 +37,10 @@ function setActions( sourceActive, identity ) {
 			break
 		case 'clementine':
 			icon = 'application-x-clementine'
+			break
+		case 'yarock':
+			icon = 'application-x-yarock'
+			break
 	}
 	iconApplication = icon
 	print( iconApplication )
@@ -46,8 +50,7 @@ function setActions( sourceActive, identity ) {
 	Plasmoid.setAction( 'quit', i18n( 'Quit' ) ,'window-close' )
 	Plasmoid.setAction( 'nextSource', i18n( 'Next multimedia source' ) , 'go-next' )
 	Plasmoid.setActionSeparator( 'sep1' )
-	Plasmoid.setAction( 'configure', i18n( 'Configure PlayBar' ) , 'configure',
-'alt+d, s' )
+	Plasmoid.setAction( 'configure', i18n( 'Configure PlayBar' ) , 'configure', 'alt+d, s' )
 
 }
 
@@ -71,6 +74,7 @@ function adjustAlpha( clr, a ) {
 // Hue: 0..1
 // Saturation: 0..1
 // Lightness: -1..1
+// Return a { h, s, l } object
 function rgbToHsl( clr ) {
 
 	//The RGB values are divided by 255 to change the range from 0..255 to 0..1

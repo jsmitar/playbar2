@@ -45,7 +45,7 @@ PlasmaCore.DataSource {
 	property var service: null
 
 
-	property string identity: hasSource( 'Identity' ) ? data[source]['Identity'] : i18n( 'No media player' )
+	property string identity: hasSource( 'Identity' ) ? toCapitalizeIdentity() : i18n( 'No media player' )
 
 	property string playbackStatus: hasSource( 'PlaybackStatus' ) ? data[source]['PlaybackStatus'] : ''
 
@@ -81,6 +81,7 @@ PlasmaCore.DataSource {
 	Component.onCompleted: nextSource()
 
 // 	onIntervalChanged: debug( 'interval', interval )
+
 
 	onIdentityChanged: {
 		if ( source.length > 0 ) Utils.setActions( source[0], identity )
@@ -177,13 +178,13 @@ PlasmaCore.DataSource {
 	function seek( position, currentPosition ) {
 		if ( service && canControl && canSeek ) {
 			var job = service.operationDescription( 'SetPosition' )
-			job['microseconds'] = ( position * 10000 ) .toFixed( 0 )
+			job['microseconds'] = ( position * 10000 ).toFixed( 0 )
 			service.startOperationCall( job )
 		}
 		return position
 // 		if ( source == 'clementine' ) {
 // 			job = service.operationDescription( 'Seek' )
-// 			job['microseconds'] = ( ( -currentPosition + position ) * 10000 ) .toFixed( 0 )
+// 			job['microseconds'] = ( ( -currentPosition + position ) * 10000 ).toFixed( 0 )
 // 			service.startOperationCall( job )
 // 			return
 // 		}
@@ -205,5 +206,10 @@ PlasmaCore.DataSource {
 			value = value > 1.2 ? 1 : value
 		}
 		return value
+	}
+
+	function toCapitalizeIdentity() {
+		var i = data[source]['Identity'];
+		return i[0].toUpperCase() + i.substr(1);
 	}
 }

@@ -47,26 +47,35 @@ Rectangle {
 		color: color
 	}
 
-	OpacityAnimator on opacity {
+	SequentialAnimation{
 		id: appear
 		running: false
 		alwaysRunToEnd: true
-		to: 1.0
-		duration: units.longDuration
+		OpacityAnimator {
+			target: cover
+			to: 0.3
+			duration: units.longDuration
+		}
+		OpacityAnimator {
+			target: cover
+			to: 1.0
+			duration: units.longDuration
+		}
 	}
 
-	OpacityAnimator on opacity {
+	OpacityAnimator{
 		id: fade
+		target: bg
 		running: false
-		alwaysRunToEnd: true
+		alwaysRunToEnd: false
 		to: 0.3
 		duration: units.longDuration
 	}
 
-
 	Image {
 		id: cover
 
+		z: 10
 		source: mpris2.artUrl
 		fillMode: Image.PreserveAspectFit
 		anchors.centerIn: parent
@@ -82,38 +91,40 @@ Rectangle {
 		verticalAlignment: Image.AlignVCenter
 
 		onStatusChanged: {
-			if ( status === Image.Ready )
+			if ( !appear.running && status === Image.Ready )  {
+				fade.stop()
+				mask.visible = false
 				appear.start()
-			else if ( mpris2.artUrl.length === 0 && ( status === Image.Null || status === Image.Error ) ) {
-				fade.start()
-				// debug( 'Fade on CoverArt', status )
+				bg.opacity = 1.0
+				return
+			}
+			if ( ( !mpris2.artUrl.length && status !== Image.Ready && !appear.running )
+				|| !mpris2.sourceActive || mpris2.playbackStatus === "Stopped" )
+			{
+				mask.visible = true
+				fade.restart()
 			}
 		}
 	}
 
 	PlasmaCore.IconItem {
 		id: noCover
-
 		anchors.centerIn: parent
 		width: parent.width - 2
 		height: parent.height - 2
-
 		source: 'tools-rip-audio-cd'
-
 		visible: false
 	}
 
 	Colorize {
+		id: mask
 		anchors.fill: noCover
 		readonly property var hsl: Utils.rgbToHsl( theme.textColor )
-
-		visible: cover.status !== Image.Ready || !mpris2.sourceActive
 		source: noCover
 		hue: hsl.h
 		saturation: hsl.s
 		lightness: hsl.l
 		cached: true
-
 	}
 
 	MouseArea {
