@@ -67,7 +67,8 @@ Rectangle {
 		id: fade
 		target: bg
 		running: false
-		alwaysRunToEnd: false
+		alwaysRunToEnd: true
+
 		to: 0.3
 		duration: units.longDuration
 	}
@@ -94,13 +95,14 @@ Rectangle {
 			if ( !appear.running && status === Image.Ready )  {
 				fade.stop()
 				mask.visible = false
-				appear.start()
 				bg.opacity = 1.0
+				appear.start()
 				return
 			}
-			if ( ( !mpris2.artUrl.length && status !== Image.Ready && !appear.running )
-				|| !mpris2.sourceActive || mpris2.playbackStatus === "Stopped" )
+			if ( ( mpris2.artUrl.length == 0 && status !== Image.Ready )
+				|| ( !mpris2.sourceActive || mpris2.playbackStatus === "Stopped" ) )
 			{
+				appear.stop()
 				mask.visible = true
 				fade.restart()
 			}
