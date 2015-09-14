@@ -47,7 +47,7 @@ PlayBar also supports keyboard shortcuts and these come with a default configura
 # Contributors
 - ![Alexey Murz Korepov](https://github.com/MurzNN) Improve Readme
 - ![varlesh](https://github.com/varlesh) Create a PPA repository with Packages for **Ubuntu**
-- ![André Vitor de Lima Matos](https://github.com/andrevmatos) Create a AUR package for **Arch Linux**
+- ![André Vitor de Lima Matos](https://github.com/andrevmatos) Create a AUR package for **Arch Linux** and Portuguese translation
 - ![Tomasz Przybył](https://github.com/FadeMind) Polish translation
 - ![Konstantin](https://github.com/KottV) Russian translation
 - ![dkadioglu](https://github.com/dkadioglu) German translation
