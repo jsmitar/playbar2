@@ -36,6 +36,7 @@ RowLayout {
 		lineHeight: 1.2
 		text: mpris2.identity
 		enabled: mpris2.sourceActive
+		opacity: enabled ? 1.0 : 0.5
 	}
 
 	PlasmaComponents.ToolButton {

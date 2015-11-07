@@ -28,10 +28,9 @@ Rectangle {
 
 	width: units.iconSizes.enormous
 	height: units.iconSizes.enormous
-	//color: Utils.adjustAlpha( Utils.blendColors( theme.complementaryBackgroundColor, theme.backgroundColor, 0.5 ) , 0.5 )
-	color: Utils.adjustAlpha( theme.complementaryBackgroundColor, 0.3 )
+	color: Utils.adjustAlpha( theme.complementaryBackgroundColor, 0.1 )
 	radius: 2
-	opacity: 0.3
+	opacity: 1
 
 	Layout.minimumWidth: height
 	Layout.minimumHeight: units.iconSizes.enormous
@@ -49,28 +48,18 @@ Rectangle {
 
 	SequentialAnimation{
 		id: appear
-		running: false
+		running: true
 		alwaysRunToEnd: true
 		OpacityAnimator {
 			target: cover
 			to: 0.3
-			duration: units.longDuration
+			duration: units.shortDuration
 		}
 		OpacityAnimator {
 			target: cover
 			to: 1.0
 			duration: units.longDuration
 		}
-	}
-
-	OpacityAnimator{
-		id: fade
-		target: bg
-		running: false
-		alwaysRunToEnd: true
-
-		to: 0.3
-		duration: units.longDuration
 	}
 
 	Image {
@@ -92,20 +81,8 @@ Rectangle {
 		verticalAlignment: Image.AlignVCenter
 
 		onStatusChanged: {
-			if ( !appear.running && status === Image.Ready )  {
-				fade.stop()
-				mask.visible = false
-				bg.opacity = 1.0
-				appear.start()
-				return
-			}
-			if ( ( mpris2.artUrl.length == 0 && status !== Image.Ready )
-				|| ( !mpris2.sourceActive || mpris2.playbackStatus === "Stopped" ) )
-			{
-				appear.stop()
-				mask.visible = true
-				fade.restart()
-			}
+			if ( ( status === Image.Ready || mpris2.artUrl.length > 0 ) && !appear.running )
+				appear.restart()
 		}
 	}
 
@@ -126,6 +103,7 @@ Rectangle {
 		hue: hsl.h
 		saturation: hsl.s
 		lightness: hsl.l
+		opacity: 0.3
 		cached: true
 	}
 

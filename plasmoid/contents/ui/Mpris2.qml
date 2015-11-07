@@ -30,7 +30,7 @@ PlasmaCore.DataSource {
 
 	readonly property int maximumLoad: 450
 
-	readonly property int minimumLoad: 1500
+	readonly property int minimumLoad: 450
 
 	readonly property bool isMaximumLoad: interval === maximumLoad
 

@@ -44,7 +44,7 @@ IconWidget {
 		if ( mpris2.volume == 0 ) return level[0]
 		else if ( mpris2.volume <= 0.3 ) return level[1]
 		else if ( mpris2.volume <= 0.6 ) return level[2]
-		else return level[3]
+		return level[3]
 	}
 
 	onClicked: {
