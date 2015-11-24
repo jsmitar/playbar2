@@ -21,7 +21,6 @@ target_link_libraries( plasma_engine_playbar
 	KF5::GlobalAccel
 	KF5::I18n
 	KF5::Plasma
-	KF5::PlasmaQuick
 	KF5::WindowSystem
 	KF5::XmlGui
 )

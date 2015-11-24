@@ -12,7 +12,7 @@ find_package(ECM REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
-			Plasma PlasmaQuick DocTools Declarative WindowSystem ConfigWidgets XmlGui GlobalAccel I18n)
+			Plasma PlasmaQuick DocTools WindowSystem ConfigWidgets XmlGui GlobalAccel I18n)
 
 include(KDECMakeSettings)
 include(KDECompilerSettings)
