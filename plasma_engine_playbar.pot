@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
-"POT-Creation-Date: 2015-07-30 22:10-0500\n"
+"POT-Creation-Date: 2015-11-24 11:47-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,110 +17,40 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: configdialog.cpp:33
+#: configdialog.cpp:32
 msgid "Configure PlayBar"
 msgstr ""
 
-#: configdialog.cpp:37
+#: configdialog.cpp:36
 msgctxt "General config"
 msgid "General"
 msgstr ""
 
-#: configdialog.cpp:38
+#: configdialog.cpp:37
 msgctxt "Shortcuts config"
 msgid "Shortcuts"
 msgstr ""
 
-#: configdialog.cpp:38
+#: configdialog.cpp:37
 msgid "Shortcuts Configuration"
 msgstr ""
 
-#: playbar.cpp:50
+#: playbar.cpp:49
 msgid "Play/Pause"
 msgstr ""
 
-#: playbar.cpp:55
+#: playbar.cpp:54
 msgid "Stop"
 msgstr ""
 
-#: playbar.cpp:60
+#: playbar.cpp:59
 msgid "Next track"
 msgstr ""
 
-#: playbar.cpp:65
+#: playbar.cpp:64
 msgid "Previous track"
 msgstr ""
 
-#: playbar.cpp:69
+#: playbar.cpp:68
 msgid "Toggle window media player"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:31
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowStop)
-#. i18n: file: playbar.kcfg:13
-#. i18n: ectx: label, entry (ShowStop), group (General)
-#: playbarsettings.cpp:39 rc.cpp:3 rc.cpp:30
-msgid "Show stop button"
-msgstr ""
-
-#: playbarsettings.cpp:43
-msgid "Controls on bar"
-msgstr ""
-
-#. i18n: file: playbar.kcfg:21
-#. i18n: ectx: label, entry (ButtonsAppearance), group (General)
-#: playbarsettings.cpp:48 rc.cpp:36
-msgid "Buttons appearance"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:110
-#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BackgroundHint)
-#. i18n: file: playbar.kcfg:25
-#. i18n: ectx: label, entry (BackgroundHint), group (General)
-#: playbarsettings.cpp:53 rc.cpp:18 rc.cpp:39
-msgid "Background hints"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:41
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ControlsOnBar)
-#. i18n: file: playbar.kcfg:17
-#. i18n: ectx: label, entry (ControlsOnBar), group (General)
-#: rc.cpp:6 rc.cpp:33
-msgid "Playback controls on the bar"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:57
-#. i18n: ectx: property (title), widget (QGroupBox, kcfg_ButtonsAppearance)
-#: rc.cpp:9
-msgid "Buttons appareance"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:72
-#. i18n: ectx: property (text), widget (QRadioButton, flat)
-#: rc.cpp:12
-msgid "F&lat"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:88
-#. i18n: ectx: property (text), widget (QRadioButton, toolbutton)
-#: rc.cpp:15
-msgid "T&ool button"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:131
-#. i18n: ectx: property (text), widget (QRadioButton, nobackground)
-#: rc.cpp:21
-msgid "No bac&kground"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:144
-#. i18n: ectx: property (text), widget (QRadioButton, normal)
-#: rc.cpp:24
-msgid "Nor&mal"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:163
-#. i18n: ectx: property (text), widget (QRadioButton, translucent)
-#: rc.cpp:27
-msgid "Transl&ucent"
 msgstr ""
