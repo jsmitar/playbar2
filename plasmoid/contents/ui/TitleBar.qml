@@ -22,54 +22,56 @@ import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
-import "../code/utils.js" as Utils
+import '../code/utils.js' as Utils
 
-RowLayout{
+RowLayout {
 	Layout.minimumHeight: implicitHeight + units.smallSpacing
+	Layout.fillWidth: true
+	Layout.fillHeight: true
 
-	PlasmaExtras.Heading{
+	PlasmaExtras.Heading {
 		id: titleBar
 		Layout.fillWidth: true
 		level: 2
 		lineHeight: 1.2
 		text: mpris2.identity
 		enabled: mpris2.sourceActive
+		opacity: enabled ? 1.0 : 0.5
 	}
 
-	PlasmaComponents.ToolButton{
+	PlasmaComponents.ToolButton {
 		id: menuButton
 		property var contextMenu
 
 		Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
 		enabled: mpris2.sourceActive
-		iconSource: "configure"
+		iconSource: 'configure'
 		onClicked: {
-			if(!contextMenu)
-				contextMenu = contextMenuComponent.createObject(menuButton)
+			if ( !contextMenu )
+				contextMenu = contextMenuComponent.createObject( menuButton )
 			contextMenu.open()
 		}
 	}
 
-	Component{
+	Component {
 		id: contextMenuComponent
-		PlasmaComponents.ContextMenu{
+		PlasmaComponents.ContextMenu {
 			visualParent: menuButton
-			PlasmaComponents.MenuItem{
+			PlasmaComponents.MenuItem {
 				icon: Utils.iconApplication
-				text: i18n("Open %1", mpris2.identity)
+				text: i18n( 'Open %1', mpris2.identity )
 				onClicked: action_raise()
 			}
-			PlasmaComponents.MenuItem{
-				icon: "window-close"
-				text: i18n("Quit")
+			PlasmaComponents.MenuItem {
+				icon: 'window-close'
+				text: i18n( 'Quit' )
 				onClicked: action_quit()
 			}
-			PlasmaComponents.MenuItem{
-				icon: "go-next"
-				text: i18n("Next multimedia source")
+			PlasmaComponents.MenuItem {
+				icon: 'go-next'
+				text: i18n( 'Next multimedia source' )
 				onClicked: action_nextSource()
 			}
-
 		}
 	}
 }

@@ -7,7 +7,7 @@ Type=Service
 
 X-KDE-ServiceTypes=Plasma/DataEngine
 X-KDE-Library=plasma_engine_playbar
-X-Plasma-EngineName=playbarengine
+X-Plasma-EngineName=playbar
 
 X-KDE-PluginInfo-Author=Smith AR
 X-KDE-PluginInfo-Category=Multimedia
@@ -15,6 +15,6 @@ X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-Email=audoban@openmailbox.org
 X-KDE-PluginInfo-EnabledByDefault=true
 X-KDE-PluginInfo-License=LGPL
-X-KDE-PluginInfo-Name=audoban.dataengine.playbar
-X-KDE-PluginInfo-Version=2.1
+X-KDE-PluginInfo-Name=playbar
+X-KDE-PluginInfo-Version=2.2
 X-KDE-PluginInfo-Website=https://github.com/audoban/PlayBar2

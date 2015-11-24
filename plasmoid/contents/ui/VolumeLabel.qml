@@ -4,7 +4,7 @@
 *   This program is free software; you can redistribute it and/or modify
 *   it under the terms of the GNU Library General Public License as
 *   published by the Free Software Foundation; either version 2 or
-*   (at your option) any later version.
+*   (at your option ) any later version.
 *
 *   This program is distributed in the hope that it will be useful,
 *   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -20,9 +20,9 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import org.kde.plasma.extras 2.0 as PlasmaExtras
-import "../code/utils.js" as Utils
+import '../code/utils.js' as Utils
 
-PlasmaExtras.Paragraph{
+PlasmaExtras.Paragraph {
 	id: label
 
 	property real value: 0
@@ -30,12 +30,12 @@ PlasmaExtras.Paragraph{
 	wrapMode: Text.NoWrap
 	elide: Text.ElideNone
 	maximumLineCount: 1
-	color: Utils.adjustAlpha(theme.textColor, 0.8)
+	color: Utils.adjustAlpha( theme.textColor, 0.8 )
 
-	function setLabel(value){
-		text = (value * 100).toFixed()+'%'
+	function setLabel( value ) {
+		text = ( value * 100 ).toFixed() +'%'
 	}
 
-	text: (value * 100).toFixed() + '%'
+	text: ( value * 100 ).toFixed() + '%'
 
 }

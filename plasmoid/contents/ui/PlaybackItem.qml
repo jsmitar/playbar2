@@ -20,47 +20,45 @@
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
 
-Item{
-    id: playbackitem
+Item {
+	id: playbackitem
 
-    property bool playing: mpris2.playbackStatus == 'Playing'
+	property bool playing: mpris2.playbackStatus == 'Playing'
 
-    property bool showStop: mpris2.source == 'spotify' ? false : playbarEngine.showStop
+	property bool showStop: mpris2.source == 'spotify' ? false : playbarEngine.showStop
 
-    property int buttonSize: units.iconSizes.small
+	property int buttonSize: units.iconSizes.small
 
-    enabled: mpris2.sourceActive && mpris2.canControl
+	enabled: mpris2.sourceActive && mpris2.canControl
 
-    visible: mpris2.sourceActive
+	signal playPause()
 
-    signal playPause()
+	signal previous()
 
-    signal previous()
+	signal next()
 
-    signal next()
+	signal stop()
 
-    signal stop()
-
-    onPlayPause: {
-		if(mpris2.source == 'spotify' ) {
-			mpris2.startOperation('PlayPause')
+	onPlayPause: {
+		if ( mpris2.source == 'spotify' ) {
+			mpris2.startOperation( 'PlayPause' )
 			return
 		}
-		if(!playing) mpris2.startOperation('Play')
-		else mpris2.startOperation('PlayPause')
+		if ( !playing ) mpris2.startOperation( 'Play' )
+		else mpris2.startOperation( 'PlayPause' )
 	}
 
-    onPrevious: {
-		if(mpris2.canGoPrevious)
-			mpris2.startOperation('Previous')
+	onPrevious: {
+		if ( mpris2.canGoPrevious )
+			mpris2.startOperation( 'Previous' )
 	}
-    onNext: {
-		if(mpris2.canGoNext)
-			mpris2.startOperation('Next')
+	onNext: {
+		if ( mpris2.canGoNext )
+			mpris2.startOperation( 'Next' )
 	}
-    onStop: {
-		if(mpris2.playbackStatus != "Stopped")
-			mpris2.startOperation('Stop')
+	onStop: {
+		if ( mpris2.playbackStatus != 'Stopped' )
+			mpris2.startOperation( 'Stop' )
 	}
 
 }

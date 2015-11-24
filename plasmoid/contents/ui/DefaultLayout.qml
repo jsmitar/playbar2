@@ -20,72 +20,80 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import QtGraphicalEffects 1.0
+import org.kde.plasma.core 2.0 as PlasmaCore
 
 //###########
 // DefaultLayout
 //###########
-ColumnLayout{
-	id: page
 
+Item {
 	readonly property double num_aureo: 1.618033988749895
-	spacing: units.smallSpacing
-	width: implicitHeight * num_aureo
-	height: implicitHeight
 
-	Layout.fillHeight: true
-	Layout.fillWidth: true
-	Layout.minimumWidth: 350
-	Layout.minimumHeight: implicitHeight
+ 	Layout.fillHeight: true
+ 	Layout.fillWidth: true
+ 	Layout.minimumWidth: page.implicitHeight * num_aureo
+ 	Layout.minimumHeight: page.implicitHeight
+ 	Layout.preferredWidth: page.implicitHeight * num_aureo
+ 	Layout.preferredHeight: page.implicitHeight
 
-	TitleBar{
+
+GridLayout {
+	id: page
+	width: parent.width
+	height: parent.height
+
+ 	rowSpacing: units.smallSpacing
+ 	columnSpacing: units.largeSpacing
+ 	Layout.minimumWidth: implicitHeight * num_aureo
+ 	Layout.minimumHeight: implicitHeight
+ 	Layout.maximumHeight: implicitHeight
+ 	Layout.fillWidth: true
+ 	Layout.fillHeight: false
+
+	columns: 2
+	rows: 5
+
+	TitleBar {
+		Layout.row: 0
 		Layout.columnSpan: 2
-		Layout.maximumHeight: implicitHeight
 	}
-	GridLayout{
-		id: osd
-		rowSpacing: units.largeSpacing
-		columnSpacing: units.largeSpacing
-		Layout.fillHeight: true
-		Layout.maximumHeight: implicitHeight
-
-		columns: 2
-		rows: 2
-
-		CoverArt{
-			id: cover
-			Layout.rowSpan: 2
-			Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-			focus: true
-		}
-		TrackInfo{
-			Layout.fillHeight: true
-			Behavior on width{
-				NumberAnimation{
-					duration: units.shortDuration
-				}
-			}
-		}
-		PlaybackWidget{
-			id: playback
-			Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
-			Layout.fillHeight: true
-			Layout.fillWidth: true
-		}
+	CoverArt {
+		id: cover
+		Layout.row: 1
+ 		Layout.rowSpan: 2
+		Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+		focus: true
 	}
-
-	SliderVolume{
+	TrackInfo {
+		Layout.row: 1
+		Layout.column: 1
+ 		Layout.fillHeight: false
+	}
+	PlaybackWidget {
+		id: playback
+		Layout.row: 2
+		Layout.column: 1
+		Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+	}
+	SliderVolume {
+		Layout.row: 3
+		Layout.columnSpan: 2
 		Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 	}
-	SliderSeek{
+	SliderSeek {
+		Layout.row: 4
+		Layout.columnSpan: 2
 		Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 	}
 
-	layer.enabled: playbarEngine.backgroundHint == 0 && plasmoid.formFactor == 0
-	layer.effect: DropShadow{
+	layer.enabled: playbarEngine.backgroundHint === 0 && plasmoid.formFactor === PlasmaCore.Types.Planar
+	layer.effect: DropShadow {
 		source: page
 		radius: 8.0
 		fast: true
-		color: "#99888888"
+		spread: 0.3
+		color: theme.complementaryBackgroundColor
 		anchors.fill: source
 	}
+}
 }

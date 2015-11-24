@@ -19,53 +19,53 @@
 
 import QtQuick 2.4
 import org.kde.plasma.extras 2.0 as PlasmaExtras
-import "../code/utils.js" as Utils
+import '../code/utils.js' as Utils
 
-PlasmaExtras.Paragraph{
-    id: time
+PlasmaExtras.Paragraph {
+	id: time
 
-    // units in hundredth of second
-    property int topTime: mpris2.length
-    // units in hundredth of second
-    property int currentTime: mpris2.position
+	// units in hundredth of second
+	property int topTime: mpris2.length
+	// units in hundredth of second
+	property int currentTime: mpris2.position
 
-    property bool showPosition: true
+	property bool showPosition: true
 
-    property bool showRemaining: true
+	property bool showRemaining: true
 
-    property bool labelSwitch: false
+	property bool labelSwitch: false
 
-    property alias interactive: mouseArea.hoverEnabled
+	property alias interactive: mouseArea.hoverEnabled
 
 	property alias autoTimeUpdate: timer.running
 
-	color: Utils.adjustAlpha(theme.textColor, 0.8)
+	color: Utils.adjustAlpha( theme.textColor, 0.8 )
 
 	enabled: mpris2.sourceActive & mpris2.length > 0
 
-    function positionUpdate(negative) {
-        var min, sec
+	function positionUpdate( negative ) {
+		var min, sec
 
-        if (negative) sec = Math.abs((topTime - currentTime)/100)
-        else sec = currentTime/100
+		if ( negative ) sec = Math.abs( ( topTime - currentTime ) /100 )
+		else sec = currentTime/100
 
-		min = Utils.truncate(sec/60)
-		sec = Utils.truncate(sec - min*60)
+		min = Utils.truncate( sec/60 )
+		sec = Utils.truncate( sec - min*60 )
 
-		if(negative) text = '-' + min + ':'
+		if ( negative ) text = '-' + min + ':'
 		else text = min + ':'
 		text += sec <= 9 ? '0' + sec : sec
-    }
+	}
 
-    function lengthUpdate() {
+	function lengthUpdate() {
 		var min
 		var sec = topTime/100
-		min = Utils.truncate(sec/60)
-		sec = Utils.truncate(sec - min*60)
+		min = Utils.truncate( sec/60 )
+		sec = Utils.truncate( sec - min*60 )
 		time.text = min + ':' + ( sec <= 9 ? '0' + sec : sec )
 	}
 
-	Timer{
+	Timer {
 		id: timer
 
 		property bool _switch: labelSwitch
@@ -74,32 +74,32 @@ PlasmaExtras.Paragraph{
 		repeat: true
 		running: parent.visible
 		onTriggered: {
-			if(showPosition & showRemaining)
-				positionUpdate(_switch)
-			else if(_switch & showPosition)
-				positionUpdate(false)
-			else if(_switch & showRemaining)
-				positionUpdate(true)
+			if ( showPosition & showRemaining )
+				positionUpdate( _switch )
+			else if ( _switch & showPosition )
+				positionUpdate( false )
+			else if ( _switch & showRemaining )
+				positionUpdate( true )
 			else
 				lengthUpdate()
 		}
 	}
 
-    MouseArea{
-        id: mouseArea
+	MouseArea {
+		id: mouseArea
 
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton
+		anchors.fill: parent
+		acceptedButtons: Qt.LeftButton
 		enabled: hoverEnabled
 
 		onEntered: color = theme.viewHoverColor
-        onExited: color = Utils.adjustAlpha(theme.textColor, 0.8)
-        onReleased: {
-            if (!exited || containsMouse ){
+		onExited: color = Utils.adjustAlpha( theme.textColor, 0.8 )
+		onReleased: {
+			if ( !exited || containsMouse ) {
 				timer._switch = !timer._switch
 				plasmoid.configuration.TimeLabelSwitch = timer._switch
-                timer.triggered()
-            }
-        }
-    }
+				timer.triggered()
+			}
+		}
+	}
 }

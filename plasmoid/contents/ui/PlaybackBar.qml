@@ -22,7 +22,7 @@ import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
-PlaybackItem{
+PlaybackItem {
 	id: playbackbar
 
 	property int buttonsAppearance: playbarEngine.buttonsAppearance
@@ -36,35 +36,35 @@ PlaybackItem{
 	height: visible ? buttons.height : 0
 
 	onPlayingChanged: {
-		if(!model.itemAt(1)) return
+		if ( !model.itemAt( 1 ) ) return
 
-		if(playing)
-			model.itemAt(1).iconSource = "media-playback-pause"
+		if ( playing )
+			model.itemAt( 1 ).iconSource = 'media-playback-pause'
 		else
-			model.itemAt(1).iconSource = "media-playback-start"
+			model.itemAt( 1 ).iconSource = 'media-playback-start'
 	}
 
-	ListModel{
+	ListModel {
 		id: playmodel
 
-		ListElement{
-			icon: "media-skip-backward"
+		ListElement {
+			icon: 'media-skip-backward'
 		}
-		ListElement{
-			icon: "media-playback-start"
+		ListElement {
+			icon: 'media-playback-start'
 		}
-		ListElement{
-			icon: "media-playback-stop"
+		ListElement {
+			icon: 'media-playback-stop'
 		}
-		ListElement{
-			icon: "media-skip-forward"
+		ListElement {
+			icon: 'media-skip-forward'
 		}
 	}
 
-	Component{
+	Component {
 		id: toolButtonDelegate
 
-		PlasmaComponents.ToolButton{
+		PlasmaComponents.ToolButton {
 			iconSource: icon
 			layer.smooth: true
 			visible: index == 2 ? showStop : true
@@ -73,13 +73,13 @@ PlaybackItem{
 		}
 	}
 
-	Component{
+	Component {
 		id: iconWidgetDelegate
 
-		IconWidget{
-			svg: PlasmaCore.Svg{ imagePath: "icons/media" }
+		IconWidget {
+			svg: PlasmaCore.Svg { imagePath: 'icons/media' }
 			iconSource: icon
-			visible: !(index == 2) | showStop
+			visible: !( index == 2 ) | showStop
 			enabled: mpris2.sourceActive
 			size: buttonSize
 		}
@@ -93,33 +93,33 @@ PlaybackItem{
 
 		move: Transition {
 			NumberAnimation {
-				property: "y"
+				property: 'y'
 				easing.type: Easing.Linear
 				duration: units.longDuration
 			}
 		}
 
 
-		Repeater{
+		Repeater {
 			id: model
 			model: playmodel
 			delegate: buttonsAppearance ? toolButtonDelegate : iconWidgetDelegate
 
 			onItemAdded: {
-				switch(index){
+				switch ( index ) {
 					case 0:
-						item.clicked.connect(previous)
+						item.clicked.connect( previous )
 						break
 					case 1:
-						item.clicked.connect(playPause)
+						item.clicked.connect( playPause )
 						//NOTE: update icon playing state
 						playingChanged()
 						break
 					case 2:
-						item.clicked.connect(stop)
+						item.clicked.connect( stop )
 						break
 					case 3:
-						item.clicked.connect(next)
+						item.clicked.connect( next )
 						break
 				}
 			}

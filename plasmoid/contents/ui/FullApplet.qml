@@ -19,4 +19,4 @@
 
 import QtQuick 2.4
 
-DefaultLayout{}
+DefaultLayout { }

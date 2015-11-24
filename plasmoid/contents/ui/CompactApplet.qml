@@ -23,7 +23,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
-Flow{
+Flow {
 	id: playbackControl
 
 	spacing: units.smallSpacing / 2
@@ -33,34 +33,34 @@ Flow{
 	Layout.minimumHeight: vertical ? playbackBar.height + playbackBar.buttonSize + spacing : units.iconSizes.small
 	anchors.fill: parent
 
-	property int _buttonSize: vertical ? (parent && parent.width ? parent.width : 0 ): (parent && parent.height ? parent.height : 0 )
+	property int _buttonSize: vertical ? ( parent && parent.width ? parent.width : 0 ) : ( parent && parent.height ? parent.height : 0 )
 
 	property alias playbackBarVisible: playbackBar.visible
 
 
-	VolumeWheel{
+	VolumeWheel {
 		id: volumeWheelArea
 		parent: playbackBar.visible ? playbackBar : popupContainer
 		anchors.fill: parent
 	}
 
-	PlaybackBar{
+	PlaybackBar {
 		id: playbackBar
 		buttonSize: parent._buttonSize
 	}
 
-	Item{
+	Item {
 		id: popupContainer
 		width: _buttonSize
 		height: _buttonSize
 
-		VolumeWheel{ anchors.fill: parent }
+		VolumeWheel { anchors.fill: parent }
 
-		PopupButton{
+		PopupButton {
 			id: popup
 
 			size: playbackBar.visible ?
-				_buttonSize * (playbarEngine.buttonsAppearance ? 0.5 : 0.7) : _buttonSize
+				_buttonSize * ( playbarEngine.buttonsAppearance ? 0.5 : 0.7 ) : _buttonSize
 			anchors.centerIn: parent
 			opened: plasmoid.expanded
 
@@ -70,13 +70,13 @@ Flow{
 		}
 	}
 
-	Timer{
-		//HACK: For PopupApplet in Notification
+	Timer {
+		//HACK: For PopupApplet in Notification Area
 		running: playbackBar.visible
 		interval: 100
 		onTriggered: {
-			if((!vertical && playbackBar.width > playbackControl.width) ||
-				(vertical && playbackBar.height > playbackControl.height)){
+			if ( ( !vertical && playbackBar.width > playbackControl.width ) ||
+				( vertical && playbackBar.height > playbackControl.height ) ) {
 				playbackBar.visible = false
 			}
 		}
