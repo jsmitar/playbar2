@@ -93,7 +93,7 @@ function rgbToHsl( clr ) {
 	else {
 		switch ( Cmax ) {
 			case R:
-				H = Math.mod( ( G - B ) / diff, 6 )
+				H = ( G - B ) / diff % 6
 				break;
 			case G:
 				H = ( B - R ) / diff + 2

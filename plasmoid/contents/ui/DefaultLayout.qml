@@ -68,6 +68,7 @@ GridLayout {
 		Layout.row: 1
 		Layout.column: 1
  		Layout.fillHeight: false
+ 		layer.enabled: true
 	}
 	PlaybackWidget {
 		id: playback
@@ -92,7 +93,8 @@ GridLayout {
 		radius: 8.0
 		fast: true
 		spread: 0.3
-		color: theme.complementaryBackgroundColor
+		color: ( playbarEngine.backgroundHint === 0 )
+			? playbarEngine.backgroundColor : theme.complementaryBackgroundColor
 		anchors.fill: source
 	}
 }

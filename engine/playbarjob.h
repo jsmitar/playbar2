@@ -39,7 +39,6 @@ class PlayBarJob : public ServiceJob {
 	
 	void start() override;
 	
-	
   private:
   
 	PlayBar *m_playbar;

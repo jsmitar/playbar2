@@ -39,7 +39,8 @@ PlasmaExtras.Paragraph {
 
 	property alias autoTimeUpdate: timer.running
 
-	color: Utils.adjustAlpha( theme.textColor, 0.8 )
+	color: playbarEngine.backgroundHint === 0  
+		? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
 
 	enabled: mpris2.sourceActive & mpris2.length > 0
 
@@ -87,13 +88,14 @@ PlasmaExtras.Paragraph {
 
 	MouseArea {
 		id: mouseArea
-
+ 
 		anchors.fill: parent
 		acceptedButtons: Qt.LeftButton
 		enabled: hoverEnabled
 
 		onEntered: color = theme.viewHoverColor
-		onExited: color = Utils.adjustAlpha( theme.textColor, 0.8 )
+		onExited: color = playbarEngine.backgroundHint === 0  
+			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
 		onReleased: {
 			if ( !exited || containsMouse ) {
 				timer._switch = !timer._switch

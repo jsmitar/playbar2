@@ -71,7 +71,8 @@ PlayBar::PlayBar( KSharedConfigPtr &config , QObject *parent )
 	//connect( m_configDialog, SIGNAL( settingsChanged( QString ) ), this, SLOT( loadSettings() ) );
 }
 
-PlayBar::~PlayBar() {}
+PlayBar::~PlayBar() {
+}
 
 void PlayBar::slotPlayPause() {
 	startOpOverMpris2( "PlayPause" );
@@ -101,6 +102,7 @@ void PlayBar::showSettings() {
 	PlayBarSettings::self()->load();
 	Q_ASSERT( m_collection );
 	m_configDialog = new ConfigDialog( m_collection );
+	
 	connect( this, SIGNAL( destroyed( QObject * ) ), m_configDialog, SLOT( deleteLater() ) );
 	m_configDialog->show();
 }
@@ -121,6 +123,10 @@ const DataEngine::Data &PlayBar::data() {
 			m_data->insert( name , config->buttonsAppearance() );
 		else if ( name == QLatin1String( "BackgroundHint" ) )
 			m_data->insert( name, config->backgroundHint() );
+		else if ( name == QLatin1String( "FrontColor" ) )
+			m_data->insert( name, config->frontColor() );
+		else if ( name == QLatin1String( "BackgroundColor" ) )
+			m_data->insert( name, config->backgroundColor() );
 	}
 	
 	return *m_data;

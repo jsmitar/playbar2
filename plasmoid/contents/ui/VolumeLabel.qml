@@ -30,7 +30,8 @@ PlasmaExtras.Paragraph {
 	wrapMode: Text.NoWrap
 	elide: Text.ElideNone
 	maximumLineCount: 1
-	color: Utils.adjustAlpha( theme.textColor, 0.8 )
+	color: playbarEngine.backgroundHint === 0  
+		? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
 
 	function setLabel( value ) {
 		text = ( value * 100 ).toFixed() +'%'

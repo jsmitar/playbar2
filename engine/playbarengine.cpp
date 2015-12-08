@@ -36,7 +36,9 @@ PlayBarEngine::PlayBarEngine( QObject *parent, const QVariantList &args )
 	connect( PlayBarSettings::self(), SIGNAL( configChanged() ), this, SLOT( updateData() ) );
 }
 
-PlayBarEngine::~PlayBarEngine() {}
+PlayBarEngine::~PlayBarEngine() {
+	delete m_playbar;
+}
 
 Service *PlayBarEngine::serviceForSource( const QString &source ) {
 	if ( source != PROVIDER ) return nullptr;

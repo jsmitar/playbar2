@@ -23,7 +23,25 @@
 		  </entry>
 		  <entry name="BackgroundHint" type="Enum">
 			   <label>Background hints</label>
-			   <default>1</default>
+			   <default>2</default>
 		  </entry>
+		  <entry name="NoBackground" type="Bool">
+			   <label>No background</label>
+			   <default>false</default>
+		  </entry>
+		  <entry name="Normal" type="Bool">
+			   <label>Normal</label>
+			   <default>true</default>
+		  </entry>
+		  <entry name="Translucent" type="Bool">
+			   <label>Translucent</label>
+			   <default>false</default>
+		  </entry>
+                  <entry name="FrontColor" type="Color">
+			   <label>Front color</label>
+                  </entry>
+                  <entry name="BackgroundColor" type="Color">
+                           <label>Background color</label>
+                  </entry>
 	 </group>
 </kcfg>

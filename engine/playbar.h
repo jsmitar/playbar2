@@ -61,11 +61,11 @@ class PlayBar : public QObject {
 	
   private:
   
-	ConfigDialog *m_configDialog;
-	KActionCollection *m_collection;
+	ConfigDialog *m_configDialog = nullptr;
+	KActionCollection *m_collection = nullptr;
 	KSharedConfigPtr m_config;
-	DataEngine::Data *m_data;
-	DataEngineConsumer *m_dc;
+	DataEngine::Data *m_data = nullptr;
+	DataEngineConsumer *m_dc = nullptr;
 	const QString MPRIS2 = "mpris2";
 	
 	QAction *m_playpause;

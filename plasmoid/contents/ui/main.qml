@@ -36,7 +36,9 @@ Item {
 		readonly property bool controlsOnBar: hasSource( 'ControlsOnBar' ) ? data[connectedSources[0]]['ControlsOnBar'] : true
 		readonly property int  buttonsAppearance: hasSource( 'ButtonsAppearance' ) ? data[connectedSources[0]]['ButtonsAppearance'] : 0
 		readonly property int  backgroundHint: hasSource( 'BackgroundHint' ) ? data[connectedSources[0]]['BackgroundHint'] : 1
-
+		readonly property color frontColor: hasSource( 'FrontColor' ) ? data[connectedSources[0]]['FrontColor'] : "#fff"
+		readonly property color backgroundColor: hasSource( 'BackgroundColor' ) ? data[connectedSources[0]]['BackgroundColor'] : "#fff"
+		
 		function startOperation( name ) {
 			if ( !playbarEngine.valid ) return
 			var service = playbarEngine.serviceForSource( 'Provider' )

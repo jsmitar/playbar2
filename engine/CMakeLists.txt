@@ -29,7 +29,7 @@ target_link_libraries( plasma_engine_playbar
 )
 
 install(TARGETS plasma_engine_playbar
-		DESTINATION ${KDE_INSTALL_LIBDIR}/qt5/plugins/plasma/dataengine)
+		DESTINATION ${KDE_INSTALL_PLUGINDIR}/plasma/dataengine)
 
 install(FILES plasma-dataengine-playbar.desktop
 		DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

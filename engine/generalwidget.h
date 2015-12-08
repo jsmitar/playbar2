@@ -32,27 +32,52 @@ class GeneralWidget : public QWidget {
 	virtual ~GeneralWidget();
 	
   public:
-	inline bool showStop() {
+	bool showStop() const {
 		return m_ui.kcfg_ShowStop->isChecked();
 	}
 	
-	inline bool controlsOnBar() {
+	bool controlsOnBar() const {
 		return m_ui.kcfg_ControlsOnBar->isChecked();
 	}
 	
-	inline int buttonsAppearance() {
+	int buttonsAppearance() const {
 		return m_buttonsAppearance;
 	}
-	inline int backgroundHint() {
+	
+	int backgroundHint() const {
 		return m_backgroundHint;
 	}
+	
+	bool noBackground() const {
+		return m_ui.kcfg_NoBackground->isChecked();
+	}
+	
+	bool normal() const {
+		return m_ui.kcfg_Normal->isChecked();
+	}
+	
+	bool translucent() const {
+		return m_ui.kcfg_Translucent->isChecked();
+	}
+	
+	QColor frontColor() const {
+		return m_ui.kcfg_FrontColor->color();
+	}
+	
+	QColor backgroundColor() const {
+		return m_ui.kcfg_BackgroundColor->color();
+	}
+	
+  Q_SIGNALS:
+	void frontColorChanged( const QColor &color );
+	void backgroundColorChanged( const QColor &color );
 	
   private Q_SLOTS:
 	void setButtonsAppearance( bool checked );
 	void setBackgroundHint();
 	
   private:
-	Ui::GeneralWidget m_ui;
+	mutable Ui::GeneralWidget m_ui;
 	int m_buttonsAppearance = 0;
 	int m_backgroundHint = 1;
 };

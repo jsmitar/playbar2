@@ -43,7 +43,8 @@ GridLayout {
 
 		text: mpris2.title
 		level: 2
-		color: theme.textColor
+		color: ( playbarEngine.backgroundHint === 0 ) 
+			? playbarEngine.frontColor : theme.textColor
 
 		wrapMode: scrollTitle.scrolling ? Text.NoWrap : Text.WrapAnywhere
 		elide: scrollTitle.scrolling ? Text.ElideNone : Text.ElideRight
@@ -78,7 +79,9 @@ GridLayout {
 
 		text: mpris2.artist
 		level: 3
-		color: Utils.adjustAlpha( theme.textColor, 0.9 )
+		color: playbarEngine.backgroundHint === 0  
+			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.9 )
+		opacity: playbarEngine.backgroundHint === 0 ? 0.8 : 1.0
 		visible: mpris2.artist.length > 0
 
 		wrapMode: scrollArtist.scrolling ? Text.NoWrap : Text.WrapAnywhere
@@ -113,7 +116,9 @@ GridLayout {
 
 		text: mpris2.album
 		level: 3
-		color: Utils.adjustAlpha( theme.textColor, 0.9 )
+		color: playbarEngine.backgroundHint === 0  
+			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.9 )
+		opacity: playbarEngine.backgroundHint === 0 ? 0.8 : 1.0
 		visible: mpris2.album.length > 0
 
 		wrapMode: scrollAlbum.scrolling ? Text.NoWrap : Text.WrapAnywhere
@@ -137,7 +142,9 @@ GridLayout {
 
 		text: i18n( 'By' )
 		level: 5
-		color: Utils.adjustAlpha( theme.textColor, 0.8 )
+		color: playbarEngine.backgroundHint === 0  
+			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
+		opacity: playbarEngine.backgroundHint === 0 ? 0.7 : 1.0
 		visible: mpris2.artist.length > 0
 
 		Layout.row: 1
@@ -151,7 +158,10 @@ GridLayout {
 
 		text: i18n( 'On' )
 		level: 5
-		color: Utils.adjustAlpha( theme.textColor, 0.8 )
+		color: playbarEngine.backgroundHint === 0  
+			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
+		opacity: playbarEngine.backgroundHint === 0 ? 0.7 : 1.0
+
 		visible: mpris2.album.length > 0
 
 		Layout.row: 2

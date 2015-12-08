@@ -38,12 +38,12 @@ class ConfigDialog : public KConfigDialog {
 	
   protected Q_SLOTS:
 	void updateSettings();
+	void UpdateColorSettings();
 	
   private:
 	KSharedConfigPtr config() const;
 	
   private:
-  
 	GeneralWidget *m_generalPage;
 	KShortcutsEditor *m_shortcutsPage;
 	

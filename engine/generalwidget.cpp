@@ -25,9 +25,13 @@ GeneralWidget::GeneralWidget( QWidget *parent )
 	
 	connect( m_ui.flat, SIGNAL( toggled( bool ) ), this, SLOT( setButtonsAppearance( bool ) ) );
 	
-	connect( m_ui.normal, SIGNAL( toggled( bool ) ), this, SLOT( setBackgroundHint() ) );
-	connect( m_ui.translucent, SIGNAL( toggled( bool ) ), this, SLOT( setBackgroundHint() ) );
-	connect( m_ui.nobackground, SIGNAL( toggled( bool ) ), this, SLOT( setBackgroundHint() ) );
+	connect( m_ui.kcfg_NoBackground, SIGNAL( toggled( bool ) ), this, SLOT( setBackgroundHint() ) );
+	connect( m_ui.kcfg_Normal, SIGNAL( toggled( bool ) ), this, SLOT( setBackgroundHint() ) );
+	connect( m_ui.kcfg_Translucent, SIGNAL( toggled( bool ) ), this, SLOT( setBackgroundHint() ) );
+	connect( m_ui.kcfg_FrontColor, SIGNAL( changed( const QColor & ) ),
+			 this, SIGNAL( frontColorChanged( const QColor & ) ) );
+	connect( m_ui.kcfg_BackgroundColor, SIGNAL( changed( const QColor & ) ),
+			 this, SIGNAL( backgroundColorChanged( const QColor & ) ) );
 }
 
 void GeneralWidget::setButtonsAppearance( bool checked ) {
@@ -36,9 +40,9 @@ void GeneralWidget::setButtonsAppearance( bool checked ) {
 }
 
 void GeneralWidget::setBackgroundHint() {
-	if ( m_ui.normal->isChecked() )
+	if ( m_ui.kcfg_Normal->isChecked() )
 		m_backgroundHint = 1; // standard
-	else if ( m_ui.translucent->isChecked() )
+	else if ( m_ui.kcfg_Translucent->isChecked() )
 		m_backgroundHint = 2; // translucent
 	else
 		m_backgroundHint = 0; // no background

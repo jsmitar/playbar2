@@ -7,7 +7,7 @@ Type=Service
 
 X-KDE-ServiceTypes=Plasma/DataEngine
 X-KDE-Library=plasma_engine_playbar
-X-Plasma-EngineName=playbar
+#X-Plasma-EngineName=playbar
 
 X-KDE-PluginInfo-Author=Smith AR
 X-KDE-PluginInfo-Category=Multimedia

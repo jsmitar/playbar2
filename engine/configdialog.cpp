@@ -40,11 +40,26 @@ ConfigDialog::ConfigDialog( KActionCollection *collection , QWidget *parent )
 	QPushButton *apply = this->button( QDialogButtonBox::Apply );
 	connect( apply, SIGNAL( clicked() ), this, SLOT( updateSettings() ) );
 	
+	connect( m_generalPage, SIGNAL( frontColorChanged( const QColor & ) ),
+			 this, SLOT( UpdateColorSettings() ) );
+	connect( m_generalPage, SIGNAL( backgroundColorChanged( const QColor & ) ),
+			 this, SLOT( UpdateColorSettings() ) );
+			 
 	connect( this, SIGNAL( finished( int ) ), this, SLOT( deleteLater() ) );
 }
 
 ConfigDialog::~ConfigDialog() {
+	delete m_generalPage;
+	delete m_shortcutsPage;
 	// qDebug() << this << "deleted";
+}
+
+void ConfigDialog::UpdateColorSettings() {
+	PlayBarSettings *config = PlayBarSettings::self();
+	
+	config->setFrontColor( m_generalPage->frontColor() );
+	config->setBackgroundColor( m_generalPage->backgroundColor() );
+	config->save();
 }
 
 void ConfigDialog::updateSettings() {
@@ -57,6 +72,11 @@ void ConfigDialog::updateSettings() {
 	config->setControlsOnBar( m_generalPage->controlsOnBar() );
 	config->setButtonsAppearance( m_generalPage->buttonsAppearance() );
 	config->setBackgroundHint( m_generalPage->backgroundHint() );
+	config->setNoBackground( m_generalPage->noBackground() );
+	config->setNormal( m_generalPage->normal() );
+	config->setTranslucent( m_generalPage->translucent() );
+	config->setFrontColor( m_generalPage->frontColor() );
+	config->setBackgroundColor( m_generalPage->backgroundColor() );
 	config->save();
 	qDebug() << "PlayBarEngine: config saved";
 }

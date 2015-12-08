@@ -37,6 +37,8 @@ RowLayout {
 		text: mpris2.identity
 		enabled: mpris2.sourceActive
 		opacity: enabled ? 1.0 : 0.5
+		color: ( playbarEngine.backgroundHint === 0 ) 
+			? playbarEngine.frontColor : theme.textColor
 	}
 
 	PlasmaComponents.ToolButton {

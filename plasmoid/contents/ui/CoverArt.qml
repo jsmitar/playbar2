@@ -28,7 +28,8 @@ Rectangle {
 
 	width: units.iconSizes.enormous
 	height: units.iconSizes.enormous
-	color: Utils.adjustAlpha( theme.complementaryBackgroundColor, 0.1 )
+	color: Utils.adjustAlpha( ( playbarEngine.backgroundHint === 0  
+			? playbarEngine.frontColor :  theme.complementaryBackgroundColor ), 0.1 )
 	radius: 2
 	opacity: 1
 
@@ -52,11 +53,13 @@ Rectangle {
 		alwaysRunToEnd: true
 		OpacityAnimator {
 			target: cover
+			from: 1.0
 			to: 0.3
 			duration: units.shortDuration
 		}
 		OpacityAnimator {
 			target: cover
+			from: 0.3
 			to: 1.0
 			duration: units.longDuration
 		}
@@ -98,13 +101,13 @@ Rectangle {
 	Colorize {
 		id: mask
 		anchors.fill: noCover
-		readonly property var hsl: Utils.rgbToHsl( theme.textColor )
+		readonly property var hsl: Utils.rgbToHsl( ( playbarEngine.backgroundHint === 0  
+			? playbarEngine.frontColor : theme.textColor ) )
 		source: noCover
 		hue: hsl.h
 		saturation: hsl.s
 		lightness: hsl.l
 		opacity: 0.3
-		cached: true
 	}
 
 	MouseArea {

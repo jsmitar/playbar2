@@ -47,7 +47,6 @@ class PlayBarEngine : public DataEngine {
 	bool updateSourceEvent( const QString &source ) override;
 	
   private:
-  
 	const QString PROVIDER = "Provider";
 	PlayBar *m_playbar;
 };
