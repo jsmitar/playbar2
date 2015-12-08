@@ -11,18 +11,34 @@ MPRIS2 client, written in QML for **Plasma 5** and **GNU/Linux**.
 ## Build from the source code
 **Dependencies:** `plasma-framework-devel plasma5-workspace-devel kdeclarative-devel kglobalaccel-devel kconfigwidgets-devel kxmlgui-devel kwindowsystem-devel kdoctools-devel extra-cmake-modules`
 
+**Dependencies for OpenSUSE:**
+```
+sudo zypper install gcc-c++ plasma-framework-devel plasma5-workspace-devel kdeclarative-devel \
+kglobalaccel-devel kconfigwidgets-devel kxmlgui-devel kwindowsystem-devel kdoctools-devel \
+extra-cmake-modules
+```
 **Dependencies for Kubuntu:**
 ```bash
 sudo apt-get install g++ plasma-framework-dev plasma-workspace-dev libkf5declarative-dev \
 libkf5globalaccel-dev libkf5configwidgets-dev libkf5xmlgui-dev \
 libkf5windowsystem-dev kdoctools-dev cmake extra-cmake-modules kdelibs5-dev
 ```
+
 Create a *build* directory into **PlayBar**, compile the Plasmoid and enjoy it.
+
+**OpenSUSE**
+```bash
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr -DKDE_INSTALL_LIBDIR=lib64/qt5 -DCMAKE_BUILD_TYPE=Release ..
+make && sudo make install
+```
+**Kubuntu**
 ```bash
 mkdir build && cd build
 cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release ..
 make && sudo make install
 ```
+
 ## Repositories 
 **Kubuntu:**
 ```bash
