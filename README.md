@@ -26,13 +26,13 @@ libkf5windowsystem-dev kdoctools-dev cmake extra-cmake-modules kdelibs5-dev
 
 Create a *build* directory into **PlayBar**, compile the Plasmoid and enjoy it.
 
-**OpenSUSE**
+**OpenSUSE:**
 ```bash
 mkdir build && cd build
 cmake -DCMAKE_INSTALL_PREFIX=/usr -DKDE_INSTALL_LIBDIR=lib64/qt5 -DCMAKE_BUILD_TYPE=Release ..
 make && sudo make install
 ```
-**Kubuntu**
+**Kubuntu:**
 ```bash
 mkdir build && cd build
 cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release ..
