@@ -13,7 +13,9 @@ MPRIS2 client, written in QML for **Plasma 5** and **GNU/Linux**.
 
 **Dependencies for OpenSUSE:**
 ```
-plasma-framework-devel plasma5-workspace-devel kdeclarative-devel kglobalaccel-devel kconfigwidgets-devel kxmlgui-devel kwindowsystem-devel kdoctools-devel extra-cmake-modules
+sudo zypper install gcc-c++ plasma-framework-devel plasma5-workspace-devel kdeclarative-devel \
+kglobalaccel-devel kconfigwidgets-devel kxmlgui-devel kwindowsystem-devel kdoctools-devel \
+extra-cmake-modules
 ```
 **Dependencies for Kubuntu:**
 ```bash
