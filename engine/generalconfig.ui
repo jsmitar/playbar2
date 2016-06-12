@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>485</width>
-    <height>399</height>
+    <width>510</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,31 +18,70 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>485</width>
-    <height>399</height>
+    <width>445</width>
+    <height>500</height>
    </size>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QCheckBox" name="kcfg_ShowStop">
-       <property name="text">
-        <string>Show stop button</string>
+      <widget class="QGroupBox" name="groupBox_CompactRepresentation">
+       <property name="title">
+        <string>Compact representation</string>
        </property>
-       <property name="checked">
+       <property name="flat">
         <bool>true</bool>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="kcfg_ControlsOnBar">
-       <property name="text">
-        <string>Playback controls on the bar</string>
+       <property name="checkable">
+        <bool>false</bool>
        </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_Style">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="text">
+           <string>Style:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="kcfg_CompactStyle">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <property name="maxVisibleItems">
+           <number>3</number>
+          </property>
+          <property name="maxCount">
+           <number>3</number>
+          </property>
+          <property name="minimumContentsLength">
+           <number>3</number>
+          </property>
+          <item>
+           <property name="text">
+            <string>Icon</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Playback buttons</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Play/Pause and seek bar</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>
@@ -54,11 +93,17 @@
         </font>
        </property>
        <property name="title">
-        <string>Buttons appareance</string>
+        <string>Buttons</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QRadioButton" name="flat">
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+       <layout class="QFormLayout" name="formLayout_3">
+        <property name="labelAlignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="kcfg_Flat">
           <property name="font">
            <font>
             <weight>50</weight>
@@ -73,8 +118,8 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QRadioButton" name="toolbutton">
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="kcfg_ToolButton">
           <property name="font">
            <font>
             <weight>50</weight>
@@ -83,6 +128,89 @@
           </property>
           <property name="text">
            <string>&amp;Tool button</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="kcfg_ShowStop">
+          <property name="text">
+           <string>Show stop button</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_Cover">
+       <property name="title">
+        <string>Cover</string>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_Size">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Size:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_Enormous">
+          <property name="text">
+           <string>Enormous</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" colspan="2">
+         <widget class="QSlider" name="kcfg_CoverSize">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string> Icons will scale depending on the DPI</string>
+          </property>
+          <property name="minimum">
+           <number>2</number>
+          </property>
+          <property name="maximum">
+           <number>5</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
+          </property>
+          <property name="value">
+           <number>2</number>
+          </property>
+          <property name="tracking">
+           <bool>true</bool>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksAbove</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_Medium">
+          <property name="text">
+           <string>Medium</string>
           </property>
          </widget>
         </item>
@@ -109,9 +237,18 @@
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QRadioButton" name="kcfg_NoBackground">
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+       <layout class="QFormLayout" name="_3">
+        <property name="labelAlignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <property name="formAlignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="kcfg_CustomColors">
           <property name="font">
            <font>
             <weight>50</weight>
@@ -119,14 +256,26 @@
            </font>
           </property>
           <property name="text">
-           <string>Custom colors</string>
+           <string>&amp;Custom colors</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QGroupBox" name="customcolors">
+        <item row="0" column="1">
+         <widget class="QGroupBox" name="groupBox_CustomColors">
           <property name="enabled">
            <bool>false</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
           <property name="title">
            <string/>
@@ -135,47 +284,62 @@
            <bool>true</bool>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
-           <item row="1" column="1">
-            <widget class="KColorButton" name="kcfg_BackgroundColor">
-             <property name="default">
-              <bool>false</bool>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_FrontColor">
+             <property name="text">
+              <string>Front color:</string>
              </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-             <property name="alphaChannelEnabled">
-              <bool>true</bool>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
             <widget class="KColorButton" name="kcfg_FrontColor">
-             <property name="flat">
-              <bool>true</bool>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>20</height>
+              </size>
              </property>
              <property name="alphaChannelEnabled">
               <bool>true</bool>
              </property>
             </widget>
            </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="frontcolor">
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_BackgroundColor">
              <property name="text">
-              <string>Front color</string>
+              <string>Background color:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="backgroundcolor">
-             <property name="text">
-              <string>Background color</string>
+           <item row="1" column="1">
+            <widget class="KColorButton" name="kcfg_BackgroundColor">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="alphaChannelEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
           </layout>
          </widget>
         </item>
-        <item>
+        <item row="2" column="0">
          <widget class="QRadioButton" name="kcfg_Normal">
           <property name="font">
            <font>
@@ -191,11 +355,8 @@
           </property>
          </widget>
         </item>
-        <item>
+        <item row="3" column="0">
          <widget class="QRadioButton" name="kcfg_Translucent">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
           <property name="font">
            <font>
             <weight>50</weight>
@@ -215,7 +376,7 @@
      </item>
     </layout>
    </item>
-   <item row="5" column="0">
+   <item row="8" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -240,9 +401,9 @@
  <resources/>
  <connections>
   <connection>
-   <sender>kcfg_NoBackground</sender>
+   <sender>kcfg_CustomColors</sender>
    <signal>toggled(bool)</signal>
-   <receiver>customcolors</receiver>
+   <receiver>groupBox_CustomColors</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">

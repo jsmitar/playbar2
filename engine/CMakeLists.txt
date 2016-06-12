@@ -1,16 +1,18 @@
 project(PlayBarEngine)
 
+set(CMAKE_CXX_STANDARD 11)
+
 add_definitions(-DTRANSLATION_DOMAIN=\"plasma_engine_playbar\")
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
-set(playbar_engine_SRCS
+set( playbar_engine_SRCS
 	configdialog.cpp
 	generalwidget.cpp
 	playbar.cpp
 	playbarengine.cpp
 	playbarjob.cpp
 	playbarservice.cpp
-	)
+)
 
 kconfig_add_kcfg_files( playbar_engine_SRCS playbarsettings.kcfgc )
 ki18n_wrap_ui( playbar_engine_SRCS generalconfig.ui )

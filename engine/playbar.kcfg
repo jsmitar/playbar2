@@ -9,32 +9,36 @@
 	<!--<include>kglobalsettings.h</include> -->
 	 <kcfgfile name="playbarrc"/>
 	 <group name="General">
-		  <entry name="ShowStop" type="Bool">
-			   <label>Show stop button</label>
-			   <default>true</default>
-		  </entry>
-		  <entry name="ControlsOnBar" type="Bool">
-			   <label>Playback controls on the bar</label>
-			   <default>true</default>
+		  <entry name="CompactStyle" type="Int">
+			   <label>Compact representation style</label>
+			   <default>0</default>
 		  </entry>
 		  <entry name="ButtonsAppearance" type="Enum">
 			   <label>Buttons appearance</label>
 			   <default>0</default>
+                  </entry>
+                  <entry name="Flat" type="Bool">
+                          <label>Flat button</label>
+                          <default>true</default>
+                  </entry>
+                  <entry name="ToolButton" type="Bool">
+                          <label>ToolButton</label>
+                          <default>false</default>
+                  </entry>
+                  <entry name="ShowStop" type="Bool">
+			   <label>Show stop button</label>
+			   <default>true</default>
 		  </entry>
+                  <entry name="CoverSize" type="Int">
+                          <label>Cover size</label>
+                          <default>0</default>
+                  </entry>
 		  <entry name="BackgroundHint" type="Enum">
 			   <label>Background hints</label>
 			   <default>2</default>
 		  </entry>
-		  <entry name="NoBackground" type="Bool">
+		  <entry name="CustomColors" type="Bool">
 			   <label>No background</label>
-			   <default>false</default>
-		  </entry>
-		  <entry name="Normal" type="Bool">
-			   <label>Normal</label>
-			   <default>true</default>
-		  </entry>
-		  <entry name="Translucent" type="Bool">
-			   <label>Translucent</label>
 			   <default>false</default>
 		  </entry>
                   <entry name="FrontColor" type="Color">
@@ -43,5 +47,13 @@
                   <entry name="BackgroundColor" type="Color">
                            <label>Background color</label>
                   </entry>
+		  <entry name="Normal" type="Bool">
+			   <label>Normal</label>
+			   <default>true</default>
+		  </entry>
+		  <entry name="Translucent" type="Bool">
+			   <label>Translucent</label>
+			   <default>false</default>
+		  </entry>
 	 </group>
 </kcfg>

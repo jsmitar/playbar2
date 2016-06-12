@@ -21,65 +21,96 @@
 #define GENERALWIDGET_H
 
 #include <QWidget>
+#include <QColor>
+
+#include <Plasma>
 
 #include "ui_generalconfig.h"
 
-class GeneralWidget : public QWidget {
-	Q_OBJECT
-  public:
-  
-	GeneralWidget( QWidget *parent );
-	virtual ~GeneralWidget();
-	
-  public:
-	bool showStop() const {
-		return m_ui.kcfg_ShowStop->isChecked();
-	}
-	
-	bool controlsOnBar() const {
-		return m_ui.kcfg_ControlsOnBar->isChecked();
-	}
-	
-	int buttonsAppearance() const {
-		return m_buttonsAppearance;
-	}
-	
-	int backgroundHint() const {
-		return m_backgroundHint;
-	}
-	
-	bool noBackground() const {
-		return m_ui.kcfg_NoBackground->isChecked();
-	}
-	
-	bool normal() const {
-		return m_ui.kcfg_Normal->isChecked();
-	}
-	
-	bool translucent() const {
-		return m_ui.kcfg_Translucent->isChecked();
-	}
-	
-	QColor frontColor() const {
-		return m_ui.kcfg_FrontColor->color();
-	}
-	
-	QColor backgroundColor() const {
-		return m_ui.kcfg_BackgroundColor->color();
-	}
-	
-  Q_SIGNALS:
-	void frontColorChanged( const QColor &color );
-	void backgroundColorChanged( const QColor &color );
-	
-  private Q_SLOTS:
-	void setButtonsAppearance( bool checked );
-	void setBackgroundHint();
-	
-  private:
-	mutable Ui::GeneralWidget m_ui;
-	int m_buttonsAppearance = 0;
-	int m_backgroundHint = 1;
+class GeneralWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    GeneralWidget ( QWidget* parent );
+    virtual ~GeneralWidget();
+
+public:
+    inline int compactStyle() const
+    {
+        Q_ASSERT ( m_ui.kcfg_CompactStyle->currentIndex() >= 0
+                   && m_ui.kcfg_CompactStyle->currentIndex() <= 2 );
+        return m_ui.kcfg_CompactStyle->currentIndex();
+    }
+
+    inline int buttonsAppearance() const
+    {
+        return m_ui.kcfg_Flat->isChecked() ? 0 : 1;
+    }
+
+    inline bool flat() const
+    {
+        return m_ui.kcfg_Flat->isChecked();
+    }
+
+    inline bool toolButton() const
+    {
+        return m_ui.kcfg_ToolButton->isChecked();
+    }
+
+    inline bool showStop() const
+    {
+        return m_ui.kcfg_ShowStop->isChecked();
+    }
+
+    inline int coverSize() const
+    {
+        Q_ASSERT ( m_ui.kcfg_CoverSize->value() >= 2
+                   && m_ui.kcfg_CoverSize->value() <= 5 );
+        return m_ui.kcfg_CoverSize->value();
+    }
+
+    inline int backgroundHint() const
+    {
+        if ( m_ui.kcfg_CustomColors->isChecked() ) {
+            return 0;
+        } else if ( m_ui.kcfg_Normal->isChecked() ) {
+            return 1;
+        }
+        return 2;
+    }
+
+    inline bool customColors() const
+    {
+        return m_ui.kcfg_CustomColors->isChecked();
+    }
+
+    inline QColor frontColor() const
+    {
+        return m_ui.kcfg_FrontColor->color();
+    }
+
+    inline QColor backgroundColor() const
+    {
+        return m_ui.kcfg_BackgroundColor->color();
+    }
+
+    inline bool normal() const
+    {
+        return m_ui.kcfg_Normal->isChecked();
+    }
+
+    inline bool translucent() const
+    {
+        return m_ui.kcfg_Translucent->isChecked();
+    }
+
+Q_SIGNALS:
+    void frontColorChanged ( const QColor& color );
+    void backgroundColorChanged ( const QColor& color );
+
+private:
+    mutable Ui::GeneralWidget m_ui;
 };
 
 #endif // GENERALWIDGET_H
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 

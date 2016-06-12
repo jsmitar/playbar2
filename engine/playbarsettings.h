@@ -7,183 +7,275 @@
 #include <QCoreApplication>
 #include <QDebug>
 
-class PlayBarSettings : public KConfigSkeleton {
-  public:
-  
-	static PlayBarSettings *self();
-	~PlayBarSettings();
-	
-	/**
-	  Set Show stop button
-	*/
-	static
-	void setShowStop( bool v ) {
-		if ( !self()->isImmutable( QStringLiteral( "ShowStop" ) ) )
-			self()->mShowStop = v;
-	}
-	
-	/**
-	  Get Show stop button
-	*/
-	static
-	bool showStop() {
-		return self()->mShowStop;
-	}
-	
-	/**
-	  Set Playback controls on the bar
-	*/
-	static
-	void setControlsOnBar( bool v ) {
-		if ( !self()->isImmutable( QStringLiteral( "ControlsOnBar" ) ) )
-			self()->mControlsOnBar = v;
-	}
-	
-	/**
-	  Get Playback controls on the bar
-	*/
-	static
-	bool controlsOnBar() {
-		return self()->mControlsOnBar;
-	}
-	
-	/**
-	  Set Buttons appearance
-	*/
-	static
-	void setButtonsAppearance( int v ) {
-		if ( !self()->isImmutable( QStringLiteral( "ButtonsAppearance" ) ) )
-			self()->mButtonsAppearance = v;
-	}
-	
-	/**
-	  Get Buttons appearance
-	*/
-	static
-	int buttonsAppearance() {
-		return self()->mButtonsAppearance;
-	}
-	
-	/**
-	  Set Background hints
-	*/
-	static
-	void setBackgroundHint( int v ) {
-		if ( !self()->isImmutable( QStringLiteral( "BackgroundHint" ) ) )
-			self()->mBackgroundHint = v;
-	}
-	
-	/**
-	  Get Background hints
-	*/
-	static
-	int backgroundHint() {
-		return self()->mBackgroundHint;
-	}
-	
-	/**
-	  Set No background
-	*/
-	static
-	void setNoBackground( bool v ) {
-		if ( !self()->isImmutable( QStringLiteral( "NoBackground" ) ) )
-			self()->mNoBackground = v;
-	}
-	
-	/**
-	  Get No background
-	*/
-	static
-	bool noBackground() {
-		return self()->mNoBackground;
-	}
-	
-	/**
-	  Set Normal
-	*/
-	static
-	void setNormal( bool v ) {
-		if ( !self()->isImmutable( QStringLiteral( "Normal" ) ) )
-			self()->mNormal = v;
-	}
-	
-	/**
-	  Get Normal
-	*/
-	static
-	bool normal() {
-		return self()->mNormal;
-	}
-	
-	/**
-	  Set Translucent
-	*/
-	static
-	void setTranslucent( bool v ) {
-		if ( !self()->isImmutable( QStringLiteral( "Translucent" ) ) )
-			self()->mTranslucent = v;
-	}
-	
-	/**
-	  Get Translucent
-	*/
-	static
-	bool translucent() {
-		return self()->mTranslucent;
-	}
-	
-	/**
-	  Set Front color
-	*/
-	static
-	void setFrontColor( const QColor &v ) {
-		if ( !self()->isImmutable( QStringLiteral( "FrontColor" ) ) )
-			self()->mFrontColor = v;
-	}
-	
-	/**
-	  Get Front color
-	*/
-	static
-	QColor frontColor() {
-		return self()->mFrontColor;
-	}
-	
-	/**
-	  Set Background color
-	*/
-	static
-	void setBackgroundColor( const QColor &v ) {
-		if ( !self()->isImmutable( QStringLiteral( "BackgroundColor" ) ) )
-			self()->mBackgroundColor = v;
-	}
-	
-	/**
-	  Get Background color
-	*/
-	static
-	QColor backgroundColor() {
-		return self()->mBackgroundColor;
-	}
-	
-  protected:
-	PlayBarSettings();
-	friend class PlayBarSettingsHelper;
-	
-	
-	// General
-	bool mShowStop;
-	bool mControlsOnBar;
-	int mButtonsAppearance;
-	int mBackgroundHint;
-	bool mNoBackground;
-	bool mNormal;
-	bool mTranslucent;
-	QColor mFrontColor;
-	QColor mBackgroundColor;
-	
-  private:
+class PlayBarSettings : public KConfigSkeleton
+{
+public:
+
+    static PlayBarSettings* self();
+    ~PlayBarSettings();
+
+    /**
+      Set Compact representation style
+    */
+    static
+    void setCompactStyle ( int v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "CompactStyle" ) ) ) {
+            self()->mCompactStyle = v;
+        }
+    }
+
+    /**
+      Get Compact representation style
+    */
+    static
+    int compactStyle()
+    {
+        return self()->mCompactStyle;
+    }
+
+    /**
+      Set Buttons appearance
+    */
+    static
+    void setButtonsAppearance ( int v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "ButtonsAppearance" ) ) ) {
+            self()->mButtonsAppearance = v;
+        }
+    }
+
+    /**
+      Get Buttons appearance
+    */
+    static
+    int buttonsAppearance()
+    {
+        return self()->mButtonsAppearance;
+    }
+
+    /**
+      Set Flat button
+    */
+    static
+    void setFlat ( bool v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "Flat" ) ) ) {
+            self()->mFlat = v;
+        }
+    }
+
+    /**
+      Get Flat button
+    */
+    static
+    bool flat()
+    {
+        return self()->mFlat;
+    }
+
+    /**
+      Set ToolButton
+    */
+    static
+    void setToolButton ( bool v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "ToolButton" ) ) ) {
+            self()->mToolButton = v;
+        }
+    }
+
+    /**
+      Get ToolButton
+    */
+    static
+    bool toolButton()
+    {
+        return self()->mToolButton;
+    }
+
+    /**
+      Set Show stop button
+    */
+    static
+    void setShowStop ( bool v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "ShowStop" ) ) ) {
+            self()->mShowStop = v;
+        }
+    }
+
+    /**
+      Get Show stop button
+    */
+    static
+    bool showStop()
+    {
+        return self()->mShowStop;
+    }
+
+    /**
+      Set Cover size
+    */
+    static
+    void setCoverSize ( int v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "CoverSize" ) ) ) {
+            self()->mCoverSize = v;
+        }
+    }
+
+    /**
+      Get Cover size
+    */
+    static
+    int coverSize()
+    {
+        return self()->mCoverSize;
+    }
+
+    /**
+      Set Background hints
+    */
+    static
+    void setBackgroundHint ( int v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "BackgroundHint" ) ) ) {
+            self()->mBackgroundHint = v;
+        }
+    }
+
+    /**
+      Get Background hints
+    */
+    static
+    int backgroundHint()
+    {
+        return self()->mBackgroundHint;
+    }
+
+    /**
+      Set No background
+    */
+    static
+    void setCustomColors ( bool v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "CustomColors" ) ) ) {
+            self()->mCustomColors = v;
+        }
+    }
+
+    /**
+      Get No background
+    */
+    static
+    bool customColors()
+    {
+        return self()->mCustomColors;
+    }
+
+    /**
+      Set Front color
+    */
+    static
+    void setFrontColor ( const QColor& v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "FrontColor" ) ) ) {
+            self()->mFrontColor = v;
+        }
+    }
+
+    /**
+      Get Front color
+    */
+    static
+    QColor frontColor()
+    {
+        return self()->mFrontColor;
+    }
+
+    /**
+      Set Background color
+    */
+    static
+    void setBackgroundColor ( const QColor& v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "BackgroundColor" ) ) ) {
+            self()->mBackgroundColor = v;
+        }
+    }
+
+    /**
+      Get Background color
+    */
+    static
+    QColor backgroundColor()
+    {
+        return self()->mBackgroundColor;
+    }
+
+    /**
+      Set Normal
+    */
+    static
+    void setNormal ( bool v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "Normal" ) ) ) {
+            self()->mNormal = v;
+        }
+    }
+
+    /**
+      Get Normal
+    */
+    static
+    bool normal()
+    {
+        return self()->mNormal;
+    }
+
+    /**
+      Set Translucent
+    */
+    static
+    void setTranslucent ( bool v )
+    {
+        if ( !self()->isImmutable ( QStringLiteral ( "Translucent" ) ) ) {
+            self()->mTranslucent = v;
+        }
+    }
+
+    /**
+      Get Translucent
+    */
+    static
+    bool translucent()
+    {
+        return self()->mTranslucent;
+    }
+
+protected:
+    PlayBarSettings();
+    friend class PlayBarSettingsHelper;
+
+
+    // General
+    int mCompactStyle;
+    int mButtonsAppearance;
+    bool mFlat;
+    bool mToolButton;
+    bool mShowStop;
+    int mCoverSize;
+    int mBackgroundHint;
+    bool mCustomColors;
+    QColor mFrontColor;
+    QColor mBackgroundColor;
+    bool mNormal;
+    bool mTranslucent;
+
+private:
 };
 
 #endif
 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 

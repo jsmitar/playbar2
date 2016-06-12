@@ -6,69 +6,93 @@
 #include <qglobal.h>
 #include <QtCore/QFile>
 
-class PlayBarSettingsHelper {
-  public:
-	PlayBarSettingsHelper() : q( 0 ) {}
-	~PlayBarSettingsHelper() { delete q; }
-	PlayBarSettings *q;
+class PlayBarSettingsHelper
+{
+public:
+    PlayBarSettingsHelper() : q(0) {}
+    ~PlayBarSettingsHelper()
+    {
+        delete q;
+    }
+    PlayBarSettings* q;
 };
-Q_GLOBAL_STATIC( PlayBarSettingsHelper, s_globalPlayBarSettings )
-PlayBarSettings *PlayBarSettings::self() {
-	if ( !s_globalPlayBarSettings()->q ) {
-		new PlayBarSettings;
-		s_globalPlayBarSettings()->q->read();
-	}
-	
-	return s_globalPlayBarSettings()->q;
+Q_GLOBAL_STATIC(PlayBarSettingsHelper, s_globalPlayBarSettings)
+PlayBarSettings* PlayBarSettings::self()
+{
+    if (!s_globalPlayBarSettings()->q) {
+        new PlayBarSettings;
+        s_globalPlayBarSettings()->q->read();
+    }
+
+    return s_globalPlayBarSettings()->q;
 }
 
-PlayBarSettings::PlayBarSettings(  )
-	: KConfigSkeleton( QStringLiteral( "playbarrc" ) ) {
-	Q_ASSERT( !s_globalPlayBarSettings()->q );
-	s_globalPlayBarSettings()->q = this;
-	setCurrentGroup( QStringLiteral( "General" ) );
-	
-	KConfigSkeleton::ItemBool  *itemShowStop;
-	itemShowStop = new KConfigSkeleton::ItemBool( currentGroup(), QStringLiteral( "ShowStop" ), mShowStop, true );
-	itemShowStop->setLabel( QCoreApplication::translate( "PlayBarSettings", "Show stop button" ) );
-	addItem( itemShowStop, QStringLiteral( "ShowStop" ) );
-	KConfigSkeleton::ItemBool  *itemControlsOnBar;
-	itemControlsOnBar = new KConfigSkeleton::ItemBool( currentGroup(), QStringLiteral( "ControlsOnBar" ), mControlsOnBar, true );
-	itemControlsOnBar->setLabel( QCoreApplication::translate( "PlayBarSettings", "Playback controls on the bar" ) );
-	addItem( itemControlsOnBar, QStringLiteral( "ControlsOnBar" ) );
-	QList<KConfigSkeleton::ItemEnum::Choice> valuesButtonsAppearance;
-	KConfigSkeleton::ItemEnum  *itemButtonsAppearance;
-	itemButtonsAppearance = new KConfigSkeleton::ItemEnum( currentGroup(), QStringLiteral( "ButtonsAppearance" ), mButtonsAppearance, valuesButtonsAppearance, 0 );
-	itemButtonsAppearance->setLabel( QCoreApplication::translate( "PlayBarSettings", "Buttons appearance" ) );
-	addItem( itemButtonsAppearance, QStringLiteral( "ButtonsAppearance" ) );
-	QList<KConfigSkeleton::ItemEnum::Choice> valuesBackgroundHint;
-	KConfigSkeleton::ItemEnum  *itemBackgroundHint;
-	itemBackgroundHint = new KConfigSkeleton::ItemEnum( currentGroup(), QStringLiteral( "BackgroundHint" ), mBackgroundHint, valuesBackgroundHint, 2 );
-	itemBackgroundHint->setLabel( QCoreApplication::translate( "PlayBarSettings", "Background hints" ) );
-	addItem( itemBackgroundHint, QStringLiteral( "BackgroundHint" ) );
-	KConfigSkeleton::ItemBool  *itemNoBackground;
-	itemNoBackground = new KConfigSkeleton::ItemBool( currentGroup(), QStringLiteral( "NoBackground" ), mNoBackground, false );
-	itemNoBackground->setLabel( QCoreApplication::translate( "PlayBarSettings", "No background" ) );
-	addItem( itemNoBackground, QStringLiteral( "NoBackground" ) );
-	KConfigSkeleton::ItemBool  *itemNormal;
-	itemNormal = new KConfigSkeleton::ItemBool( currentGroup(), QStringLiteral( "Normal" ), mNormal, true );
-	itemNormal->setLabel( QCoreApplication::translate( "PlayBarSettings", "Normal" ) );
-	addItem( itemNormal, QStringLiteral( "Normal" ) );
-	KConfigSkeleton::ItemBool  *itemTranslucent;
-	itemTranslucent = new KConfigSkeleton::ItemBool( currentGroup(), QStringLiteral( "Translucent" ), mTranslucent, false );
-	itemTranslucent->setLabel( QCoreApplication::translate( "PlayBarSettings", "Translucent" ) );
-	addItem( itemTranslucent, QStringLiteral( "Translucent" ) );
-	KConfigSkeleton::ItemColor  *itemFrontColor;
-	itemFrontColor = new KConfigSkeleton::ItemColor( currentGroup(), QStringLiteral( "FrontColor" ), mFrontColor );
-	itemFrontColor->setLabel( QCoreApplication::translate( "PlayBarSettings", "Front color" ) );
-	addItem( itemFrontColor, QStringLiteral( "FrontColor" ) );
-	KConfigSkeleton::ItemColor  *itemBackgroundColor;
-	itemBackgroundColor = new KConfigSkeleton::ItemColor( currentGroup(), QStringLiteral( "BackgroundColor" ), mBackgroundColor );
-	itemBackgroundColor->setLabel( QCoreApplication::translate( "PlayBarSettings", "Background color" ) );
-	addItem( itemBackgroundColor, QStringLiteral( "BackgroundColor" ) );
+PlayBarSettings::PlayBarSettings()
+    : KConfigSkeleton(QStringLiteral("playbarrc"))
+{
+    Q_ASSERT(!s_globalPlayBarSettings()->q);
+    s_globalPlayBarSettings()->q = this;
+    setCurrentGroup(QStringLiteral("General"));
+
+    KConfigSkeleton::ItemInt*  itemCompactStyle;
+    itemCompactStyle = new KConfigSkeleton::ItemInt(currentGroup(), QStringLiteral("CompactStyle"), mCompactStyle, 0);
+    itemCompactStyle->setLabel(QCoreApplication::translate("PlayBarSettings", "Compact representation style"));
+    addItem(itemCompactStyle, QStringLiteral("CompactStyle"));
+    QList<KConfigSkeleton::ItemEnum::Choice> valuesButtonsAppearance;
+    KConfigSkeleton::ItemEnum*  itemButtonsAppearance;
+    itemButtonsAppearance = new KConfigSkeleton::ItemEnum(currentGroup(), QStringLiteral("ButtonsAppearance"), 
+mButtonsAppearance, valuesButtonsAppearance, 0);
+    itemButtonsAppearance->setLabel(QCoreApplication::translate("PlayBarSettings", "Buttons appearance"));
+    addItem(itemButtonsAppearance, QStringLiteral("ButtonsAppearance"));
+    KConfigSkeleton::ItemBool*  itemFlat;
+    itemFlat = new KConfigSkeleton::ItemBool(currentGroup(), QStringLiteral("Flat"), mFlat, True);
+    itemFlat->setLabel(QCoreApplication::translate("PlayBarSettings", "Flat button"));
+    addItem(itemFlat, QStringLiteral("Flat"));
+    KConfigSkeleton::ItemBool*  itemToolButton;
+    itemToolButton = new KConfigSkeleton::ItemBool(currentGroup(), QStringLiteral("ToolButton"), mToolButton, False);
+    itemToolButton->setLabel(QCoreApplication::translate("PlayBarSettings", "ToolButton"));
+    addItem(itemToolButton, QStringLiteral("ToolButton"));
+    KConfigSkeleton::ItemBool*  itemShowStop;
+    itemShowStop = new KConfigSkeleton::ItemBool(currentGroup(), QStringLiteral("ShowStop"), mShowStop, true);
+    itemShowStop->setLabel(QCoreApplication::translate("PlayBarSettings", "Show stop button"));
+    addItem(itemShowStop, QStringLiteral("ShowStop"));
+    KConfigSkeleton::ItemInt*  itemCoverSize;
+    itemCoverSize = new KConfigSkeleton::ItemInt(currentGroup(), QStringLiteral("CoverSize"), mCoverSize, 0);
+    itemCoverSize->setLabel(QCoreApplication::translate("PlayBarSettings", "Cover size"));
+    addItem(itemCoverSize, QStringLiteral("CoverSize"));
+    QList<KConfigSkeleton::ItemEnum::Choice> valuesBackgroundHint;
+    KConfigSkeleton::ItemEnum*  itemBackgroundHint;
+    itemBackgroundHint = new KConfigSkeleton::ItemEnum(currentGroup(), QStringLiteral("BackgroundHint"), 
+mBackgroundHint, valuesBackgroundHint, 2);
+    itemBackgroundHint->setLabel(QCoreApplication::translate("PlayBarSettings", "Background hints"));
+    addItem(itemBackgroundHint, QStringLiteral("BackgroundHint"));
+    KConfigSkeleton::ItemBool*  itemCustomColors;
+    itemCustomColors = new KConfigSkeleton::ItemBool(currentGroup(), QStringLiteral("CustomColors"), mCustomColors, 
+false);
+    itemCustomColors->setLabel(QCoreApplication::translate("PlayBarSettings", "No background"));
+    addItem(itemCustomColors, QStringLiteral("CustomColors"));
+    KConfigSkeleton::ItemColor*  itemFrontColor;
+    itemFrontColor = new KConfigSkeleton::ItemColor(currentGroup(), QStringLiteral("FrontColor"), mFrontColor);
+    itemFrontColor->setLabel(QCoreApplication::translate("PlayBarSettings", "Front color"));
+    addItem(itemFrontColor, QStringLiteral("FrontColor"));
+    KConfigSkeleton::ItemColor*  itemBackgroundColor;
+    itemBackgroundColor = new KConfigSkeleton::ItemColor(currentGroup(), QStringLiteral("BackgroundColor"), 
+mBackgroundColor);
+    itemBackgroundColor->setLabel(QCoreApplication::translate("PlayBarSettings", "Background color"));
+    addItem(itemBackgroundColor, QStringLiteral("BackgroundColor"));
+    KConfigSkeleton::ItemBool*  itemNormal;
+    itemNormal = new KConfigSkeleton::ItemBool(currentGroup(), QStringLiteral("Normal"), mNormal, true);
+    itemNormal->setLabel(QCoreApplication::translate("PlayBarSettings", "Normal"));
+    addItem(itemNormal, QStringLiteral("Normal"));
+    KConfigSkeleton::ItemBool*  itemTranslucent;
+    itemTranslucent = new KConfigSkeleton::ItemBool(currentGroup(), QStringLiteral("Translucent"), mTranslucent, false);
+    itemTranslucent->setLabel(QCoreApplication::translate("PlayBarSettings", "Translucent"));
+    addItem(itemTranslucent, QStringLiteral("Translucent"));
 }
 
-PlayBarSettings::~PlayBarSettings() {
-	s_globalPlayBarSettings()->q = 0;
+PlayBarSettings::~PlayBarSettings()
+{
+    s_globalPlayBarSettings()->q = 0;
 }
 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
