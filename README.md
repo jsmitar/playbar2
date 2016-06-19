@@ -4,7 +4,7 @@
 MPRIS2 client, written in QML for **Plasma 5** and **GNU/Linux**.
 
 ![desktop](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_desktop.png)
-![panel](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_panel.png) 
+![panel](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_panel.png)
 ![notification](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_notification_area.png)
 
 # Installation
@@ -39,7 +39,7 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release ..
 make && sudo make install
 ```
 
-## Repositories 
+## Repositories
 **Kubuntu:**
 ```bash
 sudo add-apt-repository ppa:varlesh-l/plasma5-tools
@@ -53,7 +53,7 @@ yaourt kdeplasma-applets-playbar2
 ```
 
 ## Configure keyboard shortcuts
-PlayBar also supports keyboard shortcuts and these come with a default configuration, but if you want change you must go to preferences of PlayBar. 
+PlayBar also supports keyboard shortcuts and these come with a default configuration, but if you want change you must go to preferences of PlayBar.
 
 ![Shortcuts](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_keys.png)
 
@@ -67,5 +67,6 @@ PlayBar also supports keyboard shortcuts and these come with a default configura
 - ![Tomasz Przybył](https://github.com/FadeMind) Polish translation
 - ![Konstantin](https://github.com/KottV) Russian translation
 - ![dkadioglu](https://github.com/dkadioglu) German translation
+- ![tillschaefer](https://github.com/tillschaefer) Gentoo ebuild
 
 # See the ![Milestones](https://github.com/audoban/PlayBar2/milestones)!
