@@ -26,18 +26,18 @@ PlasmaCore.DataSource {
 
 	engine: 'mpris2'
 
-	interval: plasmoid.expanded ? maximumLoad : minimumLoad
+	interval: 0 // ondemand
 
-	readonly property int maximumLoad: 450
+	readonly property int maximumLoad: 250
 
-	readonly property int minimumLoad: 450
+	readonly property int minimumLoad: playbackStatus === 'Paused' ? 1000 : 500
 
-	readonly property bool isMaximumLoad: interval === maximumLoad
+	readonly property bool isMaximumLoad: plasmoid.expanded
 
 	readonly property bool sourceActive: source.length > 0
 
 
-	property string previousSource
+	property string currentSource
 
 	property alias source: mpris2.connectedSources
 
@@ -45,46 +45,73 @@ PlasmaCore.DataSource {
 	property var service: null
 
 
-	property string identity: hasSource( 'Identity' ) ? toCapitalizeIdentity() : i18n( 'No media player' )
+	readonly property string identity:
+                hasSource( 'Identity' ) ? toCapitalizeIdentity() : i18n( 'No media player' )
 
-	property string playbackStatus: hasSource( 'PlaybackStatus' ) ? data[source]['PlaybackStatus'] : ''
+	readonly property string playbackStatus:
+                hasSource( 'PlaybackStatus' ) ? data[source]['PlaybackStatus'] : ''
 
-	property string artUrl: hasMetadataMpris( 'artUrl' ) ? data[source]['Metadata']['mpris:artUrl'] : ''
+	readonly property string artUrl:
+                hasMetadataMpris( 'artUrl' ) ? data[source]['Metadata']['mpris:artUrl'] : ''
 
-	property string artist: hasMetadata( 'artist' ) ? data[source]['Metadata']['xesam:artist'].toString() : ''
+	readonly property string artist:
+                hasMetadata( 'artist' ) ? data[source]['Metadata']['xesam:artist'].toString() : ''
 
-	property string album: hasMetadata( 'album' ) ? data[source]['Metadata']['xesam:album'] : ''
+	readonly property string album:
+                hasMetadata( 'album' ) ? data[source]['Metadata']['xesam:album'] : ''
 
-	property string title: hasMetadata( 'title' ) ? data[source]['Metadata']['xesam:title'] : ''
+	readonly property string title:
+                hasMetadata( 'title' ) ? data[source]['Metadata']['xesam:title'] : ''
 
 // 	hundredth of second
-	property int length: hasMetadataMpris( 'length' ) ? data[source]['Metadata']['mpris:length'] / 10000: 0
+	property int length: 0
 // 	hundredth of second
 	property int position: 0
 
 	property real userRating: 0
 
-	property real volume: hasSource( 'Volume' ) ? data[source]['Volume'] : 0
+	readonly property real volume:
+                hasSource( 'Volume' ) ? data[source]['Volume'] : 0
 
+	readonly property bool canControl:
+                hasSource( 'CanControl' ) ? data[source]['CanControl'] : true
 
-	property bool canControl: hasSource( 'CanControl' ) ? data[source]['CanControl'] : false
+	readonly property bool canGoNext:
+                hasSource( 'CanGoNext' ) ? data[source]['CanGoNext'] : true
 
-	property bool canGoNext: hasSource( 'CanGoNext' ) ? data[source]['CanGoNext'] : false
+	readonly property bool canGoPrevious:
+                hasSource( 'CanGoPrevious' ) ? data[source]['CanGoPrevious'] : true
 
-	property bool canGoPrevious: hasSource( 'CanGoPrevious' ) ? data[source]['CanGoPrevious'] : false
+	readonly property bool canSeek:
+                hasSource( 'CanSeek' ) ? data[source]['CanSeek'] : true
 
-	property bool canSeek: hasSource( 'CanSeek' ) ? data[source]['CanSeek'] : false
+	readonly property bool canRaise:
+                hasSource( 'CanRaise' ) ? data[source]['CanRaise'] : true
 
-	property bool canRaise: hasSource( 'CanRaise' ) ? data[source]['CanRaise'] : false
+	function waitGetPosition() {
+                _GetPositionTimer.stop()
+                _WaitGetPositionTimer.restart()
+	}
 
+	readonly property Timer _WaitGetPositionTimer: Timer {
+                running: false
+                repeat: false
+                interval: 1000
+                onTriggered: _GetPositionTimer.start()
+	}
+
+        readonly property Timer _GetPositionTimer: Timer {
+                running: playbackStatus !== 'Stopped'
+                        && ( plasmoid.expanded || ( playbarEngine.compactStyle === playbar.seekBar ) )
+                repeat: true
+                interval: mpris2.isMaximumLoad ? mpris2.maximumLoad : mpris2.minimumLoad
+                onTriggered: startOperation( 'GetPosition' )
+        }
 
 	Component.onCompleted: nextSource()
 
-// 	onIntervalChanged: debug( 'interval', interval )
-
-
 	onIdentityChanged: {
-		if ( source.length > 0 ) Utils.setActions( source[0], identity )
+		if ( sourceActive ) Utils.setActions( source[0], identity )
 	}
 
 	onSourceActiveChanged: {
@@ -92,8 +119,18 @@ PlasmaCore.DataSource {
 	}
 
 	onNewData: {
-		if ( isMaximumLoad )
-			position = data['Position'] / 10000
+                var p = ( data['Position'] / 10000 )
+                var l = ( data['Metadata']['mpris:length'] / 10000 )
+//                 debug( "Position, length", "( " + p + ", " + l + " )" )
+                if ( l !== length )
+                        length = l
+
+                if ( p < l ) {
+                        position = p
+                } else {
+                        length = p
+                        position = p
+                }
 	}
 
 	onSourcesChanged: {
@@ -104,53 +141,53 @@ PlasmaCore.DataSource {
 		// debug( 'Source added', source )
 		// debug( 'sources', sources )
 
-		if ( source != '@multiplex' && connectedSources.length === 0 ) {
+		if ( source !== '@multiplex' && connectedSources.length === 0 ) {
 			connectSource( source )
 			playbarEngine.setSource( source )
 		}
 	}
 
 	onSourceRemoved: {
-		if ( source === previousSource ) {
-			nextSource()
-		}
+                if ( source === currentSource )
+                        nextSource()
 	}
 
 	onSourceConnected: {
 		setService( source )
+		currentSource = source
 		// debug( 'Source connected', source )
 		// debug( 'Valid engine', valid )
 	}
 
 	onSourceDisconnected: {
-		setService( null )
-		previousSource = source
+                setService( null )
 		// debug( 'Disconnected', source )
 	}
 
-	onConnectedSourcesChanged: { setService( source[0] ) }
-
 	function hasMetadata( key ) {
-		return data[source[0]] != undefined
-			&& data[source[0]]['Metadata'] != undefined
-			&& data[source[0]]['Metadata']['xesam:'+key] != undefined
+		return data[source[0]] !== undefined
+			&& data[source[0]]['Metadata'] !== undefined
+			&& data[source[0]]['Metadata']['xesam:'+key] !== undefined
 	}
 
 	function hasMetadataMpris( key ) {
-		return data[source[0]] != undefined
-		&& data[source[0]]['Metadata'] != undefined
-		&& data[source[0]]['Metadata']['mpris:'+key] != undefined
+		return data[source[0]] !== undefined
+                        && data[source[0]]['Metadata'] !== undefined
+                        && data[source[0]]['Metadata']['mpris:'+key] !== undefined
 	}
 
 	function hasSource( key ) {
-		return data[source[0]] != undefined
-			&& data[source[0]][key] != undefined
+		return data[source[0]] !== undefined
+			&& data[source[0]][key] !== undefined
 	}
 
 	function nextSource() {
 		for ( var i = 0; i < sources.length; i++ ) {
-			if ( connectedSources[0] === sources[i] || connectedSources == [''] || connectedSources == '' )
-			 {
+			if ( connectedSources[0] === sources[i]
+                          || connectedSources.length === 0
+                          || connectedSources === ['']
+                          || connectedSources === '' )
+                        {
 				if ( ++i < sources.length && sources[i] !== '@multiplex' ) {
 					disconnectSource( source[0] )
 					connectSource( sources[i] )
@@ -170,13 +207,17 @@ PlasmaCore.DataSource {
 	}
 
 	function setService( source ) {
-		if ( !source ) service = null
-		service = mpris2.serviceForSource( source )
+		if ( source )
+                        service = mpris2.serviceForSource( source )
+                else
+                        service = null
 		// debug( 'Service active', ( service != null ) )
 	}
 
 	function seek( position, currentPosition ) {
-		if ( service && canControl && canSeek ) {
+		if ( service && ( canControl || canSeek ) ) {
+                        if ( !canSeek ) debug( "Trying seek, CanSeek is", canSeek )
+                        waitGetPosition()
 			var job = service.operationDescription( 'SetPosition' )
 			job['microseconds'] = ( position * 10000 ).toFixed( 0 )
 			service.startOperationCall( job )
