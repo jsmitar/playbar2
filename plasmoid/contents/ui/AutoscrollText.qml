@@ -30,14 +30,20 @@ Item {
 
 	focus: false
 
+	Connections {
+                target: scroll.target
+                onWidthChanged: anim.stop()
+
+                onTextChanged: anim.stop()
+	}
+
 	SequentialAnimation {
 		id: anim
 		running: false
-		alwaysRunToEnd: true
-		loops: Animation.Infinite
 
 		onStopped: {
-			if ( scrollArea.containsMouse && !running ) anim.restart()
+                        isScrollable = target.contentWidth > target.width || target.truncated
+			if ( scrollArea.containsMouse && isScrollable ) anim.restart()
 			else scrolling = false
 		}
 
@@ -46,22 +52,16 @@ Item {
 			target: scroll.target
 			property: 'x'
 			from: 0
-			to: - ( target.contentWidth - target.width + units.smallSpacing )
+			to: target.width - target.contentWidth - units.smallSpacing
 			velocity: 60
 		}
+
 		SmoothedAnimation {
 			id: animB
 			target: scroll.target
 			property: 'x'
 			to: 0
 			velocity: 80
-		}
-		Component.onCompleted: {
-			isScrollable = target.contentWidth > target.width || target.truncated
-			target.textChanged.connect( function() {
-				isScrollable = target.contentWidth > target.width || target.truncated
-				scrolling = false
-			} )
 		}
 	}
 
@@ -72,8 +72,8 @@ Item {
 		acceptedButtons: Qt.NoButton
 		hoverEnabled: true
 
-		function initAutoScroll() {
-			isScrollable = target.contentWidth > target.width || target.truncated
+                onEntered: {
+                        isScrollable = target.contentWidth > target.width || target.truncated
 			if ( isScrollable && !anim.running ) {
 				scrolling = true
 				anim.start()
@@ -81,7 +81,5 @@ Item {
 				anim.start()
 			}
 		}
-		onEntered: initAutoScroll()
-		onExited: if ( anim.running ) anim.stop()
 	}
 }
