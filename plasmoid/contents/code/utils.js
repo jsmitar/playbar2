@@ -22,16 +22,16 @@ var iconApplication
 var Plasmoid
 var i18n
 
-function setActions( sourceActive, identity ) {
+function setActions( source, identity ) {
 	var icon
 
-	if ( sourceActive === '' ) return
-	icon = sourceActive
+	if ( source === '' || source === undefined ) return
+	icon = source
 
-	if ( sourceActive.match( 'vlc' ) )
+	if ( source.match( 'vlc' ) )
 		icon = 'vlc'
 
-	switch ( sourceActive ) {
+	switch ( source ) {
 		case 'spotify':
 			icon = 'spotify-client'
 			break
@@ -43,19 +43,19 @@ function setActions( sourceActive, identity ) {
 			break
 	}
 	iconApplication = icon
-	print( iconApplication )
 
 	Plasmoid.removeAction( 'configure' )
 	Plasmoid.setAction( 'raise', i18n( 'Open %1', identity ) , icon )
-	Plasmoid.setAction( 'quit', i18n( 'Quit' ) ,'window-close' )
-	Plasmoid.setAction( 'nextSource', i18n( 'Next multimedia source' ) , 'go-next' )
+	Plasmoid.setAction( 'stop', i18n( 'Stop' ), 'media-playback-stop' )
+	Plasmoid.setAction( 'quit', i18n( 'Quit' ), 'window-close' )
+	Plasmoid.setAction( 'nextSource', i18n( 'Next multimedia source' ), 'go-next' )
 	Plasmoid.setActionSeparator( 'sep1' )
 	Plasmoid.setAction( 'configure', i18n( 'Configure PlayBar' ) , 'configure', 'alt+d, s' )
-
 }
 
 function removeActions() {
 	Plasmoid.removeAction( 'raise' )
+        Plasmoid.removeAction( 'stop' )
 	Plasmoid.removeAction( 'quit' )
 	Plasmoid.removeAction( 'nextSource' )
 	Plasmoid.removeAction( 'sep1' )
@@ -64,11 +64,11 @@ function removeActions() {
 //  Color manipulation utilities
 //  Take it from Breeze project
 function blendColors( clr0, clr1, p ) {
-	return Qt.tint( clr0, adjustAlpha( clr1, p ) ) ;
+	return Qt.tint( clr0, adjustAlpha( clr1, p ) )
 }
 
 function adjustAlpha( clr, a ) {
-	return Qt.rgba( clr.r, clr.g, clr.b, a ) ;
+	return Qt.rgba( clr.r, clr.g, clr.b, a )
 }
 
 // Hue: 0..1
@@ -93,7 +93,7 @@ function rgbToHsl( clr ) {
 	else {
 		switch ( Cmax ) {
 			case R:
-				H = ( G - B ) / diff % 6
+				H = ( ( G - B ) / diff ) % 6
 				break;
 			case G:
 				H = ( B - R ) / diff + 2
