@@ -39,6 +39,7 @@ install(FILES plasma-dataengine-playbar.desktop
 install(FILES audoban.engine.playbar.operations
 		DESTINATION ${PLASMA_DATA_INSTALL_DIR}/services)
 
-install(FILES playbar.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+install(FILES playbar.kcfg
+                DESTINATION ${KCFG_INSTALL_DIR})
 
 
