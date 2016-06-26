@@ -18,30 +18,21 @@
  */
 
 import QtQuick 2.4
-import '../code/utils.js' as Utils
 
 MouseArea {
 	id: volumeWheelArea
-	acceptedButtons: Qt.XButton1 | Qt.XButton2
-	z: 99
 
-	//HACK: Update volume when has occurred a change, and make more fluid the volume changes
-	property real volumePrevious: mpris2.volume
-	Connections {
-		target: mpris2
-		onVolumeChanged: volumeWheelArea.volumePrevious = mpris2.volume
-	}
+	acceptedButtons: Qt.NoButton
+
+	z: 99
 
 	onWheel: {
 		wheel.accepted = true
 		if ( wheel.modifiers == Qt.NoModifier ) {
-			if ( wheel.angleDelta.y > 80 ) {
-				volumePrevious = volumePrevious.toPrecision( 3 ) - volumePrevious.toPrecision( 3 ) % 0.05
-				volumePrevious = mpris2.setVolume( volumePrevious + 0.058 ).toPrecision( 3 )
-			} else if ( wheel.angleDelta.y < -80 ) {
-				volumePrevious = volumePrevious.toPrecision( 3 ) - volumePrevious.toPrecision( 3 ) % 0.05
-				volumePrevious = mpris2.setVolume( volumePrevious - 0.05 ).toPrecision( 3 )
-			}
+			if ( wheel.angleDelta.y > 50 )
+				mpris2.setVolume( Number( ( mpris2.volume + 0.1 ).toFixed( 1 ) ) )
+			else if ( wheel.angleDelta.y < -50 )
+				mpris2.setVolume( Number( ( mpris2.volume - 0.1 ).toFixed( 1 ) ) )
 		}
 	}
 }
