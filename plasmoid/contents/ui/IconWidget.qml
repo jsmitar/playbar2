@@ -19,7 +19,7 @@
 
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.extras 2.0
+import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 PlasmaCore.SvgItem {
 	id: iconWidget
@@ -38,19 +38,19 @@ PlasmaCore.SvgItem {
 
 	opacity: enabled ? 1 : 0.5
 
-	PressedAnimation {
+	PlasmaExtras.PressedAnimation {
 		id: animA
+		running: mouseArea.pressed
 		targetItem: iconWidget
-		running: false
 		duration: units.shortDuration
 		alwaysRunToEnd: true
 	}
 
-	ReleasedAnimation {
+	PlasmaExtras.ReleasedAnimation {
 		id: animB
+		running: false
 		targetItem: iconWidget
 		alwaysRunToEnd: true
-		running: enabled && mouseArea.released && !animA.running
 		duration: units.longDuration
 	}
 
@@ -59,8 +59,9 @@ PlasmaCore.SvgItem {
 
 		acceptedButtons: Qt.LeftButton
 		anchors.fill: parent
-		onPressed: animA.start()
-		onReleased: animB.start()
+
+		onPressedChanged: if ( !pressed && iconWidget.scale < 1.0 ) animB.start()
+		onExited: animB.start()
 
 		Component.onCompleted: clicked.connect( iconWidget.clicked )
 	}
