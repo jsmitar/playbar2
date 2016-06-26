@@ -17,7 +17,6 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
@@ -27,13 +26,13 @@ PlaybackItem {
 
 	property int buttonsAppearance: playbarEngine.buttonsAppearance
 
-	visible: mpris2.sourceActive && playbarEngine.controlsOnBar
+	visible: mpris2.sourceActive && ( playbarEngine.compactStyle === playbar.playbackButtons )
 
 	enabled: visible
 
-	width: visible ? buttons.width : 0
+	width: visible ? controls.width : 0
 
-	height: visible ? buttons.height : 0
+	height: visible ? controls.height : 0
 
 	onPlayingChanged: {
 		if ( !model.itemAt( 1 ) ) return
@@ -79,17 +78,18 @@ PlaybackItem {
 		IconWidget {
 			svg: PlasmaCore.Svg { imagePath: 'icons/media' }
 			iconSource: icon
-			visible: !( index == 2 ) | showStop
+			visible: !( index === 2 ) | showStop
 			enabled: mpris2.sourceActive
 			size: buttonSize
 		}
 	}
 
 	Flow {
-		id: buttons
+		id: controls
 
 		flow: vertical ? Flow.TopToBottom : Flow.LeftToRight
 		spacing: 0
+		anchors.centerIn: parent
 
 		move: Transition {
 			NumberAnimation {
@@ -102,6 +102,7 @@ PlaybackItem {
 
 		Repeater {
 			id: model
+
 			model: playmodel
 			delegate: buttonsAppearance ? toolButtonDelegate : iconWidgetDelegate
 
