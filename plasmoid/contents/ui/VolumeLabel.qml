@@ -18,25 +18,26 @@
 */
 
 import QtQuick 2.4
-import QtQuick.Layouts 1.1
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import '../code/utils.js' as Utils
 
 PlasmaExtras.Paragraph {
 	id: label
 
-	property real value: 0
+	property real volume: 0
 
 	wrapMode: Text.NoWrap
+
 	elide: Text.ElideNone
+
 	maximumLineCount: 1
-	color: playbarEngine.backgroundHint === 0  
+
+	color: playbarEngine.backgroundHint === 0
 		? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
 
-	function setLabel( value ) {
-		text = ( value * 100 ).toFixed() +'%'
+	function setLabel( volume ) {
+		text = ( volume * 100 ).toFixed() + '%'
 	}
 
-	text: ( value * 100 ).toFixed() + '%'
-
+	text: ( volume * 100 ).toFixed() + '%'
 }
