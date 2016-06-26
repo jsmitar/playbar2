@@ -33,25 +33,27 @@ PlasmaExtras.Paragraph {
 
 	property bool showRemaining: true
 
-	property bool labelSwitch: false
+	property bool labelSwitch: plasmoid.configuration.TimeLabelSwitch
 
 	property alias interactive: mouseArea.hoverEnabled
 
-	property alias autoTimeUpdate: timer.running
+	property int min: 0
 
-	color: playbarEngine.backgroundHint === 0  
+	property int sec: 0
+
+	text: '0:00'
+
+	color: playbarEngine.backgroundHint === 0
 		? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
 
 	enabled: mpris2.sourceActive & mpris2.length > 0
 
 	function positionUpdate( negative ) {
-		var min, sec
+		if ( negative ) sec = Math.abs( ( topTime - currentTime ) / 100 )
+		else sec = currentTime / 100
 
-		if ( negative ) sec = Math.abs( ( topTime - currentTime ) /100 )
-		else sec = currentTime/100
-
-		min = Utils.truncate( sec/60 )
-		sec = Utils.truncate( sec - min*60 )
+		min = sec / 60
+		sec = sec - min * 60
 
 		if ( negative ) text = '-' + min + ':'
 		else text = min + ':'
@@ -59,48 +61,42 @@ PlasmaExtras.Paragraph {
 	}
 
 	function lengthUpdate() {
-		var min
-		var sec = topTime/100
-		min = Utils.truncate( sec/60 )
-		sec = Utils.truncate( sec - min*60 )
-		time.text = min + ':' + ( sec <= 9 ? '0' + sec : sec )
+		sec = topTime / 100
+		min = sec / 60
+		sec = sec - min * 60
+		text = min + ':' + ( sec <= 9 ? '0' + sec : sec )
 	}
 
-	Timer {
-		id: timer
+	onCurrentTimeChanged: {
+                if ( showPosition & showRemaining )
+                        positionUpdate( labelSwitch )
+                else if ( labelSwitch & showPosition )
+                        positionUpdate( false )
+                else if ( labelSwitch & showRemaining )
+                        positionUpdate( true )
+	}
 
-		property bool _switch: labelSwitch
-
-		interval: 400
-		repeat: true
-		running: parent.visible
-		onTriggered: {
-			if ( showPosition & showRemaining )
-				positionUpdate( _switch )
-			else if ( _switch & showPosition )
-				positionUpdate( false )
-			else if ( _switch & showRemaining )
-				positionUpdate( true )
-			else
-				lengthUpdate()
-		}
+	onTopTimeChanged: {
+                if ( !showPosition )
+                        lengthUpdate()
 	}
 
 	MouseArea {
 		id: mouseArea
- 
+
 		anchors.fill: parent
 		acceptedButtons: Qt.LeftButton
 		enabled: hoverEnabled
 
 		onEntered: color = theme.viewHoverColor
-		onExited: color = playbarEngine.backgroundHint === 0  
+		onExited: color = playbarEngine.backgroundHint === 0
 			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
-		onReleased: {
+		onClicked: {
 			if ( !exited || containsMouse ) {
-				timer._switch = !timer._switch
-				plasmoid.configuration.TimeLabelSwitch = timer._switch
-				timer.triggered()
+				labelSwitch = !labelSwitch
+				plasmoid.configuration.TimeLabelSwitch = labelSwitch
+				if ( showPosition )
+                                        positionUpdate( labelSwitch )
 			}
 		}
 	}
