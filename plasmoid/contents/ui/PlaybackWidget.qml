@@ -35,10 +35,8 @@ PlaybackItem {
 
 	implicitHeight: buttons.height
 
-	Layout.fillWidth: true
-	Layout.fillHeight: true
-	Layout.maximumHeight: buttons.implicitHeight
-	Layout.alignment: Qt.AlignBottom | Qt.AlignLeft
+	Layout.minimumHeight: buttons.implicitHeight
+	Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 
 	onPlayingChanged: {
 		if ( !model.itemAt( 1 ) ) return
@@ -70,10 +68,14 @@ PlaybackItem {
 		id: toolButtonDelegate
 
 		PlasmaComponents.ToolButton {
+                        id: toolButton
 			iconSource: icon
-			visible: !( index == 2 ) | showStop
-			Layout.minimumWidth: buttonSize * 1.4
-			Layout.minimumHeight: buttonSize * 1.4
+			visible: !( index === 2 ) | showStop
+			property int size: buttonSize
+			Layout.minimumWidth: size * 1.4
+			Layout.minimumHeight: size * 1.4
+
+
 		}
 	}
 
@@ -81,10 +83,12 @@ PlaybackItem {
 		id: iconWidgetDelegate
 
 		IconWidget {
+                        id: iconWidget
 			svg: PlasmaCore.Svg { imagePath: 'icons/media' }
 			iconSource: icon
-			visible: !( index == 2 ) | showStop
+			visible: !( index === 2 ) | showStop
 			size: buttonSize
+
 		}
 	}
 
@@ -92,7 +96,10 @@ PlaybackItem {
 		id: buttons
 
 		spacing: buttonsAppearance ? units.smallSpacing : units.largeSpacing
-		anchors.bottom: parent.bottom
+		anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        bottom: parent.bottom
+                }
 
 		Repeater {
 			id: model
