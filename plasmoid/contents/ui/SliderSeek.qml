@@ -22,19 +22,21 @@ import QtQuick.Layouts 1.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 RowLayout {
+        id: sliderSeek
+
+	property int maxLabelWidth: Math.max( labelRight.Layout.minimumWidth, labelLeft.Layout.minimumWidth )
 
 	spacing: units.smallSpacing
 
 	Layout.fillWidth: true
-	Layout.fillHeight: true
 	Layout.minimumHeight: implicitHeight + units.smallSpacing
-
-	property int maxLabelWidth: Math.max( labelRight.Layout.minimumWidth, labelLeft.Layout.minimumWidth )
 
 	TimeLabel {
 		id: labelLeft
-		currentTime: slider.value
+		currentTime: 0
 		interactive: false
+		showPosition: false
+		showRemaining: false
 		horizontalAlignment: Text.AlignHCenter
 
 		Layout.minimumWidth: units.largeSpacing * 2.5
@@ -45,45 +47,57 @@ RowLayout {
 
 		activeFocusOnPress: false
 		maximumValue: mpris2.length
-		value: 0
+		value: mpris2.position
 		stepSize: 100
+		activeFocusOnPress: true
+		updateValueWhileDragging: true
 		enabled: maximumValue != 0
-		onValueChanged: if ( pressed ) mpris2.seek( value )
 
 		Layout.fillWidth: true
 		Layout.fillHeight: true
+		Layout.minimumWidth: 100
+
+		onPressedChanged: {
+                        if ( !pressed && value !== mpris2.position )
+                                mpris2.seek( value )
+                }
+
+                onValueChanged: {
+                         if ( pressed && playbarEngine.compactStyle !== playbar.seekBar )
+                                 mpris2.waitGetPosition()
+                }
+
 		Connections {
 			target: mpris2
 			onPositionChanged: {
-				if ( !slider.pressed ) slider.value = mpris2.position
-				wheelArea.previousValue = mpris2.position
+				if ( !slider.pressed )
+                                        slider.value = mpris2.position
 			}
 		}
+
 		MouseArea {
 			id: wheelArea
-			acceptedButtons: Qt.XButton1 | Qt.XButton2
+			acceptedButtons: Qt.NoButton
+			hoverEnabled: false
 			anchors.fill: parent
 
-			property int previousValue: mpris2.position
-
 			onWheel: {
-				accepted: true
+                                accepted = true
 				if ( wheel.angleDelta.y > 50 )
-					previousValue = mpris2.seek( previousValue + 500 )
-				else if ( wheel.angleDelta.y < -50 )
-					previousValue = mpris2.seek( previousValue - 500 )
+					slider.value = mpris2.seek( slider.value + 1000 )
+                                else if ( wheel.angleDelta.y < -50 )
+					slider.value = mpris2.seek( slider.value - 1000 )
 				else return
-				slider.value = previousValue
 			}
 		}
-	}
+        }
 
 	TimeLabel {
 		id: labelRight
 		currentTime: slider.value
 		interactive: true
 		showRemaining: true
-		showPosition: false
+		showPosition: true
 		labelSwitch: plasmoid.configuration.TimeLabelSwitch
 		horizontalAlignment: Text.AlignHCenter
 
