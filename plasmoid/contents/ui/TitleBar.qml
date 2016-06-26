@@ -19,15 +19,15 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
-import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import '../code/utils.js' as Utils
 
 RowLayout {
 	Layout.minimumHeight: implicitHeight + units.smallSpacing
+	Layout.maximumHeight: implicitHeight + units.smallSpacing
 	Layout.fillWidth: true
-	Layout.fillHeight: true
+	Layout.fillHeight: false
 
 	PlasmaExtras.Heading {
 		id: titleBar
@@ -37,15 +37,18 @@ RowLayout {
 		text: mpris2.identity
 		enabled: mpris2.sourceActive
 		opacity: enabled ? 1.0 : 0.5
-		color: ( playbarEngine.backgroundHint === 0 ) 
+		color: ( playbarEngine.backgroundHint === 0 )
 			? playbarEngine.frontColor : theme.textColor
 	}
 
 	PlasmaComponents.ToolButton {
 		id: menuButton
+
 		property var contextMenu
 
-		Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+		Layout.fillWidth: false
+		Layout.fillHeight: false
+		Layout.alignment: Qt.AlignRight
 		enabled: mpris2.sourceActive
 		iconSource: 'configure'
 		onClicked: {
@@ -53,23 +56,31 @@ RowLayout {
 				contextMenu = contextMenuComponent.createObject( menuButton )
 			contextMenu.open()
 		}
+
 	}
 
 	Component {
 		id: contextMenuComponent
+
 		PlasmaComponents.ContextMenu {
 			visualParent: menuButton
+
 			PlasmaComponents.MenuItem {
 				icon: Utils.iconApplication
 				text: i18n( 'Open %1', mpris2.identity )
 				onClicked: action_raise()
 			}
 			PlasmaComponents.MenuItem {
+                                icon: 'media-playback-stop'
+                                text: i18n( 'Stop' )
+                                onClicked: action_stop()
+			}
+			PlasmaComponents.MenuItem {
 				icon: 'window-close'
 				text: i18n( 'Quit' )
 				onClicked: action_quit()
 			}
-			PlasmaComponents.MenuItem {
+                        PlasmaComponents.MenuItem {
 				icon: 'go-next'
 				text: i18n( 'Next multimedia source' )
 				onClicked: action_nextSource()
