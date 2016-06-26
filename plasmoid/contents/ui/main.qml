@@ -30,15 +30,33 @@ Item {
 	PlasmaCore.DataSource {
 		id: playbarEngine
 		engine: 'playbar'
-		connectedSources: 'Provider'
+		connectedSources: source
 
-		readonly property bool showStop: hasSource( 'ShowStop' ) ? data[connectedSources[0]]['ShowStop'] : true
-		readonly property bool controlsOnBar: hasSource( 'ControlsOnBar' ) ? data[connectedSources[0]]['ControlsOnBar'] : true
-		readonly property int  buttonsAppearance: hasSource( 'ButtonsAppearance' ) ? data[connectedSources[0]]['ButtonsAppearance'] : 0
-		readonly property int  backgroundHint: hasSource( 'BackgroundHint' ) ? data[connectedSources[0]]['BackgroundHint'] : 1
-		readonly property color frontColor: hasSource( 'FrontColor' ) ? data[connectedSources[0]]['FrontColor'] : "#fff"
-		readonly property color backgroundColor: hasSource( 'BackgroundColor' ) ? data[connectedSources[0]]['BackgroundColor'] : "#fff"
-		
+                readonly property string source: 'Provider'
+
+		readonly property int compactStyle:
+                        hasSource( 'CompactStyle' ) ? data[source]['CompactStyle'] : playbar.icon
+
+		readonly property int  buttonsAppearance:
+                        hasSource( 'ButtonsAppearance' ) ? data[source]['ButtonsAppearance'] : playbar.flat
+
+		readonly property bool showStop:
+                        hasSource( 'ShowStop' ) ? data[source]['ShowStop'] : false
+
+		readonly property int coverSize:
+                        hasSource( 'CoverSize' ) ? data[source]['CoverSize'] : 2
+
+		readonly property int backgroundHint:
+                        hasSource( 'BackgroundHint' ) && plasmoid.formFactor == PlasmaCore.Types.Planar
+                                ? data[source]['BackgroundHint']
+                                : playbar.normal
+
+		readonly property color frontColor:
+                        hasSource( 'FrontColor' ) ? data[source]['FrontColor'] : "#fff"
+
+                readonly property color backgroundColor:
+                        hasSource( 'BackgroundColor' ) ? data[source]['BackgroundColor'] : "#fff"
+
 		function startOperation( name ) {
 			if ( !playbarEngine.valid ) return
 			var service = playbarEngine.serviceForSource( 'Provider' )
@@ -55,8 +73,7 @@ Item {
 		}
 
 		function hasSource( key ) {
-			return data[connectedSources[0]] != undefined
-			&& data[connectedSources[0]][key] != undefined
+			return data[source] && data[source][key]
 		}
 	}
 	//! dataengine
@@ -65,11 +82,11 @@ Item {
 	property bool vertical: plasmoid.formFactor === PlasmaCore.Types.Vertical
 
 	Plasmoid.compactRepresentation: CompactApplet { id: compact }
-	Plasmoid.fullRepresentation: DefaultLayout { id: full }
+	Plasmoid.fullRepresentation: FullApplet { id: full }
 
 // 	NOTE: This is necessary ?
-	Plasmoid.preferredRepresentation: plasmoid.formFactor === PlasmaCore.Types.Planar ?
-		  Plasmoid.fullRepresentation
+	Plasmoid.preferredRepresentation: plasmoid.formFactor === PlasmaCore.Types.Planar
+                ? Plasmoid.fullRepresentation
 		: Plasmoid.compactRepresentation
 
 	Plasmoid.icon: internal.icon
@@ -84,13 +101,18 @@ Item {
 // 		onFormFactorChanged:  debug( 'FormFactor', Plasmoid.formFactor )
 // 	}
 
-	function debug( str, msg ) { console.debug( 'PlayBar2 ' + str + ': ' + msg ) }
-
+	function debug( str, msg ) {
+                if ( msg === undefined ) msg = ''
+                console.debug( 'audoban.applet.playbar: ' + str, msg )
+        }
 
 	//! Context menu actions
-
 	function action_raise() {
 		mpris2.startOperation( 'Raise' )
+	}
+
+	function action_stop() {
+                mpris2.startOperation( 'Stop' )
 	}
 
 	function action_quit() {
@@ -132,6 +154,25 @@ Item {
 				i18n( 'Client MPRIS2, allows you to control your favorite media player' )
 				: artist + album
 	}
+
+	// ENUMS
+	readonly property QtObject playbar: QtObject {
+                id: enums
+                // ENUM: CompactStyle
+                readonly property int icon: 0
+                readonly property int playbackButtons: 1
+                readonly property int seekBar: 2
+
+                // ENUM: ButtonsAppearance
+                readonly property int flat: 0
+                readonly property int toolButton: 1
+
+                // ENUM: BackgroundHint
+                readonly property int customColors: 0
+                readonly property int normal: 1
+                readonly property int translucent: 2
+        }
+
 }
 
 
