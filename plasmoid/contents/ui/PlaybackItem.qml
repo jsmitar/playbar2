@@ -18,14 +18,13 @@
  */
 
 import QtQuick 2.4
-import org.kde.plasma.core 2.0 as PlasmaCore
 
 Item {
 	id: playbackitem
 
-	property bool playing: mpris2.playbackStatus == 'Playing'
+	readonly property bool playing: mpris2.playbackStatus == 'Playing'
 
-	property bool showStop: mpris2.source == 'spotify' ? false : playbarEngine.showStop
+	readonly property bool showStop: mpris2.source == 'spotify' ? false : playbarEngine.showStop
 
 	property int buttonSize: units.iconSizes.small
 
