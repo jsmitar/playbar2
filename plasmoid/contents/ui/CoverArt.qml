@@ -19,50 +19,27 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
-import QtGraphicalEffects 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
-import '../code/utils.js' as Utils
 
-Rectangle {
+Item {
 	id: bg
 
 	width: units.iconSizes.enormous
 	height: units.iconSizes.enormous
-	color: Utils.adjustAlpha( ( playbarEngine.backgroundHint === 0  
-			? playbarEngine.frontColor :  theme.complementaryBackgroundColor ), 0.1 )
-	radius: 2
-	opacity: 1
 
 	Layout.minimumWidth: height
 	Layout.minimumHeight: units.iconSizes.enormous
-	Layout.preferredWidth: units.iconSizes.enormous
-	Layout.preferredHeight: units.iconSizes.enormous
-	Layout.maximumWidth: height
-	Layout.maximumHeight: units.iconSizes.enormous
 	Layout.fillHeight: true
-	Layout.fillWidth: false
+	Layout.fillWidth: true
 
-	border {
-		width: 1
-		color: color
-	}
+	PlasmaCore.IconItem {
+		id: noCover
 
-	SequentialAnimation{
-		id: appear
-		running: true
-		alwaysRunToEnd: true
-		OpacityAnimator {
-			target: cover
-			from: 1.0
-			to: 0.3
-			duration: units.shortDuration
-		}
-		OpacityAnimator {
-			target: cover
-			from: 0.3
-			to: 1.0
-			duration: units.longDuration
-		}
+                anchors.fill: cover
+		source: 'nocover'
+                smooth: true
+                opacity: 0.3
+                visible: cover.status === Image.Null || cover.status === Image.Error
 	}
 
 	Image {
@@ -72,42 +49,42 @@ Rectangle {
 		source: mpris2.artUrl
 		fillMode: Image.PreserveAspectFit
 		anchors.centerIn: parent
+		mipmap: true
+                asynchronous: true
+                cache: false
 
 		width: parent.width - 2
 		height: parent.height - 2
-		clip: true
 
-		sourceSize.width: parent.width - 2
-		sourceSize.height: parent.height - 2
+		sourceSize.width: parent.width
+		sourceSize.height: parent.height
 
 		horizontalAlignment: Image.AlignHCenter
 		verticalAlignment: Image.AlignVCenter
 
 		onStatusChanged: {
-			if ( ( status === Image.Ready || mpris2.artUrl.length > 0 ) && !appear.running )
-				appear.restart()
+                        if ( status === Image.Loading ) {
+                                animB.stop()
+                                animA.start()
+                        } else if ( status === Image.Ready ) {
+                                animA.stop()
+                                animB.start()
+                        }
 		}
-	}
 
-	PlasmaCore.IconItem {
-		id: noCover
-		anchors.centerIn: parent
-		width: parent.width - 2
-		height: parent.height - 2
-		source: 'tools-rip-audio-cd'
-		visible: false
-	}
+                OpacityAnimator on opacity {
+                        id: animA
+                        running: false
+                        to: 0.0
+                        duration: units.shortDuration
+                }
 
-	Colorize {
-		id: mask
-		anchors.fill: noCover
-		readonly property var hsl: Utils.rgbToHsl( ( playbarEngine.backgroundHint === 0  
-			? playbarEngine.frontColor : theme.textColor ) )
-		source: noCover
-		hue: hsl.h
-		saturation: hsl.s
-		lightness: hsl.l
-		opacity: 0.3
+                OpacityAnimator on opacity {
+                        id: animB
+                        running: false
+                        to: 1.0
+                        duration: units.longDuration * 1.5
+                }
 	}
 
 	MouseArea {
