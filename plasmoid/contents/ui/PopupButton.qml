@@ -19,12 +19,15 @@
 
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.plasmoid 2.0
 
 IconWidget {
 	id: iconPopup
 
 	property bool opened: false
+
+	property bool controlsVisible: false
+
+	enabled: mpris2.sourceActive
 
 	svg: svgSource.arrows
 
@@ -32,34 +35,34 @@ IconWidget {
 
 	QtObject {
 		id: svgSource
+
 		readonly property var arrows: PlasmaCore.Svg { imagePath: 'widgets/arrows' }
+
 		readonly property var media: PlasmaCore.Svg { imagePath: 'icons/media' }
+
 		function playbackIcon() {
-			var icon
-			if ( mpris2.playbackStatus == 'Playing' )
-				icon = 'media-playback-start'
-			else if ( mpris2.playbackStatus == 'Paused' )
-				icon = 'media-playback-pause'
-			else
-				icon = 'media-playback-start'
-			return icon
+			if ( mpris2.playbackStatus === 'Playing' )
+				return 'media-playback-start'
+			else if ( mpris2.playbackStatus === 'Paused' )
+				return 'media-playback-pause'
+                        return 'media-playback-start'
 		}
 	}
 
 	state: 'default'
 
-	rotation: opened & mpris2.sourceActive ? 180: 0
+	rotation: opened ? 180 : 0
 
 	Behavior on rotation {
-		RotationAnimator {
-			direction: opened ? RotationAnimation.Clockwise : RotationAnimation.Counterclockwise
-			duration: units.longDuration
-		}
+                RotationAnimator {
+                        direction: RotationAnimator.Numerical
+                        duration: units.longDuration * 1.5
+                }
 	}
 
 	states: [
 	State {
-		when: !mpris2.sourceActive || !playbackBarVisible
+		when: !mpris2.sourceActive || !controlsVisible
 		PropertyChanges {
 			target: iconPopup
 			svg: svgSource.media
