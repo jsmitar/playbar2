@@ -24,29 +24,34 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 RowLayout {
 	id: sliderVolume
 
-	spacing: units.smallSpacing
-
-	Layout.fillWidth: true
-	Layout.fillHeight: true
-	Layout.minimumHeight: implicitHeight + units.smallSpacing
-
 	property alias labelVisible: label.visible
+
 	property alias iconVisible: icon.visible
 
+	spacing: units.smallSpacing
+
 	enabled: mpris2.sourceActive
+
+	Layout.minimumHeight: implicitHeight + units.smallSpacing
+	Layout.fillWidth: true
+
 
 	//TODO: Add a vertical Layout
 	// 	property alias orientation: slider.orientation
 	// 	property bool labelAbove: true
 
 	property int maxLabelWidth: Math.max( icon.width, label.Layout.minimumWidth )
+
 	Item {
 		width: maxLabelWidth
 		height: implicitHeight
+
 		Layout.minimumWidth: units.largeSpacing * 2.5
 		Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+
 		VolumeIcon {
 			id: icon
+			volume: slider.value
 			anchors.centerIn: parent
 		}
 	}
@@ -57,33 +62,28 @@ RowLayout {
 		value: mpris2.volume
 		maximumValue: enabled ? 1.0 : 0
 		stepSize: 0.01
+		activeFocusOnPress: true
+		updateValueWhileDragging: true
+
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		Layout.minimumWidth: 80
+		Layout.minimumWidth: 100
 
-		onValueChanged: if ( pressed ) mpris2.setVolume( value )
+		onValueChanged: {
+                        if ( value.toFixed( 2 ) != mpris2.volume.toFixed( 2 ) )
+                                mpris2.setVolume( value )
+                }
+
+		onPressedChanged: {
+                        if ( !pressed && value.toFixed( 2 ) != mpris2.volume.toFixed( 2 ) )
+                                mpris2.setVolume( value )
+                }
+
 		Connections {
 			target: mpris2
 			onVolumeChanged: {
-				if ( !slider.pressed ) slider.value = mpris2.volume
-					wheelArea.previousValue = mpris2.volume
-			}
-		}
-		MouseArea {
-			id: wheelArea
-			acceptedButtons: Qt.XButton1 | Qt.XButton2
-			anchors.fill: parent
-
-			property real previousValue: mpris2.volume
-
-			onWheel: {
-				accepted: true
-				if ( wheel.angleDelta.y > 50 )
-					previousValue = mpris2.setVolume( previousValue + 0.019 )
-				else if ( wheel.angleDelta.y < -50 )
-					previousValue = mpris2.setVolume( previousValue - 0.019 )
-				else return
-				slider.value = previousValue
+				if ( !slider.pressed )
+                                        slider.value = mpris2.volume
 			}
 		}
 	}
@@ -91,7 +91,7 @@ RowLayout {
 	VolumeLabel {
 		id: label
 
-		value: slider.pressed ? slider.value : mpris2.volume
+		volume: slider.value
 		horizontalAlignment: Text.AlignHCenter
 
 		Layout.minimumWidth: units.largeSpacing * 2.5
