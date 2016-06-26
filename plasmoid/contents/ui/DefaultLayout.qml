@@ -20,33 +20,36 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import QtGraphicalEffects 1.0
-import org.kde.plasma.core 2.0 as PlasmaCore
 
 //###########
 // DefaultLayout
 //###########
-
 Item {
-	readonly property double num_aureo: 1.618033988749895
+        id: content
+	objectName: 'DefaultLayout'
 
- 	Layout.fillHeight: true
+	signal shouldChangeLayout
+
+	onWidthChanged: if ( width < height + units.iconSizes.medium ) shouldChangeLayout()
+
  	Layout.fillWidth: true
- 	Layout.minimumWidth: page.implicitHeight * num_aureo
+ 	Layout.fillHeight: true
+ 	Layout.minimumWidth: units.iconSizes.enormous * 3
  	Layout.minimumHeight: page.implicitHeight
- 	Layout.preferredWidth: page.implicitHeight * num_aureo
+ 	Layout.preferredWidth: units.iconSizes.enormous * 3
  	Layout.preferredHeight: page.implicitHeight
 
+ 	Component.onDestruction: debug( objectName, 'destructed' )
 
 GridLayout {
 	id: page
-	width: parent.width
-	height: parent.height
+
+        anchors.fill: parent
 
  	rowSpacing: units.smallSpacing
  	columnSpacing: units.largeSpacing
- 	Layout.minimumWidth: implicitHeight * num_aureo
+ 	Layout.minimumWidth: implicitHeight * 1.6
  	Layout.minimumHeight: implicitHeight
- 	Layout.maximumHeight: implicitHeight
  	Layout.fillWidth: true
  	Layout.fillHeight: false
 
@@ -54,40 +57,52 @@ GridLayout {
 	rows: 5
 
 	TitleBar {
+                id: titleBar
 		Layout.row: 0
 		Layout.columnSpan: 2
 	}
 	CoverArt {
 		id: cover
 		Layout.row: 1
+		Layout.column: 0
  		Layout.rowSpan: 2
-		Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-		focus: true
+ 		Layout.fillWidth: false
+ 		Layout.fillHeight: true
+		Layout.alignment: Qt.AlignCenter
 	}
 	TrackInfo {
+                id: trackInfo
 		Layout.row: 1
 		Layout.column: 1
+ 		Layout.fillWidth: true
  		Layout.fillHeight: false
+		Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
  		layer.enabled: true
 	}
 	PlaybackWidget {
-		id: playback
+		id: controls
 		Layout.row: 2
 		Layout.column: 1
-		Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+		Layout.fillWidth: true
+		Layout.fillHeight: true
+		Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 	}
 	SliderVolume {
+                id: volume
 		Layout.row: 3
 		Layout.columnSpan: 2
-		Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+		Layout.fillHeight: true
+		Layout.alignment: Qt.AlignCenter
 	}
 	SliderSeek {
+                id: seek
 		Layout.row: 4
 		Layout.columnSpan: 2
-		Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+		Layout.fillHeight: false
+		Layout.alignment: Qt.AlignCenter
 	}
 
-	layer.enabled: playbarEngine.backgroundHint === 0 && plasmoid.formFactor === PlasmaCore.Types.Planar
+	layer.enabled: playbarEngine.backgroundHint === playbar.customColors
 	layer.effect: DropShadow {
 		source: page
 		radius: 8.0
