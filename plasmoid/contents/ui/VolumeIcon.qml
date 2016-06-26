@@ -23,28 +23,26 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 IconWidget {
 	id: icon
 
+	property real volume: 0
+
+	property real volumePrevious: 0
+
+	readonly property bool muted: mpris2.volume.toFixed( 1 ) <= 0.0
+
 	size: units.iconSizes.small
 
 	svg: PlasmaCore.Svg { imagePath: 'icons/audio' }
 
 	iconSource: updateIcon()
 
-	readonly property bool muted: mpris2.volume.toPrecision( 2 ) == 0.0
-
-	readonly property var level: [
-	'audio-volume-muted',
-	'audio-volume-low',
-	'audio-volume-medium',
-	'audio-volume-high'
-	]
-
-	property real volumePrevious: 0
-
 	function updateIcon() {
-		if ( mpris2.volume == 0 ) return level[0]
-		else if ( mpris2.volume <= 0.3 ) return level[1]
-		else if ( mpris2.volume <= 0.6 ) return level[2]
-		return level[3]
+		if ( volume == 0 )
+                        return 'audio-volume-muted'
+		else if ( volume <= 0.3 )
+                        return 'audio-volume-low'
+		else if ( volume <= 0.6 )
+                        return 'audio-volume-medium'
+		return 'audio-volume-high'
 	}
 
 	onClicked: {
