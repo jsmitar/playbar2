@@ -28,7 +28,8 @@ PlasmaCore.DataSource {
 
 	interval: 0 // ondemand
 
-	readonly property int maximumLoad: 250
+//!NOTE: I would fix the performance
+	readonly property int maximumLoad: 500
 
 	readonly property int minimumLoad: playbackStatus === 'Paused' ? 1000 : 500
 
@@ -55,7 +56,7 @@ PlasmaCore.DataSource {
                 hasMetadataMpris( 'artUrl' ) ? data[source]['Metadata']['mpris:artUrl'] : ''
 
 	readonly property string artist:
-                hasMetadata( 'artist' ) ? data[source]['Metadata']['xesam:artist'].toString() : ''
+                hasMetadata( 'artist' ) ? data[source]['Metadata']['xesam:artist'] : ''
 
 	readonly property string album:
                 hasMetadata( 'album' ) ? data[source]['Metadata']['xesam:album'] : ''
@@ -119,18 +120,16 @@ PlasmaCore.DataSource {
 	}
 
 	onNewData: {
-                var p = ( data['Position'] / 10000 )
-                var l = ( data['Metadata']['mpris:length'] / 10000 )
-//                 debug( "Position, length", "( " + p + ", " + l + " )" )
-                if ( l !== length )
-                        length = l
+                var p = data['Position'] / 10000
+                var l = data['Metadata']['mpris:length'] / 10000
+                //debug( "Position, length", "( " + p + ", " + l + " )" )
 
-                if ( p < l ) {
-                        position = p
-                } else {
-                        length = p
-                        position = p
-                }
+                if ( !l ) l = 0
+
+                if ( l !== length ) length = l
+
+                if ( p < l ) position = p
+                else length = position = p
 	}
 
 	onSourcesChanged: {
@@ -165,20 +164,20 @@ PlasmaCore.DataSource {
 	}
 
 	function hasMetadata( key ) {
-		return data[source[0]] !== undefined
-			&& data[source[0]]['Metadata'] !== undefined
-			&& data[source[0]]['Metadata']['xesam:'+key] !== undefined
+		return data[source[0]]
+			&& data[source[0]]['Metadata']
+			&& data[source[0]]['Metadata']['xesam:'+key]
 	}
 
 	function hasMetadataMpris( key ) {
-		return data[source[0]] !== undefined
-                        && data[source[0]]['Metadata'] !== undefined
-                        && data[source[0]]['Metadata']['mpris:'+key] !== undefined
+		return data[source[0]]
+                        && data[source[0]]['Metadata']
+                        && data[source[0]]['Metadata']['mpris:'+key]
 	}
 
 	function hasSource( key ) {
-		return data[source[0]] !== undefined
-			&& data[source[0]][key] !== undefined
+		return data[source[0]]
+                        // && data[source[0]][key]
 	}
 
 	function nextSource() {
@@ -241,7 +240,7 @@ PlasmaCore.DataSource {
 	function setVolume( value ) {
 		if ( service && canControl && service.isOperationEnabled( 'SetVolume' ) ) {
 			var job = service.operationDescription( 'SetVolume' )
-			job['level'] = value
+			job['level'] = Number( value.toFixed( 2 ) )
 			service.startOperationCall( job )
 			value = value < 0 ? 0 : value
 			value = value > 1.2 ? 1 : value
