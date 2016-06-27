@@ -32,7 +32,8 @@ PlayBarEngine::PlayBarEngine(QObject* parent, const QVariantList& args)
     KSharedConfigPtr config = PlayBarSettings::self()->sharedConfig();
     m_playbar = new PlayBar(config, this);
 
-    setMinimumPollingInterval(200);
+    setMinimumPollingInterval(1000);
+    setPollingInterval(0);
 
     connect(PlayBarSettings::self(), SIGNAL(configChanged()), this, SLOT(updateData()));
 }
@@ -76,4 +77,4 @@ bool PlayBarEngine::updateSourceEvent(const QString& source)
 
 K_EXPORT_PLASMA_DATAENGINE_WITH_JSON(playbar, PlayBarEngine, "plasma-dataengine-playbar.json")
 #include "playbarengine.moc"
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;

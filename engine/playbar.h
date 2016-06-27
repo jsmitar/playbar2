@@ -75,14 +75,11 @@ private:
     QAction* m_stop;
     QAction* m_next;
     QAction* m_previous;
-    QAction* m_volumeUp;
-    QAction* m_volumeDown;
     QAction* m_openMediaPlayer;
-    QAction* m_settingsAction;
 
 public:
     QString mpris2_source = "@multiplex";
 };
 
 #endif // PLAYBAR_H
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;

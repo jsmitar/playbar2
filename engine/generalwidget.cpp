@@ -23,14 +23,10 @@ GeneralWidget::GeneralWidget(QWidget* parent)
     : QWidget(parent)
 {
     m_ui.setupUi(this);
-    connect(m_ui.kcfg_FrontColor, SIGNAL(changed(const QColor&))
-            , this, SIGNAL(frontColorChanged(const QColor&)));
-    connect(m_ui.kcfg_BackgroundColor, SIGNAL(changed(const QColor&))
-            , this, SIGNAL(backgroundColorChanged(const QColor&)));
+    connect(m_ui.kcfg_ShadowColor, SIGNAL(changed(const QColor&))
+            , this, SIGNAL(shadowColorChanged(const QColor&)));
 }
 
 GeneralWidget::~GeneralWidget() { }
 
-
-
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;

@@ -62,16 +62,9 @@ public:
         return m_ui.kcfg_ShowStop->isChecked();
     }
 
-    inline int coverSize() const
-    {
-        Q_ASSERT ( m_ui.kcfg_CoverSize->value() >= 2
-                   && m_ui.kcfg_CoverSize->value() <= 5 );
-        return m_ui.kcfg_CoverSize->value();
-    }
-
     inline int backgroundHint() const
     {
-        if ( m_ui.kcfg_CustomColors->isChecked() ) {
+        if ( m_ui.kcfg_NoBackground->isChecked() ) {
             return 0;
         } else if ( m_ui.kcfg_Normal->isChecked() ) {
             return 1;
@@ -79,19 +72,14 @@ public:
         return 2;
     }
 
-    inline bool customColors() const
+    inline QColor shadowColor() const
     {
-        return m_ui.kcfg_CustomColors->isChecked();
+        return m_ui.kcfg_ShadowColor->color();
     }
 
-    inline QColor frontColor() const
+    inline bool noBackground() const
     {
-        return m_ui.kcfg_FrontColor->color();
-    }
-
-    inline QColor backgroundColor() const
-    {
-        return m_ui.kcfg_BackgroundColor->color();
+        return m_ui.kcfg_NoBackground->isChecked();
     }
 
     inline bool normal() const
@@ -105,12 +93,11 @@ public:
     }
 
 Q_SIGNALS:
-    void frontColorChanged ( const QColor& color );
-    void backgroundColorChanged ( const QColor& color );
+    void shadowColorChanged ( const QColor& color );
 
 private:
     mutable Ui::GeneralWidget m_ui;
 };
 
 #endif // GENERALWIDGET_H
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;

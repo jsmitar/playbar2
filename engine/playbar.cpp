@@ -65,7 +65,7 @@ PlayBar::PlayBar(KSharedConfigPtr& config , QObject* parent)
     m_previous->setText(i18n("Previous track"));
     KGlobalAccel::setGlobalShortcut(m_previous, Qt::Key_MediaPrevious);
 
-    m_openMediaPlayer = m_collection->addAction(QLatin1String("toggle-mediaplayer"), this, 
+    m_openMediaPlayer = m_collection->addAction(QLatin1String("toggle-mediaplayer"), this,
 SLOT(slotToggleWinMediaPlayer()));
     m_openMediaPlayer->setText(i18n("Toggle window media player"));
     KGlobalAccel::setGlobalShortcut(m_openMediaPlayer, QKeySequence());
@@ -126,10 +126,8 @@ const DataEngine::Data& PlayBar::data()
     m_data->insert("CompactStyle",       config->compactStyle());
     m_data->insert("ButtonsAppearance",  config->buttonsAppearance());
     m_data->insert("ShowStop",           config->showStop());
-    m_data->insert("CoverSize",          config->coverSize());
     m_data->insert("BackgroundHint",     config->backgroundHint());
-    m_data->insert("FrontColor",         config->frontColor());
-    m_data->insert("BackgroundColor",    config->backgroundColor());
+    m_data->insert("ShadowColor",        config->shadowColor());
 
     return *m_data;
 }
@@ -142,4 +140,4 @@ inline void PlayBar::startOperationOverMpris2(const QString& name) const
     ServiceJob* job = serv->startOperationCall(op);
     connect(job, SIGNAL(finished(KJob*)), serv, SLOT(deleteLater()));
 }
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;

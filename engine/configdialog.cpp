@@ -45,13 +45,13 @@ ConfigDialog::ConfigDialog(KActionCollection* collection , QWidget* parent)
             , i18n("Shortcuts Configuration"));
 
     connect(this, SIGNAL(accepted()), this, SLOT(updateSettings()));
-    
+
     QPushButton* apply = this->button(QDialogButtonBox::Apply);
     connect(apply, SIGNAL(clicked()), this, SLOT(updateSettings()));
 
     connect(m_generalPage, SIGNAL(frontColorChanged(const QColor&)),
             this, SLOT(UpdateColorSettings()));
-    
+
     connect(m_generalPage, SIGNAL(backgroundColorChanged(const QColor&))
             ,this, SLOT(UpdateColorSettings()));
 
@@ -69,8 +69,7 @@ void ConfigDialog::UpdateColorSettings()
 {
     PlayBarSettings* config = PlayBarSettings::self();
 
-    config->setFrontColor      (m_generalPage->frontColor());
-    config->setBackgroundColor (m_generalPage->backgroundColor());
+    config->setShadowColor(m_generalPage->shadowColor());
     config->save();
 }
 
@@ -85,14 +84,12 @@ void ConfigDialog::updateSettings()
     config->setFlat              (m_generalPage->flat());
     config->setToolButton        (m_generalPage->toolButton());
     config->setShowStop          (m_generalPage->showStop());
-    config->setCoverSize         (m_generalPage->coverSize());
     config->setBackgroundHint    (m_generalPage->backgroundHint());
-    config->setCustomColors      (m_generalPage->customColors());
+    config->setNoBackground      (m_generalPage->noBackground());
     config->setNormal            (m_generalPage->normal());
     config->setTranslucent       (m_generalPage->translucent());
-    config->setFrontColor        (m_generalPage->frontColor());
-    config->setBackgroundColor   (m_generalPage->backgroundColor());
+    config->setShadowColor       (m_generalPage->shadowColor());
     config->save();
     qDebug() << "config saved";
 }
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;

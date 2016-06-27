@@ -29,23 +29,16 @@
 			   <label>Show stop button</label>
 			   <default>true</default>
 		  </entry>
-                  <entry name="CoverSize" type="Int">
-                          <label>Cover size</label>
-                          <default>0</default>
-                  </entry>
 		  <entry name="BackgroundHint" type="Enum">
 			   <label>Background hints</label>
 			   <default>2</default>
 		  </entry>
-		  <entry name="CustomColors" type="Bool">
+		  <entry name="NoBackground" type="Bool">
 			   <label>No background</label>
 			   <default>false</default>
 		  </entry>
-                  <entry name="FrontColor" type="Color">
-			   <label>Front color</label>
-                  </entry>
-                  <entry name="BackgroundColor" type="Color">
-                           <label>Background color</label>
+                  <entry name="ShadowColor" type="Color">
+                           <label>Shadow color</label>
                   </entry>
 		  <entry name="Normal" type="Bool">
 			   <label>Normal</label>

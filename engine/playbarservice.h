@@ -40,9 +40,8 @@ protected:
     ServiceJob* createJob ( const QString& operation, QVariantMap& parameters ) override;
 
 private:
-
     PlayBar* m_playbar;
 };
 
 #endif // PLAYBARSERVICE_H
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
