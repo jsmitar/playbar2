@@ -3,8 +3,13 @@
 
 MPRIS2 client, written in QML for **Plasma 5** and **GNU/Linux**.
 
+<img src="https://github.com/audoban/PlayBar2/blob/remotes/origin/playbar-devel/playbar_vertical_layout.png" width="300"></img> <img src="https://github.com/audoban/PlayBar2/blob/remotes/origin/playbar-devel/playbar_slider_seek.png"></img>
+
 ![desktop](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_desktop.png)
 ![panel](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_panel.png)
+
+
+
 ![notification](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_notification_area.png)
 
 # Installation
