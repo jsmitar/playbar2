@@ -45,7 +45,6 @@ RowLayout {
 	PlasmaComponents.Slider {
 		id: slider
 
-		activeFocusOnPress: false
 		maximumValue: mpris2.length
 		value: mpris2.position
 		stepSize: 100
