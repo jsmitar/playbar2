@@ -93,7 +93,7 @@ PlaybackItem {
                         activeFocusOnPress: false
                         maximumValue: mpris2.length
                         value: 0
-                        stepSize: 100
+                        stepSize: 1
                         updateValueWhileDragging: true
 
                         width: vertical ? buttonSize : 100
@@ -124,10 +124,11 @@ PlaybackItem {
                                 hoverEnabled: false
                                 anchors.fill: parent
                                 onWheel: {
+                                        wheel.accepted = true
                                         if ( wheel.angleDelta.y > 50 )
-                                                slider.value = mpris2.seek( slider.value + 1000 )
+                                                slider.value = mpris2.seek( slider.value + 10 )
                                         else if ( wheel.angleDelta.y < -50 )
-                                                slider.value = mpris2.seek( slider.value - 1000 )
+                                                slider.value = mpris2.seek( slider.value - 10 )
                                         else return
                                 }
                         }

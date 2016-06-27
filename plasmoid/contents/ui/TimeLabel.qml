@@ -24,9 +24,9 @@ import '../code/utils.js' as Utils
 PlasmaExtras.Paragraph {
 	id: time
 
-	// units in hundredth of second
+	// seconds
 	property int topTime: mpris2.length
-	// units in hundredth of second
+	// seconds
 	property int currentTime: mpris2.position
 
 	property bool showPosition: true
@@ -49,22 +49,22 @@ PlasmaExtras.Paragraph {
 	enabled: mpris2.sourceActive & mpris2.length > 0
 
 	function positionUpdate( negative ) {
-		if ( negative ) sec = Math.abs( ( topTime - currentTime ) / 100 )
-		else sec = currentTime / 100
+		if ( negative ) sec = Math.abs( ( topTime - currentTime ) )
+		else sec = currentTime
 
 		min = sec / 60
 		sec = sec - min * 60
 
 		if ( negative ) text = '-' + min + ':'
 		else text = min + ':'
-		text += sec <= 9 ? '0' + sec : sec
+		text += sec < 10 ? '0' + sec : sec
 	}
 
 	function lengthUpdate() {
-		sec = topTime / 100
-		min = sec / 60
-		sec = sec - min * 60
-		text = min + ':' + ( sec <= 9 ? '0' + sec : sec )
+		sec = topTime / 10
+		min = sec / 6
+		sec = sec - min * 6
+		text = min + ':' + ( sec < 10 ? '0' + sec : sec )
 	}
 
 	onCurrentTimeChanged: {

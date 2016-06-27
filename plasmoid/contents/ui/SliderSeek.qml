@@ -47,7 +47,7 @@ RowLayout {
 
 		maximumValue: mpris2.length
 		value: mpris2.position
-		stepSize: 100
+		stepSize: 1
 		activeFocusOnPress: true
 		updateValueWhileDragging: true
 		enabled: maximumValue != 0
@@ -81,11 +81,11 @@ RowLayout {
 			anchors.fill: parent
 
 			onWheel: {
-                                accepted = true
+                                wheel.accepted = true
 				if ( wheel.angleDelta.y > 50 )
-					slider.value = mpris2.seek( slider.value + 1000 )
+					slider.value = mpris2.seek( slider.value + 10 )
                                 else if ( wheel.angleDelta.y < -50 )
-					slider.value = mpris2.seek( slider.value - 1000 )
+					slider.value = mpris2.seek( slider.value - 10 )
 				else return
 			}
 		}

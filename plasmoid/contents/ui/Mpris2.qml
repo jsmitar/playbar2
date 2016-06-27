@@ -64,9 +64,9 @@ PlasmaCore.DataSource {
 	readonly property string title:
                 hasMetadata( 'title' ) ? data[source]['Metadata']['xesam:title'] : ''
 
-// 	hundredth of second
+// 	seconds
 	property int length: 0
-// 	hundredth of second
+// 	seconds
 	property int position: 0
 
 	property real userRating: 0
@@ -120,9 +120,10 @@ PlasmaCore.DataSource {
 	}
 
 	onNewData: {
-                var p = data['Position'] / 10000
-                var l = data['Metadata']['mpris:length'] / 10000
-                //debug( "Position, length", "( " + p + ", " + l + " )" )
+//              to seconds
+                var p = data['Position'] / 1000000 | 0
+                var l = data['Metadata']['mpris:length'] / 1000000 | 0
+//                 debug( "Position, length", "( " + p + ", " + l + " )" )
 
                 if ( !l ) l = 0
 
@@ -218,7 +219,7 @@ PlasmaCore.DataSource {
                         if ( !canSeek ) debug( "Trying seek, CanSeek is", canSeek )
                         waitGetPosition()
 			var job = service.operationDescription( 'SetPosition' )
-			job['microseconds'] = ( position * 10000 ).toFixed( 0 )
+			job['microseconds'] = ( position * 1000000 ).toFixed( 0 )
 			service.startOperationCall( job )
 		}
 		return position
