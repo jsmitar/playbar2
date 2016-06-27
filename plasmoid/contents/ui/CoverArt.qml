@@ -45,19 +45,15 @@ Item {
 	Image {
 		id: cover
 
-		z: 10
 		source: mpris2.artUrl
 		fillMode: Image.PreserveAspectFit
-		anchors.centerIn: parent
+		anchors.fill: parent
 		mipmap: true
                 asynchronous: true
                 cache: false
 
-		width: parent.width - 2
-		height: parent.height - 2
-
-		sourceSize.width: parent.width
-		sourceSize.height: parent.height
+		sourceSize.width: width
+		sourceSize.height: height
 
 		horizontalAlignment: Image.AlignHCenter
 		verticalAlignment: Image.AlignVCenter
