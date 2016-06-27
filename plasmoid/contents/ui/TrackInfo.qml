@@ -31,24 +31,24 @@ GridLayout {
 	columnSpacing: units.largeSpacing
 	clip: true
 	focus: false
-	Layout.minimumWidth: units.iconSizes.enormous * 1.5
-	Layout.minimumHeight: units.iconSizes.huge
-	Layout.fillWidth: true
-	Layout.fillHeight: true
-	Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 
+	Layout.minimumWidth: units.iconSizes.enormous * 1.5
+	Layout.minimumHeight: implicitHeight
+	Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
 
 	PlasmaExtras.Heading {
 		id: title
 
 		text: mpris2.title
 		level: 2
-		color: ( playbarEngine.backgroundHint === 0 ) 
+		color: ( playbarEngine.backgroundHint === 0 )
 			? playbarEngine.frontColor : theme.textColor
+		visible: mpris2.artist.length > 0
+		opacity: 1.0
 
 		wrapMode: scrollTitle.scrolling ? Text.NoWrap : Text.WrapAnywhere
 		elide: scrollTitle.scrolling ? Text.ElideNone : Text.ElideRight
-		verticalAlignment: Text.AlignVCenter
+		verticalAlignment: Text.AlignTop
 		maximumLineCount: 1
 		lineHeight: 1.2
 
@@ -69,8 +69,8 @@ GridLayout {
 		Layout.fillWidth: true
 		Layout.fillHeight: false
 		Layout.alignment: Qt.AlignTop
+                clip: true
 
-		clip: true
 		children: [artist]
 	}
 
@@ -79,19 +79,20 @@ GridLayout {
 
 		text: mpris2.artist
 		level: 3
-		color: playbarEngine.backgroundHint === 0  
-			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.9 )
-		opacity: playbarEngine.backgroundHint === 0 ? 0.8 : 1.0
+		color: playbarEngine.backgroundHint === 0
+			? playbarEngine.frontColor : theme.textColor
 		visible: mpris2.artist.length > 0
+		opacity: 1.0
 
 		wrapMode: scrollArtist.scrolling ? Text.NoWrap : Text.WrapAnywhere
 		elide: scrollArtist.scrolling ? Text.ElideNone : Text.ElideRight
-		verticalAlignment: Text.AlignVCenter
+		verticalAlignment: Text.AlignTop
 		maximumLineCount: 1
 		lineHeight: 1.1
 
 		Layout.fillWidth: true
 		Layout.fillHeight: false
+		Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
 
 		AutoscrollText {
 			id: scrollArtist
@@ -107,7 +108,7 @@ GridLayout {
 		Layout.fillHeight: false
 		Layout.alignment: Qt.AlignTop
 
-		clip: true
+                clip: true
 		children: [album]
 	}
 
@@ -116,19 +117,20 @@ GridLayout {
 
 		text: mpris2.album
 		level: 3
-		color: playbarEngine.backgroundHint === 0  
-			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.9 )
-		opacity: playbarEngine.backgroundHint === 0 ? 0.8 : 1.0
+		color: playbarEngine.backgroundHint === 0
+			? playbarEngine.frontColor : theme.textColor
 		visible: mpris2.album.length > 0
+		opacity: 1.0
 
 		wrapMode: scrollAlbum.scrolling ? Text.NoWrap : Text.WrapAnywhere
 		elide: scrollAlbum.scrolling ? Text.ElideNone : Text.ElideRight
-		verticalAlignment: Text.AlignVCenter
+		verticalAlignment: Text.AlignTop
 		maximumLineCount: 1
 		lineHeight: 1.1
 
 		Layout.fillWidth: true
 		Layout.fillHeight: false
+		Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
 
 		AutoscrollText {
 			id: scrollAlbum
@@ -137,15 +139,15 @@ GridLayout {
 		}
 	}
 
-	PlasmaExtras.Heading {
+	PlasmaExtras.Paragraph {
 		id: by
 
 		text: i18n( 'By' )
-		level: 5
-		color: playbarEngine.backgroundHint === 0  
+		color: playbarEngine.backgroundHint === 0
 			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
-		opacity: playbarEngine.backgroundHint === 0 ? 0.7 : 1.0
 		visible: mpris2.artist.length > 0
+		verticalAlignment: Text.AlignTop
+		lineHeight: 1.1
 
 		Layout.row: 1
 		Layout.column: 0
@@ -153,16 +155,15 @@ GridLayout {
 		Layout.alignment: Qt.AlignRight | Qt.AlignBaseline
 	}
 
-	PlasmaExtras.Heading {
+	PlasmaExtras.Paragraph {
 		id: on
 
 		text: i18n( 'On' )
-		level: 5
-		color: playbarEngine.backgroundHint === 0  
+		color: playbarEngine.backgroundHint === 0
 			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
-		opacity: playbarEngine.backgroundHint === 0 ? 0.7 : 1.0
-
 		visible: mpris2.album.length > 0
+		verticalAlignment: Text.AlignTop
+		lineHeight: 1.1
 
 		Layout.row: 2
 		Layout.column: 0
