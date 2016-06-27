@@ -2,7 +2,7 @@
 
 pkgname=kdeplasma-applets-playbar2
 _name=PlayBar2
-pkgver=CustomColors
+pkgver=2.4
 pkgrel=1
 pkgdesc="Mpris2 Client for Plasma5"
 arch=('i686' 'x86_64')
