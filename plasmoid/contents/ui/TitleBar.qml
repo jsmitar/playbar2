@@ -48,7 +48,7 @@ RowLayout {
 
 		Layout.fillWidth: false
 		Layout.fillHeight: false
-		Layout.alignment: Qt.AlignRight
+		Layout.alignment: Qt.AlignRight | Qt.AlignTop
 		enabled: mpris2.sourceActive
 		iconSource: 'configure'
 		onClicked: {
