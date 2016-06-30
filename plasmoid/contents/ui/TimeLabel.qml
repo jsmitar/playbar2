@@ -43,9 +43,6 @@ PlasmaExtras.Paragraph {
 
 	text: '0:00'
 
-	color: playbarEngine.backgroundHint === 0
-		? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
-
 	enabled: mpris2.sourceActive & mpris2.length > 0
 
 	function positionUpdate( negative ) {
@@ -89,8 +86,8 @@ PlasmaExtras.Paragraph {
 		enabled: hoverEnabled
 
 		onEntered: color = theme.viewHoverColor
-		onExited: color = playbarEngine.backgroundHint === 0
-			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
+		onExited: color = theme.textColor
+
 		onClicked: {
 			if ( !exited || containsMouse ) {
 				labelSwitch = !labelSwitch

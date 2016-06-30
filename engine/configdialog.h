@@ -39,7 +39,7 @@ public:
 
 protected Q_SLOTS:
     void updateSettings();
-    void UpdateColorSettings();
+    void updateColorSettings();
 
 private:
     KSharedConfigPtr config() const;
@@ -54,4 +54,4 @@ public:
 };
 
 #endif // CONFIGDIALOG_H
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;

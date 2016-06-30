@@ -43,19 +43,13 @@ Item {
 		readonly property bool showStop:
                         hasSource( 'ShowStop' ) ? data[source]['ShowStop'] : false
 
-		readonly property int coverSize:
-                        hasSource( 'CoverSize' ) ? data[source]['CoverSize'] : 2
-
 		readonly property int backgroundHint:
                         hasSource( 'BackgroundHint' ) && plasmoid.formFactor == PlasmaCore.Types.Planar
                                 ? data[source]['BackgroundHint']
                                 : playbar.normal
 
-		readonly property color frontColor:
-                        hasSource( 'FrontColor' ) ? data[source]['FrontColor'] : "#fff"
-
-                readonly property color backgroundColor:
-                        hasSource( 'BackgroundColor' ) ? data[source]['BackgroundColor'] : "#fff"
+		readonly property color shadowColor:
+                        hasSource( 'ShadowColor' ) ? data[source]['ShadowColor'] : "#fff"
 
 		function startOperation( name ) {
 			if ( !playbarEngine.valid ) return
@@ -73,7 +67,7 @@ Item {
 		}
 
 		function hasSource( key ) {
-			return data[source] && data[source][key]
+			return data[source]
 		}
 	}
 	//! dataengine
@@ -93,8 +87,8 @@ Item {
 //	Plasmoid.title: mpris2.identity
 	Plasmoid.toolTipMainText: internal.title
 	Plasmoid.toolTipSubText: internal.subText
-	Plasmoid.backgroundHints: playbarEngine.backgroundHint
 	Plasmoid.toolTipTextFormat: Text.StyledText
+	Plasmoid.backgroundHints: playbarEngine.backgroundHint
 
 // 	Connections {
 // 		target: Plasmoid
@@ -168,9 +162,9 @@ Item {
                 readonly property int toolButton: 1
 
                 // ENUM: BackgroundHint
-                readonly property int customColors: 0
-                readonly property int normal: 1
-                readonly property int translucent: 2
+                readonly property int noBackground: PlasmaCore.Types.NoBackground
+                readonly property int normal: PlasmaCore.Types.Normal
+                readonly property int translucent: PlasmaCore.Types.Translucent
         }
 
 }

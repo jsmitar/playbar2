@@ -41,8 +41,6 @@ GridLayout {
 
 		text: mpris2.title
 		level: 2
-		color: ( playbarEngine.backgroundHint === 0 )
-			? playbarEngine.frontColor : theme.textColor
 		visible: mpris2.artist.length > 0
 		opacity: 1.0
 
@@ -79,8 +77,6 @@ GridLayout {
 
 		text: mpris2.artist
 		level: 3
-		color: playbarEngine.backgroundHint === 0
-			? playbarEngine.frontColor : theme.textColor
 		visible: mpris2.artist.length > 0
 		opacity: 1.0
 
@@ -117,8 +113,6 @@ GridLayout {
 
 		text: mpris2.album
 		level: 3
-		color: playbarEngine.backgroundHint === 0
-			? playbarEngine.frontColor : theme.textColor
 		visible: mpris2.album.length > 0
 		opacity: 1.0
 
@@ -143,8 +137,7 @@ GridLayout {
 		id: by
 
 		text: i18n( 'By' )
-		color: playbarEngine.backgroundHint === 0
-			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
+		color: Utils.adjustAlpha( theme.textColor, 0.8 )
 		visible: mpris2.artist.length > 0
 		verticalAlignment: Text.AlignTop
 		lineHeight: 1.1
@@ -159,8 +152,7 @@ GridLayout {
 		id: on
 
 		text: i18n( 'On' )
-		color: playbarEngine.backgroundHint === 0
-			? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
+		color: Utils.adjustAlpha( theme.textColor, 0.8 )
 		visible: mpris2.album.length > 0
 		verticalAlignment: Text.AlignTop
 		lineHeight: 1.1

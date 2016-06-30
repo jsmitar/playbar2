@@ -32,9 +32,6 @@ PlasmaExtras.Paragraph {
 
 	maximumLineCount: 1
 
-	color: playbarEngine.backgroundHint === 0
-		? playbarEngine.frontColor : Utils.adjustAlpha( theme.textColor , 0.8 )
-
 	function setLabel( volume ) {
 		text = ( volume * 100 ).toFixed() + '%'
 	}

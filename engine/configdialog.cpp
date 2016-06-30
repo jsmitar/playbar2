@@ -49,11 +49,8 @@ ConfigDialog::ConfigDialog(KActionCollection* collection , QWidget* parent)
     QPushButton* apply = this->button(QDialogButtonBox::Apply);
     connect(apply, SIGNAL(clicked()), this, SLOT(updateSettings()));
 
-    connect(m_generalPage, SIGNAL(frontColorChanged(const QColor&)),
-            this, SLOT(UpdateColorSettings()));
-
-    connect(m_generalPage, SIGNAL(backgroundColorChanged(const QColor&))
-            ,this, SLOT(UpdateColorSettings()));
+    connect(m_generalPage, SIGNAL(shadowColorChanged(const QColor&)),
+            this, SLOT(updateColorSettings()));
 
     connect(this, SIGNAL(finished(int)), this, SLOT(deleteLater()));
 }
@@ -65,7 +62,7 @@ ConfigDialog::~ConfigDialog()
     qDebug() << this << "Config dialog deleted";
 }
 
-void ConfigDialog::UpdateColorSettings()
+void ConfigDialog::updateColorSettings()
 {
     PlayBarSettings* config = PlayBarSettings::self();
 

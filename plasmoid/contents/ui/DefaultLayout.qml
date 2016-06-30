@@ -102,14 +102,13 @@ GridLayout {
 		Layout.alignment: Qt.AlignCenter
 	}
 
-	layer.enabled: playbarEngine.backgroundHint === playbar.customColors
+	layer.enabled: playbarEngine.backgroundHint === playbar.noBackground
 	layer.effect: DropShadow {
 		source: page
 		radius: 8.0
 		fast: true
 		spread: 0.3
-		color: ( playbarEngine.backgroundHint === 0 )
-			? playbarEngine.backgroundColor : theme.complementaryBackgroundColor
+		color: playbarEngine.shadowColor
 		anchors.fill: source
 	}
 }

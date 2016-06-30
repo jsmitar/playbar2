@@ -37,6 +37,7 @@ PlasmaCore.DataSource {
 
 	readonly property bool sourceActive: source.length > 0
 
+	onIsMaximumLoadChanged: debug("isMaximumLoad", isMaximumLoad)
 
 	property string currentSource
 

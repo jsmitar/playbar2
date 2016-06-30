@@ -43,7 +43,7 @@
            <enum>QFrame::NoFrame</enum>
           </property>
           <property name="text">
-           <string>Style:</string>
+           <string>Layout:</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -156,7 +156,7 @@
         <bool>false</bool>
        </property>
        <property name="title">
-        <string>Background hints</string>
+        <string>Background hint</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
