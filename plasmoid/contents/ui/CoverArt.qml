@@ -29,8 +29,8 @@ Item {
 
 	Layout.minimumWidth: height
 	Layout.minimumHeight: units.iconSizes.enormous
-	Layout.fillHeight: true
 	Layout.fillWidth: true
+	Layout.fillHeight: true
 
 	PlasmaCore.IconItem {
 		id: noCover
