@@ -23,7 +23,7 @@ import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 Loader {
-        source: 'DefaultLayout.qml'
+        source: plasmoid.configuration.FullAppletLayout
  	Layout.fillWidth: true
  	Layout.fillHeight: true
 
@@ -74,6 +74,8 @@ Loader {
                         Qt.binding( function() { return item.Layout.preferredWidth } )
                 Layout.preferredHeight =
                         Qt.binding( function() { return item.Layout.preferredHeight } )
+
+                plasmoid.configuration.FullAppletLayout = item.objectName + '.qml'
 
                 connectLayoutChangeRequests.start()
         }

@@ -8,5 +8,8 @@
 		<entry name="TimeLabelSwitch" type="Bool">
 			<default>true</default>
 		</entry>
+		<entry name="FullAppletLayout" type="String">
+			<default>DefaultLayout.qml</default>
+		</entry>
     </group>
 </kcfg>
