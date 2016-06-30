@@ -50,7 +50,7 @@ PlasmaExtras.Paragraph {
 		else sec = currentTime
 
 		min = sec / 60
-		sec = sec - min * 60
+		sec -= min * 60
 
 		if ( negative ) text = '-' + min + ':'
 		else text = min + ':'
@@ -60,16 +60,16 @@ PlasmaExtras.Paragraph {
 	function lengthUpdate() {
 		sec = topTime / 10
 		min = sec / 6
-		sec = sec - min * 6
+		sec -= min * 6
 		text = min + ':' + ( sec < 10 ? '0' + sec : sec )
 	}
 
 	onCurrentTimeChanged: {
-                if ( showPosition & showRemaining )
+                if ( showPosition && showRemaining )
                         positionUpdate( labelSwitch )
-                else if ( labelSwitch & showPosition )
+                else if ( labelSwitch && showPosition )
                         positionUpdate( false )
-                else if ( labelSwitch & showRemaining )
+                else if ( labelSwitch && showRemaining )
                         positionUpdate( true )
 	}
 
@@ -89,7 +89,7 @@ PlasmaExtras.Paragraph {
 		onExited: color = theme.textColor
 
 		onClicked: {
-			if ( !exited || containsMouse ) {
+			if ( containsMouse ) {
 				labelSwitch = !labelSwitch
 				plasmoid.configuration.TimeLabelSwitch = labelSwitch
 				if ( showPosition )
