@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
-"POT-Creation-Date: 2015-07-30 22:10-0500\n"
+"POT-Creation-Date: 2016-07-01 21:25-0500\n"
 "PO-Revision-Date: 2015-08-02 07:57+0100\n"
 "Last-Translator: Dennis Kadioglu <>\n"
 "Language: de_DE\n"
@@ -17,37 +17,37 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
-#: configdialog.cpp:33
+#: configdialog.cpp:32
 msgid "Configure PlayBar"
 msgstr "PlayBar konfigurieren"
 
-#: configdialog.cpp:37
+#: configdialog.cpp:37 configdialog.cpp:39
 msgctxt "General config"
 msgid "General"
 msgstr "Allgemein"
 
-#: configdialog.cpp:38
+#: configdialog.cpp:42
 msgctxt "Shortcuts config"
 msgid "Shortcuts"
 msgstr "Tastenkürzel"
 
-#: configdialog.cpp:38
+#: configdialog.cpp:44
 msgid "Shortcuts Configuration"
 msgstr "Konfiguration der Tastenkürzel"
 
-#: playbar.cpp:50
+#: playbar.cpp:49
 msgid "Play/Pause"
 msgstr "Abspielen/Pause"
 
-#: playbar.cpp:55
+#: playbar.cpp:54
 msgid "Stop"
 msgstr "Stop"
 
-#: playbar.cpp:60
+#: playbar.cpp:59
 msgid "Next track"
 msgstr "Nächster Titel"
 
-#: playbar.cpp:65
+#: playbar.cpp:64
 msgid "Previous track"
 msgstr "Vorheriger Titel"
 
@@ -56,72 +56,127 @@ msgid "Toggle window media player"
 msgstr "Media Player hervorholen oder minimieren"
 
 #. i18n: file: generalconfig.ui:31
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowStop)
-#. i18n: file: playbar.kcfg:13
-#. i18n: ectx: label, entry (ShowStop), group (General)
-#: playbarsettings.cpp:39 rc.cpp:3 rc.cpp:30
-msgid "Show stop button"
-msgstr "Anzeigen des Stop-Knopfes"
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_CompactRepresentation)
+#: rc.cpp:3
+msgid "Compact representation"
+msgstr ""
 
-#: playbarsettings.cpp:43
-msgid "Controls on bar"
-msgstr "Kontrollelemente auf der Kontrollleiste"
+#. i18n: file: generalconfig.ui:46
+#. i18n: ectx: property (text), widget (QLabel, label_Style)
+#: rc.cpp:6
+msgid "Layout:"
+msgstr ""
 
-#. i18n: file: playbar.kcfg:21
-#. i18n: ectx: label, entry (ButtonsAppearance), group (General)
-#: playbarsettings.cpp:48 rc.cpp:36
-msgid "Buttons appearance"
-msgstr "Erscheinungsbild der Knöpfe"
-
-#. i18n: file: generalconfig.ui:110
-#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BackgroundHint)
-#. i18n: file: playbar.kcfg:25
-#. i18n: ectx: label, entry (BackgroundHint), group (General)
-#: playbarsettings.cpp:53 rc.cpp:18 rc.cpp:39
-msgid "Background hints"
-msgstr "Hintergrundinformationen"
-
-#. i18n: file: generalconfig.ui:41
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ControlsOnBar)
-#. i18n: file: playbar.kcfg:17
-#. i18n: ectx: label, entry (ControlsOnBar), group (General)
-#: rc.cpp:6 rc.cpp:33
-msgid "Playback controls on the bar"
-msgstr "Abspielkontrollelemente auf der Kontrollleiste"
-
-#. i18n: file: generalconfig.ui:57
-#. i18n: ectx: property (title), widget (QGroupBox, kcfg_ButtonsAppearance)
+#. i18n: file: generalconfig.ui:69
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CompactStyle)
 #: rc.cpp:9
-msgid "Buttons appareance"
-msgstr "Erscheinungsbild der Knöpfe"
+msgid "Icon"
+msgstr ""
 
-#. i18n: file: generalconfig.ui:72
-#. i18n: ectx: property (text), widget (QRadioButton, flat)
+#. i18n: file: generalconfig.ui:74
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CompactStyle)
 #: rc.cpp:12
+msgid "Playback buttons"
+msgstr ""
+
+#. i18n: file: generalconfig.ui:79
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CompactStyle)
+#: rc.cpp:15
+#, fuzzy
+msgid "Play/Pause and seek bar"
+msgstr "Abspielen/Pause"
+
+#. i18n: file: generalconfig.ui:96
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_ButtonsAppearance)
+#: rc.cpp:18
+msgid "Appearance of controls"
+msgstr ""
+
+#. i18n: file: generalconfig.ui:114
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_Flat)
+#: rc.cpp:21
 msgid "F&lat"
 msgstr "Flach"
 
-#. i18n: file: generalconfig.ui:88
-#. i18n: ectx: property (text), widget (QRadioButton, toolbutton)
-#: rc.cpp:15
-msgid "T&ool button"
+#. i18n: file: generalconfig.ui:130
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_ToolButton)
+#: rc.cpp:24
+#, fuzzy
+msgid "&Tool button"
 msgstr "Konfigurationsknopf"
 
-#. i18n: file: generalconfig.ui:131
-#. i18n: ectx: property (text), widget (QRadioButton, nobackground)
-#: rc.cpp:21
-msgid "No bac&kground"
+#. i18n: file: generalconfig.ui:137
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowStop)
+#: rc.cpp:27
+msgid "Show stop button"
+msgstr "Anzeigen des Stop-Knopfes"
+
+#. i18n: file: generalconfig.ui:159
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BackgroundHint)
+#: rc.cpp:30
+#, fuzzy
+msgid "Background hint"
+msgstr "Hintergrundinformationen"
+
+#. i18n: file: generalconfig.ui:183
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_NoBackground)
+#: rc.cpp:33
+#, fuzzy
+msgid "No ba&ckground"
 msgstr "Kein Hintergrund"
 
-#. i18n: file: generalconfig.ui:144
-#. i18n: ectx: property (text), widget (QRadioButton, normal)
-#: rc.cpp:24
-msgid "Nor&mal"
-msgstr "Normal"
+#. i18n: file: generalconfig.ui:196
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_Normal)
+#: rc.cpp:36
+msgid "&Normal"
+msgstr ""
 
-#. i18n: file: generalconfig.ui:163
-#. i18n: ectx: property (text), widget (QRadioButton, translucent)
-#: rc.cpp:27
+#. i18n: file: generalconfig.ui:215
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_Translucent)
+#: rc.cpp:39
 msgid "Transl&ucent"
 msgstr "Durchsichtig"
 
+#. i18n: file: generalconfig.ui:282
+#. i18n: ectx: property (text), widget (QLabel, label_ShadowColor)
+#: rc.cpp:42
+msgid "Shadow color:"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Tool button"
+#~ msgstr "Konfigurationsknopf"
+
+#, fuzzy
+#~ msgid "No background"
+#~ msgstr "Kein Hintergrund"
+
+#, fuzzy
+#~ msgid "Translucent"
+#~ msgstr "Durchsichtig"
+
+#~ msgid "Buttons appearance"
+#~ msgstr "Erscheinungsbild der Knöpfe"
+
+#, fuzzy
+#~ msgid "Flat button"
+#~ msgstr "Konfigurationsknopf"
+
+#, fuzzy
+#~ msgid "ToolButton"
+#~ msgstr "Konfigurationsknopf"
+
+#~ msgid "Background hints"
+#~ msgstr "Hintergrundinformationen"
+
+#~ msgid "Controls on bar"
+#~ msgstr "Kontrollelemente auf der Kontrollleiste"
+
+#~ msgid "Playback controls on the bar"
+#~ msgstr "Abspielkontrollelemente auf der Kontrollleiste"
+
+#~ msgid "Buttons appareance"
+#~ msgstr "Erscheinungsbild der Knöpfe"
+
+#~ msgid "Nor&mal"
+#~ msgstr "Normal"

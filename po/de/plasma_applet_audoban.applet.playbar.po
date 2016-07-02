@@ -31,7 +31,9 @@ msgstr "<b>auf</b> %1"
 
 #: contents/ui/main.qml:139
 msgid "Client MPRIS2, allows you to control your favorite media player"
-msgstr "Ein MPRIS2-Client, der Ihnen die Kontrolle Ihres bevorzugten Media Players ermöglicht"
+msgstr ""
+"Ein MPRIS2-Client, der Ihnen die Kontrolle Ihres bevorzugten Media Players "
+"ermöglicht"
 
 #: contents/ui/Mpris2.qml:48
 msgid "No media player"
@@ -56,4 +58,3 @@ msgstr "von"
 #: contents/ui/TrackInfo.qml:149
 msgid "On"
 msgstr "auf"
-

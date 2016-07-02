@@ -56,5 +56,3 @@ msgstr "De"
 #: contents/ui/TrackInfo.qml:149
 msgid "On"
 msgstr "Em"
-
-
