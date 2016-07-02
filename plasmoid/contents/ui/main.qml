@@ -163,8 +163,8 @@ Item {
 
                 // ENUM: BackgroundHint
                 readonly property int noBackground: PlasmaCore.Types.NoBackground
-                readonly property int normal: PlasmaCore.Types.Normal
-                readonly property int translucent: PlasmaCore.Types.Translucent
+                readonly property int normal: PlasmaCore.Types.StandardBackground
+                readonly property int translucent: PlasmaCore.Types.TranslucentBackground
         }
 
 }
