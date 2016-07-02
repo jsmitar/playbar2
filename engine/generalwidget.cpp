@@ -19,12 +19,11 @@
 
 #include "generalwidget.h"
 
-GeneralWidget::GeneralWidget(QWidget* parent)
-    : QWidget(parent)
-{
-    m_ui.setupUi(this);
-    connect(m_ui.kcfg_ShadowColor, SIGNAL(changed(const QColor&))
-            , this, SIGNAL(shadowColorChanged(const QColor&)));
+GeneralWidget::GeneralWidget( QWidget *parent )
+	: QWidget( parent ) {
+	m_ui.setupUi( this );
+	connect( m_ui.kcfg_ShadowColor, SIGNAL( changed( const QColor & ) )
+			 , this, SIGNAL( shadowColorChanged( const QColor & ) ) );
 }
 
 GeneralWidget::~GeneralWidget() { }

@@ -27,20 +27,19 @@
 
 using namespace Plasma;
 
-class PlayBarService : public Service
-{
-    Q_OBJECT
-public:
+class PlayBarService : public Service {
+	Q_OBJECT
+  public:
 
-    PlayBarService ( PlayBar* playbar, QObject* parent = 0 );
+	PlayBarService ( PlayBar *playbar, QObject *parent = 0 );
 
-    virtual ~PlayBarService();
+	virtual ~PlayBarService();
 
-protected:
-    ServiceJob* createJob ( const QString& operation, QVariantMap& parameters ) override;
+  protected:
+	ServiceJob *createJob ( const QString &operation, QVariantMap &parameters ) override;
 
-private:
-    PlayBar* m_playbar;
+  private:
+	PlayBar *m_playbar;
 };
 
 #endif // PLAYBARSERVICE_H

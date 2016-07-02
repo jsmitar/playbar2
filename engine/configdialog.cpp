@@ -26,67 +26,63 @@
 #include "generalwidget.h"
 #include "playbarsettings.h"
 
-ConfigDialog::ConfigDialog(KActionCollection* collection , QWidget* parent)
-    : KConfigDialog(parent, QLatin1String("PlayBar Settings"), PlayBarSettings::self()),
-      m_generalPage(new GeneralWidget(this))
-{
-    setWindowTitle(i18n("Configure PlayBar"));
-    m_shortcutsPage = new KShortcutsEditor(collection, this, KShortcutsEditor::GlobalAction);
-    setStandardButtons(QDialogButtonBox::Apply | QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-
-    addPage(m_generalPage
-            , i18nc("General config", "General")
-            , "applications-multimedia"
-            , i18nc("General config", "General"));
-
-    addPage(m_shortcutsPage
-            , i18nc("Shortcuts config", "Shortcuts")
-            , "configure-shortcuts"
-            , i18n("Shortcuts Configuration"));
-
-    connect(this, SIGNAL(accepted()), this, SLOT(updateSettings()));
-
-    QPushButton* apply = this->button(QDialogButtonBox::Apply);
-    connect(apply, SIGNAL(clicked()), this, SLOT(updateSettings()));
-
-    connect(m_generalPage, SIGNAL(shadowColorChanged(const QColor&)),
-            this, SLOT(updateColorSettings()));
-
-    connect(this, SIGNAL(finished(int)), this, SLOT(deleteLater()));
+ConfigDialog::ConfigDialog( KActionCollection *collection , QWidget *parent )
+	: KConfigDialog( parent, QLatin1String( "PlayBar Settings" ), PlayBarSettings::self() ),
+	  m_generalPage( new GeneralWidget( this ) ) {
+	setWindowTitle( i18n( "Configure PlayBar" ) );
+	m_shortcutsPage = new KShortcutsEditor( collection, this, KShortcutsEditor::GlobalAction );
+	setStandardButtons( QDialogButtonBox::Apply | QDialogButtonBox::Ok | QDialogButtonBox::Cancel );
+	
+	addPage( m_generalPage
+			 , i18nc( "General config", "General" )
+			 , "applications-multimedia"
+			 , i18nc( "General config", "General" ) );
+			 
+	addPage( m_shortcutsPage
+			 , i18nc( "Shortcuts config", "Shortcuts" )
+			 , "configure-shortcuts"
+			 , i18n( "Shortcuts Configuration" ) );
+			 
+	connect( this, SIGNAL( accepted() ), this, SLOT( updateSettings() ) );
+	
+	QPushButton *apply = this->button( QDialogButtonBox::Apply );
+	connect( apply, SIGNAL( clicked() ), this, SLOT( updateSettings() ) );
+	
+	connect( m_generalPage, SIGNAL( shadowColorChanged( const QColor & ) ),
+			 this, SLOT( updateColorSettings() ) );
+			 
+	connect( this, SIGNAL( finished( int ) ), this, SLOT( deleteLater() ) );
 }
 
-ConfigDialog::~ConfigDialog()
-{
-    delete m_generalPage;
-    delete m_shortcutsPage;
-    qDebug() << this << "Config dialog deleted";
+ConfigDialog::~ConfigDialog() {
+	delete m_generalPage;
+	delete m_shortcutsPage;
+	qDebug() << this << "Config dialog deleted";
 }
 
-void ConfigDialog::updateColorSettings()
-{
-    PlayBarSettings* config = PlayBarSettings::self();
-
-    config->setShadowColor(m_generalPage->shadowColor());
-    config->save();
+void ConfigDialog::updateColorSettings() {
+	PlayBarSettings *config = PlayBarSettings::self();
+	
+	config->setShadowColor( m_generalPage->shadowColor() );
+	config->save();
 }
 
-void ConfigDialog::updateSettings()
-{
-    // User clicks Ok or Apply button in configuration dialog
-    m_shortcutsPage->save();
-    PlayBarSettings* config = PlayBarSettings::self();
-
-    config->setCompactStyle      (m_generalPage->compactStyle());
-    config->setButtonsAppearance (m_generalPage->buttonsAppearance());
-    config->setFlat              (m_generalPage->flat());
-    config->setToolButton        (m_generalPage->toolButton());
-    config->setShowStop          (m_generalPage->showStop());
-    config->setBackgroundHint    (m_generalPage->backgroundHint());
-    config->setNoBackground      (m_generalPage->noBackground());
-    config->setNormal            (m_generalPage->normal());
-    config->setTranslucent       (m_generalPage->translucent());
-    config->setShadowColor       (m_generalPage->shadowColor());
-    config->save();
-    qDebug() << "config saved";
+void ConfigDialog::updateSettings() {
+	// User clicks Ok or Apply button in configuration dialog
+	m_shortcutsPage->save();
+	PlayBarSettings *config = PlayBarSettings::self();
+	
+	config->setCompactStyle      ( m_generalPage->compactStyle() );
+	config->setButtonsAppearance ( m_generalPage->buttonsAppearance() );
+	config->setFlat              ( m_generalPage->flat() );
+	config->setToolButton        ( m_generalPage->toolButton() );
+	config->setShowStop          ( m_generalPage->showStop() );
+	config->setBackgroundHint    ( m_generalPage->backgroundHint() );
+	config->setNoBackground      ( m_generalPage->noBackground() );
+	config->setNormal            ( m_generalPage->normal() );
+	config->setTranslucent       ( m_generalPage->translucent() );
+	config->setShadowColor       ( m_generalPage->shadowColor() );
+	config->save();
+	qDebug() << "config saved";
 }
 // kate: indent-mode cstyle; indent-width 4; replace-tabs on;

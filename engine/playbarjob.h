@@ -26,24 +26,23 @@
 
 using namespace Plasma;
 
-class PlayBarJob : public ServiceJob
-{
-public:
-
-    PlayBarJob ( const QString& destination,
-                 const QString& operation,
-                 const QVariantMap& parameters,
-                 PlayBar* playbar,
-                 QObject* parent = nullptr );
-
-    virtual ~PlayBarJob();
-
-    void start() override;
-
-private:
-
-    PlayBar* m_playbar;
+class PlayBarJob : public ServiceJob {
+  public:
+  
+	PlayBarJob ( const QString &destination,
+				 const QString &operation,
+				 const QVariantMap &parameters,
+				 PlayBar *playbar,
+				 QObject *parent = nullptr );
+				 
+	virtual ~PlayBarJob();
+	
+	void start() override;
+	
+  private:
+  
+	PlayBar *m_playbar;
 };
 
 #endif // PLAYBARJOB_H
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
