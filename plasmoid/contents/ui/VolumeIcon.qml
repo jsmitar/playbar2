@@ -1,3 +1,4 @@
+
 /*
 *   Author: audoban <audoban@openmailbox.org>
 *
@@ -16,39 +17,41 @@
 *   Free Software Foundation, Inc.,
 *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 IconWidget {
-	id: icon
+    id: icon
 
-	property real volume: 0
+    property real volume: 0
 
-	property real volumePrevious: 0
+    property real volumePrevious: 0
 
-	readonly property bool muted: mpris2.volume.toFixed( 1 ) <= 0.0
+    readonly property bool muted: mpris2.volume.toFixed(1) <= 0.0
 
-	size: units.iconSizes.small
+    size: units.gridUnit
 
-	svg: PlasmaCore.Svg { imagePath: 'icons/audio' }
+    svg: PlasmaCore.Svg {
+        imagePath: 'icons/audio'
+    }
 
-	iconSource: updateIcon()
+    iconSource: updateIcon()
 
-	function updateIcon() {
-		if ( volume == 0 )
-                        return 'audio-volume-muted'
-		else if ( volume <= 0.3 )
-                        return 'audio-volume-low'
-		else if ( volume <= 0.6 )
-                        return 'audio-volume-medium'
-		return 'audio-volume-high'
-	}
+    function updateIcon() {
+        if (volume == 0)
+            return 'audio-volume-muted'
+        else if (volume <= 0.3)
+            return 'audio-volume-low'
+        else if (volume <= 0.6)
+            return 'audio-volume-medium'
+        return 'audio-volume-high'
+    }
 
-	onClicked: {
-		if ( !muted ) {
-			volumePrevious = mpris2.volume
-			mpris2.setVolume( 0.000001 )
-		} else mpris2.setVolume( volumePrevious )
-	}
+    onClicked: {
+        if (!muted) {
+            volumePrevious = mpris2.volume
+            mpris2.setVolume(0.000001)
+        } else
+            mpris2.setVolume(volumePrevious)
+    }
 }

@@ -16,25 +16,20 @@
 *   Free Software Foundation, Inc.,
 *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-
 import QtQuick 2.4
 import org.kde.plasma.extras 2.0 as PlasmaExtras
-import '../code/utils.js' as Utils
+import "../code/utils.js" as Utils
 
 PlasmaExtras.Paragraph {
-	id: label
+    id: label
 
-	property real volume: 0
+    property real volume: 0
 
-	wrapMode: Text.NoWrap
+    wrapMode: Text.NoWrap
 
-	elide: Text.ElideNone
+    elide: Text.ElideNone
 
-	maximumLineCount: 1
+    maximumLineCount: 1
 
-	function setLabel( volume ) {
-		text = ( volume * 100 ).toFixed() + '%'
-	}
-
-	text: ( volume * 100 ).toFixed() + '%'
+    text: (volume * 100).toFixed() + '%'
 }
