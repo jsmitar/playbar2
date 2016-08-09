@@ -32,8 +32,8 @@ Item {
 
 	Connections {
                 target: scroll.target
-                onWidthChanged: anim.stop()
 
+                onWidthChanged: anim.stop()
                 onTextChanged: anim.stop()
 	}
 
@@ -48,18 +48,20 @@ Item {
 		}
 
 		SmoothedAnimation {
-			id: animA
+			id: end
 			target: scroll.target
 			property: 'x'
 			from: 0
+			// It goes to the end of the text
 			to: target.width - target.contentWidth - units.smallSpacing
 			velocity: 60
 		}
 
 		SmoothedAnimation {
-			id: animB
+			id: begin
 			target: scroll.target
 			property: 'x'
+			// it goes to the beginning of the text
 			to: 0
 			velocity: 80
 		}
