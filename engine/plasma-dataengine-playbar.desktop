@@ -1,0 +1,20 @@
+[Desktop Entry]
+Name=PlayBarEngine
+Icon=media-playback-start
+Comment=Adds support for global shortcuts and settings
+Comment[es]=Añade soporte para los accesos globales de teclado y configuraciones
+Type=Service
+
+X-KDE-ServiceTypes=Plasma/DataEngine
+X-KDE-Library=plasma_engine_playbar
+#X-Plasma-EngineName=playbar
+
+X-KDE-PluginInfo-Author=Smith AR
+X-KDE-PluginInfo-Category=Multimedia
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-Email=audoban@openmailbox.org
+X-KDE-PluginInfo-EnabledByDefault=true
+X-KDE-PluginInfo-License=LGPL
+X-KDE-PluginInfo-Name=playbar
+X-KDE-PluginInfo-Version=2.4
+X-KDE-PluginInfo-Website=https://github.com/audoban/PlayBar2

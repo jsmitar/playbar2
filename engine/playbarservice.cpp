@@ -4,7 +4,7 @@
 *   This program is free software; you can redistribute it and/or modify
 *   it under the terms of the GNU Library General Public License as
 *   published by the Free Software Foundation; either version 2 or
-*   (at your option ) any later version.
+*   (at your option) any later version.
 *
 *   This program is distributed in the hope that it will be useful,
 *   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,24 +17,27 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import QtQuick 2.4
-import org.kde.plasma.extras 2.0 as PlasmaExtras
-import '../code/utils.js' as Utils
+#include "playbarservice.h"
 
-PlasmaExtras.Paragraph {
-	id: label
+#include "playbarjob.h"
 
-	property real volume: 0
+#include <QDebug>
 
-	wrapMode: Text.NoWrap
+#include "Plasma/Service"
+#include "Plasma/ServiceJob"
 
-	elide: Text.ElideNone
 
-	maximumLineCount: 1
-
-	function setLabel( volume ) {
-		text = ( volume * 100 ).toFixed() + '%'
-	}
-
-	text: ( volume * 100 ).toFixed() + '%'
+PlayBarService::PlayBarService( PlayBar *playbar, QObject *parent )
+	: Service( parent ),
+	  m_playbar( playbar ) {
+	setName( QLatin1Literal( "audoban.engine.playbar" ) );
 }
+
+PlayBarService::~PlayBarService() {
+	// qDebug() << this << "deleted";
+}
+
+ServiceJob *PlayBarService::createJob( const QString &operation, QVariantMap &parameters ) {
+	return new PlayBarJob( destination(), operation, parameters, m_playbar, this );
+}
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;

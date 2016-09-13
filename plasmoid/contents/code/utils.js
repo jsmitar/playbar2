@@ -22,7 +22,44 @@ var iconApplication
 var Plasmoid
 var i18n
 
+function setActions( source, identity ) {
+	var icon
 
+	if ( source === '' || source === undefined ) return
+	icon = source
+
+	if ( source.match( 'vlc' ) )
+		icon = 'vlc'
+
+	switch ( source ) {
+		case 'spotify':
+			icon = 'spotify-client'
+			break
+		case 'clementine':
+			icon = 'application-x-clementine'
+			break
+		case 'yarock':
+			icon = 'application-x-yarock'
+			break
+	}
+	iconApplication = icon
+
+	Plasmoid.removeAction( 'configure' )
+	Plasmoid.setAction( 'raise', i18n( 'Open %1', identity ) , icon )
+	Plasmoid.setAction( 'stop', i18n( 'Stop' ), 'media-playback-stop' )
+	Plasmoid.setAction( 'quit', i18n( 'Quit' ), 'window-close' )
+	Plasmoid.setAction( 'nextSource', i18n( 'Next multimedia source' ), 'go-next' )
+	Plasmoid.setActionSeparator( 'sep1' )
+	Plasmoid.setAction( 'configure', i18n( 'Configure PlayBar' ) , 'configure', 'alt+d, s' )
+}
+
+function removeActions() {
+	Plasmoid.removeAction( 'raise' )
+        Plasmoid.removeAction( 'stop' )
+	Plasmoid.removeAction( 'quit' )
+	Plasmoid.removeAction( 'nextSource' )
+	Plasmoid.removeAction( 'sep1' )
+}
 
 //  Color manipulation utilities
 //  Take it from Breeze project
