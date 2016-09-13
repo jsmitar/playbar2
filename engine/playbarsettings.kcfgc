@@ -1,5 +1,0 @@
-File=playbar.kcfg
-ClassName=PlayBarSettings
-Singleton=true
-SetUserTexts=true
-Mutators=true

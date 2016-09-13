@@ -1,100 +1,70 @@
 /*
- *   Author: audoban <audoban@openmailbox.org>
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU Library General Public License as
- *   published by the Free Software Foundation; either version 2 or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details
- *
- *   You should have received a copy of the GNU Library General Public
- *   License along with this program; if not, write to the
- *   Free Software Foundation, Inc.,
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
-
+*   Author: audoban <audoban@openmailbox.org>
+*
+*   This program is free software; you can redistribute it and/or modify
+*   it under the terms of the GNU Library General Public License as
+*   published by the Free Software Foundation; either version 2 or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details
+*
+*   You should have received a copy of the GNU Library General Public
+*   License along with this program; if not, write to the
+*   Free Software Foundation, Inc.,
+*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
 import QtQuick 2.4
 import org.kde.plasma.extras 2.0 as PlasmaExtras
-import '../code/utils.js' as Utils
+import "../code/utils.js" as Utils
 
 PlasmaExtras.Paragraph {
-	id: time
+    id: time
 
-	// seconds
-	property int topTime: mpris2.length
-	// seconds
-	property int currentTime: mpris2.position
+    // seconds
+    property int topTime: mpris2.length
 
-	property bool showPosition: true
+    property int currentTime: 0
 
-	property bool showRemaining: true
+    property alias interactive: mouseArea.enabled
 
-	property bool labelSwitch: plasmoid.configuration.TimeLabelSwitch
+    property int min: 0
 
-	property alias interactive: mouseArea.hoverEnabled
+    property int sec: 0
 
-	property int min: 0
+    property bool minusFrontOfZero: true
 
-	property int sec: 0
+    signal clicked
 
-	text: '0:00'
+    text: (minusFrontOfZero ? '-' + min : min) + ':' + (sec < 10 ? '0' + sec : sec)
 
-	enabled: mpris2.sourceActive & mpris2.length > 0
+    enabled: topTime > 0
 
-	function positionUpdate( negative ) {
-		if ( negative ) sec = Math.abs( ( topTime - currentTime ) )
-		else sec = currentTime
+    function positionUpdate() {
+        min = currentTime / 60
+        sec = currentTime - min * 60
+    }
 
-		min = sec / 60
-		sec -= min * 60
+    function remainingUpdate() {
+        min = (topTime - currentTime) / 60
+        sec = topTime - currentTime - min * 60
+    }
 
-		if ( negative ) text = '-' + min + ':'
-		else text = min + ':'
-		text += sec < 10 ? '0' + sec : sec
-	}
+    function lengthUpdate() {
+        min = topTime / 60
+        sec = topTime - min * 60
+    }
 
-	function lengthUpdate() {
-		sec = topTime / 10
-		min = sec / 6
-		sec -= min * 6
-		text = min + ':' + ( sec < 10 ? '0' + sec : sec )
-	}
+    MouseArea {
+        id: mouseArea
 
-	onCurrentTimeChanged: {
-                if ( showPosition && showRemaining )
-                        positionUpdate( labelSwitch )
-                else if ( labelSwitch && showPosition )
-                        positionUpdate( false )
-                else if ( labelSwitch && showRemaining )
-                        positionUpdate( true )
-	}
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton
+        hoverEnabled: enabled
 
-	onTopTimeChanged: {
-                if ( !showPosition )
-                        lengthUpdate()
-	}
-
-	MouseArea {
-		id: mouseArea
-
-		anchors.fill: parent
-		acceptedButtons: Qt.LeftButton
-		enabled: hoverEnabled
-
-		onEntered: color = theme.viewHoverColor
-		onExited: color = theme.textColor
-
-		onClicked: {
-			if ( containsMouse ) {
-				labelSwitch = !labelSwitch
-				plasmoid.configuration.TimeLabelSwitch = labelSwitch
-				if ( showPosition )
-                                        positionUpdate( labelSwitch )
-			}
-		}
-	}
+        onClicked: if (containsMouse)
+                       parent.clicked()
+    }
 }

@@ -16,114 +16,113 @@
 *   Free Software Foundation, Inc.,
 *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-
 import QtQuick 2.4
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.2
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 PlaybackItem {
-	id: playbackWidget
+    id: playbackWidget
 
-	property int buttonsAppearance: playbarEngine.buttonsAppearance
+    property int buttonsAppearance: playbarEngine.buttonsAppearance
 
-	visible: true
+    visible: true
 
-	buttonSize: units.iconSizes.medium
+    buttonSize: units.iconSizes.medium
 
-	implicitWidth: buttons.width
+    implicitWidth: buttons.width
 
-	implicitHeight: buttons.height
+    implicitHeight: buttons.height
 
-	Layout.minimumHeight: buttons.implicitHeight
-	Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+    Layout.minimumHeight: buttons.implicitHeight
+    Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 
-	onPlayingChanged: {
-		if ( !model.itemAt( 1 ) ) return
+    onPlayingChanged: {
+        if (!model.itemAt(1))
+            return
 
-		if ( playing )
-			model.itemAt( 1 ).iconSource = 'media-playback-pause'
-		else
-			model.itemAt( 1 ).iconSource = 'media-playback-start'
-	}
+        if (playing)
+            model.itemAt(1).iconSource = 'media-playback-pause'
+        else
+            model.itemAt(1).iconSource = 'media-playback-start'
+    }
 
-	ListModel {
-		id: playmodel
+    ListModel {
+        id: playmodel
 
-		ListElement {
-			icon: 'media-skip-backward'
-		}
-		ListElement {
-			icon: 'media-playback-start'
-		}
-		ListElement {
-			icon: 'media-playback-stop'
-		}
-		ListElement {
-			icon: 'media-skip-forward'
-		}
-	}
+        ListElement {
+            icon: 'media-skip-backward'
+        }
+        ListElement {
+            icon: 'media-playback-start'
+        }
+        ListElement {
+            icon: 'media-playback-stop'
+        }
+        ListElement {
+            icon: 'media-skip-forward'
+        }
+    }
 
-	Component {
-		id: toolButtonDelegate
+    Component {
+        id: toolButtonDelegate
 
-		PlasmaComponents.ToolButton {
-                        id: toolButton
-			iconSource: icon
-			visible: !( index === 2 ) | showStop
-			property int size: buttonSize
-			Layout.minimumWidth: size * 1.4
-			Layout.minimumHeight: size * 1.4
+        PlasmaComponents.ToolButton {
+            id: toolButton
+            iconSource: icon
+            visible: !(index === 2) | showStop
+            property int size: buttonSize
+            Layout.minimumWidth: size * 1.4
+            Layout.minimumHeight: size * 1.4
+        }
+    }
 
+    Component {
+        id: iconWidgetDelegate
 
-		}
-	}
+        IconWidget {
+            id: iconWidget
+            svg: PlasmaCore.Svg {
+                imagePath: 'icons/media'
+            }
+            iconSource: icon
+            visible: !(index === 2) | showStop
+            size: buttonSize
+        }
+    }
 
-	Component {
-		id: iconWidgetDelegate
+    RowLayout {
+        id: buttons
 
-		IconWidget {
-                        id: iconWidget
-			svg: PlasmaCore.Svg { imagePath: 'icons/media' }
-			iconSource: icon
-			visible: !( index === 2 ) | showStop
-			size: buttonSize
+        spacing: buttonsAppearance ? units.smallSpacing : units.largeSpacing
+        anchors {
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+        }
 
-		}
-	}
+        Repeater {
+            id: model
+            model: playmodel
+            delegate: buttonsAppearance ? toolButtonDelegate : iconWidgetDelegate
 
-	RowLayout {
-		id: buttons
-
-		spacing: buttonsAppearance ? units.smallSpacing : units.largeSpacing
-		anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        bottom: parent.bottom
+            onItemAdded: {
+                switch (index) {
+                case 0:
+                    item.clicked.connect(previous)
+                    break
+                case 1:
+                    item.clicked.connect(playPause)
+                    //NOTE: update icon playing state
+                    playingChanged()
+                    break
+                case 2:
+                    item.clicked.connect(stop)
+                    break
+                case 3:
+                    item.clicked.connect(next)
+                    break
                 }
-
-		Repeater {
-			id: model
-			model: playmodel
-			delegate: buttonsAppearance ? toolButtonDelegate : iconWidgetDelegate
-
-			onItemAdded: {
-				switch ( index ) {
-					case 0 :
-						item.clicked.connect( previous )
-						break
-					case 1 :
-						item.clicked.connect( playPause )
-						//NOTE: update icon playing state
-						playingChanged()
-						break
-					case 2:
-						item.clicked.connect( stop )
-						break
-					case 3:
-						item.clicked.connect( next )
-						break
-				}
-			}
-		}
-	}
+            }
+        }
+    }
 }
