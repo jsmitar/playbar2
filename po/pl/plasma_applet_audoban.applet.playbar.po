@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
-"POT-Creation-Date: 2015-07-30 19:03-0500\n"
+"POT-Creation-Date: 2016-09-13 15:11-0500\n"
 "PO-Revision-Date: 2015-08-02 07:51+0100\n"
 "Last-Translator: Tomasz Przybył <fademind@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -18,42 +18,47 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
-#: contents/ui/main.qml:123
+#: contents/ui/main.qml:143 contents/ui/main.qml:212
 msgid "Configure PlayBar"
 msgstr "Ustawienia"
 
-#: contents/ui/main.qml:134
+#: contents/ui/main.qml:153
 msgid "<b>By</b> %1 "
 msgstr "<b>przez</b> %1 "
 
-#: contents/ui/main.qml:136
+#: contents/ui/main.qml:155
 msgid "<b>On</b> %1"
 msgstr "<b>z</b> %1"
 
-#: contents/ui/main.qml:139
+#: contents/ui/main.qml:158
 msgid "Client MPRIS2, allows you to control your favorite media player"
 msgstr "Klient MPRIS2 pozwala ci kontrolować ulubiony odtwarzacz multimedialny"
 
-#: contents/ui/Mpris2.qml:48
-msgid "No media player"
-msgstr "Nie znaleziono odtwarzacza "
-
-#: contents/ui/TitleBar.qml:59
+#: contents/ui/main.qml:206 contents/ui/TitleBar.qml:65
 msgid "Open %1"
 msgstr "Otwórz %1"
 
-#: contents/ui/TitleBar.qml:64
+#: contents/ui/main.qml:207 contents/ui/TitleBar.qml:70
+msgid "Stop"
+msgstr ""
+
+#: contents/ui/main.qml:208 contents/ui/TitleBar.qml:75
 msgid "Quit"
 msgstr "Zamknij"
 
-#: contents/ui/TitleBar.qml:69
+#: contents/ui/main.qml:209 contents/ui/TitleBar.qml:80
 msgid "Next multimedia source"
 msgstr "Następne źródło "
+
+#: contents/ui/TrackInfo.qml:41
+#, fuzzy
+msgid "No media playing"
+msgstr "Nie znaleziono odtwarzacza "
 
 #: contents/ui/TrackInfo.qml:135
 msgid "By"
 msgstr "Przez"
 
-#: contents/ui/TrackInfo.qml:149
+#: contents/ui/TrackInfo.qml:150
 msgid "On"
 msgstr "z"
