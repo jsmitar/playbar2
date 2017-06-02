@@ -19,6 +19,7 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.2
 import org.kde.plasma.core 2.0 as PlasmaCore
+import QtGraphicalEffects 1.0
 
 Item {
     id: bg
@@ -54,6 +55,25 @@ Item {
 
         horizontalAlignment: Image.AlignHCenter
         verticalAlignment: Image.AlignVCenter
+
+        layer.enabled: true
+        layer.effect: OpacityMask {
+            source: cover
+            width: cover.width
+            height: cover.height
+            cached: false
+            maskSource: Item {
+                width: cover.width
+                height: cover.height
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: cover.paintedWidth
+                    height: cover.paintedHeight
+                    border.width: 0
+                    radius: units.gridUnit * 0.3
+                }
+            }
+        }
 
         onStatusChanged: {
             if (status === Image.Loading) {
