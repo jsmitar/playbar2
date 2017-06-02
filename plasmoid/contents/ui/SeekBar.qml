@@ -24,10 +24,7 @@ import org.kde.plasma.plasmoid 2.0
 PlaybackItem {
     id: seekBar
 
-    property int buttonsAppearance: playbarEngine.buttonsAppearance
-
-    visible: mpris2.sourceActive
-             && (playbarEngine.compactStyle === playbar.seekBar)
+    visible: mpris2.sourceActive && (playbarEngine.compactStyle === playbar.seekbar)
 
     enabled: visible
 
@@ -35,55 +32,37 @@ PlaybackItem {
 
     height: visible ? control.height : 0
 
-    Component {
-        id: toolButtonDelegate
-
-        PlasmaComponents.ToolButton {
-            iconSource: 'media-playback-start'
-            layer.smooth: true
-            width: buttonSize
-            height: buttonSize
-            onClicked: seekBar.playPause()
-        }
-    }
-
-    Component {
-        id: iconWidgetDelegate
-
-        IconWidget {
-            svg: PlasmaCore.Svg {
-                imagePath: 'icons/media'
-            }
-            iconSource: 'media-playback-start'
-            enabled: mpris2.sourceActive
-            size: buttonSize
-            onClicked: seekBar.playPause()
-        }
-    }
-
     onPlayingChanged: {
-        if (buttonLoader.status !== Loader.Ready)
-            return
-
         if (playing)
-            buttonLoader.item.iconSource = 'media-playback-pause'
+            button.iconSource = 'media-playback-pause'
         else
-            buttonLoader.item.iconSource = 'media-playback-start'
+            button.iconSource = 'media-playback-start'
     }
 
     Flow {
         id: control
 
         flow: vertical ? Flow.TopToBottom : Flow.LeftToRight
-        spacing: units.smallSpacing
+        spacing: 0
 
-        Loader {
-            id: buttonLoader
-            sourceComponent: buttonsAppearance
-                             === playbar.flat ? iconWidgetDelegate : toolButtonDelegate
-            onLoaded: {
-                seekBar.playingChanged()
+        Item {
+            width: buttonSize
+            height: buttonSize
+
+            IconWidget {
+                id: button
+
+                svg: PlasmaCore.Svg {
+                    imagePath: 'icons/media'
+                }
+                iconSource: 'media-playback-start'
+                enabled: mpris2.sourceActive
+
+                size: buttonSize * 0.8
+                onClicked: seekBar.playPause()
+                anchors.centerIn: parent
             }
+
             VolumeWheel {
                 anchors.fill: parent
             }
@@ -99,8 +78,36 @@ PlaybackItem {
             stepSize: 1
             updateValueWhileDragging: true
 
-            width: vertical ? buttonSize : 90
-            height: vertical ? 90 : buttonSize
+            property int size: mpris2.playbackStatus === 'Stopped' ? buttonSize : Math.min(buttonSize * 3.5, 150)
+
+            Behavior on size {
+                SequentialAnimation {
+                    id: anim
+                    PauseAnimation {
+                        duration: 400
+                    }
+                    ScriptAction {
+                        script: setVisible()
+                        function setVisible() {
+                            if (mpris2.playbackStatus !== 'Stopped')
+                                slider.visible = true
+                        }
+                    }
+                    NumberAnimation {
+                        duration: units.longDuration
+                    }
+                    ScriptAction {
+                        script: setNotVisible()
+                        function setNotVisible() {
+                            if (mpris2.playbackStatus === 'Stopped')
+                                slider.visible = false
+                        }
+                    }
+                }
+            }
+
+            width: vertical ? buttonSize : size
+            height: vertical ? size : buttonSize
             enabled: maximumValue != 0
 
             onPressedChanged: {

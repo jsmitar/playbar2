@@ -23,10 +23,7 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 PlaybackItem {
     id: playbackbar
 
-    property int buttonsAppearance: playbarEngine.buttonsAppearance
-
-    visible: mpris2.sourceActive
-             && (playbarEngine.compactStyle === playbar.playbackButtons)
+    visible: mpris2.sourceActive && (playbarEngine.compactStyle === playbar.playbackButtons)
 
     enabled: visible
 
@@ -62,18 +59,6 @@ PlaybackItem {
     }
 
     Component {
-        id: toolButtonDelegate
-
-        PlasmaComponents.ToolButton {
-            iconSource: icon
-            layer.smooth: true
-            visible: index == 2 ? showStop : true
-            width: buttonSize
-            height: buttonSize
-        }
-    }
-
-    Component {
         id: iconWidgetDelegate
 
         IconWidget {
@@ -105,7 +90,7 @@ PlaybackItem {
             id: model
 
             model: playmodel
-            delegate: buttonsAppearance ? toolButtonDelegate : iconWidgetDelegate
+            delegate: iconWidgetDelegate
 
             onItemAdded: {
                 switch (index) {

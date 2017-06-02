@@ -32,14 +32,6 @@ Flow {
 
     property bool loaded: loader.status === Loader.Ready
 
-    VolumeWheel {
-        id: volumeWheelArea
-
-        parent: loaded
-                && playbarEngine.compactStyle !== playbar.seekBar ? loader.item : popupContainer
-        anchors.fill: parent
-    }
-
     Loader {
         id: loader
 
@@ -50,8 +42,10 @@ Flow {
             switch (playbarEngine.compactStyle) {
             case playbar.playbackButtons:
                 return 'PlaybackBar.qml'
-            case playbar.seekBar:
+            case playbar.seekbar:
                 return 'SeekBar.qml'
+            case playbar.trackinfo:
+                return 'TrackInfoBar.qml'
             }
             return ''
         }
@@ -78,8 +72,7 @@ Flow {
             controlsVisible: loaded && loader.item.visible
 
             size: loaded
-                  && loader.item.visible ? _buttonSize * (playbarEngine.buttonsAppearance
-                                                          !== 0 ? 0.5 : 0.7) : _buttonSize * 0.9
+                  && loader.item.visible ? _buttonSize * 0.5 : _buttonSize * 0.9
             opened: plasmoid.expanded
             anchors.centerIn: parent
             onClicked: {
@@ -89,7 +82,7 @@ Flow {
         }
         Timer {
             //HACK: For PopupApplet in Systray Area
-            running: loaded && loader.item.visible
+            //running: loaded && loader.item.visible
             interval: 250
             onTriggered: {
                 if ((!vertical && loader.item.width > playbackControl.width)
