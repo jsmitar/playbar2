@@ -2,7 +2,6 @@
 Name=PlayBarEngine
 Icon=media-playback-start
 Comment=Adds support for global shortcuts and settings
-Comment[es]=Añade soporte para los accesos globales de teclado y configuraciones
 Type=Service
 
 X-KDE-ServiceTypes=Plasma/DataEngine

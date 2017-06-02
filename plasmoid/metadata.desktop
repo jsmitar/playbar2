@@ -18,7 +18,7 @@ X-Plasma-MainScript=ui/main.qml
 X-Plasma-Provides=org.kde.plasma.multimediacontrols
 #X-Plasma-NotificationArea=true
 #X-Plasma-DBusActivationService=org.mpris.MediaPlayer2.*
-# X-Plasma-ConfigPlugins=kcm_<KCM Name>
+#X-Plasma-ConfigPlugins=kcm_<KCM Name>
 
 X-KDE-PluginInfo-Author=Smith AR
 X-KDE-PluginInfo-Category=Multimedia
