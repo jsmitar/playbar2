@@ -9,33 +9,42 @@
 	<!--<include>kglobalsettings.h</include> -->
 	 <kcfgfile name="playbarrc"/>
 	 <group name="General">
-		  <entry name="CompactStyle" type="Int">
-			   <default>0</default>
+		  <entry name="CompactStyle" type="Enum">
+              <choices>
+                  <choice name="Icon"/>
+                  <choice name="PlaybackButtons"/>
+                  <choice name="PlayPauseAndSeek"/>
+                  <choice name="PlayPauseAndInfo"/>
+              </choices>
+              <default>1</default>
 		  </entry>
-		  <entry name="ButtonsAppearance" type="Enum">
-			   <default>0</default>
-                  </entry>
-                  <entry name="Flat" type="Bool">
-                          <default>true</default>
-                  </entry>
-                  <entry name="ToolButton" type="Bool">
-                          <default>false</default>
-                  </entry>
-                  <entry name="ShowStop" type="Bool">
-			   <default>true</default>
-		  </entry>
-		  <entry name="BackgroundHint" type="Enum">
-			   <default>2</default>
-		  </entry>
-		  <entry name="NoBackground" type="Bool">
+          <entry name="ShowStop" type="Bool">
 			   <default>false</default>
+          </entry>
+          <entry name="ShowSeekSlider" type="Bool">
+			   <default>true</default>
+          </entry>
+          <entry name="ShowVolumeSlider" type="Bool">
+			   <default>true</default>
+          </entry>
+		  <entry name="BackgroundHint" type="Enum">
+              <choices>
+                  <choice name="None"/>
+                  <choice name="Normal"/>
+                  <choice name="Translucent"/>
+              </choices>
+              <default>1</default>
 		  </entry>
-                  <entry name="ShadowColor" type="Color">
-                  </entry>
+          <entry name="ShadowColor" type="Color">
+              <default>#31363B</default>
+          </entry>
 		  <entry name="Normal" type="Bool">
 			   <default>true</default>
 		  </entry>
 		  <entry name="Translucent" type="Bool">
+			   <default>false</default>
+		  </entry>
+		  <entry name="NoBackground" type="Bool">
 			   <default>false</default>
 		  </entry>
 	 </group>

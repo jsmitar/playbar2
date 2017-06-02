@@ -40,26 +40,22 @@ class GeneralWidget : public QWidget {
 		return m_ui.kcfg_CompactStyle->currentIndex();
 	}
 	
-	inline int buttonsAppearance() const {
-		return m_ui.kcfg_Flat->isChecked() ? 0 : 1;
-	}
-	
-	inline bool flat() const {
-		return m_ui.kcfg_Flat->isChecked();
-	}
-	
-	inline bool toolButton() const {
-		return m_ui.kcfg_ToolButton->isChecked();
-	}
-	
 	inline bool showStop() const {
 		return m_ui.kcfg_ShowStop->isChecked();
 	}
 	
+	inline bool showSeekSlider() const {
+		return m_ui.kcfg_ShowSeekSlider->isChecked();
+	}
+	
+	inline bool showVolumeSlider() const {
+		return m_ui.kcfg_ShowVolumeSlider->isChecked();
+	}
+	
 	inline int backgroundHint() const {
 		if ( m_ui.kcfg_NoBackground->isChecked() )
-			return 0; else if ( m_ui.kcfg_Normal->isChecked() )
-			
+			return 0;
+		else if ( m_ui.kcfg_Normal->isChecked() )
 			return 1;
 			
 		return 2;

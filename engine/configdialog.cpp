@@ -57,7 +57,7 @@ ConfigDialog::ConfigDialog( KActionCollection *collection , QWidget *parent )
 ConfigDialog::~ConfigDialog() {
 	delete m_generalPage;
 	delete m_shortcutsPage;
-	qDebug() << this << "Config dialog deleted";
+	qDebug() << metaObject()->className() << "deleted";
 }
 
 void ConfigDialog::updateColorSettings() {
@@ -70,19 +70,18 @@ void ConfigDialog::updateColorSettings() {
 void ConfigDialog::updateSettings() {
 	// User clicks Ok or Apply button in configuration dialog
 	m_shortcutsPage->save();
-	PlayBarSettings *config = PlayBarSettings::self();
+	auto *config = PlayBarSettings::self();
 	
 	config->setCompactStyle      ( m_generalPage->compactStyle() );
-	config->setButtonsAppearance ( m_generalPage->buttonsAppearance() );
-	config->setFlat              ( m_generalPage->flat() );
-	config->setToolButton        ( m_generalPage->toolButton() );
 	config->setShowStop          ( m_generalPage->showStop() );
+	config->setShowSeekSlider    ( m_generalPage->showSeekSlider() );
+	config->setShowVolumeSlider  ( m_generalPage->showVolumeSlider() );
 	config->setBackgroundHint    ( m_generalPage->backgroundHint() );
 	config->setNoBackground      ( m_generalPage->noBackground() );
 	config->setNormal            ( m_generalPage->normal() );
 	config->setTranslucent       ( m_generalPage->translucent() );
 	config->setShadowColor       ( m_generalPage->shadowColor() );
 	config->save();
-	qDebug() << "config saved";
+	qDebug() << metaObject()->className() << "config saved";
 }
 // kate: indent-mode cstyle; indent-width 4; replace-tabs on;

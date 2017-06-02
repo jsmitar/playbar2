@@ -69,7 +69,7 @@ PlayBar::PlayBar( KSharedConfigPtr &config , QObject *parent )
 	m_openMediaPlayer->setText( i18n( "Toggle window media player" ) );
 	KGlobalAccel::setGlobalShortcut( m_openMediaPlayer, QKeySequence() );
 	
-	//connect( m_configDialog, SIGNAL( settingsChanged( QString ) ), this, SLOT( loadSettings() ) );
+	connect( m_configDialog, SIGNAL( settingsChanged( QString ) ), this, SLOT( loadSettings() ) );
 }
 
 PlayBar::~PlayBar() {
@@ -113,11 +113,12 @@ const DataEngine::Data &PlayBar::data() {
 	// Read preferences from the KConfig object.
 	config->read();
 	
-	m_data->insert( "CompactStyle",       config->compactStyle() );
-	m_data->insert( "ButtonsAppearance",  config->buttonsAppearance() );
-	m_data->insert( "ShowStop",           config->showStop() );
-	m_data->insert( "BackgroundHint",     config->backgroundHint() );
-	m_data->insert( "ShadowColor",        config->shadowColor() );
+	m_data->insert( "CompactStyle",     config->compactStyle() );
+	m_data->insert( "ShowStop",         config->showStop() );
+	m_data->insert( "ShowVolumeSlider", config->showVolumeSlider() );
+	m_data->insert( "ShowSeekSlider",   config->showSeekSlider() );
+	m_data->insert( "BackgroundHint",   config->backgroundHint() );
+	m_data->insert( "ShadowColor",      config->shadowColor() );
 	
 	return *m_data;
 }
