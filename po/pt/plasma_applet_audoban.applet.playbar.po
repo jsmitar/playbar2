@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
-"POT-Creation-Date: 2016-09-13 15:11-0500\n"
+"POT-Creation-Date: 2017-06-02 02:54-0500\n"
 "PO-Revision-Date: 2015-09-13 21:19UTC-0300\n"
 "Last-Translator: André Vitor de Lima Matos <andre.vmatos@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
@@ -17,47 +17,73 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 2.0\n"
 
-#: contents/ui/main.qml:143 contents/ui/main.qml:212
+#: ../../plasmoid/contents/ui/main.qml:160
+#: ../../plasmoid/contents/ui/main.qml:232
 msgid "Configure PlayBar"
 msgstr "Configurar PlayBar"
 
-#: contents/ui/main.qml:153
+#: ../../plasmoid/contents/ui/main.qml:169
 msgid "<b>By</b> %1 "
 msgstr "<b>De</b> %1 "
 
-#: contents/ui/main.qml:155
+#: ../../plasmoid/contents/ui/main.qml:171
 msgid "<b>On</b> %1"
 msgstr "<b>Em</b> %1"
 
-#: contents/ui/main.qml:158
+#: ../../plasmoid/contents/ui/main.qml:174
 msgid "Client MPRIS2, allows you to control your favorite media player"
 msgstr "Cliente MPRIS2, permite controlar seu tocador de mídia favorito"
 
-#: contents/ui/main.qml:206 contents/ui/TitleBar.qml:65
+#: ../../plasmoid/contents/ui/main.qml:217
+#: ../../plasmoid/contents/ui/TitleBar.qml:65
 msgid "Open %1"
 msgstr "Abrir %1"
 
-#: contents/ui/main.qml:207 contents/ui/TitleBar.qml:70
+#: ../../plasmoid/contents/ui/main.qml:218
+msgid "Play previous track"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:221
+msgid "Pause"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:223
+msgid "Play"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:225
+msgid "Play next track"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:226
+#: ../../plasmoid/contents/ui/TitleBar.qml:70
 msgid "Stop"
 msgstr ""
 
-#: contents/ui/main.qml:208 contents/ui/TitleBar.qml:75
-msgid "Quit"
-msgstr "Sair"
-
-#: contents/ui/main.qml:209 contents/ui/TitleBar.qml:80
+#: ../../plasmoid/contents/ui/main.qml:227
+#: ../../plasmoid/contents/ui/TitleBar.qml:80
 msgid "Next multimedia source"
 msgstr "Próxima fonte de multimídia"
 
-#: contents/ui/TrackInfo.qml:41
+#: ../../plasmoid/contents/ui/main.qml:229
+#: ../../plasmoid/contents/ui/TitleBar.qml:75
+msgid "Quit"
+msgstr "Sair"
+
+#: ../../plasmoid/contents/ui/TrackInfoBar.qml:106
+#, fuzzy
+msgid "%1 <b>By</b> %2"
+msgstr "<b>De</b> %1 "
+
+#: ../../plasmoid/contents/ui/TrackInfo.qml:41
 #, fuzzy
 msgid "No media playing"
 msgstr "Sem tocador de mídia"
 
-#: contents/ui/TrackInfo.qml:135
+#: ../../plasmoid/contents/ui/TrackInfo.qml:135
 msgid "By"
 msgstr "De"
 
-#: contents/ui/TrackInfo.qml:150
+#: ../../plasmoid/contents/ui/TrackInfo.qml:150
 msgid "On"
 msgstr "Em"

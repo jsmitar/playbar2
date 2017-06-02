@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
-"POT-Creation-Date: 2016-08-07 20:25-0500\n"
+"POT-Creation-Date: 2017-06-02 02:54-0500\n"
 "PO-Revision-Date: 2015-08-03 12:10+1100\n"
 "Last-Translator: kv <konstantin.voinov@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -18,154 +18,149 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
-#: configdialog.cpp:32
-msgid "Configure PlayBar"
-msgstr "Настроить PlayBar"
-
-#: configdialog.cpp:37 configdialog.cpp:39
-msgctxt "General config"
-msgid "General"
-msgstr "Основные"
-
-#: configdialog.cpp:42
-msgctxt "Shortcuts config"
-msgid "Shortcuts"
-msgstr "Комбинации клавиш"
-
-#: configdialog.cpp:44
-msgid "Shortcuts Configuration"
-msgstr "Комбинации клавиш"
-
-#: playbar.cpp:48
-msgid "Play/Pause"
-msgstr "Воспроизвести/Пауза "
-
-#: playbar.cpp:53
-msgid "Stop"
-msgstr "Остановить"
-
-#: playbar.cpp:58
-msgid "Next track"
-msgstr "Следующий трек"
-
-#: playbar.cpp:63
-msgid "Previous track"
-msgstr "Предыдущий трек"
-
-#: playbar.cpp:68
-msgid "Toggle window media player"
-msgstr "Показать окно проигрывателя"
-
-#. i18n: file: generalconfig.ui:31
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox_Layout)
-#: rc.cpp:3
-msgid "Layout"
+#. i18n: file: ../../engine/generalconfig.ui:31
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_Compact)
+#: ../../rc.cpp:3
+msgid "Compact"
 msgstr ""
 
-#. i18n: file: generalconfig.ui:46
-#. i18n: ectx: property (text), widget (QLabel, label_Compact)
-#: rc.cpp:6
-msgid "Compact:"
+#. i18n: file: ../../engine/generalconfig.ui:46
+#. i18n: ectx: property (text), widget (QLabel, label_Style)
+#: ../../rc.cpp:6
+msgid "Layout:"
 msgstr ""
 
-#. i18n: file: generalconfig.ui:69
+#. i18n: file: ../../engine/generalconfig.ui:75
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CompactStyle)
-#: rc.cpp:9
+#: ../../rc.cpp:9
 msgid "Icon"
 msgstr ""
 
-#. i18n: file: generalconfig.ui:74
+#. i18n: file: ../../engine/generalconfig.ui:80
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CompactStyle)
-#: rc.cpp:12
+#: ../../rc.cpp:12
 #, fuzzy
-msgid "Playback controls"
+msgid "Playback buttons"
 msgstr "Управление переключением на панели"
 
-#. i18n: file: generalconfig.ui:79
+#. i18n: file: ../../engine/generalconfig.ui:85
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CompactStyle)
-#: rc.cpp:15
+#: ../../rc.cpp:15
 #, fuzzy
 msgid "Play/Pause and seek bar"
 msgstr "Воспроизвести/Пауза "
 
-#. i18n: file: generalconfig.ui:87
-#. i18n: ectx: property (text), widget (QLabel, label_Expanded)
-#: rc.cpp:18
-msgid "Expanded:"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:98
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ExpandedStyle)
-#: rc.cpp:21
-msgid "Default"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:103
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ExpandedStyle)
-#: rc.cpp:24
-msgid "Vertical"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:120
-#. i18n: ectx: property (title), widget (QGroupBox, kcfg_ButtonsAppearance)
-#: rc.cpp:27
-msgid "Appearance of controls"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:138
-#. i18n: ectx: property (text), widget (QRadioButton, kcfg_Flat)
-#: rc.cpp:30
-msgid "F&lat"
-msgstr "Плоский"
-
-#. i18n: file: generalconfig.ui:154
-#. i18n: ectx: property (text), widget (QRadioButton, kcfg_ToolButton)
-#: rc.cpp:33
+#. i18n: file: ../../engine/generalconfig.ui:90
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CompactStyle)
+#: ../../rc.cpp:18
 #, fuzzy
-msgid "&Tool button"
-msgstr "Панель инструментов"
+msgid "Play/Pause and track info"
+msgstr "Воспроизвести/Пауза "
 
-#. i18n: file: generalconfig.ui:161
+#. i18n: file: ../../engine/generalconfig.ui:101
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_Expanded)
+#: ../../rc.cpp:21
+msgid "Expanded"
+msgstr ""
+
+#. i18n: file: ../../engine/generalconfig.ui:110
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowStop)
-#: rc.cpp:36
+#: ../../rc.cpp:24
 msgid "Show stop button"
 msgstr "Показать кнопку стоп"
 
-#. i18n: file: generalconfig.ui:183
-#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BackgroundHint)
-#: rc.cpp:39
-#, fuzzy
-msgid "On desktop background"
-msgstr "Отключить фон"
+#. i18n: file: ../../engine/generalconfig.ui:117
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowVolumeSlider)
+#: ../../rc.cpp:27
+msgid "Show volume slider"
+msgstr ""
 
-#. i18n: file: generalconfig.ui:207
+#. i18n: file: ../../engine/generalconfig.ui:124
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowSeekSlider)
+#: ../../rc.cpp:30
+msgid "Show seek slider"
+msgstr ""
+
+#. i18n: file: ../../engine/generalconfig.ui:146
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BackgroundHint)
+#: ../../rc.cpp:33
+#, fuzzy
+msgid "Background hint"
+msgstr "Фоновые подсказки"
+
+#. i18n: file: ../../engine/generalconfig.ui:164
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_NoBackground)
-#: rc.cpp:42
+#: ../../rc.cpp:36
 #, fuzzy
 msgid "No ba&ckground"
 msgstr "Отключить фон"
 
-#. i18n: file: generalconfig.ui:220
-#. i18n: ectx: property (text), widget (QRadioButton, kcfg_Normal)
-#: rc.cpp:45
-msgid "&Normal"
-msgstr ""
-
-#. i18n: file: generalconfig.ui:239
-#. i18n: ectx: property (text), widget (QRadioButton, kcfg_Translucent)
-#: rc.cpp:48
-msgid "Transl&ucent"
-msgstr "Прозрачный"
-
-#. i18n: file: generalconfig.ui:300
+#. i18n: file: ../../engine/generalconfig.ui:237
 #. i18n: ectx: property (text), widget (QLabel, label_ShadowColor)
-#: rc.cpp:51
+#: ../../rc.cpp:39
 msgid "Shadow color:"
 msgstr ""
 
+#. i18n: file: ../../engine/generalconfig.ui:269
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_Normal)
+#: ../../rc.cpp:42
+msgid "&Normal"
+msgstr ""
+
+#. i18n: file: ../../engine/generalconfig.ui:288
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_Translucent)
+#: ../../rc.cpp:45
+msgid "Transl&ucent"
+msgstr "Прозрачный"
+
+#: ../../engine/configdialog.cpp:33
+msgid "Configure PlayBar"
+msgstr "Настроить PlayBar"
+
+#: ../../engine/configdialog.cpp:38 ../../engine/configdialog.cpp:40
+msgctxt "General config"
+msgid "General"
+msgstr "Основные"
+
+#: ../../engine/configdialog.cpp:43
+msgctxt "Shortcuts config"
+msgid "Shortcuts"
+msgstr "Комбинации клавиш"
+
+#: ../../engine/configdialog.cpp:45
+msgid "Shortcuts Configuration"
+msgstr "Комбинации клавиш"
+
+#: ../../engine/playbar.cpp:50
+msgid "Play/Pause"
+msgstr "Воспроизвести/Пауза "
+
+#: ../../engine/playbar.cpp:55
+msgid "Stop"
+msgstr "Остановить"
+
+#: ../../engine/playbar.cpp:60
+msgid "Next track"
+msgstr "Следующий трек"
+
+#: ../../engine/playbar.cpp:65
+msgid "Previous track"
+msgstr "Предыдущий трек"
+
+#: ../../engine/playbar.cpp:70
+msgid "Toggle window media player"
+msgstr "Показать окно проигрывателя"
+
+#~ msgid "F&lat"
+#~ msgstr "Плоский"
+
 #, fuzzy
-#~ msgid "Background hint"
-#~ msgstr "Фоновые подсказки"
+#~ msgid "&Tool button"
+#~ msgstr "Панель инструментов"
+
+#, fuzzy
+#~ msgid "On desktop background"
+#~ msgstr "Отключить фон"
 
 #, fuzzy
 #~ msgid "Tool button"

@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR GPLv3
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the PlayBar2 package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PlayBar2\n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
-"POT-Creation-Date: 2016-09-13 15:11-0500\n"
+"POT-Creation-Date: 2017-06-02 02:54-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,46 +17,71 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: contents/ui/main.qml:143 contents/ui/main.qml:212
+#: ../../plasmoid/contents/ui/main.qml:160
+#: ../../plasmoid/contents/ui/main.qml:232
 msgid "Configure PlayBar"
 msgstr ""
 
-#: contents/ui/main.qml:153
+#: ../../plasmoid/contents/ui/main.qml:169
 msgid "<b>By</b> %1 "
 msgstr ""
 
-#: contents/ui/main.qml:155
+#: ../../plasmoid/contents/ui/main.qml:171
 msgid "<b>On</b> %1"
 msgstr ""
 
-#: contents/ui/main.qml:158
+#: ../../plasmoid/contents/ui/main.qml:174
 msgid "Client MPRIS2, allows you to control your favorite media player"
 msgstr ""
 
-#: contents/ui/main.qml:206 contents/ui/TitleBar.qml:65
+#: ../../plasmoid/contents/ui/main.qml:217
+#: ../../plasmoid/contents/ui/TitleBar.qml:65
 msgid "Open %1"
 msgstr ""
 
-#: contents/ui/main.qml:207 contents/ui/TitleBar.qml:70
+#: ../../plasmoid/contents/ui/main.qml:218
+msgid "Play previous track"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:221
+msgid "Pause"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:223
+msgid "Play"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:225
+msgid "Play next track"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:226
+#: ../../plasmoid/contents/ui/TitleBar.qml:70
 msgid "Stop"
 msgstr ""
 
-#: contents/ui/main.qml:208 contents/ui/TitleBar.qml:75
-msgid "Quit"
-msgstr ""
-
-#: contents/ui/main.qml:209 contents/ui/TitleBar.qml:80
+#: ../../plasmoid/contents/ui/main.qml:227
+#: ../../plasmoid/contents/ui/TitleBar.qml:80
 msgid "Next multimedia source"
 msgstr ""
 
-#: contents/ui/TrackInfo.qml:41
+#: ../../plasmoid/contents/ui/main.qml:229
+#: ../../plasmoid/contents/ui/TitleBar.qml:75
+msgid "Quit"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/TrackInfoBar.qml:106
+msgid "%1 <b>By</b> %2"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/TrackInfo.qml:41
 msgid "No media playing"
 msgstr ""
 
-#: contents/ui/TrackInfo.qml:135
+#: ../../plasmoid/contents/ui/TrackInfo.qml:135
 msgid "By"
 msgstr ""
 
-#: contents/ui/TrackInfo.qml:150
+#: ../../plasmoid/contents/ui/TrackInfo.qml:150
 msgid "On"
 msgstr ""

@@ -1,13 +1,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Smith Ar <audoban@openmailbox.org>, 2015, 2016.
+# Smith Ar <audoban@openmailbox.org>, 2015, 2016, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
-"POT-Creation-Date: 2016-09-13 15:11-0500\n"
-"PO-Revision-Date: 2016-09-13 14:55-0500\n"
+"POT-Creation-Date: 2017-06-02 02:54-0500\n"
+"PO-Revision-Date: 2017-06-02 03:04-0500\n"
 "Last-Translator: Smith Ar <audoban@openmailbox.org>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
 "Language: es_CO\n"
@@ -17,47 +17,73 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 2.0\n"
 
-#: contents/ui/main.qml:143 contents/ui/main.qml:212
+#: ../../plasmoid/contents/ui/main.qml:160
+#: ../../plasmoid/contents/ui/main.qml:232
 msgid "Configure PlayBar"
 msgstr "Configurar PlayBar"
 
-#: contents/ui/main.qml:153
+#: ../../plasmoid/contents/ui/main.qml:169
 msgid "<b>By</b> %1 "
 msgstr "<b>Por</b> %1 "
 
-#: contents/ui/main.qml:155
+#: ../../plasmoid/contents/ui/main.qml:171
 msgid "<b>On</b> %1"
 msgstr "<b>En</b> %1"
 
-#: contents/ui/main.qml:158
+#: ../../plasmoid/contents/ui/main.qml:174
 msgid "Client MPRIS2, allows you to control your favorite media player"
 msgstr ""
 "Cliente para MPRIS2, le permite controlar su reproductor de audio favorito"
 
-#: contents/ui/main.qml:206 contents/ui/TitleBar.qml:65
+#: ../../plasmoid/contents/ui/main.qml:217
+#: ../../plasmoid/contents/ui/TitleBar.qml:65
 msgid "Open %1"
 msgstr "Abrir %1"
 
-#: contents/ui/main.qml:207 contents/ui/TitleBar.qml:70
+#: ../../plasmoid/contents/ui/main.qml:218
+msgid "Play previous track"
+msgstr "Pista anterior"
+
+#: ../../plasmoid/contents/ui/main.qml:221
+msgid "Pause"
+msgstr "Pausar"
+
+#: ../../plasmoid/contents/ui/main.qml:223
+msgid "Play"
+msgstr "Reproducir"
+
+#: ../../plasmoid/contents/ui/main.qml:225
+msgid "Play next track"
+msgstr "Pista siguiente"
+
+#: ../../plasmoid/contents/ui/main.qml:226
+#: ../../plasmoid/contents/ui/TitleBar.qml:70
 msgid "Stop"
 msgstr "Detener"
 
-#: contents/ui/main.qml:208 contents/ui/TitleBar.qml:75
-msgid "Quit"
-msgstr "Salir"
-
-#: contents/ui/main.qml:209 contents/ui/TitleBar.qml:80
+#: ../../plasmoid/contents/ui/main.qml:227
+#: ../../plasmoid/contents/ui/TitleBar.qml:80
 msgid "Next multimedia source"
 msgstr "Siguiente medio"
 
-#: contents/ui/TrackInfo.qml:41
+#: ../../plasmoid/contents/ui/main.qml:229
+#: ../../plasmoid/contents/ui/TitleBar.qml:75
+msgid "Quit"
+msgstr "Salir"
+
+#: ../../plasmoid/contents/ui/TrackInfoBar.qml:106
+msgid "%1 <b>By</b> %2"
+msgstr "%1 <b>Por</b> %2"
+
+#: ../../plasmoid/contents/ui/TrackInfo.qml:41
 msgid "No media playing"
 msgstr "Ningún medio en reproducción"
 
-#: contents/ui/TrackInfo.qml:135
+#: ../../plasmoid/contents/ui/TrackInfo.qml:135
 msgid "By"
 msgstr "Por"
 
-#: contents/ui/TrackInfo.qml:150
+#: ../../plasmoid/contents/ui/TrackInfo.qml:150
 msgid "On"
 msgstr "En"
+
