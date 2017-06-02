@@ -27,45 +27,85 @@ Item {
 
     property bool isScrollable: false
 
+    property bool autoScroll: false
+
+    property int velocity: 60
+
+    property bool vertical: false
+
+    property bool reverse: false
+
     focus: false
+
+    Component.onCompleted: if (autoScroll) anim.run()
 
     Connections {
         target: scroll.target
 
         onWidthChanged: anim.stop()
-        onTextChanged: anim.stop()
+        onHeightChanged: anim.stop()
+
+        onTextChanged: {
+            if (autoScroll)
+                anim.run()
+            else
+                anim.stop()
+        }
     }
 
     SequentialAnimation {
         id: anim
         running: false
 
+        loops: autoScroll ? 2 : 1
+
+        readonly property int contentSize: target.contentWidth
+        readonly property int size: target.width
+
         onStopped: {
-            isScrollable = target.contentWidth > target.width
-                    || target.truncated
-            if (scrollArea.containsMouse && isScrollable)
-                anim.restart()
-            else
-                scrolling = false
+            isScrollable = contentSize > size || target.truncated
+
+            if (isScrollable) {
+                if (scrollArea.containsMouse) {
+                    anim.restart()
+                    return
+                }
+            }
+
+            scrolling = false
+        }
+
+        function run() {
+            isScrollable = contentSize > size || target.truncated
+            if (isScrollable && !anim.running) {
+                scrolling = true
+                anim.start()
+            } else if (scrolling && !anim.running) {
+                anim.start()
+            }
+        }
+
+        PauseAnimation {
+            duration: 250
         }
 
         SmoothedAnimation {
             id: end
             target: scroll.target
-            property: 'x'
+            property: scroll.vertical ? 'y' : 'x'
             from: 0
             // It goes to the end of the text
-            to: target.width - target.contentWidth - units.smallSpacing
-            velocity: 60
+            to: (anim.size - anim.contentSize - theme.mSize(theme.defaultFont).width) * (scroll.reverse ? -1 : 1)
+            velocity: scroll.velocity
         }
 
         SmoothedAnimation {
             id: begin
             target: scroll.target
-            property: 'x'
+            property: scroll.vertical ? 'y' : 'x'
             // it goes to the beginning of the text
             to: 0
-            velocity: 80
+            velocity: scroll.velocity * 1.1
         }
     }
 
@@ -76,15 +116,6 @@ Item {
         acceptedButtons: Qt.NoButton
         hoverEnabled: true
 
-        onEntered: {
-            isScrollable = target.contentWidth > target.width
-                    || target.truncated
-            if (isScrollable && !anim.running) {
-                scrolling = true
-                anim.start()
-            } else if (scrolling && !anim.running) {
-                anim.start()
-            }
-        }
+        onEntered: anim.run()
     }
 }
