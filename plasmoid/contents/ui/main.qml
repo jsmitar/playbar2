@@ -25,6 +25,8 @@ import "../code/utils.js" as Utils
 Item {
     id: root
 
+
+
     //! dataengine
     PlasmaCore.DataSource {
         id: playbarEngine
@@ -33,30 +35,24 @@ Item {
 
         readonly property string source: 'Provider'
 
-        readonly property int compactStyle: hasSource(
-                                                'CompactStyle') ? data[source]['CompactStyle'] : playbar.icon
+        readonly property int compactStyle: hasSource('CompactStyle')
+            ? data[source]['CompactStyle'] : playbar.icon
 
-        readonly property int expandedStyle: hasSource(
-                                                 'ExpandedStyle') ? data[source]['ExpandedStyle'] : playbar.defaultLayout
+        readonly property bool showStop: hasSource('ShowStop')
+            ? data[source]['ShowStop'] : false
 
-        readonly property int buttonsAppearance: hasSource(
-                                                     'ButtonsAppearance') ? data[source]['ButtonsAppearance'] : playbar.flat
+        readonly property bool showVolumeSlider: hasSource('ShowVolumeSlider')
+            ? data[source]['ShowVolumeSlider'] : false
 
-        readonly property bool showStop: hasSource(
-                                             'ShowStop') ? data[source]['ShowStop'] : false
+        readonly property bool showSeekSlider: hasSource('ShowSeekSlider')
+            ? data[source]['ShowSeekSlider'] : false
 
-        readonly property int backgroundHint: hasSource('BackgroundHint')
-                                              && plasmoid.formFactor == PlasmaCore.Types.Planar ? data[source]['BackgroundHint'] : playbar.normal
+        readonly property int backgroundHint:
+            hasSource('BackgroundHint') && plasmoid.formFactor == PlasmaCore.Types.Planar
+            ? data[source]['BackgroundHint'] : playbar.normal
 
-        readonly property color shadowColor: hasSource(
-                                                 'ShadowColor') ? data[source]['ShadowColor'] : "#fff"
-
-        onExpandedStyleChanged: {
-            if (expandedStyle === 0)
-                plasmoid.configuration.FullAppletLayout = 'DefaultLayout.qml'
-            else
-                plasmoid.configuration.FullAppletLayout = 'VerticalLayout.qml'
-        }
+        readonly property color shadowColor: hasSource('ShadowColor')
+            ? data[source]['ShadowColor'] : "#fff"
 
         property bool systrayArea: false
 
@@ -88,6 +84,7 @@ Item {
     }
 
     property bool vertical: plasmoid.formFactor === PlasmaCore.Types.Vertical
+    property bool leftEdge: plasmoid.location === PlasmaCore.Types.LeftEdge
 
     Plasmoid.compactRepresentation: CompactApplet {
         id: compact
@@ -121,8 +118,28 @@ Item {
         mpris2.startOperation('Raise')
     }
 
+    function action_playPause() {
+        if (mpris2.source === 'spotify') {
+            mpris2.startOperation('PlayPause')
+            return
+        }
+        if (mpris2.playbackStatus !== 'Playing')
+            mpris2.startOperation('Play')
+        else
+            mpris2.startOperation('PlayPause')
+    }
+
+    function action_previous() {
+        mpris2.startOperation('Previous')
+    }
+
+    function action_next() {
+        mpris2.startOperation('Next')
+    }
+
     function action_stop() {
-        mpris2.startOperation('Stop')
+        if (mpris2.playbackStatus !== 'Stopped')
+            mpris2.startOperation('Stop')
     }
 
     function action_quit() {
@@ -140,8 +157,7 @@ Item {
     Component.onCompleted: {
         plasmoid.formFactorChanged()
         plasmoid.removeAction('configure')
-        plasmoid.setAction('configure', i18n('Configure PlayBar'), 'configure',
-                           'alt+d, s')
+        plasmoid.setAction('configure', i18n('Configure PlayBar'), 'configure', 'alt+d, s')
     }
 
     QtObject {
@@ -160,37 +176,32 @@ Item {
 
     // ENUMS
     readonly property QtObject playbar: QtObject {
-        objectName: "playbar_utils"
+        objectName: "playbar_namespace"
         // ENUM: CompactStyle
         readonly property int icon: 0
         readonly property int playbackButtons: 1
-        readonly property int seekBar: 2
+        readonly property int seekbar: 2
+        readonly property int trackinfo: 3
 
         // ENUM: ExpandedStyle
         readonly property int defaultLayout: 0
         readonly property int verticalLayout: 1
-
-        // ENUM: ButtonsAppearance
-        readonly property int flat: 0
-        readonly property int toolButton: 1
 
         // ENUM: BackgroundHint
         readonly property int noBackground: PlasmaCore.Types.NoBackground
         readonly property int normal: PlasmaCore.Types.StandardBackground
         readonly property int translucent: PlasmaCore.Types.TranslucentBackground
 
-        function setActions(source, identity) {
-            debug('setActions(' + source + ', ' + identity + ')')
-            var icon
+    }
+        Plasmoid.onContextualActionsAboutToShow: {
+            plasmoid.clearActions()
 
-            if (source === '' || source === undefined)
-                return
-            icon = source
+            var icon = mpris2.currentSource
 
-            if (source.match('vlc'))
+            if (icon.match('vlc'))
                 icon = 'vlc'
 
-            switch (source) {
+            switch (icon) {
             case 'spotify':
                 icon = 'spotify-client'
                 break
@@ -202,24 +213,22 @@ Item {
                 break
             }
 
-            plasmoid.removeAction('configure')
-            plasmoid.setAction('raise', i18n('Open %1', identity), icon)
-            plasmoid.setAction('stop', i18n('Stop'), 'media-playback-stop')
-            plasmoid.setAction('quit', i18n('Quit'), 'window-close')
-            plasmoid.setAction('nextSource', i18n('Next multimedia source'),
-                               'go-next')
-            plasmoid.setActionSeparator('sep1')
-            plasmoid.setAction('configure', i18n('Configure PlayBar'),
-                               'configure', 'alt+d, s')
-        }
+            if (mpris2.sourceActive) {
+                plasmoid.setAction('raise', i18n('Open %1', mpris2.identity), icon)
+                plasmoid.setAction('previous', i18n('Play previous track'), 'media-skip-backward')
 
-        function removeActions() {
-            debug('removeActions()')
-            plasmoid.removeAction('raise')
-            plasmoid.removeAction('stop')
-            plasmoid.removeAction('quit')
-            plasmoid.removeAction('nextSource')
-            plasmoid.removeAction('sep1')
+                if (mpris2.playbackStatus === 'Playing')
+                    plasmoid.setAction('playPause', i18n('Pause'), 'media-playback-pause')
+                else
+                    plasmoid.setAction('playPause', i18n('Play'), 'media-playback-start')
+
+                plasmoid.setAction('next', i18n('Play next track'), 'media-skip-forward')
+                plasmoid.setAction('stop', i18n('Stop'), 'media-playback-stop')
+                plasmoid.setAction('nextSource', i18n('Next multimedia source'), 'go-next')
+                plasmoid.setActionSeparator('sep1')
+                plasmoid.setAction('quit', i18n('Quit'), 'application-exit')
+            }
+
+           plasmoid.setAction('configure', i18n('Configure PlayBar'), 'configure', 'alt+d, s')
         }
-    }
 }
