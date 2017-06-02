@@ -17,10 +17,10 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 import QtQuick 2.4
-import org.kde.plasma.extras 2.0 as PlasmaExtras
+import org.kde.plasma.components 2.0 as PlasmaComponents
 import "../code/utils.js" as Utils
 
-PlasmaExtras.Paragraph {
+PlasmaComponents.Label {
     id: label
 
     property real volume: 0
@@ -30,6 +30,10 @@ PlasmaExtras.Paragraph {
     elide: Text.ElideNone
 
     maximumLineCount: 1
+
+    font: theme.smallestFont
+
+    opacity: 0.8
 
     text: (volume * 100).toFixed() + '%'
 }

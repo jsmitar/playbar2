@@ -28,6 +28,8 @@ RowLayout {
 
     spacing: units.smallSpacing
 
+    visible: playbarEngine.showSeekSlider
+
     Layout.fillWidth: true
     Layout.minimumHeight: implicitHeight + units.smallSpacing
 

@@ -29,7 +29,7 @@ IconWidget {
 
     readonly property bool muted: mpris2.volume.toFixed(1) <= 0.0
 
-    size: units.gridUnit
+    size: units.iconSizes.small
 
     svg: PlasmaCore.Svg {
         imagePath: 'icons/audio'
