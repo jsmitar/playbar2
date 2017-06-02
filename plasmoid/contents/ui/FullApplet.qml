@@ -76,4 +76,35 @@ Loader {
     onLoaded: {
         connectLayoutChangeRequests.start()
     }
+
+    Keys.onReleased: {
+        if (!event.modifiers) {
+            event.accepted = true
+
+            if (event.key === Qt.Key_Space || event.key === Qt.Key_K) {
+                root.action_playPause()
+            } else if (event.key === Qt.Key_P) {
+                root.action_previous()
+            } else if (event.key === Qt.Key_N) {
+                root.action_next()
+            } else if (event.key === Qt.Key_S) {
+                root.action_stop()
+            } else if (event.key === Qt.Key_Left || event.key === Qt.Key_J) {
+                //seek back 5s
+                mpris2.seek(Math.max(0, mpris2.position - 5))
+            } else if (event.key === Qt.Key_Right || event.key === Qt.Key_L) {
+                //seek forward 5s
+                mpris2.seek(Math.min(mpris2.length, mpris2.position + 5))
+            } else if (event.key === Qt.Key_Home) {
+                mpris2.seek(0)
+            } else if (event.key === Qt.Key_End) {
+                mpris2.seek(mpris2.length - 3)
+            } else if (event.key >= Qt.Key_0 && event.key <= Qt.Key_9) {
+                //jump to percentage, ie. 0 = beginnign, 1 = 10% of total length etc
+                mpris2.seek(mpris2.length * (event.key - Qt.Key_0) / 10)
+            } else {
+                event.accepted = false
+            }
+        }
+    }
 }
