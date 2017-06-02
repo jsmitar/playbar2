@@ -31,6 +31,8 @@ RowLayout {
 
     enabled: mpris2.sourceActive
 
+    visible: playbarEngine.showVolumeSlider
+
     Layout.minimumHeight: implicitHeight + units.smallSpacing
     Layout.fillWidth: true
 
