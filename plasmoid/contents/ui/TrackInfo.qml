@@ -75,7 +75,7 @@ GridLayout {
 
         text: mpris2.artist
         level: 3
-        opacity: playbarEngine.backgroundHint === playbar.noBackground ? 1.0 : 0.8
+        opacity: playbarEngine.backgroundHint === playbar.noBackground ? 0.9 : 0.6
 
         wrapMode: scrollArtist.scrolling ? Text.NoWrap : Text.WrapAnywhere
         elide: scrollArtist.scrolling ? Text.ElideNone : Text.ElideRight
@@ -110,7 +110,7 @@ GridLayout {
 
         text: mpris2.album
         level: 3
-        opacity: playbarEngine.backgroundHint === playbar.noBackground ? 1.0 : 0.8
+        opacity: playbarEngine.backgroundHint === playbar.noBackground ? 0.9 : 0.6
 
         wrapMode: scrollAlbum.scrolling ? Text.NoWrap : Text.WrapAnywhere
         elide: scrollAlbum.scrolling ? Text.ElideNone : Text.ElideRight

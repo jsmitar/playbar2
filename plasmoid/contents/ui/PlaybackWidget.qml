@@ -24,11 +24,9 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 PlaybackItem {
     id: playbackWidget
 
-    property int buttonsAppearance: playbarEngine.buttonsAppearance
-
     visible: true
 
-    buttonSize: units.iconSizes.medium
+    buttonSize: units.iconSizes.medium * 1.4
 
     implicitWidth: buttons.width
 
@@ -71,30 +69,17 @@ PlaybackItem {
             id: toolButton
             iconSource: icon
             visible: !(index === 2) | showStop
-            property int size: buttonSize
-            Layout.minimumWidth: size * 1.4
-            Layout.minimumHeight: size * 1.4
-        }
-    }
-
-    Component {
-        id: iconWidgetDelegate
-
-        IconWidget {
-            id: iconWidget
-            svg: PlasmaCore.Svg {
-                imagePath: 'icons/media'
-            }
-            iconSource: icon
-            visible: !(index === 2) | showStop
-            size: buttonSize
+            property int size: !showStop && index === 1 ? buttonSize * 1.6 : buttonSize
+            enabled: mpris2.sourceActive
+            Layout.minimumWidth: size
+            Layout.minimumHeight: size
         }
     }
 
     RowLayout {
         id: buttons
 
-        spacing: buttonsAppearance ? units.smallSpacing : units.largeSpacing
+        spacing: units.smallSpacing
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
@@ -103,7 +88,7 @@ PlaybackItem {
         Repeater {
             id: model
             model: playmodel
-            delegate: buttonsAppearance ? toolButtonDelegate : iconWidgetDelegate
+            delegate: toolButtonDelegate
 
             onItemAdded: {
                 switch (index) {
