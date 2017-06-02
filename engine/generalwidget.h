@@ -28,60 +28,60 @@
 #include "ui_generalconfig.h"
 
 class GeneralWidget : public QWidget {
-	Q_OBJECT
-  public:
-	GeneralWidget ( QWidget *parent );
-	virtual ~GeneralWidget();
-	
-  public:
-	inline int compactStyle() const {
-		Q_ASSERT ( m_ui.kcfg_CompactStyle->currentIndex() >= 0
-				   && m_ui.kcfg_CompactStyle->currentIndex() <= 2 );
-		return m_ui.kcfg_CompactStyle->currentIndex();
-	}
-	
-	inline bool showStop() const {
-		return m_ui.kcfg_ShowStop->isChecked();
-	}
-	
-	inline bool showSeekSlider() const {
-		return m_ui.kcfg_ShowSeekSlider->isChecked();
-	}
-	
-	inline bool showVolumeSlider() const {
-		return m_ui.kcfg_ShowVolumeSlider->isChecked();
-	}
-	
-	inline int backgroundHint() const {
-		if ( m_ui.kcfg_NoBackground->isChecked() )
-			return 0;
-		else if ( m_ui.kcfg_Normal->isChecked() )
-			return 1;
-			
-		return 2;
-	}
-	
-	inline QColor shadowColor() const {
-		return m_ui.kcfg_ShadowColor->color();
-	}
-	
-	inline bool noBackground() const {
-		return m_ui.kcfg_NoBackground->isChecked();
-	}
-	
-	inline bool normal() const {
-		return m_ui.kcfg_Normal->isChecked();
-	}
-	
-	inline bool translucent() const {
-		return m_ui.kcfg_Translucent->isChecked();
-	}
-	
-  Q_SIGNALS:
-	void shadowColorChanged ( const QColor &color );
-	
-  private:
-	mutable Ui::GeneralWidget m_ui;
+    Q_OBJECT
+public:
+    GeneralWidget(QWidget *parent);
+    virtual ~GeneralWidget();
+
+public:
+    inline int compactStyle() const {
+        Q_ASSERT(m_ui.kcfg_CompactStyle->currentIndex() >= 0
+                 && m_ui.kcfg_CompactStyle->currentIndex() <= 2);
+        return m_ui.kcfg_CompactStyle->currentIndex();
+    }
+
+    inline bool showStop() const {
+        return m_ui.kcfg_ShowStop->isChecked();
+    }
+
+    inline bool showSeekSlider() const {
+        return m_ui.kcfg_ShowSeekSlider->isChecked();
+    }
+
+    inline bool showVolumeSlider() const {
+        return m_ui.kcfg_ShowVolumeSlider->isChecked();
+    }
+
+    inline int backgroundHint() const {
+        if (m_ui.kcfg_NoBackground->isChecked())
+            return 0;
+        else if (m_ui.kcfg_Normal->isChecked())
+            return 1;
+
+        return 2;
+    }
+
+    inline QColor shadowColor() const {
+        return m_ui.kcfg_ShadowColor->color();
+    }
+
+    inline bool noBackground() const {
+        return m_ui.kcfg_NoBackground->isChecked();
+    }
+
+    inline bool normal() const {
+        return m_ui.kcfg_Normal->isChecked();
+    }
+
+    inline bool translucent() const {
+        return m_ui.kcfg_Translucent->isChecked();
+    }
+
+Q_SIGNALS:
+    void shadowColorChanged(const QColor &color);
+
+private:
+    mutable Ui::GeneralWidget m_ui;
 };
 
 #endif // GENERALWIDGET_H

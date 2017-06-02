@@ -30,26 +30,26 @@
 #include "generalwidget.h"
 
 class ConfigDialog : public KConfigDialog {
-	Q_OBJECT
-  public:
-	ConfigDialog ( KActionCollection *collection, QWidget *parent = nullptr );
-	
-	virtual ~ConfigDialog();
-	
-  protected Q_SLOTS:
-	void updateSettings();
-	void updateColorSettings();
-	
-  private:
-	KSharedConfigPtr config() const;
-	
-  private:
-	GeneralWidget *m_generalPage;
-	KShortcutsEditor *m_shortcutsPage;
-	
-  public:
-	static constexpr const char *CONFIG_NAME { "PlayBar Settings" };
-	
+    Q_OBJECT
+public:
+    ConfigDialog(KActionCollection *collection, QWidget *parent = nullptr);
+
+    virtual ~ConfigDialog();
+
+protected Q_SLOTS:
+    void updateSettings();
+    void updateColorSettings();
+
+private:
+    KSharedConfigPtr config() const;
+
+private:
+    GeneralWidget *m_generalPage;
+    KShortcutsEditor *m_shortcutsPage;
+
+public:
+    static constexpr const char *CONFIG_NAME { "PlayBar Settings" };
+
 };
 
 #endif // CONFIGDIALOG_H
