@@ -112,12 +112,10 @@ PlasmaCore.DataSource {
 
     onSourceActiveChanged: {
         if (sourceActive && identity)
-            playbar.setActions(connectedSources[0], identity)
-        else {
-            playbar.removeActions()
-            length = 0
-            position = 0
-        }
+            return;
+
+        length = 0
+        position = 0
     }
 
     onLengthChanged: startOperation('GetPosition')
