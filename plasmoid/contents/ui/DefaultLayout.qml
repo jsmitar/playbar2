@@ -33,8 +33,6 @@ GridLayout {
     rowSpacing: units.smallSpacing
     columnSpacing: units.largeSpacing
 
-    readonly property bool ratioIsSquare: width / height < 1.5
-
     Layout.fillWidth: true
     Layout.fillHeight: true
     Layout.minimumWidth: units.iconSizes.enormous * 3
@@ -46,19 +44,8 @@ GridLayout {
 
     state: 'square'
 
-    states: State {
-        name: 'square'
-        when: page.ratioIsSquare
-        PropertyChanges {
-            target: controls
-            Layout.columnSpan: 1
-            Layout.column: 1
-        }
-        PropertyChanges {
-            target: cover
-            Layout.rowSpan: 2
-        }
-    }
+    onWidthChanged: if (height + units.iconSizes.medium > width)
+                        shouldChangeLayout()
 
     CoverArt {
         id: cover
