@@ -84,6 +84,8 @@ Flow {
             onClicked: {
                 if (mpris2.sourceActive)
                     plasmoid.expanded = !plasmoid.expanded
+                else
+                    action_player0()
             }
         }
         Timer {

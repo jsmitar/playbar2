@@ -25,8 +25,6 @@ import "../code/utils.js" as Utils
 Item {
     id: root
 
-
-
     //! dataengine
     PlasmaCore.DataSource {
         id: playbarEngine
@@ -79,6 +77,33 @@ Item {
 
         function hasSource(key) {
             return data[source]
+        }
+    }
+
+    PlasmaCore.DataSource {
+        id: executable
+        engine: 'executable'
+
+        property var _start: undefined
+
+        onSourceRemoved: {
+            if (_start) {
+                _start()
+                _start = undefined
+            }
+        }
+
+        function startPlayer(index) {
+            var source = mpris2.recentSources[index].source
+
+            if (connectedSources.length > 0) {
+                _start = function() {
+                    connectSource(source)
+                }
+                connectedSources = []
+            } else {
+                connectSource(source)
+            }
         }
     }
     //! dataengine
@@ -157,6 +182,16 @@ Item {
         playbarEngine.showSettings()
     }
 
+    function action_player0() {
+        executable.startPlayer(0)
+    }
+    function action_player1() {
+        executable.startPlayer(1)
+    }
+    function action_player2() {
+        executable.startPlayer(2)
+    }
+
     Component.onCompleted: {
         plasmoid.formFactorChanged()
         plasmoid.removeAction('configure')
@@ -166,9 +201,12 @@ Item {
     QtObject {
         id: internal
 
-        property string icon: mpris2.artUrl != '' ? Qt.resolvedUrl(
-                                                        mpris2.artUrl) : 'media-playback-start'
-        property string title: mpris2.title != '' ? mpris2.title : 'PlayBar'
+        property string icon: mpris2.artUrl != '' ? Qt.resolvedUrl(mpris2.artUrl)
+            : mpris2.recentSources.length > 0 ? mpris2.recentSources[0].icon : 'media-playback-start'
+
+        property string title: mpris2.title != '' ? mpris2.title
+            : mpris2.recentSources.length > 0 ? mpris2.recentSources[0].identity : 'PlayBar'
+
         property string artist: mpris2.artist != '' ? i18n('<b>By</b> %1 ',
                                                            mpris2.artist) : ''
         property string album: mpris2.album != '' ? i18n('<b>On</b> %1',
@@ -196,28 +234,17 @@ Item {
         readonly property int translucent: PlasmaCore.Types.TranslucentBackground
 
     }
-        Plasmoid.onContextualActionsAboutToShow: {
-            plasmoid.clearActions()
 
-            var icon = mpris2.currentSource
 
-            if (icon.match('vlc'))
-                icon = 'vlc'
+    Plasmoid.onContextualActionsAboutToShow: {
+        plasmoid.clearActions()
 
-            switch (icon) {
-            case 'spotify':
-                icon = 'spotify-client'
-                break
-            case 'clementine':
-                icon = 'application-x-clementine'
-                break
-            case 'yarock':
-                icon = 'application-x-yarock'
-                break
-            }
+        var icon = mpris2.icon(mpris2.currentSource)
 
-            if (mpris2.sourceActive) {
-                plasmoid.setAction('raise', i18n('Open %1', mpris2.identity), icon)
+        if (mpris2.sourceActive) {
+            plasmoid.setAction('raise', i18n('Open %1', mpris2.identity), icon)
+
+            if (playbarEngine.compactStyle !== playbar.playbackButtons) {
                 plasmoid.setAction('previous', i18n('Play previous track'), 'media-skip-backward')
 
                 if (mpris2.playbackStatus === 'Playing')
@@ -226,12 +253,22 @@ Item {
                     plasmoid.setAction('playPause', i18n('Play'), 'media-playback-start')
 
                 plasmoid.setAction('next', i18n('Play next track'), 'media-skip-forward')
-                plasmoid.setAction('stop', i18n('Stop'), 'media-playback-stop')
-                plasmoid.setAction('nextSource', i18n('Next multimedia source'), 'go-next')
-                plasmoid.setActionSeparator('sep1')
-                plasmoid.setAction('quit', i18n('Quit'), 'application-exit')
             }
 
-           plasmoid.setAction('configure', i18n('Configure PlayBar'), 'configure', 'alt+d, s')
+            plasmoid.setAction('stop', i18n('Stop'), 'media-playback-stop')
+            plasmoid.setAction('nextSource', i18n('Next multimedia source'), 'go-next')
+            plasmoid.setActionSeparator('sep1')
+            plasmoid.setAction('quit', i18n('Quit'), 'application-exit')
+        } else {
+            var sources = mpris2.recentSources
+
+            for (var i = 0; i < sources.length; i++) {
+                plasmoid.setAction('player' + i, sources[i].identity, sources[i].icon)
+            }
+            if (sources.length > 0)
+                plasmoid.setActionSeparator('sep1')
         }
+
+        plasmoid.setAction('configure', i18n('Configure PlayBar'), 'configure', 'alt+d, s')
+    }
 }

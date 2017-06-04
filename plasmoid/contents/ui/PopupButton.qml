@@ -26,8 +26,6 @@ IconWidget {
 
     property bool controlsVisible: false
 
-    enabled: mpris2.sourceActive
-
     svg: svgSource.arrows
 
     iconSource: 'down-arrow'

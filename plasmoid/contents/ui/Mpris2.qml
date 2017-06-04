@@ -35,9 +35,11 @@ PlasmaCore.DataSource {
 
     property string currentSource: ''
 
+    property var recentSources: JSON.parse(plasmoid.configuration.RecentSources)
+
     readonly property var metadata: currentSource ? data[currentSource].Metadata : undefined
 
-    readonly property string identity: currentSource ? toCapitalizeIdentity() : ''
+    readonly property string identity: currentSource ? capitalize(source) : ''
 
     readonly property string playbackStatus: currentSource
                                              && sourceActive ? data[currentSource].PlaybackStatus : 'Stopped'
@@ -71,6 +73,7 @@ PlasmaCore.DataSource {
     readonly property bool canRaise: currentSource ? data[currentSource].CanRaise : false
 
     readonly property real volume: currentSource ? data[currentSource].Volume : 0
+
 
     // 	seconds
     property int length: 0
@@ -108,7 +111,10 @@ PlasmaCore.DataSource {
         }
     }
 
-    Component.onCompleted: nextSource()
+    Component.onCompleted: {
+        nextSource()
+
+    }
 
     onSourceActiveChanged: {
         if (sourceActive && identity)
@@ -164,8 +170,8 @@ PlasmaCore.DataSource {
     onSourceConnected: {
         setService(source)
         currentSource = source
-        // debug( 'Source connected', source )
-        // debug( 'Valid engine', valid )
+        debug('Source connected', source)
+        addRecentSource(source)
     }
 
     onSourceDisconnected: {
@@ -240,8 +246,60 @@ PlasmaCore.DataSource {
         return value
     }
 
-    function toCapitalizeIdentity() {
+    function capitalize(source) {
         var i = data[source]['Identity']
         return i[0].toUpperCase() + i.substr(1)
+    }
+
+    function icon(source) {
+        var icon = source
+
+        if (icon.match('vlc'))
+            icon = 'vlc'
+
+            switch (icon) {
+                case 'spotify':
+                    icon = 'spotify-client'
+                    break
+                case 'clementine':
+                    icon = 'application-x-clementine'
+                    break
+                case 'yarock':
+                    icon = 'application-x-yarock'
+                    break
+            }
+
+        return icon
+    }
+
+    function addRecentSource(source) {
+        if (plasmoid.configuration.RecentSources != '[]')
+            recentSources = JSON.parse(plasmoid.configuration.RecentSources)
+
+        if (recentSources.length == 0)
+            recentSources = []
+
+        var index = function() {
+            for (var i = 0; i < recentSources.length; i++) {
+                if (recentSources[i].source == source)
+                    return i
+            }
+            return -1
+        }()
+
+        var elem
+        if (index !== -1)
+            elem = recentSources.splice(index, 1)[0]
+        else
+            elem = {source: source, identity: capitalize(source), icon: icon(source)}
+
+        console.debug('recentSource: ', JSON.stringify(elem))
+        recentSources.unshift(elem)
+
+        if (recentSources.length > 3)
+            recentSources.pop()
+
+        plasmoid.configuration.RecentSources = JSON.stringify(recentSources)
+        console.log("recentSources:", plasmoid.configuration.RecentSources)
     }
 }

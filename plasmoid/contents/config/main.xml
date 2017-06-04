@@ -11,5 +11,8 @@
 		<entry name="FullAppletLayout" type="String">
 			<default>DefaultLayout.qml</default>
 		</entry>
+		<entry name="RecentSources" type="String">
+			<default>""</default>
+		</entry>
     </group>
 </kcfg>
