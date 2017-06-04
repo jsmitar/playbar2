@@ -25,12 +25,19 @@ Flow {
     flow: vertical ? Flow.TopToBottom : Flow.LeftToRight
     spacing: 0
 
-    Layout.minimumWidth: !vertical ? popupContainer.width + loader.width : units.iconSizes.small
-    Layout.minimumHeight: vertical ? popupContainer.height + loader.height : units.iconSizes.small
+    Layout.minimumWidth: !vertical ? popupContainer.width + loader.width : units.iconSizes.smallMedium
+    Layout.minimumHeight: vertical ? popupContainer.height + loader.height : units.iconSizes.smallMedium
 
-    property int _buttonSize: vertical ? (parent ? parent.width : units.iconSizes.small) : (parent ? parent.height : units.iconSizes.small)
+    readonly property int _minSize: vertical ? (parent ? parent.width : units.iconSizes.small)
+                                             : (parent ? parent.height : units.iconSizes.small)
 
-    property bool loaded: loader.status === Loader.Ready
+    readonly property int _iconSize:
+        _minSize < units.iconSizes.smallMedium ? units.iconSizes.small : units.iconSizes.smallMedium
+
+    readonly property size iconSize: vertical ? Qt.size(Math.max(_minSize, _iconSize), _iconSize)
+                                              : Qt.size(_iconSize, Math.max(_minSize, _iconSize))
+
+    readonly property bool loaded: loader.status === Loader.Ready
 
     Loader {
         id: loader
@@ -52,15 +59,15 @@ Flow {
 
         onLoaded: {
             item.buttonSize = Qt.binding(function () {
-                return playbackControl._buttonSize
+                return iconSize
             })
         }
     }
 
     Item {
         id: popupContainer
-        width: _buttonSize
-        height: _buttonSize
+        width: !loaded || !loader.item.visible ? _minSize : iconSize.width
+        height: !loaded || !loader.item.visible ? _minSize : iconSize.height
 
         VolumeWheel {
             anchors.fill: parent
@@ -71,8 +78,7 @@ Flow {
 
             controlsVisible: loaded && loader.item.visible
 
-            size: loaded
-                  && loader.item.visible ? _buttonSize * 0.5 : _buttonSize * 0.9
+            size: loaded && loader.item.visible ? _iconSize - 4 : _iconSize
             opened: plasmoid.expanded
             anchors.centerIn: parent
             onClicked: {

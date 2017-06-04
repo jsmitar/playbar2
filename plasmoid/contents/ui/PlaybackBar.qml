@@ -36,9 +36,13 @@ PlaybackItem {
             return
 
         if (playing)
-            model.itemAt(1).iconSource = 'media-playback-pause'
+            model.itemAt(1).children[0].iconSource = 'media-playback-pause'
         else
-            model.itemAt(1).iconSource = 'media-playback-start'
+            model.itemAt(1).children[0].iconSource = 'media-playback-start'
+    }
+
+    VolumeWheel {
+        anchors.fill: parent
     }
 
     ListModel {
@@ -61,14 +65,22 @@ PlaybackItem {
     Component {
         id: iconWidgetDelegate
 
-        IconWidget {
-            svg: PlasmaCore.Svg {
-                imagePath: 'icons/media'
-            }
-            iconSource: icon
+        Item {
+            width: buttonSize.width
+            height: buttonSize.height
             visible: !(index === 2) | showStop
-            enabled: mpris2.sourceActive
-            size: buttonSize
+
+            IconWidget {
+                id: button
+                svg: PlasmaCore.Svg {
+                    imagePath: 'icons/media'
+                }
+                iconSource: icon
+                enabled: mpris2.sourceActive
+
+                size: Math.min(buttonSize.width, buttonSize.height)
+                anchors.centerIn: parent
+            }
         }
     }
 
@@ -95,18 +107,18 @@ PlaybackItem {
             onItemAdded: {
                 switch (index) {
                 case 0:
-                    item.clicked.connect(previous)
+                    item.children[0].clicked.connect(previous)
                     break
                 case 1:
-                    item.clicked.connect(playPause)
+                    item.children[0].clicked.connect(playPause)
                     //NOTE: update icon playing state
                     playingChanged()
                     break
                 case 2:
-                    item.clicked.connect(stop)
+                    item.children[0].clicked.connect(stop)
                     break
                 case 3:
-                    item.clicked.connect(next)
+                    item.children[0].clicked.connect(next)
                     break
                 }
             }

@@ -26,7 +26,7 @@ PlaybackItem {
 
     visible: true
 
-    buttonSize: units.iconSizes.medium * 1.4
+    buttonSize: Qt.size(units.iconSizes.medium * 1.4, units.iconSizes.medium * 1.4)
 
     implicitWidth: buttons.width
 
@@ -69,7 +69,7 @@ PlaybackItem {
             id: toolButton
             iconSource: icon
             visible: !(index === 2) | showStop
-            property int size: !showStop && index === 1 ? buttonSize * 1.6 : buttonSize
+            property int size: !showStop && index === 1 ? buttonSize.width * 1.4 : buttonSize.width
             enabled: mpris2.sourceActive
             Layout.minimumWidth: size
             Layout.minimumHeight: size

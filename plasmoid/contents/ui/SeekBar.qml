@@ -32,6 +32,9 @@ PlaybackItem {
 
     height: visible ? control.height : 0
 
+    readonly property int minWidth: Math.min(buttonSize.width, buttonSize.height)
+    readonly property int maxWidth: Math.max(buttonSize.width, buttonSize.height)
+
     onPlayingChanged: {
         if (playing)
             button.iconSource = 'media-playback-pause'
@@ -46,8 +49,8 @@ PlaybackItem {
         spacing: 0
 
         Item {
-            width: buttonSize
-            height: buttonSize
+            width: buttonSize.width
+            height: buttonSize.height
 
             IconWidget {
                 id: button
@@ -58,7 +61,7 @@ PlaybackItem {
                 iconSource: 'media-playback-start'
                 enabled: mpris2.sourceActive
 
-                size: buttonSize * 0.8
+                size: minWidth
                 onClicked: seekBar.playPause()
                 anchors.centerIn: parent
             }
@@ -77,8 +80,7 @@ PlaybackItem {
             value: 0
             stepSize: 1
             updateValueWhileDragging: true
-
-            property int size: mpris2.playbackStatus === 'Stopped' ? buttonSize : Math.min(buttonSize * 3.5, 150)
+            property int size: mpris2.playbackStatus === 'Stopped' ? 50 : Math.max(150 - maxWidth, 50)
 
             Behavior on size {
                 SequentialAnimation {
@@ -99,15 +101,15 @@ PlaybackItem {
                     ScriptAction {
                         script: setNotVisible()
                         function setNotVisible() {
-                            if (mpris2.playbackStatus === 'Stopped')
+                            if (mpris2.playbackStatus === 'Stopped' || slider.size <= 50)
                                 slider.visible = false
                         }
                     }
                 }
             }
 
-            width: vertical ? buttonSize : size
-            height: vertical ? size : buttonSize
+            width: vertical ? buttonSize.width : size
+            height: vertical ? size : buttonSize.height
             enabled: maximumValue != 0
 
             onPressedChanged: {

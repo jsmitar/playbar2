@@ -26,7 +26,7 @@ Item {
     readonly property bool showStop: mpris2.currentSource
                                      === 'spotify' ? false : playbarEngine.showStop
 
-    property int buttonSize: units.iconSizes.small
+    property size buttonSize: Qt.size(units.iconSizes.small, units.iconSizes.small)
 
     enabled: mpris2.canControl && mpris2.sourceActive
 

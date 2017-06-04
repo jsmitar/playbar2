@@ -35,6 +35,9 @@ PlaybackItem {
 
     height: visible ? control.height : 0
 
+    readonly property int minWidth: Math.min(buttonSize.width, buttonSize.height)
+    readonly property int maxWidth: Math.max(buttonSize.width, buttonSize.height)
+
     onPlayingChanged: {
         if (playing)
             button.iconSource = 'media-playback-pause'
@@ -52,8 +55,10 @@ PlaybackItem {
         flow: vertical ? Flow.TopToBottom : Flow.LeftToRight
 
         Item {
-            width: buttonSize
-            height: buttonSize
+            width: buttonSize.width
+            height: buttonSize.height
+
+            property alias iconSource: button.iconSource
 
             IconWidget {
                 id: button
@@ -64,7 +69,7 @@ PlaybackItem {
                 iconSource: 'media-playback-start'
                 enabled: mpris2.sourceActive
 
-                size: buttonSize * 0.8
+                size: Math.min(buttonSize.width, buttonSize.height)
                 onClicked: infoBar.playPause()
                 anchors.centerIn: parent
             }
@@ -72,11 +77,11 @@ PlaybackItem {
 
         Item {
             id: content
-            width: vertical ? buttonSize : size
-            height: vertical ? size : buttonSize
+            width: vertical ? buttonSize.width : size
+            height: vertical ? size : buttonSize.height
             clip: true
 
-            property int size: trackinfo.text ? Math.min(buttonSize * 3.5, 150) : 0
+            property int size: trackinfo.text ? Math.max(160 - maxWidth, 0) : 0
 
             Behavior on size {
                 NumberAnimation {
@@ -95,13 +100,13 @@ PlaybackItem {
                 id: trackinfo
 
                 transform: Rotation {
-                    readonly property int _origin: (leftEdge ? content.size : buttonSize) / 2
+                    readonly property int _origin: (leftEdge ? content.size : minWidth) / 2
                     origin.x: _origin; origin.y: _origin
                     angle: vertical ? (leftEdge ? 270 : 90) : 0
                 }
 
                 width: content.size
-                height: buttonSize
+                height: maxWidth
 
                 text: mpris2.title && mpris2.artist ? i18n('%1 <b>By</b> %2', mpris2.title, mpris2.artist)
                         : (mpris2.title ? mpris2.title : '')
