@@ -53,10 +53,8 @@ sudo apt-get install plasma-widget-playbar2
 yaourt kdeplasma-applets-playbar2
 ```
 
-## Configure keyboard shortcuts
-PlayBar also supports keyboard shortcuts and these come with a default configuration, but if you want change you must go to preferences of PlayBar.
-
-![Shortcuts](https://raw.githubusercontent.com/audoban/PlayBar2/master/playbar_keys.png)
+## Configure your global shortcuts
+PlayBar also supports keyboard shortcuts, if you want change you must go to preferences of PlayBar.
 
 # Help me to translate!
 **If you want to add a language, please follow this**  __[Thread.](https://github.com/audoban/PlayBar2/issues/1)__
@@ -69,5 +67,3 @@ PlayBar also supports keyboard shortcuts and these come with a default configura
 - ![Konstantin](https://github.com/KottV) Russian translation
 - ![dkadioglu](https://github.com/dkadioglu) German translation
 - ![tillschaefer](https://github.com/tillschaefer) Gentoo ebuild
-
-# See the ![Milestones](https://github.com/audoban/PlayBar2/milestones)!
