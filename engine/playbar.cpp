@@ -123,6 +123,7 @@ const DataEngine::Data &PlayBar::data()
     config->read();
 
     m_data->insert("CompactStyle",     config->compactStyle());
+    m_data->insert("ExpandedStyle",    config->expandedStyle());
     m_data->insert("ShowStop",         config->showStop());
     m_data->insert("ShowVolumeSlider", config->showVolumeSlider());
     m_data->insert("ShowSeekSlider",   config->showSeekSlider());

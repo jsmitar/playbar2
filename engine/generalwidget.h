@@ -40,6 +40,10 @@ public:
         return m_ui.kcfg_CompactStyle->currentIndex();
     }
 
+    inline int expandedStyle() const {
+        return m_ui.kcfg_ExpandedStyle->currentIndex();
+    }
+
     inline bool showStop() const {
         return m_ui.kcfg_ShowStop->isChecked();
     }

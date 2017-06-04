@@ -18,6 +18,13 @@
               </choices>
               <default>1</default>
 		  </entry>
+		  <entry name="ExpandedStyle" type="Enum">
+              <choices>
+                  <choice name="Horizontal"/>
+                  <choice name="Vertical"/>
+              </choices>
+              <default>1</default>
+		  </entry>
           <entry name="ShowStop" type="Bool">
 			   <default>false</default>
           </entry>
