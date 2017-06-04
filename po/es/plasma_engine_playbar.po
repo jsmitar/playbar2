@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
-"POT-Creation-Date: 2017-06-02 02:54-0500\n"
-"PO-Revision-Date: 2017-06-02 03:08-0500\n"
+"POT-Creation-Date: 2017-06-04 02:51-0500\n"
+"PO-Revision-Date: 2017-06-04 02:53-0500\n"
 "Last-Translator: Smith Ar <audoban@openmailbox.org>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
 "Language: es\n"
@@ -24,7 +24,7 @@ msgid "Compact"
 msgstr "Compacto:"
 
 #. i18n: file: ../../engine/generalconfig.ui:46
-#. i18n: ectx: property (text), widget (QLabel, label_Style)
+#. i18n: ectx: property (text), widget (QLabel, label_compactLayout)
 #: ../../rc.cpp:6
 msgid "Layout:"
 msgstr "Diseño:"
@@ -59,51 +59,75 @@ msgstr "Reproducir/Pausar y información de pista"
 msgid "Expanded"
 msgstr "Expandido:"
 
-#. i18n: file: ../../engine/generalconfig.ui:110
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowStop)
+#. i18n: file: ../../engine/generalconfig.ui:116
+#. i18n: ectx: property (text), widget (QLabel, label_Layout)
 #: ../../rc.cpp:24
+msgid "Preferred layout:"
+msgstr "Diseño preferido:"
+
+#. i18n: file: ../../engine/generalconfig.ui:148
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ExpandedStyle)
+#: ../../rc.cpp:27
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#. i18n: file: ../../engine/generalconfig.ui:153
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ExpandedStyle)
+#: ../../rc.cpp:30
+msgid "Vertical"
+msgstr "Vertical"
+
+#. i18n: file: ../../engine/generalconfig.ui:170
+#. i18n: ectx: property (text), widget (QLabel, label_Controls)
+#: ../../rc.cpp:33
+msgid "Controls:"
+msgstr "Controles:"
+
+#. i18n: file: ../../engine/generalconfig.ui:189
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowStop)
+#: ../../rc.cpp:36
 msgid "Show stop button"
 msgstr "Mostrar botón de stop"
 
-#. i18n: file: ../../engine/generalconfig.ui:117
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowVolumeSlider)
-#: ../../rc.cpp:27
-msgid "Show volume slider"
-msgstr "Mostrar deslizador de volumen"
-
-#. i18n: file: ../../engine/generalconfig.ui:124
+#. i18n: file: ../../engine/generalconfig.ui:196
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowSeekSlider)
-#: ../../rc.cpp:30
+#: ../../rc.cpp:39
 msgid "Show seek slider"
 msgstr "Mostrar barra de búsqueda"
 
-#. i18n: file: ../../engine/generalconfig.ui:146
-#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BackgroundHint)
-#: ../../rc.cpp:33
-msgid "Background hint"
-msgstr "Sugerencias de fondo"
+#. i18n: file: ../../engine/generalconfig.ui:203
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowVolumeSlider)
+#: ../../rc.cpp:42
+msgid "Show volume slider"
+msgstr "Mostrar deslizador de volumen"
 
-#. i18n: file: ../../engine/generalconfig.ui:164
+#. i18n: file: ../../engine/generalconfig.ui:228
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BackgroundHint)
+#: ../../rc.cpp:45
+msgid "Background hint (Only desktop view)"
+msgstr "Sugerencias de fondo (Solo vista de escritorio)"
+
+#. i18n: file: ../../engine/generalconfig.ui:246
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_NoBackground)
-#: ../../rc.cpp:36
+#: ../../rc.cpp:48
 msgid "No ba&ckground"
 msgstr "Sin fondo"
 
-#. i18n: file: ../../engine/generalconfig.ui:237
+#. i18n: file: ../../engine/generalconfig.ui:319
 #. i18n: ectx: property (text), widget (QLabel, label_ShadowColor)
-#: ../../rc.cpp:39
+#: ../../rc.cpp:51
 msgid "Shadow color:"
 msgstr "Color de sombra:"
 
-#. i18n: file: ../../engine/generalconfig.ui:269
+#. i18n: file: ../../engine/generalconfig.ui:351
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_Normal)
-#: ../../rc.cpp:42
+#: ../../rc.cpp:54
 msgid "&Normal"
 msgstr "Normal"
 
-#. i18n: file: ../../engine/generalconfig.ui:288
+#. i18n: file: ../../engine/generalconfig.ui:370
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_Translucent)
-#: ../../rc.cpp:45
+#: ../../rc.cpp:57
 msgid "Transl&ucent"
 msgstr "Translúcido"
 
@@ -145,14 +169,14 @@ msgstr "Pista anterior"
 msgid "Toggle window media player"
 msgstr "Conmutar la ventana del reproductor"
 
+#~ msgid "Background hint"
+#~ msgstr "Sugerencias de fondo"
+
 #~ msgid "Playback controls"
 #~ msgstr "Controles de reproducción"
 
 #~ msgid "Default"
 #~ msgstr "Por defecto"
-
-#~ msgid "Vertical"
-#~ msgstr "Vertical"
 
 #~ msgid "Appearance of controls"
 #~ msgstr "Apariencia de los controles"
@@ -191,12 +215,6 @@ msgstr "Conmutar la ventana del reproductor"
 #, fuzzy
 #~ msgid "ToolButton"
 #~ msgstr "B&otón de herramientas"
-
-#~ msgid "Background hints"
-#~ msgstr "Sugerencias de fondo"
-
-#~ msgid "Controls on bar"
-#~ msgstr "Controles en linea"
 
 #~ msgid "Buttons appareance"
 #~ msgstr "Apariencia de los botones"

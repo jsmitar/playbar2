@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PlayBar2\n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
-"POT-Creation-Date: 2017-06-02 02:54-0500\n"
+"POT-Creation-Date: 2017-06-04 02:51-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgid "Compact"
 msgstr ""
 
 #. i18n: file: ../../engine/generalconfig.ui:46
-#. i18n: ectx: property (text), widget (QLabel, label_Style)
+#. i18n: ectx: property (text), widget (QLabel, label_compactLayout)
 #: ../../rc.cpp:6
 msgid "Layout:"
 msgstr ""
@@ -59,51 +59,75 @@ msgstr ""
 msgid "Expanded"
 msgstr ""
 
-#. i18n: file: ../../engine/generalconfig.ui:110
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowStop)
+#. i18n: file: ../../engine/generalconfig.ui:116
+#. i18n: ectx: property (text), widget (QLabel, label_Layout)
 #: ../../rc.cpp:24
+msgid "Preferred layout:"
+msgstr ""
+
+#. i18n: file: ../../engine/generalconfig.ui:148
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ExpandedStyle)
+#: ../../rc.cpp:27
+msgid "Horizontal"
+msgstr ""
+
+#. i18n: file: ../../engine/generalconfig.ui:153
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ExpandedStyle)
+#: ../../rc.cpp:30
+msgid "Vertical"
+msgstr ""
+
+#. i18n: file: ../../engine/generalconfig.ui:170
+#. i18n: ectx: property (text), widget (QLabel, label_Controls)
+#: ../../rc.cpp:33
+msgid "Controls:"
+msgstr ""
+
+#. i18n: file: ../../engine/generalconfig.ui:189
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowStop)
+#: ../../rc.cpp:36
 msgid "Show stop button"
 msgstr ""
 
-#. i18n: file: ../../engine/generalconfig.ui:117
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowVolumeSlider)
-#: ../../rc.cpp:27
-msgid "Show volume slider"
-msgstr ""
-
-#. i18n: file: ../../engine/generalconfig.ui:124
+#. i18n: file: ../../engine/generalconfig.ui:196
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowSeekSlider)
-#: ../../rc.cpp:30
+#: ../../rc.cpp:39
 msgid "Show seek slider"
 msgstr ""
 
-#. i18n: file: ../../engine/generalconfig.ui:146
-#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BackgroundHint)
-#: ../../rc.cpp:33
-msgid "Background hint"
+#. i18n: file: ../../engine/generalconfig.ui:203
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowVolumeSlider)
+#: ../../rc.cpp:42
+msgid "Show volume slider"
 msgstr ""
 
-#. i18n: file: ../../engine/generalconfig.ui:164
+#. i18n: file: ../../engine/generalconfig.ui:228
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_BackgroundHint)
+#: ../../rc.cpp:45
+msgid "Background hint (Only desktop view)"
+msgstr ""
+
+#. i18n: file: ../../engine/generalconfig.ui:246
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_NoBackground)
-#: ../../rc.cpp:36
+#: ../../rc.cpp:48
 msgid "No ba&ckground"
 msgstr ""
 
-#. i18n: file: ../../engine/generalconfig.ui:237
+#. i18n: file: ../../engine/generalconfig.ui:319
 #. i18n: ectx: property (text), widget (QLabel, label_ShadowColor)
-#: ../../rc.cpp:39
+#: ../../rc.cpp:51
 msgid "Shadow color:"
 msgstr ""
 
-#. i18n: file: ../../engine/generalconfig.ui:269
+#. i18n: file: ../../engine/generalconfig.ui:351
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_Normal)
-#: ../../rc.cpp:42
+#: ../../rc.cpp:54
 msgid "&Normal"
 msgstr ""
 
-#. i18n: file: ../../engine/generalconfig.ui:288
+#. i18n: file: ../../engine/generalconfig.ui:370
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_Translucent)
-#: ../../rc.cpp:45
+#: ../../rc.cpp:57
 msgid "Transl&ucent"
 msgstr ""
 
