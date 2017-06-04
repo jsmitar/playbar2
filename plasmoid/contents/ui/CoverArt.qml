@@ -36,7 +36,7 @@ Item {
         anchors.fill: cover
         source: 'nocover'
         smooth: true
-        opacity: 0.3
+        opacity: mpris2.sourceActive ? 1 : 0.3
         visible: cover.status === Image.Null || cover.status === Image.Error
     }
 
