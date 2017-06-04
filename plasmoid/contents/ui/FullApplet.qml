@@ -47,6 +47,31 @@ Loader {
     signal loadDefaultLayout
     signal loadVerticalLayout
 
+    Connections {
+        target: playbarEngine
+        enabled: plasmoid.formFactor !== PlasmaCore.Types.Planar
+
+        onExpandedStyleChanged: {
+            if (playbarEngine.expandedStyle === playbar.horizontalLayout) {
+                plasmoid.configuration.FullAppletLayout = 'DefaultLayout.qml'
+            } else {
+                plasmoid.configuration.FullAppletLayout = 'VerticalLayout.qml'
+            }
+
+            plasmoid.expanded = false
+            fullApplet.sourceComponent = undefined
+            connectLayoutChangeRequests.start()
+        }
+    }
+
+    Connections {
+        target: playbarEngine
+        enabled: plasmoid.formFactor !== PlasmaCore.Types.Planar
+
+        onShowVolumeSliderChanged: playbarEngine.expandedStyleChanged()
+        onShowSeekSliderChanged: playbarEngine.expandedStyleChanged()
+    }
+
     onLoadDefaultLayout: {
         if (item)
             item.shouldChangeLayout.disconnect(loadDefaultLayout)
@@ -63,13 +88,19 @@ Loader {
         id: connectLayoutChangeRequests
         running: false
         repeat: false
-        interval: 100
+        interval: 300
+
         onTriggered: {
-            if (item.objectName === 'DefaultLayout') {
-                item.shouldChangeLayout.connect(loadVerticalLayout)
-            } else {
-                item.shouldChangeLayout.connect(loadDefaultLayout)
+            if (item) {
+                if (item.objectName === 'DefaultLayout') {
+                    item.shouldChangeLayout.connect(loadVerticalLayout)
+                } else {
+                    item.shouldChangeLayout.connect(loadDefaultLayout)
+                }
             }
+
+            if (plasmoid.formFactor !== PlasmaCore.Types.Planar)
+                source = plasmoid.configuration.FullAppletLayout
         }
     }
 

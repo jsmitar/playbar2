@@ -38,6 +38,9 @@ Item {
         readonly property int compactStyle: hasSource('CompactStyle')
             ? data[source]['CompactStyle'] : playbar.icon
 
+        readonly property int expandedStyle: hasSource('ExpandedStyle')
+            ? data[source]['ExpandedStyle'] : playbar.horizontalLayout
+
         readonly property bool showStop: hasSource('ShowStop')
             ? data[source]['ShowStop'] : false
 
@@ -184,7 +187,7 @@ Item {
         readonly property int trackinfo: 3
 
         // ENUM: ExpandedStyle
-        readonly property int defaultLayout: 0
+        readonly property int horizontalLayout: 0
         readonly property int verticalLayout: 1
 
         // ENUM: BackgroundHint

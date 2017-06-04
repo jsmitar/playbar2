@@ -44,8 +44,13 @@ GridLayout {
 
     state: 'square'
 
-    onWidthChanged: if (height + units.iconSizes.medium > width)
-                        shouldChangeLayout()
+    Connections {
+        target: page
+        enabled: plasmoid.formFactor === PlasmaCore.Types.Planar
+
+        onWidthChanged: if (height + units.iconSizes.medium > width)
+                            shouldChangeLayout()
+    }
 
     CoverArt {
         id: cover
