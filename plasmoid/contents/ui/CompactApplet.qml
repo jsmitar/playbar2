@@ -37,7 +37,7 @@ Flow {
     readonly property size iconSize: vertical ? Qt.size(Math.max(_minSize, _iconSize), _iconSize)
                                               : Qt.size(_iconSize, Math.max(_minSize, _iconSize))
 
-    readonly property int popupIconSize: units.roundToIconSize(playbarEngine.compactStyle !== playbar.icon
+    readonly property int popupIconSize: units.roundToIconSize(loaded && loader.item.visible
             ? Math.min(units.iconSizes.smallMedium, _minSize - units.smallSpacing / 2.2)
             : units.roundToIconSize(_minSize))
 
