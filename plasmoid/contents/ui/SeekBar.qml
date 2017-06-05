@@ -80,7 +80,8 @@ PlaybackItem {
             value: 0
             stepSize: 1
             updateValueWhileDragging: true
-            property int size: mpris2.playbackStatus === 'Stopped' ? 50 : Math.max(150 - maxWidth, 50)
+            visible: false
+            property int size: mpris2.playbackStatus === 'Stopped' ? 40 : Math.max(150 - maxWidth, 40)
 
             Behavior on size {
                 SequentialAnimation {
