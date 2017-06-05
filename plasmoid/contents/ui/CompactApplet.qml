@@ -32,10 +32,14 @@ Flow {
                                              : (parent ? parent.height : units.iconSizes.small)
 
     readonly property int _iconSize:
-        _minSize < units.iconSizes.smallMedium ? units.iconSizes.small : units.iconSizes.smallMedium
+    Math.min(units.roundToIconSize(_minSize - units.smallSpacing), units.iconSizes.large)
 
     readonly property size iconSize: vertical ? Qt.size(Math.max(_minSize, _iconSize), _iconSize)
                                               : Qt.size(_iconSize, Math.max(_minSize, _iconSize))
+
+    readonly property int popupIconSize: units.roundToIconSize(playbarEngine.compactStyle !== playbar.icon
+            ? Math.min(units.iconSizes.smallMedium, _minSize - units.smallSpacing / 2.2)
+            : units.roundToIconSize(_minSize))
 
     readonly property bool loaded: loader.status === Loader.Ready
 
@@ -66,8 +70,11 @@ Flow {
 
     Item {
         id: popupContainer
-        width: !loaded || !loader.item.visible ? _minSize : iconSize.width
-        height: !loaded || !loader.item.visible ? _minSize : iconSize.height
+        //width: !loaded || !loader.item.visible ? _minSize : iconSize.width
+        //height: !loaded || !loader.item.visible ? _minSize : iconSize.height
+
+        width: vertical ? iconSize.width : popupIconSize
+        height: vertical ? popupIconSize : iconSize.height
 
         VolumeWheel {
             anchors.fill: parent
@@ -78,7 +85,8 @@ Flow {
 
             controlsVisible: loaded && loader.item.visible
 
-            size: loaded && loader.item.visible ? _iconSize - 4 : _iconSize
+            size: popupIconSize
+
             opened: plasmoid.expanded
             anchors.centerIn: parent
             onClicked: {
