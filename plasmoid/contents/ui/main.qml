@@ -134,7 +134,10 @@ Item {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.BackButton | Qt.ForwardButton
 
-                onClicked: plasmoid.expanded = !plasmoid.expanded
+                onClicked: {
+                    if (mouse.button === Qt.LeftButton)
+                        plasmoid.expanded = !plasmoid.expanded
+                }
             }
         }
     }
