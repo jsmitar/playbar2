@@ -24,7 +24,7 @@ import org.kde.plasma.plasmoid 2.0
 
 Loader {
     id: fullApplet
-    source: plasmoid.configuration.FullAppletLayout
+    source: systray ? 'SystrayLayout.qml' : plasmoid.configuration.FullAppletLayout
     asynchronous: false
 
     width: item ? item.width : 0
@@ -49,27 +49,37 @@ Loader {
 
     Connections {
         target: playbarEngine
-        enabled: plasmoid.formFactor !== PlasmaCore.Types.Planar
 
         onExpandedStyleChanged: {
+            if (systray) return
+
             if (playbarEngine.expandedStyle === playbar.horizontalLayout) {
                 plasmoid.configuration.FullAppletLayout = 'DefaultLayout.qml'
             } else {
                 plasmoid.configuration.FullAppletLayout = 'VerticalLayout.qml'
             }
 
-            plasmoid.expanded = false
-            fullApplet.sourceComponent = undefined
+            if (plasmoid.formFactor !== PlasmaCore.Types.Planar) {
+                plasmoid.expanded = false
+                fullApplet.sourceComponent = undefined
+            }
+
             connectLayoutChangeRequests.start()
         }
     }
 
     Connections {
         target: playbarEngine
-        enabled: plasmoid.formFactor !== PlasmaCore.Types.Planar
 
-        onShowVolumeSliderChanged: playbarEngine.expandedStyleChanged()
-        onShowSeekSliderChanged: playbarEngine.expandedStyleChanged()
+        onShowVolumeSliderChanged: {
+            if (plasmoid.formFactor !== PlasmaCore.Types.Planar)
+                playbarEngine.expandedStyleChanged()
+        }
+
+        onShowSeekSliderChanged: {
+            if (plasmoid.formFactor !== PlasmaCore.Types.Planar)
+                playbarEngine.expandedStyleChanged()
+        }
     }
 
     onLoadDefaultLayout: {
@@ -105,7 +115,8 @@ Loader {
     }
 
     onLoaded: {
-        connectLayoutChangeRequests.start()
+        if (!systray)
+            connectLayoutChangeRequests.start()
     }
 
     Keys.onReleased: {

@@ -21,9 +21,22 @@ import QtQuick 2.4
 MouseArea {
     id: volumeWheelArea
 
-    acceptedButtons: Qt.NoButton
-
     z: 99
+    acceptedButtons: Qt.MiddleButton | Qt.BackButton | Qt.ForwardButton
+
+    onClicked: {
+        switch (mouse.button) {
+            case Qt.MiddleButton:
+                root.action_playPause()
+                break
+            case Qt.BackButton:
+                root.action_previous()
+                break
+            case Qt.ForwardButton:
+                root.action_next()
+                break
+        }
+    }
 
     onWheel: {
         wheel.accepted = true

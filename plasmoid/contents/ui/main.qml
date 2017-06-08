@@ -34,32 +34,33 @@ Item {
         readonly property string source: 'Provider'
 
         readonly property int compactStyle: hasSource('CompactStyle')
-            ? data[source]['CompactStyle'] : playbar.icon
+        ? data[source]['CompactStyle'] : playbar.icon
 
         readonly property int expandedStyle: hasSource('ExpandedStyle')
-            ? data[source]['ExpandedStyle'] : playbar.horizontalLayout
+        ? data[source]['ExpandedStyle'] : playbar.horizontalLayout
 
         readonly property bool showStop: hasSource('ShowStop')
-            ? data[source]['ShowStop'] : false
+        ? data[source]['ShowStop'] : false
 
         readonly property bool showVolumeSlider: hasSource('ShowVolumeSlider')
-            ? data[source]['ShowVolumeSlider'] : false
+        ? data[source]['ShowVolumeSlider'] : false
 
         readonly property bool showSeekSlider: hasSource('ShowSeekSlider')
-            ? data[source]['ShowSeekSlider'] : false
+        ? data[source]['ShowSeekSlider'] : false
 
         readonly property int backgroundHint:
-            hasSource('BackgroundHint') && plasmoid.formFactor == PlasmaCore.Types.Planar
-            ? data[source]['BackgroundHint'] : playbar.normal
+        hasSource('BackgroundHint') && plasmoid.formFactor == PlasmaCore.Types.Planar
+        ? data[source]['BackgroundHint'] : playbar.normal
 
         readonly property color shadowColor: hasSource('ShadowColor')
-            ? data[source]['ShadowColor'] : "#fff"
+        ? data[source]['ShadowColor'] : "#fff"
 
         property bool systrayArea: false
 
         function showSettings() {
             if (!playbarEngine.valid)
                 return
+
             var service = playbarEngine.serviceForSource('Provider')
             var job = service.operationDescription('ShowSettings')
             job['id'] = plasmoid.id
@@ -69,6 +70,7 @@ Item {
         function setSource(name) {
             if (!playbarEngine.valid)
                 return
+
             var service = playbarEngine.serviceForSource('Provider')
             var job = service.operationDescription('SetSourceMpris2')
             job['source'] = name
@@ -111,41 +113,56 @@ Item {
         id: mpris2
     }
 
-    property bool vertical: plasmoid.formFactor === PlasmaCore.Types.Vertical
-    property bool leftEdge: plasmoid.location === PlasmaCore.Types.LeftEdge
+    readonly property bool vertical: plasmoid.formFactor === PlasmaCore.Types.Vertical
+    readonly property bool leftEdge: plasmoid.location === PlasmaCore.Types.LeftEdge
+    readonly property bool systray: plasmoid.pluginName === 'audoban.applet.playbar.systray'
 
-    Plasmoid.compactRepresentation: CompactApplet {
+    Plasmoid.compactRepresentation: systray ? compactIconOnly : compact
+
+    Component {
         id: compact
+        CompactApplet {
+        }
     }
+
+    Component {
+        id: compactIconOnly
+        PlasmaCore.IconItem {
+            source: mpris2.playbackStatus === 'Playing' ? 'media-playback-start' : 'media-playback-pause'
+
+            MediaPlayerArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.BackButton | Qt.ForwardButton
+
+                onClicked: plasmoid.expanded = !plasmoid.expanded
+            }
+        }
+    }
+
     Plasmoid.fullRepresentation: FullApplet {
         id: full
     }
 
-    // 	NOTE: This is necessary ?
-    Plasmoid.preferredRepresentation: plasmoid.formFactor === PlasmaCore.Types.Planar ? Plasmoid.fullRepresentation : Plasmoid.compactRepresentation
+    Plasmoid.preferredRepresentation: plasmoid.formFactor === PlasmaCore.Types.Planar
+        ? Plasmoid.fullRepresentation : Plasmoid.compactRepresentation
 
     Plasmoid.icon: internal.icon
-    Plasmoid.title: mpris2.identity
+    Plasmoid.title: systray ? mpris2.identity : 'PlayBar'
     Plasmoid.toolTipMainText: internal.title
     Plasmoid.toolTipSubText: internal.subText
     Plasmoid.toolTipTextFormat: Text.StyledText
     Plasmoid.backgroundHints: playbarEngine.backgroundHint
 
-    // 	Connections {
-    // 		target: Plasmoid
-    // 		onFormFactorChanged:  debug( 'FormFactor', Plasmoid.formFactor )
-    // 	}
     function debug(str, msg) {
         if (msg === undefined)
             msg = ''
-        console.debug('audoban.applet.playbar: ' + str, msg)
+            console.debug('audoban.applet.playbar: ' + str, msg)
     }
 
     //! Context menu actions
     function action_raise() {
         mpris2.startOperation('Raise')
     }
-
     function action_playPause() {
         if (mpris2.source === 'spotify') {
             mpris2.startOperation('PlayPause')
@@ -156,32 +173,25 @@ Item {
         else
             mpris2.startOperation('PlayPause')
     }
-
     function action_previous() {
         mpris2.startOperation('Previous')
     }
-
     function action_next() {
         mpris2.startOperation('Next')
     }
-
     function action_stop() {
         if (mpris2.playbackStatus !== 'Stopped')
             mpris2.startOperation('Stop')
     }
-
     function action_quit() {
         mpris2.startOperation('Quit')
     }
-
     function action_nextSource() {
         mpris2.nextSource()
     }
-
     function action_configure() {
         playbarEngine.showSettings()
     }
-
     function action_player0() {
         executable.startPlayer(0)
     }
@@ -196,23 +206,24 @@ Item {
         plasmoid.formFactorChanged()
         plasmoid.removeAction('configure')
         plasmoid.setAction('configure', i18n('Configure PlayBar'), 'configure', 'alt+d, s')
+        console.log("plugin name", plasmoid.pluginName)
     }
 
     QtObject {
         id: internal
 
         property string icon: mpris2.artUrl != '' ? Qt.resolvedUrl(mpris2.artUrl)
-            : mpris2.recentSources.length > 0 ? mpris2.recentSources[0].icon : 'media-playback-start'
+        : mpris2.recentSources.length > 0 ? mpris2.recentSources[0].icon : 'media-playback-start'
 
         property string title: mpris2.title != '' ? mpris2.title
-            : mpris2.recentSources.length > 0 ? mpris2.recentSources[0].identity : 'PlayBar'
+        : mpris2.recentSources.length > 0 ? mpris2.recentSources[0].identity : 'PlayBar'
 
-        property string artist: mpris2.artist != '' ? i18n('<b>By</b> %1 ',
-                                                           mpris2.artist) : ''
-        property string album: mpris2.album != '' ? i18n('<b>On</b> %1',
-                                                         mpris2.album) : ''
-        property string subText: (title === 'PlayBar' && artist === ''
-                                  && album === '') ? i18n('Client MPRIS2, allows you to control your favorite media player') : artist + album
+        property string artist: mpris2.artist != '' ? i18n('<b>By</b> %1 ', mpris2.artist) : ''
+
+        property string album: mpris2.album != '' ? i18n('<b>On</b> %1', mpris2.album) : ''
+
+        property string subText: (title === 'PlayBar' && artist === '' && album === '')
+        ? i18n('Client MPRIS2, allows you to control your favorite media player') : artist + album
     }
 
     // ENUMS
@@ -234,7 +245,6 @@ Item {
         readonly property int translucent: PlasmaCore.Types.TranslucentBackground
 
     }
-
 
     Plasmoid.onContextualActionsAboutToShow: {
         plasmoid.clearActions()
@@ -262,9 +272,9 @@ Item {
         } else {
             var sources = mpris2.recentSources
 
-            for (var i = 0; i < sources.length; i++) {
+            for (var i = 0; i < sources.length; i++)
                 plasmoid.setAction('player' + i, sources[i].identity, sources[i].icon)
-            }
+
             if (sources.length > 0)
                 plasmoid.setActionSeparator('sep1')
         }

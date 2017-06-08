@@ -41,7 +41,7 @@ PlaybackItem {
             model.itemAt(1).children[0].iconSource = 'media-playback-start'
     }
 
-    VolumeWheel {
+    MediaPlayerArea {
         anchors.fill: parent
     }
 

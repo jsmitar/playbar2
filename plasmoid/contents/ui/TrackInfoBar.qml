@@ -45,7 +45,7 @@ PlaybackItem {
             button.iconSource = 'media-playback-start'
     }
 
-    VolumeWheel {
+    MediaPlayerArea {
         anchors.fill: parent
     }
 

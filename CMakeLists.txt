@@ -21,5 +21,6 @@ include(ECMPackageConfigHelpers)
 
 add_subdirectory(engine)
 add_subdirectory(plasmoid)
+add_subdirectory(plasmoid-systray)
 
 ki18n_install(po)

@@ -66,7 +66,7 @@ PlaybackItem {
                 anchors.centerIn: parent
             }
 
-            VolumeWheel {
+            MediaPlayerArea {
                 anchors.fill: parent
             }
         }

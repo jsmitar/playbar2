@@ -32,6 +32,8 @@ PlaybackItem {
 
     implicitHeight: buttons.height
 
+    property alias spacing: buttons.spacing
+
     Layout.minimumHeight: buttons.implicitHeight
     Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 
@@ -80,10 +82,8 @@ PlaybackItem {
         id: buttons
 
         spacing: units.smallSpacing
-        anchors {
-            bottom: parent.bottom
-            horizontalCenter: parent.horizontalCenter
-        }
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
 
         Repeater {
             id: model

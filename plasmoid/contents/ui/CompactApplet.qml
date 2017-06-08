@@ -73,10 +73,10 @@ Flow {
         //width: !loaded || !loader.item.visible ? _minSize : iconSize.width
         //height: !loaded || !loader.item.visible ? _minSize : iconSize.height
 
-        width: vertical ? iconSize.width : popupIconSize
-        height: vertical ? popupIconSize : iconSize.height
+        width: vertical ? _minSize : popupIconSize
+        height: vertical ? popupIconSize : _minSize
 
-        VolumeWheel {
+        MediaPlayerArea {
             anchors.fill: parent
         }
 
@@ -94,21 +94,6 @@ Flow {
                     plasmoid.expanded = !plasmoid.expanded
                 else
                     action_player0()
-            }
-        }
-        Timer {
-            //HACK: For PopupApplet in Systray Area
-            //running: loaded && loader.item.visible
-            interval: 250
-            onTriggered: {
-                if ((!vertical && loader.item.width > playbackControl.width)
-                        || (vertical
-                            && loader.item.height > playbackControl.height)) {
-                    loader.item.visible = false
-                    playbarEngine.systrayArea = true
-                } else {
-                    playbarEngine.systrayArea = false
-                }
             }
         }
     }
