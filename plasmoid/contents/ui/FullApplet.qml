@@ -24,7 +24,7 @@ import org.kde.plasma.plasmoid 2.0
 
 Loader {
     id: fullApplet
-    source: systray ? 'SystrayLayout.qml' : plasmoid.configuration.FullAppletLayout
+    source: systray ? 'SystrayLayout.qml' : playbarEngine.expandedStyle == 0 ? 'DefaultLayout.qml' : 'VerticalLayout.qml'
     asynchronous: false
 
     width: item ? item.width : 0
@@ -53,18 +53,22 @@ Loader {
         onExpandedStyleChanged: {
             if (systray) return
 
-            if (playbarEngine.expandedStyle === playbar.horizontalLayout) {
-                plasmoid.configuration.FullAppletLayout = 'DefaultLayout.qml'
-            } else {
-                plasmoid.configuration.FullAppletLayout = 'VerticalLayout.qml'
-            }
+            console.log("expanded style:", playbarEngine.expandedStyle)
 
             if (plasmoid.formFactor !== PlasmaCore.Types.Planar) {
                 plasmoid.expanded = false
-                fullApplet.sourceComponent = undefined
+
+                if (item) {
+                    item.shouldChangeLayout.disconnect(loadDefaultLayout)
+                    item.shouldChangeLayout.disconnect(loadVerticalLayout)
+                }
+
+                source = ''
             }
 
-            connectLayoutChangeRequests.start()
+            source = Qt.binding(function() {
+                return  playbarEngine.expandedStyle == playbar.horizontalLayout ? 'DefaultLayout.qml' : 'VerticalLayout.qml'
+            })
         }
     }
 
@@ -82,16 +86,31 @@ Loader {
         }
     }
 
+    Connections {
+        target: plasmoid
+
+        onFormFactorChanged:
+            if (!systray && plasmoid.formFactor === PlasmaCore.Types.Planar)
+                connectLayoutChangeRequests.start()
+    }
+
     onLoadDefaultLayout: {
         if (item)
             item.shouldChangeLayout.disconnect(loadDefaultLayout)
-        plasmoid.configuration.FullAppletLayout = 'DefaultLayout.qml'
+
+        source = 'DefaultLayout.qml'
     }
 
     onLoadVerticalLayout: {
         if (item)
             item.shouldChangeLayout.disconnect(loadVerticalLayout)
-        plasmoid.configuration.FullAppletLayout = 'VerticalLayout.qml'
+
+        source = 'VerticalLayout.qml'
+    }
+
+    onLoaded: {
+        if (!systray && plasmoid.formFactor === PlasmaCore.Types.Planar)
+            connectLayoutChangeRequests.start()
     }
 
     Timer {
@@ -103,20 +122,14 @@ Loader {
         onTriggered: {
             if (item) {
                 if (item.objectName === 'DefaultLayout') {
+                    item.shouldChangeLayout.disconnect(loadVerticalLayout)
                     item.shouldChangeLayout.connect(loadVerticalLayout)
                 } else {
+                    item.shouldChangeLayout.disconnect(loadDefaultLayout)
                     item.shouldChangeLayout.connect(loadDefaultLayout)
                 }
             }
-
-            if (plasmoid.formFactor !== PlasmaCore.Types.Planar)
-                source = plasmoid.configuration.FullAppletLayout
         }
-    }
-
-    onLoaded: {
-        if (!systray)
-            connectLayoutChangeRequests.start()
     }
 
     Keys.onReleased: {
