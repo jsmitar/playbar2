@@ -7,6 +7,30 @@ MPRIS2 client, written in QML for **Plasma 5** and **GNU/Linux**.
 <img src="https://github.com/audoban/PlayBar2/blob/master/screenshot.png" width="500"></img>
 </p>
 
+# Shortcuts
+
+On expanded:
+
+| Key          | Action          |
+|-------------:|-----------------|
+| `K`, `Space` | Play/Pause      |
+| `P`          | Previous        |
+| `N`          | Next            |
+| `S`          | Stop            |
+| `Left`, `J`  | Seek back 5s    |
+| `Right`, `L` | Seek forward 5s |
+| `Home`       | Seek start      |
+| `End`        | Seek end        |
+| `Num: [0..9]`| Jump to porcentage, `Key 0: 0%, ..., Key 9: 90%` |
+
+On panel:
+
+| Mouse key       | Action         |
+|----------------:|----------------|
+| `Middle button` | Play/Pause     |
+| `Wheel`         | Up/Down volume |
+| `Back button`   | Previous       |
+| `Forward button`| Next           |
 
 # Installation
 ## Build from the source code
