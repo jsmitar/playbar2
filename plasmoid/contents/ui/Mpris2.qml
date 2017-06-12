@@ -301,5 +301,7 @@ PlasmaCore.DataSource {
 
         plasmoid.configuration.RecentSources = JSON.stringify(recentSources)
         console.log("recentSources:", plasmoid.configuration.RecentSources)
+
+        recentSourcesChanged()
     }
 }
