@@ -82,6 +82,11 @@ Item {
                 anim.start()
             } else if (scrolling && !anim.running) {
                 anim.start()
+            } else if (!anim.running) {
+                if (vertical)
+                    target.y = 0
+                else
+                    target.x = 0
             }
         }
 
