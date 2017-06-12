@@ -25,8 +25,8 @@ Flow {
     flow: vertical ? Flow.TopToBottom : Flow.LeftToRight
     spacing: 0
 
-    Layout.minimumWidth: !vertical ? popupContainer.width + loader.width : units.iconSizes.smallMedium
-    Layout.minimumHeight: vertical ? popupContainer.height + loader.height : units.iconSizes.smallMedium
+    Layout.minimumWidth: !vertical ? popupIconSize + loader.width : units.iconSizes.small
+    Layout.minimumHeight: vertical ? popupIconSize + loader.height : units.iconSizes.small
 
     readonly property int _minSize: vertical ? (parent ? parent.width : units.iconSizes.small)
                                              : (parent ? parent.height : units.iconSizes.small)
@@ -70,11 +70,9 @@ Flow {
 
     Item {
         id: popupContainer
-        //width: !loaded || !loader.item.visible ? _minSize : iconSize.width
-        //height: !loaded || !loader.item.visible ? _minSize : iconSize.height
 
-        width: vertical ? _minSize : popupIconSize
-        height: vertical ? popupIconSize : _minSize
+        width: vertical ? _minSize : parent.width - loader.width
+        height: vertical ? parent.height - loader.height : _minSize
 
         MediaPlayerArea {
             anchors.fill: parent
