@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
-"POT-Creation-Date: 2017-06-04 02:51-0500\n"
+"POT-Creation-Date: 2017-06-12 18:23-0500\n"
 "PO-Revision-Date: 2015-08-02 07:51+0100\n"
 "Last-Translator: Tomasz Przybył <fademind@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -18,55 +18,55 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
 
-#: ../../plasmoid/contents/ui/main.qml:198
-#: ../../plasmoid/contents/ui/main.qml:272
+#: ../../plasmoid/contents/ui/main.qml:214
+#: ../../plasmoid/contents/ui/main.qml:288
 msgid "Configure PlayBar"
 msgstr "Ustawienia"
 
-#: ../../plasmoid/contents/ui/main.qml:210
+#: ../../plasmoid/contents/ui/main.qml:227
 msgid "<b>By</b> %1 "
 msgstr "<b>przez</b> %1 "
 
-#: ../../plasmoid/contents/ui/main.qml:212
+#: ../../plasmoid/contents/ui/main.qml:229
 msgid "<b>On</b> %1"
 msgstr "<b>z</b> %1"
 
-#: ../../plasmoid/contents/ui/main.qml:215
+#: ../../plasmoid/contents/ui/main.qml:232
 msgid "Client MPRIS2, allows you to control your favorite media player"
 msgstr "Klient MPRIS2 pozwala ci kontrolować ulubiony odtwarzacz multimedialny"
 
-#: ../../plasmoid/contents/ui/main.qml:245
+#: ../../plasmoid/contents/ui/main.qml:261
 #: ../../plasmoid/contents/ui/TitleBar.qml:65
 msgid "Open %1"
 msgstr "Otwórz %1"
 
-#: ../../plasmoid/contents/ui/main.qml:248
+#: ../../plasmoid/contents/ui/main.qml:264
 msgid "Play previous track"
 msgstr ""
 
-#: ../../plasmoid/contents/ui/main.qml:251
+#: ../../plasmoid/contents/ui/main.qml:267
 msgid "Pause"
 msgstr ""
 
-#: ../../plasmoid/contents/ui/main.qml:253
+#: ../../plasmoid/contents/ui/main.qml:269
 msgid "Play"
 msgstr ""
 
-#: ../../plasmoid/contents/ui/main.qml:255
+#: ../../plasmoid/contents/ui/main.qml:271
 msgid "Play next track"
 msgstr ""
 
-#: ../../plasmoid/contents/ui/main.qml:258
+#: ../../plasmoid/contents/ui/main.qml:274
 #: ../../plasmoid/contents/ui/TitleBar.qml:70
 msgid "Stop"
 msgstr ""
 
-#: ../../plasmoid/contents/ui/main.qml:259
+#: ../../plasmoid/contents/ui/main.qml:275
 #: ../../plasmoid/contents/ui/TitleBar.qml:80
 msgid "Next multimedia source"
 msgstr "Następne źródło "
 
-#: ../../plasmoid/contents/ui/main.qml:261
+#: ../../plasmoid/contents/ui/main.qml:277
 #: ../../plasmoid/contents/ui/TitleBar.qml:75
 msgid "Quit"
 msgstr "Zamknij"
