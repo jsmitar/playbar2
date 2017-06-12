@@ -77,6 +77,7 @@ void ConfigDialog::updateSettings()
     auto *config = PlayBarSettings::self();
 
     config->setCompactStyle(m_generalPage->compactStyle());
+    config->setMaxWidth(m_generalPage->maxWidth());
     config->setExpandedStyle(m_generalPage->expandedStyle());
     config->setShowStop(m_generalPage->showStop());
     config->setShowSeekSlider(m_generalPage->showSeekSlider());

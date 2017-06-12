@@ -18,6 +18,7 @@
 */
 
 #include "generalwidget.h"
+#include <QComboBox>
 
 GeneralWidget::GeneralWidget(QWidget *parent)
     : QWidget(parent)
@@ -25,6 +26,11 @@ GeneralWidget::GeneralWidget(QWidget *parent)
     m_ui.setupUi(this);
     connect(m_ui.kcfg_ShadowColor, SIGNAL(changed(const QColor &))
             , this, SIGNAL(shadowColorChanged(const QColor &)));
+
+    connect(m_ui.kcfg_CompactStyle, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged)
+    , this, [&](int index) noexcept {
+        m_ui.widget_MaxWidth->setVisible(index == 2 || index == 3);
+    });
 }
 
 GeneralWidget::~GeneralWidget() { }

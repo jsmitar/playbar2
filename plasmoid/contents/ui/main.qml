@@ -36,6 +36,9 @@ Item {
         readonly property int compactStyle: hasSource('CompactStyle')
         ? data[source]['CompactStyle'] : playbar.icon
 
+        readonly property int maxWidth: hasSource('MaxWidth')
+        ? data[source]['MaxWidth'] : 120
+
         readonly property int expandedStyle: hasSource('ExpandedStyle')
         ? data[source]['ExpandedStyle'] : playbar.horizontalLayout
 

@@ -81,7 +81,7 @@ PlaybackItem {
             height: vertical ? size : buttonSize.height
             clip: true
 
-            property int size: trackinfo.text ? Math.max(160 - maxWidth, 0) : 0
+            property int size: trackinfo.text ? playbarEngine.maxWidth : 0
 
             Behavior on size {
                 NumberAnimation {

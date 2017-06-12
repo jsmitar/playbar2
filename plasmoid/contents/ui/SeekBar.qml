@@ -33,7 +33,6 @@ PlaybackItem {
     height: visible ? control.height : 0
 
     readonly property int minWidth: Math.min(buttonSize.width, buttonSize.height)
-    readonly property int maxWidth: Math.max(buttonSize.width, buttonSize.height)
 
     onPlayingChanged: {
         if (playing)
@@ -80,8 +79,8 @@ PlaybackItem {
             value: 0
             stepSize: 1
             updateValueWhileDragging: true
-            visible: false
-            property int size: mpris2.playbackStatus === 'Stopped' ? 40 : Math.max(150 - maxWidth, 40)
+            visible: mpris2.playbackStatus !== 'Stopped'
+            property int size: mpris2.playbackStatus === 'Stopped' ? 40 : playbarEngine.maxWidth
 
             Behavior on size {
                 SequentialAnimation {

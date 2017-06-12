@@ -35,9 +35,11 @@ public:
 
 public:
     inline int compactStyle() const {
-        Q_ASSERT(m_ui.kcfg_CompactStyle->currentIndex() >= 0
-                 && m_ui.kcfg_CompactStyle->currentIndex() <= 2);
         return m_ui.kcfg_CompactStyle->currentIndex();
+    }
+
+    inline int maxWidth() const {
+        return m_ui.kcfg_MaxWidth->value();
     }
 
     inline int expandedStyle() const {
