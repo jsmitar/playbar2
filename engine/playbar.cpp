@@ -70,7 +70,6 @@ PlayBar::PlayBar(KSharedConfigPtr &config , QObject *parent)
     m_openMediaPlayer->setText(i18n("Toggle window media player"));
     KGlobalAccel::setGlobalShortcut(m_openMediaPlayer, QKeySequence());
 
-    connect(m_configDialog, SIGNAL(settingsChanged(QString)), this, SLOT(loadSettings()));
 }
 
 PlayBar::~PlayBar()
