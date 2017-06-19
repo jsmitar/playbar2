@@ -74,7 +74,9 @@ sudo apt-get install plasma-widget-playbar2
 
 **Arch Linux (AUR):**
 ```bash
-yaourt kdeplasma-applets-playbar2
+yaourt -S plasma5-applets-playbar2
+# or
+yaourt -S plasma5-applets-playbar2-git
 ```
 
 ## Configure your global shortcuts
