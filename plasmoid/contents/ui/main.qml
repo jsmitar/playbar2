@@ -114,6 +114,13 @@ Item {
     //! dataengine
     Mpris2 {
         id: mpris2
+
+        onIdentityChanged: {
+           if (mpris2.sourceActive) {
+               var icon = mpris2.icon(mpris2.currentSource)
+               plasmoid.setAction('raise', i18n('Open %1', mpris2.identity), icon)
+           }
+        }
     }
 
     readonly property bool vertical: plasmoid.formFactor === PlasmaCore.Types.Vertical
