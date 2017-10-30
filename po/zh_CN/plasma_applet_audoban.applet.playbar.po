@@ -1,0 +1,87 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR GPLv3
+# This file is distributed under the same license as the PlayBar2 package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PlayBar2\n"
+"Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
+"POT-Creation-Date: 2017-06-12 18:23-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../plasmoid/contents/ui/main.qml:214
+#: ../../plasmoid/contents/ui/main.qml:288
+msgid "Configure PlayBar"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:227
+msgid "<b>By</b> %1 "
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:229
+msgid "<b>On</b> %1"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:232
+msgid "Client MPRIS2, allows you to control your favorite media player"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:261
+#: ../../plasmoid/contents/ui/TitleBar.qml:65
+msgid "Open %1"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:264
+msgid "Play previous track"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:267
+msgid "Pause"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:269
+msgid "Play"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:271
+msgid "Play next track"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:274
+#: ../../plasmoid/contents/ui/TitleBar.qml:70
+msgid "Stop"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:275
+#: ../../plasmoid/contents/ui/TitleBar.qml:80
+msgid "Next multimedia source"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/main.qml:277
+#: ../../plasmoid/contents/ui/TitleBar.qml:75
+msgid "Quit"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/TrackInfoBar.qml:111
+msgid "%1 <b>By</b> %2"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/TrackInfo.qml:41
+msgid "No media playing"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/TrackInfo.qml:135
+msgid "By"
+msgstr ""
+
+#: ../../plasmoid/contents/ui/TrackInfo.qml:150
+msgid "On"
+msgstr ""
