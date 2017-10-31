@@ -1,26 +1,26 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR GPLv3
 # This file is distributed under the same license as the PlayBar2 package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# flashydirox <1814822135@qq.com>, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: PlayBar2\n"
 "Report-Msgid-Bugs-To: https://github.com/audoban/PlayBar2\n"
 "POT-Creation-Date: 2017-06-12 18:23-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2017-10-30 21:40+0800\n"
+"Last-Translator: flashydirox <1814822135@qq.com>\n"
+"Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../../plasmoid/contents/ui/main.qml:214
 #: ../../plasmoid/contents/ui/main.qml:288
 msgid "Configure PlayBar"
-msgstr ""
+msgstr "配置 Playbar"
 
 #: ../../plasmoid/contents/ui/main.qml:227
 msgid "<b>By</b> %1 "
@@ -32,43 +32,43 @@ msgstr ""
 
 #: ../../plasmoid/contents/ui/main.qml:232
 msgid "Client MPRIS2, allows you to control your favorite media player"
-msgstr ""
+msgstr "MPRIS2客户端, 允许你配置您最喜爱的媒体播放器"
 
 #: ../../plasmoid/contents/ui/main.qml:261
 #: ../../plasmoid/contents/ui/TitleBar.qml:65
 msgid "Open %1"
-msgstr ""
+msgstr "打开"
 
 #: ../../plasmoid/contents/ui/main.qml:264
 msgid "Play previous track"
-msgstr ""
+msgstr "播放上一个多媒体"
 
 #: ../../plasmoid/contents/ui/main.qml:267
 msgid "Pause"
-msgstr ""
+msgstr "暂停"
 
 #: ../../plasmoid/contents/ui/main.qml:269
 msgid "Play"
-msgstr ""
+msgstr "播放"
 
 #: ../../plasmoid/contents/ui/main.qml:271
 msgid "Play next track"
-msgstr ""
+msgstr "播放下一个多媒体"
 
 #: ../../plasmoid/contents/ui/main.qml:274
 #: ../../plasmoid/contents/ui/TitleBar.qml:70
 msgid "Stop"
-msgstr ""
+msgstr "性质"
 
 #: ../../plasmoid/contents/ui/main.qml:275
 #: ../../plasmoid/contents/ui/TitleBar.qml:80
 msgid "Next multimedia source"
-msgstr ""
+msgstr "下一个多媒体的信息"
 
 #: ../../plasmoid/contents/ui/main.qml:277
 #: ../../plasmoid/contents/ui/TitleBar.qml:75
 msgid "Quit"
-msgstr ""
+msgstr "退出"
 
 #: ../../plasmoid/contents/ui/TrackInfoBar.qml:111
 msgid "%1 <b>By</b> %2"
@@ -76,7 +76,7 @@ msgstr ""
 
 #: ../../plasmoid/contents/ui/TrackInfo.qml:41
 msgid "No media playing"
-msgstr ""
+msgstr "没有正在播放的多媒体"
 
 #: ../../plasmoid/contents/ui/TrackInfo.qml:135
 msgid "By"
@@ -85,3 +85,4 @@ msgstr ""
 #: ../../plasmoid/contents/ui/TrackInfo.qml:150
 msgid "On"
 msgstr ""
+
