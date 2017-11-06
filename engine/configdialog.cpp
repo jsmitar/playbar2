@@ -34,6 +34,7 @@ ConfigDialog::ConfigDialog(KActionCollection *collection , QWidget *parent)
     m_shortcutsPage = new KShortcutsEditor(collection, this, KShortcutsEditor::GlobalAction);
     setStandardButtons(QDialogButtonBox::Apply | QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
+    setMinimumWidth(600);
     addPage(m_generalPage
             , i18nc("General config", "General")
             , "applications-multimedia"
