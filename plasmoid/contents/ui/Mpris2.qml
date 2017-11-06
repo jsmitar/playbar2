@@ -215,31 +215,31 @@ PlasmaCore.DataSource {
             if (!canSeek)
                 debug("Trying seek, CanSeek is", canSeek)
             waitGetPosition()
-            var job = service.operationDescription('SetPosition')
-            job['microseconds'] = (position * 1000000).toFixed(0)
-            service.startOperationCall(job)
+            var operation = service.operationDescription('SetPosition')
+            operation['microseconds'] = (position * 1000000).toFixed(0)
+            service.startOperationCall(operation)
         }
         return position
         // 		if ( source == 'clementine' ) {
-        // 			job = service.operationDescription( 'Seek' )
-        // 			job['microseconds'] = ( ( -currentPosition + position ) * 10000 ).toFixed( 0 )
-        // 			service.startOperationCall( job )
+        // 			operation = service.operationDescription( 'Seek' )
+        // 			operation['microseconds'] = ( ( -currentPosition + position ) * 10000 ).toFixed( 0 )
+        // 			service.startOperationCall( operation )
         // 			return
         // 		}
     }
 
     function startOperation(name) {
         if (service && canControl) {
-            var job = service.operationDescription(name)
-            service.startOperationCall(job)
+            var operation = service.operationDescription(name)
+            service.startOperationCall(operation)
         }
     }
 
     function setVolume(value) {
         if (service && canControl && service.isOperationEnabled('SetVolume')) {
-            var job = service.operationDescription('SetVolume')
-            job['level'] = Number(value.toFixed(2))
-            service.startOperationCall(job)
+            var operation = service.operationDescription('SetVolume')
+            operation['level'] = Number(value.toFixed(2))
+            service.startOperationCall(operation)
             value = value < 0 ? 0 : value
             value = value > 1.2 ? 1 : value
         }
