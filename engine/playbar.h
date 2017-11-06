@@ -30,7 +30,7 @@
 
 using namespace Plasma;
 
-class PlayBar : public QObject {
+class PlayBar : public QObject, public Plasma::DataEngineConsumer {
     Q_OBJECT
 public:
 
@@ -43,39 +43,53 @@ public:
     }
 
     inline void setSource(const QString &source) {
+        if (!m_mpris2Engine)
+            m_mpris2Engine = dataEngine(MPRIS2);
+        else
+            m_mpris2Engine->disconnectSource(mpris2_source, this);
+
         mpris2_source = source;
+        m_mpris2Engine->connectSource(mpris2_source, this);
     }
 
     const DataEngine::Data &data();
 
-    void startOperationOverMpris2(const QString &name) const;
+    inline void startAction(const QString &name) const;
+    inline void seek(qlonglong us) const;
 
-public Q_SLOTS:
 
-    void slotPlayPause();
-    void slotStop();
-    void slotNext();
-    void slotPrevious();
-    void slotToggleWinMediaPlayer();
+public slots:
+    void dataUpdated(const QString &sourceName, const Plasma::DataEngine::Data &data);
+
+ public slots:
+    void action_playPause();
+    void action_stop();
+    void action_next();
+    void action_previous();
+    void action_forward();
+    void action_backward();
+    void action_raise();
     void showSettings();
 
 private:
-
     ConfigDialog *m_configDialog = nullptr;
     KActionCollection *m_collection = nullptr;
     KSharedConfigPtr m_config;
+    DataEngine* m_mpris2Engine {nullptr};
     DataEngine::Data *m_data = nullptr;
-    DataEngineConsumer *m_dc = nullptr;
-    static constexpr const char *MPRIS2 { "mpris2" };
+
+    const char * const MPRIS2 {"mpris2"};
+    qlonglong m_currentPosition {0};
 
     QAction *m_playpause;
     QAction *m_stop;
     QAction *m_next;
     QAction *m_previous;
-    QAction *m_openMediaPlayer;
+    QAction *m_forward;
+    QAction *m_backward;
+    QAction *m_raise;
 
-public:
-    QString mpris2_source = "@multiplex";
+    QString mpris2_source {"@multiplex"};
 };
 
 #endif // PLAYBAR_H
