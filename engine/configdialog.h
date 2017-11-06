@@ -48,7 +48,7 @@ private:
     KShortcutsEditor *m_shortcutsPage;
 
 public:
-    static constexpr const char *CONFIG_NAME { "PlayBar Settings" };
+    static constexpr const char* CONFIG_NAME {"PlayBar Settings"};
 
 };
 

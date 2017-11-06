@@ -39,7 +39,6 @@ using namespace Plasma;
 
 PlayBar::PlayBar(KSharedConfigPtr &config , QObject *parent)
     : QObject(parent),
-      m_configDialog(nullptr),
       m_config(config),
       m_data(new Plasma::DataEngine::Data())
 {

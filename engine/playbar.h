@@ -72,11 +72,11 @@ public slots:
     void showSettings();
 
 private:
-    ConfigDialog *m_configDialog = nullptr;
-    KActionCollection *m_collection = nullptr;
     KSharedConfigPtr m_config;
+    ConfigDialog *m_configDialog {nullptr};
+    KActionCollection *m_collection {nullptr};
     DataEngine* m_mpris2Engine {nullptr};
-    DataEngine::Data *m_data = nullptr;
+    DataEngine::Data *m_data {nullptr};
 
     const char * const MPRIS2 {"mpris2"};
     qlonglong m_currentPosition {0};
