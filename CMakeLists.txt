@@ -5,6 +5,8 @@ project(PlayBar)
 
 set(QT_MIN_VERSION "5.4.1")
 set(KF5_MIN_VERSION "5.9.0")
+set(CMAKE_INSTALL_PREFIX /usr)
+set(KDE_INSTALL_LIBDIR lib64/qt5)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Widgets Quick QuickWidgets)
 # CMAKE EXTRA MODULES
