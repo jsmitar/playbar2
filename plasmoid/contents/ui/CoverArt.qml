@@ -18,7 +18,9 @@
 */
 import QtQuick 2.4
 import QtQuick.Layouts 1.2
+import QtQuick.Controls 1.4
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.components 2.0 as PlasmaComponents
 import QtGraphicalEffects 1.0
 
 Item {
@@ -98,6 +100,7 @@ Item {
             to: 1.0
             duration: units.longDuration * 1.5
         }
+
     }
 
     MouseArea {
@@ -105,5 +108,109 @@ Item {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
         onClicked: action_raise()
+        hoverEnabled: true
+    }
+
+    PlasmaComponents.ToolButton {
+        id: mediaSelector
+        anchors {
+            left: cover.left
+            top: cover.top
+            leftMargin: units.smallSpacing
+            topMargin: units.smallSpacing
+        }
+
+        opacity: (toggleWindow.containsMouse || hovered) ? 1 : 0
+        visible: repeater.count >= 2
+
+        Behavior on opacity {
+            NumberAnimation { duration: units.largeDuration }
+        }
+
+        iconName: mpris2.icon(mpris2.currentSource)
+        onClicked: menu.open()
+
+        PlasmaComponents.ContextMenu {
+            id: menu
+            visualParent: mediaSelector
+
+            function caption(source) {
+                var text = 'None'
+
+                if (source === "@multiplex") {
+                    text = i18n("Select automatically")
+                } else if (source && mpris2.currentSource === source) {
+                    text = mpris2.capitalize(source)
+                } else {
+                    var e = mpris2.recentSources.find(function (e) {
+                        return e.source === source
+                    });
+
+                    if (!e)
+                        text = source[0].toUpperCase() + source.substr(1)
+                    else
+                        text = e.identity
+                }
+
+                return text
+            }
+
+            function changeSource(source) {
+                if (mpris2.currentSource !== source) {
+                    if (mpris2.sourceActive)
+                        mpris2.disconnectSource(mpris2.currentSource)
+
+                    mpris2.connectSource(source)
+                }
+            }
+
+
+            PlasmaComponents.MenuItem {
+                id: menuItemAuto
+                readonly property string source: '@multiplex'
+                text: menu.caption(source)
+                onClicked: {
+                    sourceChanged()
+                    menu.changeSource(source)
+                }
+                checkable: true
+                Binding {
+                    target: menuItemAuto
+                    property: 'checked'
+                    value: mpris2.currentSource === menuItemAuto.source
+                }
+            }
+
+            //!BEGIN: Media players menu items
+            readonly property Item _items: Item {
+                Repeater {
+                    id: repeater
+                    readonly property var sources: mpris2.sources.filter(function(e){ return e !== '@multiplex' })
+
+                    model: sources.length
+                    onItemAdded: menu.addMenuItem(item)
+                    onItemRemoved: menu.removeMenuItem(item)
+
+                    delegate: PlasmaComponents.MenuItem {
+                        id: menuItem
+                        readonly property string source: repeater.sources[index]
+                        text: menu.caption(source)
+                        onClicked: {
+                            sourceChanged()
+                            menu.changeSource(source)
+                        }
+                        checkable: true
+
+                        Binding {
+                            target: menuItem
+                            property: 'checked'
+                            value: mpris2.currentSource === menuItem.source
+                        }
+                    }
+                }
+            }
+            //!END: Media players menu items
+        }
+
     }
 }

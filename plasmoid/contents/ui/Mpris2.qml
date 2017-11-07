@@ -39,7 +39,7 @@ PlasmaCore.DataSource {
 
     readonly property var metadata: currentSource ? data[currentSource].Metadata : undefined
 
-    readonly property string identity: currentSource ? capitalize(source) : ''
+    readonly property string identity: currentSource ? capitalize(currentSource) : ''
 
     readonly property string playbackStatus: currentSource
                                              && sourceActive ? data[currentSource].PlaybackStatus : 'Stopped'
@@ -150,10 +150,11 @@ PlasmaCore.DataSource {
     onSourcesChanged: {
         if (connectedSources.length === 0)
             nextSource()
+
+        console.log("sources availables:", sources)
     }
 
     onSourceAdded: {
-
         // debug( 'Source added', source )
         // debug( 'sources', sources )
         if (source !== '@multiplex' && connectedSources.length === 0) {
@@ -247,29 +248,40 @@ PlasmaCore.DataSource {
     }
 
     function capitalize(source) {
-        var i = data[source]['Identity']
-        return i[0].toUpperCase() + i.substr(1)
+        if (source !== '') {
+            var i = (data[source] || { Identity: source }).Identity
+            return i[0].toUpperCase() + i.substr(1)
+        }
+
+        return source
     }
 
     function icon(source) {
-        var icon = source
+        var iconName = source
 
-        if (icon.match('vlc'))
-            icon = 'vlc'
+        if (iconName.match('vlc'))
+            iconName = 'vlc'
 
-            switch (icon) {
+            switch (iconName) {
                 case 'spotify':
-                    icon = 'spotify-client'
+                    iconName = 'spotify-client'
                     break
                 case 'clementine':
-                    icon = 'application-x-clementine'
+                    iconName = 'application-x-clementine'
                     break
                 case 'yarock':
-                    icon = 'application-x-yarock'
+                    iconName = 'application-x-yarock'
+                    break
+                case '@multiplex':
+                    if (sourceActive && currentSource == '@multiplex')
+                        iconName = icon(data[source]['Source Name'])
+                    else
+                        iconName = 'emblem-music-symbolic'
+
                     break
             }
 
-        return icon
+        return iconName
     }
 
     function addRecentSource(source) {
