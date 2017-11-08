@@ -68,12 +68,12 @@ PlayBar::PlayBar(KSharedConfigPtr &config , QObject *parent)
     m_forward = m_collection->addAction(QStringLiteral("seek-forward"), this, SLOT(action_forward()));
     m_forward->setIcon(QIcon::fromTheme(QStringLiteral("media-seek-forward")));
     m_forward->setText(i18n("Seek forward"));
-    KGlobalAccel::setGlobalShortcut(m_forward, QKeySequence{Qt::CTRL + Qt::SHIFT + Qt::Key_Right});
+    KGlobalAccel::setGlobalShortcut(m_forward, QKeySequence{Qt::META + Qt::Key_MediaNext});
 
     m_backward = m_collection->addAction(QStringLiteral("seek-backward"), this, SLOT(action_backward()));
     m_backward->setIcon(QIcon::fromTheme(QStringLiteral("media-seek-backward")));
     m_backward->setText(i18n("Seek backward"));
-    KGlobalAccel::setGlobalShortcut(m_backward, QKeySequence{Qt::CTRL + Qt::SHIFT + Qt::Key_Left});
+    KGlobalAccel::setGlobalShortcut(m_backward, QKeySequence{Qt::META + Qt::Key_MediaPrevious});
 
     m_raise = m_collection->addAction(QStringLiteral("toggle-mediaplayer"), this,
                         SLOT(action_raise()));
