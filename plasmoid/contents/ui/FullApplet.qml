@@ -53,7 +53,7 @@ Loader {
         onExpandedStyleChanged: {
             if (systray) return
 
-            console.log("expanded style:", playbarEngine.expandedStyle)
+            debug("expanded style:", playbarEngine.expandedStyle)
 
             if (plasmoid.formFactor !== PlasmaCore.Types.Planar) {
                 plasmoid.expanded = false

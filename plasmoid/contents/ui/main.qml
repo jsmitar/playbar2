@@ -159,10 +159,9 @@ Item {
     Plasmoid.toolTipTextFormat: Text.StyledText
     Plasmoid.backgroundHints: playbarEngine.backgroundHint
 
-    function debug(str, msg) {
-        if (msg === undefined)
-            msg = ''
-            console.debug('audoban.applet.playbar: ' + str, msg)
+    function debug() {
+        var args = Array.prototype.slice.call(arguments, debug.length).join(' ')
+        console.log('playbar:', args)
     }
 
     //! Context menu actions
@@ -212,7 +211,7 @@ Item {
         plasmoid.formFactorChanged()
         plasmoid.removeAction('configure')
         plasmoid.setAction('configure', i18n('Configure PlayBar'), 'configure', 'alt+d, s')
-        console.log("plugin name", plasmoid.pluginName)
+        debug("plugin name", plasmoid.pluginName)
     }
 
     QtObject {

@@ -151,7 +151,7 @@ PlasmaCore.DataSource {
         if (connectedSources.length === 0)
             nextSource()
 
-        console.log("sources availables:", sources)
+        debug('sources availables:', sources)
     }
 
     onSourceAdded: {
@@ -171,7 +171,7 @@ PlasmaCore.DataSource {
     onSourceConnected: {
         setService(source)
         currentSource = source
-        debug('Source connected', source)
+        debug('source connected:', source)
         addRecentSource(source)
     }
 
@@ -305,14 +305,13 @@ PlasmaCore.DataSource {
         else
             elem = {source: source, identity: capitalize(source), icon: icon(source)}
 
-        console.debug('recentSource: ', JSON.stringify(elem))
         recentSources.unshift(elem)
 
         if (recentSources.length > 3)
             recentSources.pop()
 
         plasmoid.configuration.RecentSources = JSON.stringify(recentSources)
-        console.log("recentSources:", plasmoid.configuration.RecentSources)
+        debug("recentSources:", plasmoid.configuration.RecentSources)
 
         recentSourcesChanged()
     }
