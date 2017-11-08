@@ -212,21 +212,18 @@ PlasmaCore.DataSource {
     }
 
     function seek(position, currentPosition) {
-        if (service && (canControl || canSeek)) {
-            if (!canSeek)
-                debug("Trying seek, CanSeek is", canSeek)
-            waitGetPosition()
-            var operation = service.operationDescription('SetPosition')
-            operation['microseconds'] = (position * 1000000).toFixed(0)
-            service.startOperationCall(operation)
+        if (service) {
+            if (canControl || canSeek) {
+                if (!canSeek)
+                    debug(source, 'ignoring CanSeek:', canSeek)
+
+                waitGetPosition()
+                var operation = service.operationDescription('SetPosition')
+                operation['microseconds'] = (position * 1000000).toFixed(0)
+                service.startOperationCall(operation)
+            }
         }
         return position
-        // 		if ( source == 'clementine' ) {
-        // 			operation = service.operationDescription( 'Seek' )
-        // 			operation['microseconds'] = ( ( -currentPosition + position ) * 10000 ).toFixed( 0 )
-        // 			service.startOperationCall( operation )
-        // 			return
-        // 		}
     }
 
     function startOperation(name) {
@@ -288,7 +285,7 @@ PlasmaCore.DataSource {
         if (plasmoid.configuration.RecentSources != '[]')
             recentSources = JSON.parse(plasmoid.configuration.RecentSources)
 
-        if (recentSources.length == 0)
+        if (recentSources.length === 0)
             recentSources = []
 
         var index = function() {
