@@ -97,7 +97,7 @@ PlaybackItem {
                     break
                 case 1:
                     item.clicked.connect(playPause)
-                    //NOTE: update icon playing state
+                    //NOTE: update icon playing state on start
                     playingChanged()
                     break
                 case 2:

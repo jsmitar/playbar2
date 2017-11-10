@@ -48,8 +48,10 @@ public:
         else
             m_mpris2Engine->disconnectSource(mpris2_source, this);
 
-        mpris2_source = source;
-        m_mpris2Engine->connectSource(mpris2_source, this);
+        mpris2_source = source.trimmed();
+        if (!mpris2_source.isEmpty()) {
+            m_mpris2Engine->connectSource(mpris2_source, this);
+        }
     }
 
     const DataEngine::Data &data();

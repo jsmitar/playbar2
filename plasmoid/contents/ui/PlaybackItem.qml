@@ -21,7 +21,7 @@ import QtQuick 2.4
 Item {
     id: playbackitem
 
-    readonly property bool playing: mpris2.playbackStatus == 'Playing'
+    readonly property bool playing: mpris2.playbackStatus === 'Playing'
 
     readonly property bool showStop: mpris2.currentSource
                                      === 'spotify' ? false : playbarEngine.showStop
@@ -39,7 +39,7 @@ Item {
     signal stop
 
     onPlayPause: {
-        if (mpris2.source == 'spotify') {
+        if (mpris2.source === 'spotify') {
             mpris2.startOperation('PlayPause')
             return
         }
@@ -56,7 +56,7 @@ Item {
         mpris2.startOperation('Next')
     }
     onStop: {
-        if (mpris2.playbackStatus != 'Stopped')
+        if (mpris2.playbackStatus !== 'Stopped')
             mpris2.startOperation('Stop')
     }
 }

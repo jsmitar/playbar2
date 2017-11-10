@@ -124,7 +124,7 @@ Item {
         }
 
         opacity: (toggleWindow.containsMouse || hovered) ? 1 : 0
-        visible: repeater.count >= 2
+        visible: repeater.count >= 1
 
         Behavior on opacity {
             NumberAnimation { duration: units.longDuration }
@@ -150,17 +150,10 @@ Item {
 
                 if (source === "@multiplex") {
                     text = i18n("Select automatically")
-                } else if (source && mpris2.currentSource === source) {
-                    text = mpris2.capitalize(source)
                 } else {
-                    var e = mpris2.recentSources.find(function (e) {
-                        return e.source === source
-                    });
-
-                    if (!e)
-                        text = source[0].toUpperCase() + source.substr(1)
-                    else
-                        text = e.identity
+                    var instance = source.match(/\.instance[0-9]+/)
+                    instance = instance ? instance[0].replace('.instance', ' PID:') : ''
+                    text = mpris2.getIdentity(source) + instance
                 }
 
                 return text
@@ -176,6 +169,13 @@ Item {
                 }
             }
 
+            PlasmaComponents.MenuItem {
+                id: menuItemNext
+                text: 'Next source'
+                onClicked: {
+                    mpris2.nextSource()
+                }
+            }
 
             PlasmaComponents.MenuItem {
                 id: menuItemAuto
@@ -197,7 +197,7 @@ Item {
             readonly property Item _items: Item {
                 Repeater {
                     id: repeater
-                    readonly property var sources: mpris2.sources.filter(function(e){ return e !== '@multiplex' })
+                    readonly property var sources: mpris2.sources.filter(function(e){ return e !== '@multiplex' }).sort()
 
                     model: sources.length
                     onItemAdded: menu.addMenuItem(item)

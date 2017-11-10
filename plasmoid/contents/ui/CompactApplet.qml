@@ -90,7 +90,7 @@ Flow {
             onClicked: {
                 if (mpris2.sourceActive)
                     plasmoid.expanded = !plasmoid.expanded
-                else
+                else if (mpris2.recentSources.length > 0)
                     action_player0()
             }
         }

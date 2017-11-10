@@ -157,7 +157,7 @@ const DataEngine::Data &PlayBar::data()
 
 inline void PlayBar::startAction(const QString &name) const
 {
-    if(!m_mpris2Engine)
+    if(!m_mpris2Engine || mpris2_source.isEmpty())
         return;
 
     auto *service = m_mpris2Engine->serviceForSource(mpris2_source);
@@ -169,7 +169,7 @@ inline void PlayBar::startAction(const QString &name) const
 
 inline void PlayBar::seek(qlonglong us) const
 {
-    if(!m_mpris2Engine)
+    if(!m_mpris2Engine || mpris2_source.isEmpty())
         return;
 
     auto *service = m_mpris2Engine->serviceForSource(mpris2_source);
