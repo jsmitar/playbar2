@@ -206,6 +206,12 @@ Item {
     function action_player2() {
         executable.startPlayer(2)
     }
+    function action_player3() {
+        executable.startPlayer(3)
+    }
+    function action_player4() {
+        executable.startPlayer(4)
+    }
 
     Component.onCompleted: {
         plasmoid.formFactorChanged()
@@ -277,7 +283,7 @@ Item {
         } else {
             var sources = mpris2.recentSources
 
-            for (var i = 0; i < sources.length; i++)
+            for (var i = 0; i < Math.min(sources.length, 5); i++)
                 plasmoid.setAction('player' + i, sources[i].identity, sources[i].icon)
 
             if (sources.length > 0)
