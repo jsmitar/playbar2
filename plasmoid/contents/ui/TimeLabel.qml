@@ -23,10 +23,11 @@ import "../code/utils.js" as Utils
 PlasmaComponents.Label {
     id: time
 
-    // seconds
-    property int topTime: mpris2.length
+    property alias type: time.state
 
-    property int currentTime: 0
+    readonly property int length: mpris2.length
+
+    property int position: 0
 
     property alias interactive: mouseArea.enabled
 
@@ -36,38 +37,70 @@ PlasmaComponents.Label {
 
     property int sec: 0
 
-    property bool timeNegative: true
+    property var _update: lengthUpdate
 
-    opacity: 0.8
+    state: type
+
+    opacity: 1
 
     font: theme.smallestFont
 
     signal clicked
 
-    text: (timeNegative ? '-' : '')
+    text: (type == 'remaining' ? '-' : '')
           + (hour > 0 ? hour + ':': '')
           + (hour > 0 && min < 10 ? '0' + min : min)
           + ':' + (sec < 10 ? '0' + sec : sec)
 
-    enabled: topTime > 0
+    enabled: length > 0
+
+    onPositionChanged: _update()
+
+    onLengthChanged: _update()
+
+    onTypeChanged: _update
+
+    states: [
+        State {
+            name: 'length'
+            PropertyChanges {
+                target: time
+                _update: lengthUpdate
+            }
+        },
+        State {
+            name: 'position'
+            PropertyChanges {
+                target: time
+                _update: positionUpdate
+            }
+        },
+        State {
+            name: 'remaining'
+            PropertyChanges {
+                target: time
+                _update: remainingUpdate
+            }
+        }
+    ]
 
     function positionUpdate() {
-        hour = currentTime / 3600
-        min = currentTime / 60 - hour * 60
-        sec = currentTime - hour * 3600 - min * 60
+        hour = position / 3600
+        min = position / 60 - hour * 60
+        sec = position - hour * 3600 - min * 60
     }
 
     function remainingUpdate() {
-        var remain = topTime - currentTime
+        var remain = length - position
         hour = remain / 3600
         min = remain / 60 - hour * 60
         sec = remain - hour * 3600 - min * 60
     }
 
     function lengthUpdate() {
-        hour = topTime / 3600
-        min = topTime / 60 - hour * 60
-        sec = topTime - hour * 3600 - min * 60
+        hour = length / 3600
+        min = length / 60 - hour * 60
+        sec = length - hour * 3600 - min * 60
     }
 
     MouseArea {
@@ -78,6 +111,6 @@ PlasmaComponents.Label {
         hoverEnabled: enabled
 
         onClicked: if (containsMouse)
-                       parent.clicked()
+                       time.clicked()
     }
 }

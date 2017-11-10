@@ -38,13 +38,9 @@ RowLayout {
 
         property bool labelSwitch: plasmoid.configuration.TimeLabelSwitch
 
-        currentTime: labelSwitch ? mpris2.length : slider.value
+        type: labelSwitch ? 'length' : 'position'
+        position: labelSwitch ? 0 : slider.value
         interactive: true
-        timeNegative: false
-
-        onCurrentTimeChanged: {
-            positionUpdate()
-        }
 
         onClicked: plasmoid.configuration.TimeLabelSwitch = !labelSwitch
 
@@ -108,23 +104,9 @@ RowLayout {
 
         property bool labelSwitch: plasmoid.configuration.TimeLabelSwitch
 
-        currentTime: slider.value
+        position: slider.value
         interactive: true
-        timeNegative: !labelSwitch
-
-        onCurrentTimeChanged: {
-            if (labelSwitch)
-                positionUpdate()
-            else
-                remainingUpdate()
-        }
-
-        onLabelSwitchChanged: {
-            if (labelSwitch)
-                positionUpdate()
-            else
-                remainingUpdate()
-        }
+        type: labelSwitch ? 'position' : 'remaining'
 
         onClicked: plasmoid.configuration.TimeLabelSwitch = !labelSwitch
 
