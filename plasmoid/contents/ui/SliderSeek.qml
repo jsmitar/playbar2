@@ -40,8 +40,7 @@ RowLayout {
 
         currentTime: labelSwitch ? mpris2.length : slider.value
         interactive: true
-        horizontalAlignment: Text.AlignHCenter
-        minusFrontOfZero: false
+        timeNegative: false
 
         onCurrentTimeChanged: {
             positionUpdate()
@@ -49,7 +48,9 @@ RowLayout {
 
         onClicked: plasmoid.configuration.TimeLabelSwitch = !labelSwitch
 
-        Layout.minimumWidth: units.largeSpacing * 2.2
+        horizontalAlignment: Text.AlignHCenter
+        Layout.alignment: Qt.AlignHCenter
+        Layout.minimumWidth: units.largeSpacing * (mpris2.length >= 3600 ? 2.8 : 2.2)
     }
 
     PlasmaComponents.Slider {
@@ -60,7 +61,7 @@ RowLayout {
         stepSize: 1
         activeFocusOnPress: false
         updateValueWhileDragging: true
-        enabled: mpris2.canSeek && maximumValue != 0
+        enabled: (mpris2.canSeek || mpris2.canControl) && maximumValue != 0
 
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -109,7 +110,7 @@ RowLayout {
 
         currentTime: slider.value
         interactive: true
-        minusFrontOfZero: !labelSwitch
+        timeNegative: !labelSwitch
 
         onCurrentTimeChanged: {
             if (labelSwitch)
@@ -128,8 +129,7 @@ RowLayout {
         onClicked: plasmoid.configuration.TimeLabelSwitch = !labelSwitch
 
         horizontalAlignment: Text.AlignHCenter
-
-        Layout.minimumWidth: units.largeSpacing * 2.2
+        Layout.minimumWidth: units.largeSpacing * (mpris2.length >= 3600 ? 2.8 : 2.2)
         Layout.alignment: Qt.AlignHCenter
     }
 }

@@ -30,11 +30,13 @@ PlasmaComponents.Label {
 
     property alias interactive: mouseArea.enabled
 
+    property int hour: 0
+
     property int min: 0
 
     property int sec: 0
 
-    property bool minusFrontOfZero: true
+    property bool timeNegative: true
 
     opacity: 0.8
 
@@ -42,23 +44,30 @@ PlasmaComponents.Label {
 
     signal clicked
 
-    text: (minusFrontOfZero ? '-' + min : min) + ':' + (sec < 10 ? '0' + sec : sec)
+    text: (timeNegative ? '-' : '')
+          + (hour > 0 ? hour + ':': '')
+          + (hour > 0 && min < 10 ? '0' + min : min)
+          + ':' + (sec < 10 ? '0' + sec : sec)
 
     enabled: topTime > 0
 
     function positionUpdate() {
-        min = currentTime / 60
-        sec = currentTime - min * 60
+        hour = currentTime / 3600
+        min = currentTime / 60 - hour * 60
+        sec = currentTime - hour * 3600 - min * 60
     }
 
     function remainingUpdate() {
-        min = (topTime - currentTime) / 60
-        sec = topTime - currentTime - min * 60
+        var remain = topTime - currentTime
+        hour = remain / 3600
+        min = remain / 60 - hour * 60
+        sec = remain - hour * 3600 - min * 60
     }
 
     function lengthUpdate() {
-        min = topTime / 60
-        sec = topTime - min * 60
+        hour = topTime / 3600
+        min = topTime / 60 - hour * 60
+        sec = topTime - hour * 3600 - min * 60
     }
 
     MouseArea {
