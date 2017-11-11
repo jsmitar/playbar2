@@ -152,7 +152,7 @@ Item {
                     text = i18n("Select automatically")
                 } else {
                     var instance = source.match(/\.instance[0-9]+/)
-                    instance = instance ? instance[0].replace('.instance', ' PID:') : ''
+                    instance = instance ? instance[0].replace('.instance', ' Instance:') : ''
                     text = mpris2.getIdentity(source) + instance
                 }
 
@@ -171,7 +171,7 @@ Item {
 
             PlasmaComponents.MenuItem {
                 id: menuItemNext
-                text: 'Next source'
+                text: i18n('Next multimedia source')
                 onClicked: {
                     mpris2.nextSource()
                 }
