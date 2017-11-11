@@ -40,9 +40,7 @@ PlasmaComponents.Label {
     property var _update: lengthUpdate
 
     state: type
-
-    opacity: 1
-
+    opacity: 0.8
     font: theme.smallestFont
 
     signal clicked
@@ -55,10 +53,8 @@ PlasmaComponents.Label {
     enabled: length > 0
 
     onPositionChanged: _update()
-
     onLengthChanged: _update()
-
-    onTypeChanged: _update
+    onTypeChanged: _update()
 
     states: [
         State {
