@@ -72,7 +72,6 @@ PlaybackItem {
             iconSource: icon
             visible: !(index === 2) | showStop
             property int size: !showStop && index === 1 ? buttonSize.width * 1.4 : buttonSize.width
-            enabled: mpris2.sourceActive
             Layout.minimumWidth: size
             Layout.minimumHeight: size
         }
@@ -94,17 +93,21 @@ PlaybackItem {
                 switch (index) {
                 case 0:
                     item.clicked.connect(previous)
+                    item.enabled = Qt.binding(function () { return mpris2.canGoPrevious })
                     break
                 case 1:
                     item.clicked.connect(playPause)
-                    //NOTE: update icon playing state on start
+                    item.enabled = Qt.binding(function () { return mpris2.canPlayPause })
+                    //NOTE: update icon playing state
                     playingChanged()
                     break
                 case 2:
                     item.clicked.connect(stop)
+                    item.enabled = Qt.binding(function () { return mpris2.canControl })
                     break
                 case 3:
                     item.clicked.connect(next)
+                    item.enabled = Qt.binding(function () { return mpris2.canGoNext })
                     break
                 }
             }

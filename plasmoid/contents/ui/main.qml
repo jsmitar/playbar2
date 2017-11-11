@@ -212,6 +212,7 @@ Item {
     function action_player4() {
         executable.startPlayer(4)
     }
+    //!END: Context menu actions
 
     Component.onCompleted: {
         plasmoid.formFactorChanged()
@@ -274,12 +275,23 @@ Item {
                     plasmoid.setAction('playPause', i18n('Play'), 'media-playback-start')
 
                 plasmoid.setAction('next', i18n('Play next track'), 'media-skip-forward')
+
+                // enable/disable actions
+                plasmoid.action('previous').enabled = mpris2.canGoPrevious
+                plasmoid.action('playPause').enabled = mpris2.canPlayPause
+                plasmoid.action('next').enabled = mpris2.canGoNext
             }
 
             plasmoid.setAction('stop', i18n('Stop'), 'media-playback-stop')
             plasmoid.setAction('nextSource', i18n('Next multimedia source'), 'go-next')
             plasmoid.setActionSeparator('sep1')
             plasmoid.setAction('quit', i18n('Quit'), 'application-exit')
+
+            // enable/disable actions
+            plasmoid.action('raise').enabled = mpris2.canRaise
+            plasmoid.action('stop').enabled = mpris2.canControl
+            plasmoid.action('quit').enabled = mpris2.canQuit
+
         } else {
             var sources = mpris2.recentSources
 

@@ -108,17 +108,21 @@ PlaybackItem {
                 switch (index) {
                 case 0:
                     item.children[0].clicked.connect(previous)
+                    item.children[0].enabled = Qt.binding(function () { return mpris2.canGoPrevious })
                     break
                 case 1:
                     item.children[0].clicked.connect(playPause)
+                    item.children[0].enabled = Qt.binding(function () { return mpris2.canPlayPause })
                     //NOTE: update icon playing state
                     playingChanged()
                     break
                 case 2:
                     item.children[0].clicked.connect(stop)
+                    item.children[0].enabled = Qt.binding(function () { return mpris2.canControl })
                     break
                 case 3:
                     item.children[0].clicked.connect(next)
+                    item.children[0].enabled = Qt.binding(function () { return mpris2.canGoNext })
                     break
                 }
             }
