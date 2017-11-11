@@ -164,7 +164,7 @@ Item {
         console.log('playbar:', args)
     }
 
-    //! Context menu actions
+    //!BEGIN: Context menu actions
     function action_raise() {
         mpris2.startOperation('Raise')
     }
