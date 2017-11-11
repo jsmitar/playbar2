@@ -185,27 +185,35 @@ PlasmaCore.DataSource {
         }).sort()
 
         var _currentSource = currentSource
-        disconnectSource(currentSource)
 
-        for (var i = 0; i < _sources.length; i++) {
-            if (_sources[i] === _currentSource) {
-                var s = i + 1 < _sources.length ? _sources[i + 1] : _sources[0]
-                disconnectSource(_currentSource)
-                connectSource(s)
-                playbarEngine.setSource(s)
-                debug('next source:', s)
-                return
+        debug('connectedSources:', connectedSources.length)
+        debug('_sources', _sources.join(','))
+
+        if (_sources.length > 0 && connectedSources.length === 0) {
+            connectSource('@multiplex')
+            playbarEngine.setSource('@multiplex')
+            debug('next source: @multiplex')
+
+        } else if (_sources.length > 0) {
+            var _source = _sources[0]
+
+            if (_sources.length > 1) {
+                for (var i = 0; i < _sources.length; i++) {
+                    if (_sources[i] === _currentSource)
+                        _source = i + 1 < _sources.length ? _sources[i + 1] : _sources[0]
+                }
             }
-        }
 
-        if (_sources.length > 0) {
-            connectSource(_sources[0])
-            playbarEngine.setSource(_sources[0])
-            debug('next source:', _sources[0])
-        } else {
+            disconnectSource(_currentSource)
+            connectSource(_source)
+            playbarEngine.setSource(_source)
+            debug('next source:', _source)
+
+        } else if (connectedSources.length > 0) {
             disconnectSource('@multiplex')
             playbarEngine.setSource('')
             debug('next source:', 'Nothing')
+
         }
     }
 
