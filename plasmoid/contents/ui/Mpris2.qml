@@ -54,15 +54,19 @@ PlasmaCore.DataSource {
 
     readonly property bool canControl: sourceActive ? data[currentSource].CanControl || false : false
 
-    readonly property bool canGoNext: sourceActive ? data[currentSource].CanGoNext || false : false
+    readonly property bool canPlayPause: canControl ? data[currentSource].CanPlay || data[currentSource].CanPause || false : false
 
-    readonly property bool canGoPrevious: sourceActive ? data[currentSource].CanGoPrevious || false : false
+    readonly property bool canGoNext: canControl ? data[currentSource].CanGoNext || false : false
 
-    readonly property bool canSeek: sourceActive ? data[currentSource].CanSeek || false : false
+    readonly property bool canGoPrevious: canControl ? data[currentSource].CanGoPrevious || false : false
 
-    readonly property bool canRaise: sourceActive ? data[currentSource].CanRaise || false : false
+    readonly property bool canSeek: canControl ? data[currentSource].CanSeek || false : false
 
-    readonly property real volume: sourceActive ? data[currentSource].Volume || false : 0
+    readonly property real volume: canControl ? data[currentSource].Volume || false : 0
+
+    readonly property bool canRaise: canControl ? data[currentSource].CanRaise || false : false
+
+    readonly property bool canQuit: canControl ? data[currentSource].CanQuit || false : false
 
 
     // 	seconds
@@ -213,16 +217,11 @@ PlasmaCore.DataSource {
     }
 
     function seek(secs) {
-        if (service) {
-            if (canControl || canSeek) {
-                if (!canSeek)
-                    debug('ignoring CanSeek:', currentSource)
-
-                var operation = service.operationDescription('SetPosition')
-                operation['microseconds'] = (secs * 1000000).toFixed(0)
-                waitGetPosition()
-                service.startOperationCall(operation)
-            }
+        if (service && canSeek) {
+            var operation = service.operationDescription('SetPosition')
+            operation['microseconds'] = (secs * 1000000).toFixed(0)
+            waitGetPosition()
+            service.startOperationCall(operation)
         }
         return secs
     }
