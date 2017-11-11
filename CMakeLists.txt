@@ -25,7 +25,7 @@ add_subdirectory(engine)
 add_subdirectory(plasmoid)
 add_subdirectory(plasmoid-systray)
 
-file(GLOB_RECURSE SRCS *.qml *.js main.xml)
+file(GLOB_RECURSE SRCS *.qml *.js main.xml *.desktop)
 add_custom_target(contents SOURCES ${SRCS})
 
 ki18n_install(po)
