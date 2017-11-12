@@ -131,7 +131,7 @@ Item {
     Component {
         id: compactIconOnly
         PlasmaCore.IconItem {
-            source: mpris2.playbackStatus === 'Playing' ? 'media-playback-start' : 'media-playback-pause'
+            source: mpris2.playing ? 'media-playback-start' : 'media-playback-pause'
 
             MediaPlayerArea {
                 anchors.fill: parent
@@ -169,24 +169,16 @@ Item {
         mpris2.startOperation('Raise')
     }
     function action_playPause() {
-        if (mpris2.source === 'spotify') {
-            mpris2.startOperation('PlayPause')
-            return
-        }
-        if (mpris2.playbackStatus !== 'Playing')
-            mpris2.startOperation('Play')
-        else
-            mpris2.startOperation('PlayPause')
+        mpris2.playPause()
     }
     function action_previous() {
-        mpris2.startOperation('Previous')
+        mpris2.previous()
     }
     function action_next() {
-        mpris2.startOperation('Next')
+        mpris2.next()
     }
     function action_stop() {
-        if (mpris2.playbackStatus !== 'Stopped')
-            mpris2.startOperation('Stop')
+        mpris2.stop()
     }
     function action_quit() {
         mpris2.startOperation('Quit')
@@ -269,7 +261,7 @@ Item {
             if (playbarEngine.compactStyle !== playbar.playbackButtons) {
                 plasmoid.setAction('previous', i18n('Play previous track'), 'media-skip-backward')
 
-                if (mpris2.playbackStatus === 'Playing')
+                if (mpris2.playing)
                     plasmoid.setAction('playPause', i18n('Pause'), 'media-playback-pause')
                 else
                     plasmoid.setAction('playPause', i18n('Play'), 'media-playback-start')

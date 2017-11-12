@@ -42,6 +42,8 @@ PlasmaCore.DataSource {
 
     readonly property string playbackStatus: sourceActive ? data[currentSource].PlaybackStatus || 'Stopped' : 'Stopped'
 
+    readonly property bool playing: playbackStatus === 'Playing'
+
     readonly property string artUrl: metadata ? metadata['mpris:artUrl'] || '' : ''
 
     readonly property string artist: metadata ? metadata['xesam:artist'] || '' : ''
@@ -50,11 +52,14 @@ PlasmaCore.DataSource {
 
     readonly property string title: metadata ? metadata['xesam:title'] || '' : ''
 
-    property date positionLastUpdated: new Date()
 
     readonly property bool canControl: sourceActive ? data[currentSource].CanControl || false : false
 
-    readonly property bool canPlayPause: canControl ? data[currentSource].CanPlay || data[currentSource].CanPause || false : false
+    readonly property bool canPlayPause: canPlay || canPause
+
+    readonly property bool canPlay: canControl ? data[currentSource].CanPlay || false : false
+
+    readonly property bool canPause: canControl ? data[currentSource].CanPause || false : false
 
     readonly property bool canGoNext: canControl ? data[currentSource].CanGoNext || false : false
 
@@ -73,6 +78,8 @@ PlasmaCore.DataSource {
     property int length: 0
     // 	seconds
     property int position: 0
+
+    property date positionLastUpdated: new Date()
 
     property bool positionUpdateEnable: true
 
@@ -250,6 +257,32 @@ PlasmaCore.DataSource {
             value = value > 1.2 ? 1 : value
         }
         return value
+    }
+
+    function playPause() {
+        if (playing) {
+            if (canPause)
+                startOperation('Pause')
+            else
+                startOperation('PlayPause')
+        } else {
+            if (canPlay)
+                startOperation('Play')
+            else
+                startOperation('PlayPause')
+        }
+    }
+
+    function stop() {
+        startOperation('Stop')
+    }
+
+    function next() {
+        startOperation('Next')
+    }
+
+    function previous() {
+        startOperation('Previous')
     }
 
     function getIdentity(source) {

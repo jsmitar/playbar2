@@ -34,13 +34,6 @@ PlaybackItem {
 
     readonly property int minWidth: Math.min(buttonSize.width, buttonSize.height)
 
-    onPlayingChanged: {
-        if (playing)
-            button.iconSource = 'media-playback-pause'
-        else
-            button.iconSource = 'media-playback-start'
-    }
-
     Flow {
         id: control
 
@@ -57,11 +50,11 @@ PlaybackItem {
                 svg: PlasmaCore.Svg {
                     imagePath: 'icons/media'
                 }
-                iconSource: 'media-playback-start'
+                iconSource: mpris2.playing ? 'media-playback-pause' : 'media-playback-start'
                 enabled: mpris2.sourceActive
 
                 size: minWidth
-                onClicked: seekBar.playPause()
+                onClicked: mpris2.playPause()
                 anchors.centerIn: parent
             }
 
@@ -79,8 +72,8 @@ PlaybackItem {
             value: 0
             stepSize: 1
             updateValueWhileDragging: true
-            visible: mpris2.playbackStatus !== 'Stopped'
-            property int size: mpris2.playbackStatus === 'Stopped' ? 40 : playbarEngine.maxWidth
+            visible: mpris2.playbackStatus !== 'Stopped' && slider.enabled
+            property int size: mpris2.playbackStatus === 'Stopped' || !slider.enabled ? 40 : playbarEngine.maxWidth
 
             Behavior on size {
                 SequentialAnimation {
@@ -91,7 +84,7 @@ PlaybackItem {
                     ScriptAction {
                         script: setVisible()
                         function setVisible() {
-                            if (mpris2.playbackStatus !== 'Stopped')
+                            if (mpris2.playbackStatus !== 'Stopped' && slider.enabled)
                                 slider.visible = true
                         }
                     }
@@ -101,7 +94,7 @@ PlaybackItem {
                     ScriptAction {
                         script: setNotVisible()
                         function setNotVisible() {
-                            if (mpris2.playbackStatus === 'Stopped' || slider.size <= 50)
+                            if (mpris2.playbackStatus === 'Stopped' || slider.size <= 50 || !slider.enabled)
                                 slider.visible = false
                         }
                     }

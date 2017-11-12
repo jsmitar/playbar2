@@ -31,16 +31,6 @@ PlaybackItem {
 
     height: visible ? controls.height : 0
 
-    onPlayingChanged: {
-        if (!model.itemAt(1))
-            return
-
-        if (playing)
-            model.itemAt(1).children[0].iconSource = 'media-playback-pause'
-        else
-            model.itemAt(1).children[0].iconSource = 'media-playback-start'
-    }
-
     MediaPlayerArea {
         anchors.fill: parent
     }
@@ -107,21 +97,24 @@ PlaybackItem {
             onItemAdded: {
                 switch (index) {
                 case 0:
-                    item.children[0].clicked.connect(previous)
+                    item.children[0].clicked.connect(mpris2.previous)
                     item.children[0].enabled = Qt.binding(function () { return mpris2.canGoPrevious })
                     break
                 case 1:
-                    item.children[0].clicked.connect(playPause)
+                    item.children[0].clicked.connect(mpris2.playPause)
                     item.children[0].enabled = Qt.binding(function () { return mpris2.canPlayPause })
+                    item.children[0].iconSource = Qt.binding(function() {
+                        return mpris2.playing ? 'media-playback-pause'
+                                              : 'media-playback-start'
+                    })
                     //NOTE: update icon playing state
-                    playingChanged()
                     break
                 case 2:
-                    item.children[0].clicked.connect(stop)
+                    item.children[0].clicked.connect(mpris2.stop)
                     item.children[0].enabled = Qt.binding(function () { return mpris2.canControl })
                     break
                 case 3:
-                    item.children[0].clicked.connect(next)
+                    item.children[0].clicked.connect(mpris2.next)
                     item.children[0].enabled = Qt.binding(function () { return mpris2.canGoNext })
                     break
                 }

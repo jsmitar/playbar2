@@ -24,7 +24,8 @@ import org.kde.plasma.plasmoid 2.0
 
 Loader {
     id: fullApplet
-    source: systray ? 'SystrayLayout.qml' : playbarEngine.expandedStyle == 0 ? 'DefaultLayout.qml' : 'VerticalLayout.qml'
+    source: systray ? 'SystrayLayout.qml' : (playbarEngine.expandedStyle == 0 ? 'DefaultLayout.qml'
+                                                                              : 'VerticalLayout.qml')
     asynchronous: false
 
     width: item ? item.width : 0
@@ -67,7 +68,8 @@ Loader {
             }
 
             source = Qt.binding(function() {
-                return  playbarEngine.expandedStyle == playbar.horizontalLayout ? 'DefaultLayout.qml' : 'VerticalLayout.qml'
+                return  playbarEngine.expandedStyle === playbar.horizontalLayout ? 'DefaultLayout.qml'
+                                                                                 : 'VerticalLayout.qml'
             })
         }
     }

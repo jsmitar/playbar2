@@ -37,16 +37,6 @@ PlaybackItem {
     Layout.minimumHeight: buttons.implicitHeight
     Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 
-    onPlayingChanged: {
-        if (!model.itemAt(1))
-            return
-
-        if (playing)
-            model.itemAt(1).iconSource = 'media-playback-pause'
-        else
-            model.itemAt(1).iconSource = 'media-playback-start'
-    }
-
     ListModel {
         id: playmodel
 
@@ -92,21 +82,24 @@ PlaybackItem {
             onItemAdded: {
                 switch (index) {
                 case 0:
-                    item.clicked.connect(previous)
+                    item.clicked.connect(mpris2.previous)
                     item.enabled = Qt.binding(function () { return mpris2.canGoPrevious })
                     break
                 case 1:
-                    item.clicked.connect(playPause)
+                    item.clicked.connect(mpris2.playPause)
                     item.enabled = Qt.binding(function () { return mpris2.canPlayPause })
+                    item.iconSource = Qt.binding(function() {
+                        return mpris2.playing ? 'media-playback-pause'
+                                              : 'media-playback-start'
+                    })
                     //NOTE: update icon playing state
-                    playingChanged()
                     break
                 case 2:
-                    item.clicked.connect(stop)
+                    item.clicked.connect(mpris2.stop)
                     item.enabled = Qt.binding(function () { return mpris2.canControl })
                     break
                 case 3:
-                    item.clicked.connect(next)
+                    item.clicked.connect(mpris2.next)
                     item.enabled = Qt.binding(function () { return mpris2.canGoNext })
                     break
                 }
