@@ -38,13 +38,6 @@ PlaybackItem {
     readonly property int minWidth: Math.min(buttonSize.width, buttonSize.height)
     readonly property int maxWidth: Math.max(buttonSize.width, buttonSize.height)
 
-    onPlayingChanged: {
-        if (playing)
-            button.iconSource = 'media-playback-pause'
-        else
-            button.iconSource = 'media-playback-start'
-    }
-
     MediaPlayerArea {
         anchors.fill: parent
     }
@@ -66,11 +59,11 @@ PlaybackItem {
                 svg: PlasmaCore.Svg {
                     imagePath: 'icons/media'
                 }
-                iconSource: 'media-playback-start'
+                iconSource: mpris2.playing ? 'media-playback-pause' : 'media-playback-start'
                 enabled: mpris2.sourceActive
 
                 size: Math.min(buttonSize.width, buttonSize.height)
-                onClicked: infoBar.playPause()
+                onClicked: mpris2.playPause()
                 anchors.centerIn: parent
             }
         }
