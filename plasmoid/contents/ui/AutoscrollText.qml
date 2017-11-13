@@ -35,22 +35,50 @@ Item {
 
     property bool reverse: false
 
+    readonly property int contentSize: target.contentWidth
+
+    readonly property int size: target.width
+
     focus: false
 
-    Component.onCompleted: if (autoScroll) anim.run()
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        acceptedButtons: Qt.NoButton
+        hoverEnabled: true
+        onEntered: start()
+    }
+
+    function start() {
+        if (!anim.running && _isScrollable()) {
+            scrolling = true
+            anim.start()
+        }
+    }
+
+    function restart() {
+        stop()
+        if (_isScrollable()) {
+            scrolling = true
+            anim.restart()
+        }
+    }
+
+    function stop() {
+        anim.stop()
+        if (vertical) target.y = 0
+        else target.x = 0
+    }
+
+    function _isScrollable() {
+        return isScrollable = contentSize > size || target.truncated
+    }
 
     Connections {
         target: scroll.target
-
-        onWidthChanged: anim.stop()
-        onHeightChanged: anim.stop()
-
-        onTextChanged: {
-            if (autoScroll)
-                anim.run()
-            else
-                anim.stop()
-        }
+        onWidthChanged: scroll.stop()
+        onHeightChanged: scroll.stop()
+        onTextChanged: scroll.stop()
     }
 
     SequentialAnimation {
@@ -59,39 +87,15 @@ Item {
 
         loops: autoScroll ? 2 : 1
 
-        readonly property int contentSize: target.contentWidth
-        readonly property int size: target.width
-
         onStopped: {
-            isScrollable = contentSize > size || target.truncated
-
-            if (isScrollable) {
-                if (scrollArea.containsMouse) {
-                    anim.restart()
-                    return
-                }
-            }
-
-            scrolling = false
-        }
-
-        function run() {
-            isScrollable = contentSize > size || target.truncated
-            if (isScrollable && !anim.running) {
-                scrolling = true
-                anim.start()
-            } else if (scrolling && !anim.running) {
-                anim.start()
-            } else if (!anim.running) {
-                if (vertical)
-                    target.y = 0
-                else
-                    target.x = 0
-            }
+            if (_isScrollable() && mouseArea.containsMouse)
+                anim.restart()
+            else
+                scrolling = false
         }
 
         PauseAnimation {
-            duration: 250
+            duration: 300
         }
 
         SmoothedAnimation {
@@ -100,7 +104,7 @@ Item {
             property: scroll.vertical ? 'y' : 'x'
             from: 0
             // It goes to the end of the text
-            to: (anim.size - anim.contentSize - theme.mSize(theme.defaultFont).width) * (scroll.reverse ? -1 : 1)
+            to: (size - contentSize - theme.mSize(theme.defaultFont).width) *  (scroll.reverse ? -1 : 1)
             velocity: scroll.velocity
         }
 
@@ -112,15 +116,5 @@ Item {
             to: 0
             velocity: scroll.velocity * 1.1
         }
-    }
-
-    MouseArea {
-        id: scrollArea
-
-        anchors.fill: parent
-        acceptedButtons: Qt.NoButton
-        hoverEnabled: true
-
-        onEntered: anim.run()
     }
 }
