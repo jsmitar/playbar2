@@ -275,14 +275,23 @@ Item {
             }
 
             plasmoid.setAction('stop', i18n('Stop'), 'media-playback-stop')
-            plasmoid.setAction('nextSource', i18n('Next multimedia source'), 'go-next')
-            plasmoid.setActionSeparator('sep1')
             plasmoid.setAction('quit', i18n('Quit'), 'application-exit')
 
             // enable/disable actions
             plasmoid.action('raise').enabled = mpris2.canRaise
             plasmoid.action('stop').enabled = mpris2.canControl
             plasmoid.action('quit').enabled = mpris2.canQuit
+
+            plasmoid.setActionSeparator('sep1')
+
+            // find the next source
+            var ns = mpris2.sources.filter(function(e){return e !== '@multiplex'}).sort()
+            var i = ns.indexOf(mpris2.currentSource)
+            i = i + 1 < ns.length && i !== -1 ? i + 1 : 0
+
+            if (ns[i] !== mpris2.currentSource) {
+                plasmoid.setAction('nextSource', i18n('Next source (%1)', mpris2.getIdentity(ns[i])), 'go-next')
+            }
 
         } else {
             var sources = mpris2.recentSources

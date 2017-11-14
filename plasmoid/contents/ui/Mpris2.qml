@@ -202,20 +202,15 @@ PlasmaCore.DataSource {
             debug('next source: @multiplex')
 
         } else if (_sources.length > 0) {
-            var _source = _sources[0]
+            var i = _sources.indexOf(_currentSource)
+            i = i + 1 < _sources.length && i !== -1 ? i + 1 : 0
 
-            if (_sources.length > 1) {
-                for (var i = 0; i < _sources.length; i++) {
-                    if (_sources[i] === _currentSource)
-                        _source = i + 1 < _sources.length ? _sources[i + 1] : _sources[0]
-                }
+            if (_sources[i] !== _currentSource) {
+                disconnectSource(_currentSource)
+                connectSource(_sources[i])
+                playbarEngine.setSource(_sources[i])
+                debug('next source:', _source[i])
             }
-
-            disconnectSource(_currentSource)
-            connectSource(_source)
-            playbarEngine.setSource(_source)
-            debug('next source:', _source)
-
         } else if (connectedSources.length > 0) {
             disconnectSource('@multiplex')
             playbarEngine.setSource('')
