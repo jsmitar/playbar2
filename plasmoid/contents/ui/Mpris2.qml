@@ -101,8 +101,7 @@ PlasmaCore.DataSource {
     }
 
     readonly property Timer _GetPositionTimer: Timer {
-        running: positionUpdateEnable && playbackStatus === 'Playing'
-                 && length > 0
+        running: positionUpdateEnable && playbackStatus !== 'Stopped'
         repeat: true
         triggeredOnStart: true
         interval: 1000
@@ -140,12 +139,12 @@ PlasmaCore.DataSource {
                 // to seconds
                 var p = Number(((data['Position'] || 0) / 1000000).toFixed(0))
                 var l = Number(((data['Metadata']['mpris:length'] || 0) / 1000000).toFixed(0))
-                // debug( "Position, length", "( " + p + ", " + l + " )" )
+                debug( "(length:" + l + ", position:" + p + ")" )
 
                 if (l !== length)
-                    length = l
+                    length = l > 0 ? l : 0
 
-                position = p < l ? p : l
+                position = p > 0 ? p : 0
             }
         }
     }

@@ -106,7 +106,11 @@ PlasmaComponents.Label {
         acceptedButtons: Qt.LeftButton
         hoverEnabled: enabled
 
-        onClicked: if (containsMouse)
-                       time.clicked()
+        onClicked: {
+            if (containsMouse) {
+                time.clicked()
+                time._update()
+            }
+        }
     }
 }

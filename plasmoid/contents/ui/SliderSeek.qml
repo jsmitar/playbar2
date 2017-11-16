@@ -33,6 +33,21 @@ RowLayout {
     Layout.fillWidth: true
     Layout.minimumHeight: implicitHeight + units.smallSpacing
 
+
+    states: State {
+        when: mpris2.position > mpris2.length
+        PropertyChanges {
+            target: labelLeft
+            type: 'length'
+            position: 0
+        }
+        PropertyChanges {
+            target: labelRight
+            type: 'position'
+            position: mpris2.position
+        }
+    }
+
     TimeLabel {
         id: labelLeft
 
@@ -57,7 +72,7 @@ RowLayout {
         stepSize: 1
         activeFocusOnPress: false
         updateValueWhileDragging: true
-        enabled: (mpris2.canSeek || mpris2.canControl) && maximumValue != 0
+        enabled: mpris2.canSeek || mpris2.canControl
 
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -69,7 +84,7 @@ RowLayout {
         }
 
         onValueChanged: {
-            if (pressed && playbarEngine.compactStyle !== playbar.seekBar)
+            if (pressed)
                 mpris2.waitGetPosition()
         }
 
