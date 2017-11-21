@@ -30,3 +30,5 @@ build/
 .kdev4/
 
 *.user
+
+*.autosave
