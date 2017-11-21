@@ -52,13 +52,18 @@ Item {
         ? data[source]['ShowSeekSlider'] : false
 
         readonly property int backgroundHint:
-        hasSource('BackgroundHint') && plasmoid.formFactor == PlasmaCore.Types.Planar
+        hasSource('BackgroundHint') && plasmoid.formFactor === PlasmaCore.Types.Planar
         ? data[source]['BackgroundHint'] : playbar.normal
 
         readonly property color shadowColor: hasSource('ShadowColor')
-        ? data[source]['ShadowColor'] : "#fff"
+        ? data[source]['ShadowColor'] : '#fff'
+
+        readonly property bool nextSource: hasSource('NextSource')
+        ? data[source]['NextSource'] : false
 
         property bool systrayArea: false
+
+        onNextSourceChanged: if (nextSource) mpris2.nextSource()
 
         function showSettings() {
             if (!playbarEngine.valid)
@@ -286,11 +291,14 @@ Item {
 
             // find the next source
             var ns = mpris2.sources.filter(function(e){return e !== '@multiplex'}).sort()
-            var i = ns.indexOf(mpris2.currentSource)
-            i = i + 1 < ns.length && i !== -1 ? i + 1 : 0
 
-            if (ns[i] !== mpris2.currentSource) {
-                plasmoid.setAction('nextSource', i18n('Next source (%1)', mpris2.getIdentity(ns[i])), 'go-next')
+            if (ns.length > 1) {
+                var index = ns.indexOf(mpris2.currentSource)
+                index = index + 1 < ns.length && index !== -1 ? index + 1 : 0
+
+                if (ns[index] !== mpris2.currentSource) {
+                    plasmoid.setAction('nextSource', i18n('Next source (%1)', mpris2.getIdentity(ns[index])), 'go-next')
+                }
             }
 
         } else {

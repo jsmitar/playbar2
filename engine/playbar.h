@@ -52,6 +52,11 @@ public:
         if (!mpris2_source.isEmpty()) {
             m_mpris2Engine->connectSource(mpris2_source, this);
         }
+
+        if (m_goNextSource) {
+            m_goNextSource = false;
+            emit nextSourceTriggered();
+        }
     }
 
     const DataEngine::Data &data();
@@ -59,11 +64,13 @@ public:
     inline void startAction(const QString &name) const;
     inline void seek(qlonglong us) const;
 
+signals:
+    void nextSourceTriggered();
 
 public slots:
     void dataUpdated(const QString &sourceName, const Plasma::DataEngine::Data &data);
 
- public slots:
+public slots:
     void action_playPause();
     void action_stop();
     void action_next();
@@ -71,6 +78,7 @@ public slots:
     void action_forward();
     void action_backward();
     void action_raise();
+    void action_nextSource();
     void showSettings();
 
 private:
@@ -90,6 +98,8 @@ private:
     QAction *m_forward;
     QAction *m_backward;
     QAction *m_raise;
+    QAction *m_nextSource;
+    bool m_goNextSource {false};
 
     QString mpris2_source {"@multiplex"};
 };

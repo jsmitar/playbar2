@@ -32,10 +32,11 @@ PlayBarEngine::PlayBarEngine(QObject *parent, const QVariantList &args)
     KSharedConfigPtr config = PlayBarSettings::self()->sharedConfig();
     m_playbar = new PlayBar(config, this);
 
-    setMinimumPollingInterval(1000);
+    setMinimumPollingInterval(0);
     setPollingInterval(0);
 
     connect(PlayBarSettings::self(), SIGNAL(configChanged()), this, SLOT(updateData()));
+    connect(m_playbar, SIGNAL(nextSourceTriggered()), this, SLOT(updateData()));
 }
 
 PlayBarEngine::~PlayBarEngine()

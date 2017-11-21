@@ -32,7 +32,6 @@
 #include <Plasma/Service>
 #include <Plasma/ServiceJob>
 
-
 #include "playbarsettings.h"
 
 using namespace Plasma;
@@ -75,10 +74,14 @@ PlayBar::PlayBar(KSharedConfigPtr &config , QObject *parent)
     m_backward->setText(i18n("Seek backward"));
     KGlobalAccel::setGlobalShortcut(m_backward, QKeySequence{Qt::META + Qt::Key_MediaPrevious});
 
-    m_raise = m_collection->addAction(QStringLiteral("toggle-mediaplayer"), this,
-                        SLOT(action_raise()));
+    m_raise = m_collection->addAction(QStringLiteral("toggle-mediaplayer"), this, SLOT(action_raise()));
     m_raise->setText(i18n("Toggle window media player"));
-    KGlobalAccel::setGlobalShortcut(m_raise, QKeySequence{});
+    KGlobalAccel::setGlobalShortcut(m_raise, QKeySequence{Qt::META + Qt::Key_MediaPlay});
+
+    m_nextSource = m_collection->addAction(QStringLiteral("next-source"), this, SLOT(action_nextSource()));
+    m_nextSource->setIcon(QIcon::fromTheme(QStringLiteral("go-next")));
+    m_nextSource->setText(i18n("Next source"));
+    KGlobalAccel::setGlobalShortcut(m_nextSource, QKeySequence{});
 
 }
 
@@ -123,6 +126,14 @@ void PlayBar::action_raise()
     startAction("Raise");
 }
 
+void PlayBar::action_nextSource()
+{
+    if (!m_goNextSource) {
+        m_goNextSource = true;
+        emit nextSourceTriggered();
+    }
+}
+
 void PlayBar::showSettings()
 {
     if (KConfigDialog::showDialog(ConfigDialog::CONFIG_NAME))
@@ -151,6 +162,7 @@ const DataEngine::Data &PlayBar::data()
     m_data->insert(QStringLiteral("ShowSeekSlider"),   config->showSeekSlider());
     m_data->insert(QStringLiteral("BackgroundHint"),   config->backgroundHint());
     m_data->insert(QStringLiteral("ShadowColor"),      config->shadowColor());
+    m_data->insert(QStringLiteral("NextSource"),       m_goNextSource);
 
     return *m_data;
 }
