@@ -105,12 +105,7 @@ PlasmaCore.DataSource {
         repeat: true
         triggeredOnStart: true
         interval: 1000
-        onTriggered: {
-            if (position + 1 <= length)
-                ++position
-            else
-                startOperation('GetPosition')
-        }
+        onTriggered: startOperation('GetPosition')
     }
 
     Component.onCompleted: {
@@ -121,9 +116,8 @@ PlasmaCore.DataSource {
     }
 
     onSourceActiveChanged: {
-        if (sourceActive) {
+        if (sourceActive)
             addRecentSource(currentSource)
-        }
     }
 
     onLengthChanged: startOperation('GetPosition')
@@ -173,11 +167,11 @@ PlasmaCore.DataSource {
     onSourceConnected: {
         setService(source)
         currentSource = source
-        debug('source connected:', source)
-
         position = 0
         length = 0
         positionLastUpdated = new Date()
+
+        debug('source connected:', source)
     }
 
     onSourceDisconnected: {
@@ -208,8 +202,9 @@ PlasmaCore.DataSource {
                 disconnectSource(_currentSource)
                 connectSource(_sources[i])
                 playbarEngine.setSource(_sources[i])
-                debug('next source:', _source[i])
+                debug('next source:', _sources[i])
             }
+
         } else if (connectedSources.length > 0) {
             disconnectSource('@multiplex')
             playbarEngine.setSource('')
