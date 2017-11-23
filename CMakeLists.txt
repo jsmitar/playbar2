@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 project(PlayBar)
 
+set(CMAKE_CXX_STANDARD 14)
 set(QT_MIN_VERSION "5.4.1")
 set(KF5_MIN_VERSION "5.9.0")
 set(CMAKE_INSTALL_PREFIX /usr)

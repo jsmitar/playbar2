@@ -170,6 +170,7 @@ PlasmaCore.DataSource {
         position = 0
         length = 0
         positionLastUpdated = new Date()
+        playbarEngine.setSource(source)
 
         debug('source connected:', source)
     }

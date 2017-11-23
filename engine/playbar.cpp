@@ -39,7 +39,8 @@ using namespace Plasma;
 PlayBar::PlayBar(KSharedConfigPtr &config , QObject *parent)
     : QObject(parent),
       m_config(config),
-      m_data(new Plasma::DataEngine::Data())
+      m_data(new Plasma::DataEngine::Data()),
+      m_timerNextSource(new QTimer(this))
 {
     m_collection = new KActionCollection(this, QStringLiteral("PlayBar"));
     m_collection->setComponentDisplayName(QStringLiteral("PlayBar"));
@@ -83,10 +84,33 @@ PlayBar::PlayBar(KSharedConfigPtr &config , QObject *parent)
     m_nextSource->setText(i18n("Next source"));
     KGlobalAccel::setGlobalShortcut(m_nextSource, QKeySequence{});
 
+    m_timerNextSource->setInterval(250);
+    m_timerNextSource->setSingleShot(true);
 }
 
 PlayBar::~PlayBar()
 {
+}
+
+QString PlayBar::source() const {
+    return mpris2_source;
+}
+
+void PlayBar::setSource(const QString &source) {
+    if (!m_mpris2Engine)
+        m_mpris2Engine = dataEngine(MPRIS2);
+    else
+        m_mpris2Engine->disconnectSource(mpris2_source, this);
+
+    mpris2_source = source.trimmed();
+    if (!mpris2_source.isEmpty()) {
+        m_mpris2Engine->connectSource(mpris2_source, this);
+    }
+
+    if (m_goNextSource) {
+        m_goNextSource = false;
+        emit nextSourceTriggered();
+    }
 }
 
 void PlayBar::action_playPause()
@@ -128,8 +152,10 @@ void PlayBar::action_raise()
 
 void PlayBar::action_nextSource()
 {
-    if (!m_goNextSource) {
-        m_goNextSource = true;
+    if (!m_timerNextSource->isActive()) {
+        qDebug() << Q_FUNC_INFO << m_goNextSource << mpris2_source;
+        m_timerNextSource->start();
+        m_goNextSource = !m_goNextSource;
         emit nextSourceTriggered();
     }
 }
@@ -162,7 +188,7 @@ const DataEngine::Data &PlayBar::data()
     m_data->insert(QStringLiteral("ShowSeekSlider"),   config->showSeekSlider());
     m_data->insert(QStringLiteral("BackgroundHint"),   config->backgroundHint());
     m_data->insert(QStringLiteral("ShadowColor"),      config->shadowColor());
-    m_data->insert(QStringLiteral("NextSource"),       m_goNextSource);
+    m_data->insert(QStringLiteral("NextSource"),       m_goNextSource.load());
 
     return *m_data;
 }

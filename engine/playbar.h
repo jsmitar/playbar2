@@ -20,7 +20,10 @@
 #ifndef PLAYBAR_H
 #define PLAYBAR_H
 
+#include <atomic>
+
 #include <QAction>
+#include <QTimer>
 
 #include <KActionCollection>
 #include <Plasma/DataEngine>
@@ -38,26 +41,8 @@ public:
 
     virtual ~PlayBar();
 
-    inline const QString &source() const {
-        return mpris2_source;
-    }
-
-    inline void setSource(const QString &source) {
-        if (!m_mpris2Engine)
-            m_mpris2Engine = dataEngine(MPRIS2);
-        else
-            m_mpris2Engine->disconnectSource(mpris2_source, this);
-
-        mpris2_source = source.trimmed();
-        if (!mpris2_source.isEmpty()) {
-            m_mpris2Engine->connectSource(mpris2_source, this);
-        }
-
-        if (m_goNextSource) {
-            m_goNextSource = false;
-            emit nextSourceTriggered();
-        }
-    }
+    inline QString source() const;
+    void setSource(const QString &source);
 
     const DataEngine::Data &data();
 
@@ -99,7 +84,8 @@ private:
     QAction *m_backward;
     QAction *m_raise;
     QAction *m_nextSource;
-    bool m_goNextSource {false};
+    QTimer *m_timerNextSource;
+    std::atomic_bool m_goNextSource {false};
 
     QString mpris2_source {"@multiplex"};
 };
