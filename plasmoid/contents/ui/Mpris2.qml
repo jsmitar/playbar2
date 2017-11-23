@@ -133,7 +133,7 @@ PlasmaCore.DataSource {
                 // to seconds
                 var p = Number(((data['Position'] || 0) / 1000000).toFixed(0))
                 var l = Number(((data['Metadata']['mpris:length'] || 0) / 1000000).toFixed(0))
-                debug( "(length:" + l + ", position:" + p + ")" )
+//                debug( "(length:" + l + ", position:" + p + ")" )
 
                 if (l !== length)
                     length = l > 0 ? l : 0
@@ -203,13 +203,14 @@ PlasmaCore.DataSource {
                 connectSource(_sources[i])
                 playbarEngine.setSource(_sources[i])
                 debug('next source:', _sources[i])
+            } else {
+                playbarEngine.setSource(_currentSource)
             }
 
         } else if (connectedSources.length > 0) {
             disconnectSource('@multiplex')
             playbarEngine.setSource('')
             debug('next source:', 'Nothing')
-
         }
     }
 

@@ -18,6 +18,9 @@
 */
 import QtQuick 2.4
 import QtQuick.Layouts 1.2
+import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.extras 2.0 as PlasmaExtras
+import "../code/utils.js" as Utils
 
 Flow {
     id: playbackControl
@@ -42,6 +45,26 @@ Flow {
             : units.roundToIconSize(_minSize))
 
     readonly property bool loaded: loader.status === Loader.Ready
+
+
+    property bool containsMouse: false
+
+    onContainsMouseChanged: {
+        if (containsMouse)
+            toolTip.showToolTip()
+        else
+            toolTip.hideToolTip()
+    }
+
+    Component.onCompleted: toolTip.visualParent = playbackControl
+
+    onParentChanged: {
+        if (parent && parent.objectName === 'org.kde.desktop-CompactApplet') {
+            //! NOTE: disable the standard toolTip
+            parent.active = false
+            containsMouse = Qt.binding(function () { return parent.containsMouse })
+        }
+    }
 
     Loader {
         id: loader

@@ -63,6 +63,16 @@ GridLayout {
         Layout.minimumHeight: units.iconSizes.enormous
         Layout.alignment: Qt.AlignBottom
         Layout.maximumWidth: page.width / 2 - units.iconSizes.medium
+        opacity: mpris2.sourceActive ? 1 : 0.3
+
+        SourceSelectorButton {
+            anchors {
+                top: cover.top
+                left: cover.left
+                topMargin: cover.coverTopMargin
+                leftMargin: cover.coverLeftMargin
+            }
+        }
     }
     TrackInfo {
         id: trackInfo

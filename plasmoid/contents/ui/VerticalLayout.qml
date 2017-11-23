@@ -60,6 +60,16 @@ ColumnLayout {
         Layout.minimumWidth: Math.min(page.width, height)
         Layout.minimumHeight: Math.min(page.width, height)
         Layout.alignment: Qt.AlignCenter
+        opacity: mpris2.sourceActive ? 1 : 0.3
+
+        SourceSelectorButton {
+            anchors {
+                top: cover.top
+                left: cover.left
+                topMargin: cover.coverTopMargin
+                leftMargin: cover.coverLeftMargin
+            }
+        }
     }
     TrackInfo {
         id: trackInfo

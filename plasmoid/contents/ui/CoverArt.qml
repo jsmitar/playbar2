@@ -26,11 +26,31 @@ import QtGraphicalEffects 1.0
 Item {
     id: bg
 
+    readonly property int paintedWidth: noCover.visible ? noCover.paintedWidth : cover.paintedWidth
+    readonly property int paintedHeight: noCover.visible ? noCover.paintedHeight : cover.paintedHeight
+
+    readonly property int coverLeftMargin: (bg.width - paintedWidth) / 2 + units.smallSpacing
+    readonly property int coverTopMargin: (bg.height - paintedHeight) / 2 + units.smallSpacing
+
+    readonly property alias containsMouse: toggleWindow.containsMouse
+
+    property alias noCoverIcon: noCover.source
+    property bool forceNoCover: false
+
     width: units.iconSizes.enormous
     height: units.iconSizes.enormous
-
     Layout.fillWidth: true
     Layout.fillHeight: true
+
+    Timer {
+        id: timer
+        repeat: false
+        interval: 250
+
+        onTriggered: {
+            noCover.visible = cover.status === Image.Null || cover.status === Image.Error || forceNoCover
+        }
+    }
 
     PlasmaCore.IconItem {
         id: noCover
@@ -38,19 +58,17 @@ Item {
         anchors.fill: parent
         source: 'nocover'
         smooth: true
-        opacity: mpris2.sourceActive ? 1 : 0.3
-        visible: cover.status === Image.Null || cover.status === Image.Error
     }
 
     Image {
         id: cover
 
-        source: mpris2.artUrl
+        source: Qt.resolvedUrl(mpris2.artUrl)
         fillMode: Image.PreserveAspectFit
         anchors.fill: parent
         mipmap: true
-        asynchronous: true
         cache: false
+        visible: !forceNoCover
 
         sourceSize.width: width
         sourceSize.height: height
@@ -85,6 +103,7 @@ Item {
                 animA.stop()
                 animB.start()
             }
+            timer.restart()
         }
 
         OpacityAnimator on opacity {
@@ -110,119 +129,4 @@ Item {
         hoverEnabled: true
     }
 
-    PlasmaComponents.ToolButton {
-        id: mediaSelector
-
-        readonly property int paintedWidth: noCover.visible ? noCover.paintedWidth : cover.paintedWidth
-        readonly property int paintedHeight: noCover.visible ? noCover.paintedHeight : cover.paintedHeight
-
-        anchors {
-            left: cover.left
-            top: cover.top
-            leftMargin: (bg.width - paintedWidth) / 2 + units.smallSpacing
-            topMargin: (bg.height - paintedHeight) / 2 + units.smallSpacing
-        }
-
-        opacity: (toggleWindow.containsMouse || hovered) ? 1 : 0
-        visible: repeater.count >= 1
-
-        Behavior on opacity {
-            NumberAnimation { duration: units.longDuration }
-        }
-
-        Behavior on anchors.leftMargin {
-            NumberAnimation { duration: units.longDuration }
-        }
-
-        Behavior on anchors.topMargin {
-            NumberAnimation { duration: units.longDuration }
-        }
-
-        iconName: mpris2.icon(mpris2.currentSource)
-        onClicked: menu.open()
-
-        PlasmaComponents.ContextMenu {
-            id: menu
-            visualParent: mediaSelector
-
-            function caption(source) {
-                var text = 'None'
-
-                if (source === "@multiplex") {
-                    text = i18n("Select automatically")
-                } else {
-                    var instance = source.match(/\.instance[0-9]+/)
-                    instance = instance ? instance[0].replace('.instance', ' Instance:') : ''
-                    text = mpris2.getIdentity(source) + instance
-                }
-
-                return text
-            }
-
-            function changeSource(source) {
-                if (mpris2.currentSource !== source) {
-                    if (mpris2.sourceActive)
-                        mpris2.disconnectSource(mpris2.currentSource)
-
-                    mpris2.connectSource(source)
-                    playbarEngine.setSource(source)
-                }
-            }
-
-            PlasmaComponents.MenuItem {
-                id: menuItemNext
-                text: i18n('Next multimedia source')
-                onClicked: {
-                    mpris2.nextSource()
-                }
-            }
-
-            PlasmaComponents.MenuItem {
-                id: menuItemAuto
-                readonly property string source: '@multiplex'
-                text: menu.caption(source)
-                onClicked: {
-                    sourceChanged()
-                    menu.changeSource(source)
-                }
-                checkable: true
-                Binding {
-                    target: menuItemAuto
-                    property: 'checked'
-                    value: mpris2.currentSource === menuItemAuto.source
-                }
-            }
-
-            //!BEGIN: Media players menu items
-            readonly property Item _items: Item {
-                Repeater {
-                    id: repeater
-                    readonly property var sources: mpris2.sources.filter(function(e){ return e !== '@multiplex' }).sort()
-
-                    model: sources.length
-                    onItemAdded: menu.addMenuItem(item)
-                    onItemRemoved: menu.removeMenuItem(item)
-
-                    delegate: PlasmaComponents.MenuItem {
-                        id: menuItem
-                        readonly property string source: repeater.sources[index]
-                        text: menu.caption(source)
-                        onClicked: {
-                            sourceChanged()
-                            menu.changeSource(source)
-                        }
-                        checkable: true
-
-                        Binding {
-                            target: menuItem
-                            property: 'checked'
-                            value: mpris2.currentSource === menuItem.source
-                        }
-                    }
-                }
-            }
-            //!END: Media players menu items
-        }
-
-    }
 }

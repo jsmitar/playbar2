@@ -19,11 +19,16 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.2
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.plasmoid 2.0
 import "../code/utils.js" as Utils
 
 Item {
     id: root
+
+    readonly property bool vertical: plasmoid.formFactor === PlasmaCore.Types.Vertical
+    readonly property bool leftEdge: plasmoid.location === PlasmaCore.Types.LeftEdge
+    readonly property bool systray: plasmoid.pluginName === 'audoban.applet.playbar.systray'
 
     //! dataengine
     PlasmaCore.DataSource {
@@ -63,7 +68,18 @@ Item {
 
         property bool systrayArea: false
 
-        onNextSourceChanged: if (nextSource) mpris2.nextSource()
+        onNextSourceChanged: {
+            if (nextSource &&
+                    mpris2
+                    .sources
+                    .filter(function(e){return e !== '@multiplex'}).length > 0)
+            {
+                mpris2.nextSource()
+                toolTip.showToolTipChangingSource()
+            } else if (nextSource) {
+                action_player0()
+            }
+        }
 
         function showSettings() {
             if (!playbarEngine.valid)
@@ -121,11 +137,98 @@ Item {
         id: mpris2
     }
 
-    readonly property bool vertical: plasmoid.formFactor === PlasmaCore.Types.Vertical
-    readonly property bool leftEdge: plasmoid.location === PlasmaCore.Types.LeftEdge
-    readonly property bool systray: plasmoid.pluginName === 'audoban.applet.playbar.systray'
+    readonly property PlasmaCore.Dialog toolTip: PlasmaCore.Dialog {
+        id: toolTip
+        location: PlasmaCore.Types.Floating
+        outputOnly: true
+        visible: false
 
-    Plasmoid.compactRepresentation: systray ? compactIconOnly : compact
+        readonly property var showToolTip: _delay.restart
+        readonly property var hideToolTip: function() { _delay.stop(); hide() }
+        readonly property var showToolTipChangingSource: function () { _timer.restart(); showToolTip() }
+
+        readonly property Timer _delay: Timer {
+            repeat: false
+            running: false
+            interval: units.longDuration
+            onTriggered: toolTip.visible = !plasmoid.expanded
+        }
+
+        mainItem: GridLayout {
+            rows: 2
+            columns: 2
+            rowSpacing: units.smallSpacing
+            columnSpacing: units.largeSpacing
+            Layout.preferredWidth: implicitWidth
+
+            states: [
+                State {
+                    when: mpris2.playbackStatus === 'Stopped' && !_timer.running
+                    PropertyChanges { target: icon; Layout.rowSpan: 1; size: 32; forceNoCover: false }
+                    PropertyChanges { target: subText; visible: false }
+                    PropertyChanges { target: title; Layout.alignment: Qt.AlignVCenter }
+                },
+                State {
+                    when: mpris2.playbackStatus !== 'Stopped' && !_timer.running
+                    PropertyChanges { target: icon; Layout.rowSpan: 2; size: 48; forceNoCover: false }
+                    PropertyChanges { target: subText; visible: true }
+                    PropertyChanges { target: title; Layout.alignment: 0 }
+                },
+                State {
+                    name: 'changing_source'
+                    when: _timer.running
+                    PropertyChanges { target: icon; Layout.rowSpan: 1; size: 32; forceNoCover: true }
+                    PropertyChanges { target: subText; visible: false }
+                    PropertyChanges { target: title; Layout.alignment: Qt.AlignVCenter; text: mpris2.identity }
+                }
+            ]
+
+            Timer {
+                id: _timer
+                running: false
+                repeat: false
+                interval: 1250
+                onTriggered: toolTip.hideToolTip()
+            }
+
+            CoverArt {
+                id: icon
+                Layout.rowSpan: 2
+                Layout.fillWidth: false
+                property int size: 48
+                Layout.minimumWidth: size
+                Layout.minimumHeight: size
+                Layout.maximumWidth: size
+                Layout.maximumHeight: size
+                Layout.topMargin: units.smallSpacing
+                Layout.bottomMargin: units.smallSpacing
+                smooth: true
+                noCoverIcon: internal.icon
+            }
+
+            PlasmaExtras.Heading {
+                id: title
+                Layout.fillWidth: false
+                Layout.maximumWidth: 400
+                Layout.topMargin: units.smallSpacing
+                maximumLineCount: 1
+                horizontalAlignment: Text.AlignLeft
+                level: 3
+                text: internal.title
+            }
+
+            PlasmaExtras.Paragraph {
+                id: subText
+                Layout.fillWidth: false
+                Layout.maximumWidth: 400
+                Layout.bottomMargin: units.smallSpacing
+                color: Utils.adjustAlpha(theme.textColor, 0.7)
+                maximumLineCount: 2
+                horizontalAlignment: Text.AlignLeft
+                text: internal.subText
+            }
+        }
+    }
 
     Component {
         id: compact
@@ -136,6 +239,7 @@ Item {
     Component {
         id: compactIconOnly
         PlasmaCore.IconItem {
+            id: iconLayout
             source: mpris2.playing ? 'media-playback-start' : 'media-playback-pause'
 
             MediaPlayerArea {
@@ -147,17 +251,18 @@ Item {
                         plasmoid.expanded = !plasmoid.expanded
                 }
             }
+
+            Component.onCompleted: toolTip.visualParent = iconLayout
         }
     }
 
-    Plasmoid.fullRepresentation: FullApplet {
-        id: full
-    }
+    Plasmoid.compactRepresentation: systray ? compactIconOnly : compact
+    Plasmoid.fullRepresentation: FullApplet { id: full }
 
     Plasmoid.preferredRepresentation: plasmoid.formFactor === PlasmaCore.Types.Planar
         ? Plasmoid.fullRepresentation : Plasmoid.compactRepresentation
 
-    Plasmoid.icon: internal.icon
+    Plasmoid.icon: internal.cover || internal.icon
     Plasmoid.title: systray ? mpris2.identity : 'PlayBar'
     Plasmoid.toolTipMainText: internal.title
     Plasmoid.toolTipSubText: internal.subText
@@ -195,7 +300,8 @@ Item {
         playbarEngine.showSettings()
     }
     function action_player0() {
-        executable.startPlayer(0)
+        if (mpris2.recentSources.length > 0)
+            executable.startPlayer(0)
     }
     function action_player1() {
         executable.startPlayer(1)
@@ -221,18 +327,24 @@ Item {
     QtObject {
         id: internal
 
-        property string icon: mpris2.artUrl != '' ? Qt.resolvedUrl(mpris2.artUrl)
-        : mpris2.recentSources.length > 0 ? mpris2.recentSources[0].icon : 'media-playback-start'
+        property string icon: mpris2.sourceActive ? mpris2.icon(mpris2.currentSource)
+                                                  : mpris2.recentSources.length > 0
+                                                    ? mpris2.recentSources[0].icon : 'media-playback-start'
 
-        property string title: mpris2.title != '' ? mpris2.title
-        : mpris2.recentSources.length > 0 ? mpris2.recentSources[0].identity : 'PlayBar'
+        property string cover: mpris2.artUrl !== '' ? Qt.resolvedUrl(mpris2.artUrl)
+                                                    : ''
 
-        property string artist: mpris2.artist != '' ? i18n('<b>By</b> %1 ', mpris2.artist) : ''
+        property string title: mpris2.title !== '' ? mpris2.title
+                                                   : mpris2.recentSources.length > 0
+                                                     ? mpris2.recentSources[0].identity  : 'PlayBar'
 
-        property string album: mpris2.album != '' ? i18n('<b>On</b> %1', mpris2.album) : ''
+        property string artist: mpris2.artist !== '' ? i18n('<b>By</b> %1 ', mpris2.artist) : ''
+
+        property string album: mpris2.album !== '' ? i18n('<b>On</b> %1', mpris2.album) : ''
 
         property string subText: (title === 'PlayBar' && artist === '' && album === '')
-        ? i18n('Client MPRIS2, allows you to control your favorite media player') : artist + album
+                                 ? i18n('Client MPRIS2, allows you to control your favorite media player')
+                                 : artist + album
     }
 
     // ENUMS
@@ -256,6 +368,7 @@ Item {
     }
 
     Plasmoid.onContextualActionsAboutToShow: {
+        toolTip.hideToolTip()
         plasmoid.clearActions()
 
         var icon = mpris2.icon(mpris2.currentSource)
