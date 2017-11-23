@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE kcfg SYSTEM
-	"http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+<!DOCTYPE kcfg SYSTEM "http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
 <kcfg>
-	<group name="ShowSettings">
-	</group>
-	<group name="SetSourceMpris2">
-		 <entry name="source" type="String">
-		 </entry>
-	</group>
+    <group name="ShowSettings"></group>
+    <group name="SetSourceMpris2">
+        <entry name="source" type="String"></entry>
+    </group>
 </kcfg>
