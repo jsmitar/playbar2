@@ -140,6 +140,8 @@ Item {
     readonly property PlasmaCore.Dialog toolTip: PlasmaCore.Dialog {
         id: toolTip
         location: PlasmaCore.Types.Floating
+        type: PlasmaCore.Dialog.Tooltip
+        flags: Qt.ToolTip | Qt.WindowDoesNotAcceptFocus
         outputOnly: true
         visible: false
 
