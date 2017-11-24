@@ -35,6 +35,7 @@ GridLayout {
     Layout.minimumHeight: implicitHeight
     Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
 
+    //BEGIN: ROW 0, COL_SPAN 2
     PlasmaExtras.Heading {
         id: title
 
@@ -58,7 +59,9 @@ GridLayout {
             anchors.fill: parent
         }
     }
+    //!END: ROW 0, COL_SPAN 2
 
+    //!BEGIN: ROW 1, COl 1
     RowLayout {
         Layout.row: 1
         Layout.column: 1
@@ -67,74 +70,74 @@ GridLayout {
         Layout.alignment: Qt.AlignTop
         clip: true
 
-        children: [artist]
-    }
+        PlasmaExtras.Heading {
+            id: artist
 
-    PlasmaExtras.Heading {
-        id: artist
+            text: mpris2.artist || mpris2.album
+            level: 3
+            opacity: playbarEngine.backgroundHint === playbar.noBackground ? 0.9 : 0.6
 
-        text: mpris2.artist
-        level: 3
-        opacity: playbarEngine.backgroundHint === playbar.noBackground ? 0.9 : 0.6
+            wrapMode: scrollArtist.scrolling ? Text.NoWrap : Text.WrapAnywhere
+            elide: scrollArtist.scrolling ? Text.ElideNone : Text.ElideRight
+            verticalAlignment: Text.AlignTop
+            maximumLineCount: 1
+            lineHeight: 1.1
 
-        wrapMode: scrollArtist.scrolling ? Text.NoWrap : Text.WrapAnywhere
-        elide: scrollArtist.scrolling ? Text.ElideNone : Text.ElideRight
-        verticalAlignment: Text.AlignTop
-        maximumLineCount: 1
-        lineHeight: 1.1
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+            Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
 
-        Layout.fillWidth: true
-        Layout.fillHeight: false
-        Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
-
-        AutoscrollText {
-            id: scrollArtist
-            target: artist
-            anchors.fill: parent
+            AutoscrollText {
+                id: scrollArtist
+                target: artist
+                anchors.fill: parent
+            }
         }
     }
+    //!END: ROW 1, COL 1
 
+    //!BEGIN: ROW 2, COL 1
     RowLayout {
         Layout.row: 2
         Layout.column: 1
         Layout.fillWidth: true
         Layout.fillHeight: false
         Layout.alignment: Qt.AlignTop
-
         clip: true
-        children: [album]
-    }
 
-    PlasmaExtras.Heading {
-        id: album
+        PlasmaExtras.Heading {
+            id: album
 
-        text: mpris2.album
-        level: 3
-        opacity: playbarEngine.backgroundHint === playbar.noBackground ? 0.9 : 0.6
+            text: mpris2.artist ? mpris2.album : ''
+            level: 3
+            opacity: playbarEngine.backgroundHint === playbar.noBackground ? 0.9 : 0.6
 
-        wrapMode: scrollAlbum.scrolling ? Text.NoWrap : Text.WrapAnywhere
-        elide: scrollAlbum.scrolling ? Text.ElideNone : Text.ElideRight
-        verticalAlignment: Text.AlignTop
-        maximumLineCount: 1
-        lineHeight: 1.1
+            wrapMode: scrollAlbum.scrolling ? Text.NoWrap : Text.WrapAnywhere
+            elide: scrollAlbum.scrolling ? Text.ElideNone : Text.ElideRight
+            verticalAlignment: Text.AlignTop
+            maximumLineCount: 1
+            lineHeight: 1.1
 
-        Layout.fillWidth: true
-        Layout.fillHeight: false
-        Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+            Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
 
-        AutoscrollText {
-            id: scrollAlbum
-            target: album
-            anchors.fill: parent
+            AutoscrollText {
+                id: scrollAlbum
+                target: album
+                anchors.fill: parent
+            }
         }
     }
+    //!END: ROW 2, COL 1
 
+    //!BEGIN: ROW 1, COL 0
     PlasmaExtras.Paragraph {
         id: by
 
-        text: i18n('By')
+        text: mpris2.artist ? i18n('By') : i18n('On')
         color: Utils.adjustAlpha(theme.textColor, 0.8)
-        visible: mpris2.artist.length > 0
+        visible: artist.text
         verticalAlignment: Text.AlignTop
         lineHeight: 1.1
 
@@ -143,13 +146,15 @@ GridLayout {
         Layout.fillHeight: false
         Layout.alignment: Qt.AlignRight | Qt.AlignBaseline
     }
+    //!END: ROW 1, COL 0
 
+    //!BEGIN: ROW 2, COL 0
     PlasmaExtras.Paragraph {
         id: on
 
         text: i18n('On')
         color: Utils.adjustAlpha(theme.textColor, 0.8)
-        visible: mpris2.album.length > 0
+        visible: album.text
         verticalAlignment: Text.AlignTop
         lineHeight: 1.1
 
@@ -158,4 +163,5 @@ GridLayout {
         Layout.fillHeight: false
         Layout.alignment: Qt.AlignRight | Qt.AlignBaseline
     }
+    //!END: ROW 2, COL 0
 }
