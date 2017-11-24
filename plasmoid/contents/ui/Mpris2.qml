@@ -51,6 +51,7 @@ PlasmaCore.DataSource {
 
     readonly property string title: metadata ? metadata['xesam:title'] || '' : ''
 
+    readonly property real volume: sourceActive ? data[currentSource].Volume || 0 : 0
 
     readonly property bool canControl: sourceActive ? data[currentSource].CanControl || false : false
 
@@ -66,12 +67,9 @@ PlasmaCore.DataSource {
 
     readonly property bool canSeek: canControl ? data[currentSource].CanSeek || false : false
 
-    readonly property real volume: canControl ? data[currentSource].Volume || false : 0
-
     readonly property bool canRaise: canControl ? data[currentSource].CanRaise || false : false
 
     readonly property bool canQuit: canControl ? data[currentSource].CanQuit || false : false
-
 
     // 	seconds
     property int length: 0
