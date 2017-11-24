@@ -279,6 +279,11 @@ PlasmaCore.DataSource {
     function getIdentity(source) {
         if (sourceActive && source === currentSource && data[source]) {
             var i = data[source].Identity
+
+            if (!i) {
+                i = source === '@multiplex' ? data[source]['Source Name'] : source
+                i = i.replace(/-/g, ' ')
+            }
             return i.charAt(0).toUpperCase() + i.substr(1)
         } else {
             var e = recentSources.find(function (e) {
