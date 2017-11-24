@@ -18,7 +18,6 @@
 */
 import QtQuick 2.4
 import org.kde.plasma.core 2.0 as PlasmaCore
-import "../code/utils.js" as Utils
 
 PlasmaCore.DataSource {
     id: mpris2

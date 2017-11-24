@@ -30,9 +30,7 @@ IconWidget {
 
     size: units.iconSizes.small
 
-    svg: PlasmaCore.Svg {
-        imagePath: 'icons/audio'
-    }
+    svg: PlasmaCore.Svg { imagePath: 'icons/audio' }
 
     iconSource: updateIcon()
 

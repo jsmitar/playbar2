@@ -18,7 +18,6 @@
 */
 import QtQuick 2.4
 import org.kde.plasma.components 2.0 as PlasmaComponents
-import "../code/utils.js" as Utils
 
 PlasmaComponents.Label {
     id: label
@@ -26,14 +25,9 @@ PlasmaComponents.Label {
     property real volume: 0
 
     wrapMode: Text.NoWrap
-
     elide: Text.ElideNone
-
     maximumLineCount: 1
-
     font: theme.smallestFont
-
     opacity: 0.8
-
     text: (volume * 100).toFixed() + '%'
 }

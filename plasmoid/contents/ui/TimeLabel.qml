@@ -18,7 +18,6 @@
 */
 import QtQuick 2.4
 import org.kde.plasma.components 2.0 as PlasmaComponents
-import "../code/utils.js" as Utils
 
 PlasmaComponents.Label {
     id: time

@@ -21,7 +21,6 @@ import QtQuick.Layouts 1.2
 import QtGraphicalEffects 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
-
 //###########
 // VerticalLayout
 //###########
@@ -36,8 +35,8 @@ ColumnLayout {
 
     Layout.minimumWidth: units.iconSizes.enormous * 1.4
     Layout.minimumHeight: implicitHeight
-    Layout.maximumWidth: plasmoid.formFactor
-                         === PlasmaCore.Types.Planar ? -1 : units.iconSizes.enormous * 1.7
+    Layout.maximumWidth: plasmoid.formFactor === PlasmaCore.Types.Planar
+        ? -1 : units.iconSizes.enormous * 1.7
     Layout.preferredWidth: units.iconSizes.enormous * 1.7
     Layout.preferredHeight: height
     Layout.fillWidth: true

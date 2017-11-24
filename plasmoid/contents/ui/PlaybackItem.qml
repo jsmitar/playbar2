@@ -21,10 +21,9 @@ import QtQuick 2.4
 Item {
     id: playbackitem
 
-    readonly property bool showStop: mpris2.currentSource
-                                     === 'spotify' ? false : playbarEngine.showStop
+    readonly property bool showStop: mpris2.currentSource === 'spotify' ? false
+                                                                        : playbarEngine.showStop
 
     property size buttonSize: Qt.size(units.iconSizes.small, units.iconSizes.small)
-
     enabled: mpris2.canControl
 }
