@@ -78,7 +78,7 @@ msgstr "Выход"
 #: ../../plasmoid/contents/ui/TrackInfoBar.qml:111
 #, qt-format
 msgid "%1 <b>By</b> %2"
-msgstr "%1<b>от</b> %2"
+msgstr "%1 <b>от</b> %2"
 
 #: ../../plasmoid/contents/ui/TrackInfo.qml:41
 msgid "No media playing"
