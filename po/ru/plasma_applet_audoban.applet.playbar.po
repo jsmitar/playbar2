@@ -14,9 +14,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 2.0\n"
+"X-Language: ru_RU\n"
+"X-Source-Language: C\n"
 
 #: ../../plasmoid/contents/ui/main.qml:214
 #: ../../plasmoid/contents/ui/main.qml:288
@@ -24,10 +25,12 @@ msgid "Configure PlayBar"
 msgstr "Настроить PlayBar"
 
 #: ../../plasmoid/contents/ui/main.qml:227
+#, qt-format
 msgid "<b>By</b> %1 "
 msgstr "<b>от</b> %1 "
 
 #: ../../plasmoid/contents/ui/main.qml:229
+#, qt-format
 msgid "<b>On</b> %1"
 msgstr "<b>из</b> %1"
 
@@ -37,29 +40,30 @@ msgstr "Клиент MPRIS2, позволяет управлять вашим м
 
 #: ../../plasmoid/contents/ui/main.qml:261
 #: ../../plasmoid/contents/ui/TitleBar.qml:65
+#, qt-format
 msgid "Open %1"
 msgstr "Открыть %1"
 
 #: ../../plasmoid/contents/ui/main.qml:264
 msgid "Play previous track"
-msgstr ""
+msgstr "Предыдущая дорожка"
 
 #: ../../plasmoid/contents/ui/main.qml:267
 msgid "Pause"
-msgstr ""
+msgstr "Пауза"
 
 #: ../../plasmoid/contents/ui/main.qml:269
 msgid "Play"
-msgstr ""
+msgstr "Воспроизвести"
 
 #: ../../plasmoid/contents/ui/main.qml:271
 msgid "Play next track"
-msgstr ""
+msgstr "Следующая дорожка"
 
 #: ../../plasmoid/contents/ui/main.qml:274
 #: ../../plasmoid/contents/ui/TitleBar.qml:70
 msgid "Stop"
-msgstr ""
+msgstr "Стоп"
 
 #: ../../plasmoid/contents/ui/main.qml:275
 #: ../../plasmoid/contents/ui/TitleBar.qml:80
@@ -72,14 +76,13 @@ msgid "Quit"
 msgstr "Выход"
 
 #: ../../plasmoid/contents/ui/TrackInfoBar.qml:111
-#, fuzzy
+#, qt-format
 msgid "%1 <b>By</b> %2"
-msgstr "<b>от</b> %1 "
+msgstr "%1 <b>от</b> %2"
 
 #: ../../plasmoid/contents/ui/TrackInfo.qml:41
-#, fuzzy
 msgid "No media playing"
-msgstr "Нет проигрывателя"
+msgstr "Ничего не воспроизводится"
 
 #: ../../plasmoid/contents/ui/TrackInfo.qml:135
 msgid "By"
