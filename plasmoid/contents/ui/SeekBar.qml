@@ -23,7 +23,8 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 PlaybackItem {
     id: seekBar
 
-    visible: mpris2.sourceActive && (playbarEngine.compactStyle === playbar.seekbar)
+    visible: (mpris2.sourceActive || playbarEngine.fixedSize)
+    && (playbarEngine.compactStyle === playbar.seekbar)
 
     enabled: visible
 
@@ -40,8 +41,9 @@ PlaybackItem {
         spacing: 0
 
         Item {
-            width: buttonSize.width
-            height: buttonSize.height
+            visible: playbarEngine.showPlayPause
+            width: visible ? buttonSize.width : 0
+            height: visible ? buttonSize.height : 0
 
             IconWidget {
                 id: button
@@ -71,8 +73,8 @@ PlaybackItem {
             value: 0
             stepSize: 1
             updateValueWhileDragging: true
-            visible: mpris2.playbackStatus !== 'Stopped' && slider.enabled
-            property int size: mpris2.playbackStatus === 'Stopped' || !slider.enabled ? 40 : playbarEngine.maxWidth
+            visible: (mpris2.playbackStatus !== 'Stopped' && slider.enabled) || playerEngine.fixedSize
+            property int size: !visible ? 40 : playbarEngine.maxWidth
 
             Behavior on size {
                 SequentialAnimation {
@@ -83,7 +85,7 @@ PlaybackItem {
                     ScriptAction {
                         script: setVisible()
                         function setVisible() {
-                            if (mpris2.playbackStatus !== 'Stopped' && slider.enabled)
+                            if ((mpris2.playbackStatus !== 'Stopped' && slider.enabled) || playerEngine.fixedSize)
                                 slider.visible = true
                         }
                     }
@@ -94,7 +96,8 @@ PlaybackItem {
                         script: setNotVisible()
                         function setNotVisible() {
                             if (mpris2.playbackStatus === 'Stopped' || slider.size <= 50 || !slider.enabled)
-                                slider.visible = false
+                                if (!playerEngine.fixedSize)
+                                    slider.visible = false
                         }
                     }
                 }

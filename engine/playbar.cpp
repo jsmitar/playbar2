@@ -182,6 +182,9 @@ const DataEngine::Data &PlayBar::data()
 
     m_data->insert(QStringLiteral("CompactStyle"),     config->compactStyle());
     m_data->insert(QStringLiteral("MaxWidth"),         config->maxWidth());
+    m_data->insert(QStringLiteral("FixedSize"),        config->fixedSize());
+    m_data->insert(QStringLiteral("ShowPlayPause"),    config->showPlayPause());
+    m_data->insert(QStringLiteral("TrackInfoFormat"),  config->trackInfoFormat());
     m_data->insert(QStringLiteral("ExpandedStyle"),    config->expandedStyle());
     m_data->insert(QStringLiteral("ShowStop"),         config->showStop());
     m_data->insert(QStringLiteral("ShowVolumeSlider"), config->showVolumeSlider());

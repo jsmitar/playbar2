@@ -21,6 +21,22 @@
           <entry name="MaxWidth" type="Int">
               <default>120</default>
           </entry>
+					<entry name="FixedSize" type="Bool">
+			   <default>false</default>
+          </entry>
+					<entry name="ShowPlayPause" type="Bool">
+			   <default>true</default>
+          </entry>
+			<entry name="TrackInfoFormat" type="Enum">
+              <choices>
+                  <choice name="Default"/>
+                  <choice name="ArtistTrack"/>
+                  <choice name="TrackArtist"/>
+                  <choice name="Track"/>
+									<choice name="TrackbyArtist"/>
+              </choices>
+              <default>0</default>
+		  </entry>
 		  <entry name="ExpandedStyle" type="Enum">
               <choices>
                   <choice name="Horizontal"/>

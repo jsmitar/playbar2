@@ -42,6 +42,18 @@ public:
         return m_ui.kcfg_MaxWidth->value();
     }
 
+    inline int trackInfoFormat() const {
+        return m_ui.kcfg_TrackInfoFormat->currentIndex();
+    }
+
+    inline bool fixedSize() const {
+        return m_ui.kcfg_FixedSize->isChecked();
+    }
+
+    inline bool showPlayPause() const {
+        return m_ui.kcfg_ShowPlayPause->isChecked();
+    }
+
     inline int expandedStyle() const {
         return m_ui.kcfg_ExpandedStyle->currentIndex();
     }

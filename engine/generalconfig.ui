@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>527</height>
+    <height>590</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -150,6 +150,56 @@
             </spacer>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_TrackInfoFormat">
+          <property name="text">
+           <string>Track Info Format:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QCheckBox" name="kcfg_FixedSize">
+          <property name="text">
+           <string>Fixed Size</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QComboBox" name="kcfg_TrackInfoFormat">
+          <item>
+           <property name="text">
+            <string>Default</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Artist - Track</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Track - Artist</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Track</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Track by Artist</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QCheckBox" name="kcfg_ShowPlayPause">
+          <property name="text">
+           <string>Show play/pause button</string>
+          </property>
          </widget>
         </item>
        </layout>

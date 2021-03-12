@@ -79,6 +79,9 @@ void ConfigDialog::updateSettings()
 
     config->setCompactStyle(m_generalPage->compactStyle());
     config->setMaxWidth(m_generalPage->maxWidth());
+    config->setFixedSize(m_generalPage->fixedSize());
+    config->setShowPlayPause(m_generalPage->showPlayPause());
+    config->setTrackInfoFormat(m_generalPage->trackInfoFormat());
     config->setExpandedStyle(m_generalPage->expandedStyle());
     config->setShowStop(m_generalPage->showStop());
     config->setShowSeekSlider(m_generalPage->showSeekSlider());

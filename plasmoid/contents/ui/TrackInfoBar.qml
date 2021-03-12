@@ -25,7 +25,7 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 PlaybackItem {
     id: infoBar
 
-    visible: mpris2.sourceActive
+    visible: (mpris2.sourceActive || playbarEngine.fixedSize)
     && (playbarEngine.compactStyle === playbar.trackinfo)
 
     enabled: visible
@@ -47,8 +47,9 @@ PlaybackItem {
         flow: vertical ? Flow.TopToBottom : Flow.LeftToRight
 
         Item {
-            width: buttonSize.width
-            height: buttonSize.height
+            visible: playbarEngine.showPlayPause
+            width: visible ? buttonSize.width : 0
+            height: visible ? buttonSize.height : 0
 
             property alias iconSource: button.iconSource
 
@@ -73,7 +74,7 @@ PlaybackItem {
             height: vertical ? size : buttonSize.height
             clip: true
 
-            property int size: trackinfo.text ? playbarEngine.maxWidth : 0
+            property int size: (trackinfo.text || playbarEngine.fixedSize) ? playbarEngine.maxWidth : 0
 
             Behavior on size {
                 NumberAnimation {
@@ -100,8 +101,24 @@ PlaybackItem {
                 width: content.size
                 height: maxWidth
 
-                text: mpris2.title && mpris2.artist ? i18n('%1 <b>By</b> %2', mpris2.title, mpris2.artist)
-                        : (mpris2.title ? mpris2.title : '')
+                function getTrackInfo() {
+                  if (mpris2.title && mpris2.artist) {
+                    switch (playbarEngine.trackInfoFormat) {
+                    case playbar.formatDefault:
+                        return i18n('%1 <b>By</b> %2', mpris2.title, mpris2.artist);
+                    case playbar.trackByArtistLower:
+                        return i18n('%1 <b>by</b> %2', mpris2.title, mpris2.artist);
+                    case playbar.artistTrack:
+                        return mpris2.artist + ' <b>-</b> ' + mpris2.title;
+                    case playbar.trackArtist:
+                        return mpris2.title + ' <b>-</b> ' + mpris2.artist;
+                    }
+                  }
+
+                  return (mpris2.title ? mpris2.title : '');
+                }
+
+                text: getTrackInfo()
 
                 verticalAlignment: Text.AlignVCenter
                 wrapMode: scroll.scrolling ? Text.NoWrap : Text.WrapAnywhere
