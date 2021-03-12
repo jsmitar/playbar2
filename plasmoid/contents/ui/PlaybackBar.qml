@@ -22,7 +22,8 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 PlaybackItem {
     id: playbackbar
 
-    visible: mpris2.sourceActive && (playbarEngine.compactStyle === playbar.playbackButtons)
+    visible: (mpris2.sourceActive || playbarEngine.fixedSize)
+    && (playbarEngine.compactStyle === playbar.playbackButtons)
 
     enabled: visible
 

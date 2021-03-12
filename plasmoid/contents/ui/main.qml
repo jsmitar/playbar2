@@ -44,6 +44,15 @@ Item {
         readonly property int maxWidth: hasSource('MaxWidth')
         ? data[source]['MaxWidth'] : 120
 
+        readonly property bool fixedSize: hasSource('FixedSize')
+        ? data[source]['FixedSize'] : false
+
+        readonly property bool showPlayPause: hasSource('ShowPlayPause')
+        ? data[source]['ShowPlayPause'] : true
+
+        readonly property int trackInfoFormat: hasSource('TrackInfoFormat')
+        ? data[source]['TrackInfoFormat'] : playbar.formatDefault
+
         readonly property int expandedStyle: hasSource('ExpandedStyle')
         ? data[source]['ExpandedStyle'] : playbar.horizontalLayout
 
@@ -357,6 +366,14 @@ Item {
         readonly property int playbackButtons: 1
         readonly property int seekbar: 2
         readonly property int trackinfo: 3
+
+        // ENUM: TrackInfoFormat
+        readonly property int formatDefault: 0
+        readonly property int artistTrack: 1
+        readonly property int trackArtist: 2
+        readonly property int trackOnly: 3
+        readonly property int trackByArtistLower: 4
+
 
         // ENUM: ExpandedStyle
         readonly property int horizontalLayout: 0
